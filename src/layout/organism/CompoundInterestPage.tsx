@@ -1,17 +1,5 @@
 import React, {useState} from 'react';
-import {
-  Box,
-  Button,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  TextField,
-  Typography
-} from "@material-ui/core";
+import {Button, TextField, Typography} from "@material-ui/core";
 import {
   calcCompoundInterestResult,
   CompoundInterestProps,
@@ -20,6 +8,7 @@ import {
 import {makeStyles} from "@material-ui/core/styles";
 import {CompoundInterestTable} from "../molecules/CompoundInterestTable";
 import ResponsiveDrawer from "../molecules/DrawerMenu";
+import {JustifyCenterBox} from "../atoms/JustifyCenterBox";
 
 const useStyles = makeStyles({
   table: {
@@ -46,33 +35,35 @@ export function CompoundInterestPage() {
   return (
     <>
       <ResponsiveDrawer>
-      <Typography>複利計算ページ</Typography>
-      <TextField label="現在の金額"
-                 defaultValue={interestProps.presentAmount}
-                 onChange={v => setInterestProps(Object.assign(interestProps, {presentAmount: v.target.value}))}
-      />
-      <TextField label="積立金額"
-                 defaultValue={interestProps.reserveAmount}
-                 onChange={v => setInterestProps(Object.assign(interestProps, {reserveAmount: v.target.value}))}
-      />
-      <TextField label="積立年数"
-                 defaultValue={interestProps.reserveYears}
-                 onChange={v => setInterestProps(Object.assign(interestProps, {reserveYears: v.target.value}))}
-      />
-      <TextField label="年利"
-                 defaultValue={interestProps.annualInterest}
-                 onChange={v => setInterestProps(Object.assign(interestProps, {annualInterest: v.target.value}))}
-      />
-      <Button variant="contained" color="primary"
-              onClick={calc}
-      >
-        計算
-      </Button>
+        <JustifyCenterBox width={'200px'}>
+            <Typography>複利計算ページ</Typography>
+            <TextField label="現在の金額"
+                       defaultValue={interestProps.presentAmount}
+                       onChange={v => setInterestProps(Object.assign(interestProps, {presentAmount: v.target.value}))}
+            />
+            <TextField label="積立金額"
+                       defaultValue={interestProps.reserveAmount}
+                       onChange={v => setInterestProps(Object.assign(interestProps, {reserveAmount: v.target.value}))}
+            />
+            <TextField label="積立年数"
+                       defaultValue={interestProps.reserveYears}
+                       onChange={v => setInterestProps(Object.assign(interestProps, {reserveYears: v.target.value}))}
+            />
+            <TextField label="年利"
+                       defaultValue={interestProps.annualInterest}
+                       onChange={v => setInterestProps(Object.assign(interestProps, {annualInterest: v.target.value}))}
+            />
+            <Button variant="contained" color="primary"
+                    onClick={calc}
+            >
+              計算
+            </Button>
+        </JustifyCenterBox>
 
       {compoundInterestResult && (
-        <Box display="flex" justifyContent="center">
+        <JustifyCenterBox width={'250px'}>
           <CompoundInterestTable result={compoundInterestResult.result} />
-        </Box>
+        </JustifyCenterBox>
       )}
       </ResponsiveDrawer>
     </>
