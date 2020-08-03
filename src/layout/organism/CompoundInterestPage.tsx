@@ -7,7 +7,6 @@ import {
 } from "../../features/compoundInterest/compoundInterest";
 import {makeStyles} from "@material-ui/core/styles";
 import {CompoundInterestTable} from "../molecules/CompoundInterestTable";
-import ResponsiveDrawer from "../molecules/DrawerMenu";
 import {JustifyCenterBox} from "../atoms/JustifyCenterBox";
 
 const useStyles = makeStyles({
@@ -34,7 +33,6 @@ export function CompoundInterestPage() {
 
   return (
     <>
-      <ResponsiveDrawer>
         <JustifyCenterBox width={'200px'}>
             <Typography>複利計算ページ</Typography>
             <TextField label="現在の金額"
@@ -65,7 +63,6 @@ export function CompoundInterestPage() {
           <CompoundInterestTable result={compoundInterestResult.result} />
         </JustifyCenterBox>
       )}
-      </ResponsiveDrawer>
     </>
   );
 }
