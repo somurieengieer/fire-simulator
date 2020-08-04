@@ -19,22 +19,30 @@ interface PhaseData {
   operationPeriod: number, // 運用期間（年数）
 }
 
+// 運用しない場合の終了時資産
+function calcAssetAtEndWithoutOperation(data: PhaseData): number {
+  return data.assetAtStart + (data.income - data.expense) * data.operationPeriod
+}
+
 interface PhaseProps {
-  operationPeriod: number, // 運用期間（年数）
+  ageAtStart: number, // フェーズ開始時年齢
+  ageAtEnd: number,   // フェーズ終了時年齢
+  assetAtStart: number, // 開始時資産
 }
 
 // 複利計算ページ
-export function Phase({operationPeriod}: PhaseProps) {
+export function Phase({ageAtStart, ageAtEnd, assetAtStart}: PhaseProps) {
 
   const classes = useStyles();
+  const operationPeriod = ageAtEnd - ageAtStart + 1
 
   const [data, setData] = useState<PhaseData>(
     { income: 500,
       expense: 400,
-      assetAtStart: 600,
+      assetAtStart: assetAtStart,
       annualInterest: 3,
       assetAtEnd: 0,
-      operationPeriod: 13,
+      operationPeriod: operationPeriod,
     }
   )
 
@@ -78,6 +86,9 @@ export function Phase({operationPeriod}: PhaseProps) {
 
   return (
     <>
+      <Grid>
+        <div>{ageAtStart}歳〜{ageAtEnd}歳</div>
+      </Grid>
         <Grid container spacing={2}>
           <Grid item xs={9}>
             <TableContainer component={Paper}>
@@ -121,7 +132,11 @@ export function Phase({operationPeriod}: PhaseProps) {
                     <TableCell component="th" scope="row">
                       支出総額（内訳を入力できるよう追って対応）
                     </TableCell>
-                    <TableCell align="right">テキストボックス</TableCell>
+                    <TableCell align="right">
+                      <input value={data.expense}
+                             onChange={v => update('expense', v.target.value)}
+                      />
+                    </TableCell>
                   </TableRow>
                   {/*))}*/}
                 </TableBody>
@@ -143,9 +158,33 @@ export function Phase({operationPeriod}: PhaseProps) {
                   {/*{rows.map((row) => (*/}
                   <TableRow key={'test'}>
                     <TableCell component="th" scope="row">
+                      開始時資産
+                    </TableCell>
+                    <TableCell align="right">
+                      <input value={data.assetAtStart}
+                             onChange={v => update('assetAtStart', v.target.value)}
+                      />
+                    </TableCell>
+                  </TableRow>
+                  <TableRow key={'test'}>
+                    <TableCell component="th" scope="row">
                       リターン
                     </TableCell>
-                    <TableCell align="right">テキストボックス</TableCell>
+                    <TableCell align="right">
+                      <input value={data.annualInterest}
+                             onChange={v => update('annualInterest', v.target.value)}
+                      />
+                    </TableCell>
+                  </TableRow>
+                  <TableRow key={'test'}>
+                    <TableCell component="th" scope="row">
+                      終了時資産
+                    </TableCell>
+                    <TableCell align="right">
+                      <input value={data.assetAtEnd}
+                             onChange={v => update('assetAtEnd', v.target.value)}
+                      />
+                    </TableCell>
                   </TableRow>
                   {/*))}*/}
                 </TableBody>
@@ -154,6 +193,9 @@ export function Phase({operationPeriod}: PhaseProps) {
           </Grid>
         </Grid>
       <Grid>
+        運用しない場合
+        {calcAssetAtEndWithoutOperation(data)}
+        <br />
         終了時資産
         {numberFixed(data.assetAtEnd)}
       </Grid>

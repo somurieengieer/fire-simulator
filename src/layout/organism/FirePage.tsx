@@ -33,8 +33,7 @@ export function FirePage() {
   return (
     <>
       <Paper>
-        <div>○歳〜○歳</div>
-        <Phase operationPeriod={12}/>
+        <Phase ageAtStart={32} ageAtEnd={60} assetAtStart={600} />
       </Paper>
     </>
   );
