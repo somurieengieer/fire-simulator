@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
 import {calcCompoundInterestResult} from "../../features/compoundInterest/compoundInterest";
 import {makeStyles} from "@material-ui/core/styles";
@@ -9,43 +9,70 @@ const useStyles = makeStyles({
   },
 });
 
-interface PhaseData {
+export interface PhaseData {
+  ageAtStart: number, // フェーズ開始時年齢
+  ageAtEnd: number,   // フェーズ終了時年齢
+  ageAtStartEditable: boolean,
+  assetAtStartEditable: boolean,
   income: number, // 収入
   expense: number, // 支出
   assetAtStart: number, // 開始時資産
   annualInterest: number, // 年利
-  assetAtEnd: number, // 終了時資産
-  operationPeriod: number, // 運用期間（年数）
+  // assetAtEnd(): number, // 終了時資産
 }
 
-// 運用しない場合の終了時資産
-function calcAssetAtEndWithoutOperation(data: PhaseData): number {
-  return data.assetAtStart + (data.income - data.expense) * data.operationPeriod
+export class PhaseClass implements PhaseData {
+  ageAtStart!: number;
+  ageAtEnd!: number;
+  ageAtStartEditable!: boolean;
+  assetAtStartEditable!: boolean;
+  income!: number;
+  expense!: number;
+  assetAtStart!: number;
+  annualInterest!: number;
+  constructor(data: PhaseData) {
+    Object.assign(this, data)
+  }
+  operationPeriod(): number { // 運用期間（年数）
+    return this.ageAtEnd - this.ageAtStart + 1
+  }
+
+  assetAtEndWithoutOperation(): number { // 運用しない場合の終了時資産
+    return this.assetAtStart + (this.income - this.expense) * this.operationPeriod()
+  }
+  profitByYear(): number {
+    return this.income - this.expense
+  }
+
+  assetAtEnd(): number { // 終了時資産
+    return calcCompoundInterestResult({
+      presentAmount: this.assetAtStart,
+      reserveAmount: this.profitByYear(),
+      reserveYears: this.operationPeriod(),
+      annualInterest: this.annualInterest,
+    }).result.slice(-1)[0].amount
+  }
+
+  // compoundInterestResult(): number {
+  //   return calcCompoundInterestResult({
+  //     presentAmount: this.assetAtStart,
+  //     reserveAmount: this.profitByYear(),
+  //     reserveYears: this.operationPeriod(),
+  //     annualInterest: this.annualInterest,
+  //   }).result.slice(-1)[0].amount
+  // }
 }
 
-export interface PhaseProps {
-  ageAtStart: number, // フェーズ開始時年齢
-  ageAtEnd: number,   // フェーズ終了時年齢
-  assetAtStart: number, // 開始時資産
-  ageAtStartEditable: boolean,
-  assetAtStartEditable: boolean,
+
+interface PhaseProps {
+  data: PhaseClass,
+  setData: (updatedData: PhaseClass) => void
 }
 
 // 複利計算ページ
-export function Phase({ageAtStart, ageAtEnd, assetAtStart, ageAtStartEditable, assetAtStartEditable}: PhaseProps) {
+export function Phase({data, setData}: PhaseProps) {
 
   const classes = useStyles();
-  const operationPeriod = ageAtEnd - ageAtStart + 1
-
-  const [data, setData] = useState<PhaseData>(
-    { income: 500,
-      expense: 400,
-      assetAtStart: assetAtStart,
-      annualInterest: 3,
-      assetAtEnd: 0,
-      operationPeriod: operationPeriod,
-    }
-  )
 
   const update = (key: string, updatedValue: any): void => {
 
@@ -55,32 +82,22 @@ export function Phase({ageAtStart, ageAtEnd, assetAtStart, ageAtStartEditable, a
     setData(newData)
   }
 
-  const calcAssetAtEnd = (): number => {
-    const profitByYear = data.income - data.expense
-    return calcCompoundInterestResult({
-      presentAmount: data.assetAtStart,
-      reserveAmount: profitByYear,
-      reserveYears: data.operationPeriod,
-      annualInterest: data.annualInterest,
-    }).result.slice(-1)[0].amount
-  }
-
-  const calc = () => {
+  // const calc = () => {
     // assetAtEndの更新
-    const assetAtEnd = calcAssetAtEnd()
-    update('assetAtEnd', assetAtEnd)
-  }
+    // const assetAtEnd = data.assetAtEnd()
+    // update('assetAtEnd', assetAtEnd)
+  // }
 
-  useEffect(() => {
-    if (data.assetAtEnd !== calcAssetAtEnd()) {
-      calc()
-    }
-  }, [data])
+  // useEffect(() => {
+  //   if (data.assetAtEnd !== data.assetAtEnd()) {
+  //     calc()
+  //   }
+  // }, [data])
 
   const operationItems = [
-    {label: '開始時資産', key: 'assetAtStart', disabled: true },
-    {label: 'リターン', key: 'annualInterest', disabled: false },
-    {label: '終了時資産', key: 'assetAtEnd', disabled: true },
+    {label: '開始時資産', value: data.assetAtStart, key: 'assetAtStart', disabled: true },
+    {label: 'リターン', value: data.annualInterest, key: 'annualInterest', disabled: false },
+    {label: '終了時資産', value: data.assetAtEnd(), key: 'assetAtEnd()', disabled: true },
     ]
 
   return (
@@ -88,7 +105,7 @@ export function Phase({ageAtStart, ageAtEnd, assetAtStart, ageAtStartEditable, a
       <Paper>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          {ageAtStart}歳〜{ageAtEnd}歳
+          {data.ageAtStart}歳〜{data.ageAtEnd}歳
         </Grid>
       </Grid>
       <Grid  style={{marginLeft: 40}}>
@@ -166,7 +183,7 @@ export function Phase({ageAtStart, ageAtEnd, assetAtStart, ageAtStartEditable, a
                   <TableCell align="right">
                     <input value={
                       // @ts-ignore
-                      data[item.key]
+                      item.value
                     }
                            disabled={item.disabled}
                            onChange={v => update(item.key, v.target.value)}

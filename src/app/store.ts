@@ -1,5 +1,6 @@
 import {Action, configureStore, ThunkAction} from '@reduxjs/toolkit';
 import counterReducer from '../features/counter/counterSlice';
+import fireReducer from '../features/fire/fireSlice';
 import {createLogger} from "redux-logger";
 import {createBrowserHistory} from "history";
 import {connectRouter, routerMiddleware} from "connected-react-router";
@@ -14,6 +15,7 @@ export const history = createBrowserHistory();
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
+    fire: fireReducer,
     // @ts-ignore  （toolkit上Reducer<State, AnyAction>のような汎用的な型にしないといけないみたいだけど無視
     router: connectRouter(history),
   },

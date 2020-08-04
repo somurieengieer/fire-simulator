@@ -1,6 +1,8 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
-import {Phase, PhaseProps} from "../molecules/Phase";
+import {Phase, PhaseClass, PhaseData} from "../molecules/Phase";
+import {useDispatch, useSelector} from "react-redux";
+import {selectPhases, updatePhases} from "../../features/fire/fireSlice";
 
 const useStyles = makeStyles({
   table: {
@@ -14,23 +16,25 @@ const useStyles = makeStyles({
 export function FirePage() {
 
   const classes = useStyles();
+  const dispatch = useDispatch();
 
-  const [phaseOverviewData, setPhaseOverviewData] = useState<PhaseProps>(
-    {
-      ageAtStart: 32,
-      ageAtEnd: 60,
-      assetAtStart: 300,
-      ageAtStartEditable: true,
-      assetAtStartEditable: true,
+  const selectedPhases = useSelector(selectPhases)
+
+  const updatePhase = (index: number) =>
+    (updatedPhase: PhaseData): void => {
+
+      const newPhases = JSON.parse(JSON.stringify(selectedPhases))
+      newPhases[index] = updatedPhase
+      dispatch(updatePhases(newPhases))
     }
-  )
 
   return (
     <>
-        <Phase ageAtStart={32} ageAtEnd={60} assetAtStart={600}
-               ageAtStartEditable={true}
-               assetAtStartEditable={true}
+      {selectedPhases.map((phase: PhaseData, i: number) => (
+        <Phase data={new PhaseClass(phase)}
+               setData={updatePhase(i)}
         />
+        ))}
     </>
   );
 }
