@@ -79,15 +79,12 @@ export function Phase({operationPeriod}: PhaseProps) {
   return (
     <>
         <Grid container spacing={2}>
-          <Grid item xs={3} >
-            収入
-          </Grid>
           <Grid item xs={9}>
             <TableContainer component={Paper}>
               <Table className={classes.table} aria-label="simple table">
                 <TableHead>
                   <TableRow>
-                    <TableCell colSpan={2}>給与所得or事業所得</TableCell>
+                    <TableCell colSpan={2}>収入</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -98,7 +95,7 @@ export function Phase({operationPeriod}: PhaseProps) {
                       </TableCell>
                       <TableCell align="right">
                         <input value={data.income}
-                               onChange={v => update('income', v)}
+                               onChange={v => update('income', v.target.value)}
                         />
                       </TableCell>
                     </TableRow>
@@ -110,22 +107,19 @@ export function Phase({operationPeriod}: PhaseProps) {
         </Grid>
 
         <Grid container spacing={2}>
-          <Grid item xs={3}>
-            支出
-          </Grid>
           <Grid item xs={9}>
             <TableContainer component={Paper}>
               <Table className={classes.table} aria-label="simple table">
                 <TableHead>
                   <TableRow>
-                    <TableCell colSpan={2}>支出合計額</TableCell>
+                    <TableCell colSpan={2}>支出</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {/*{rows.map((row) => (*/}
                   <TableRow key={'test'}>
                     <TableCell component="th" scope="row">
-                      内訳（テキストボックス）
+                      支出総額（内訳を入力できるよう追って対応）
                     </TableCell>
                     <TableCell align="right">テキストボックス</TableCell>
                   </TableRow>
@@ -137,15 +131,12 @@ export function Phase({operationPeriod}: PhaseProps) {
         </Grid>
 
         <Grid container spacing={2}>
-          <Grid item xs={3}>
-            資産運用
-          </Grid>
           <Grid item xs={9}>
             <TableContainer component={Paper}>
               <Table className={classes.table} aria-label="simple table">
                 <TableHead>
                   <TableRow>
-                    <TableCell colSpan={2}>開始時資産</TableCell>
+                    <TableCell colSpan={2}>資産運用</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
