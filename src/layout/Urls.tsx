@@ -1,5 +1,5 @@
 export const myUrl = {
-  topPage: '/',
+  top: '/',
 
   fukuri: '/fukuri',
   fire: '/fire',

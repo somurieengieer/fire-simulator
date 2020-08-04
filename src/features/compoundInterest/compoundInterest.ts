@@ -1,8 +1,8 @@
 // 複利の計算
 
 export interface CompoundInterestProps {
-  presentAmount?: number,
-  reserveAmount: number,
+  presentAmount?: number, //開始時資産
+  reserveAmount: number, // 毎年加算する金額
   reserveYears: number,
   annualInterest: number, // 5%の場合5が入る
 }
