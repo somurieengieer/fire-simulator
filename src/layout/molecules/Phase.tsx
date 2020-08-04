@@ -55,9 +55,6 @@ export function Phase({ageAtStart, ageAtEnd, assetAtStart}: PhaseProps) {
     console.log('same? : ',Object.is(data, newData))
 
     setData(newData)
-
-    // data.assetAtEnd=2222
-    // setData(data)
   }
 
   const calcAssetAtEnd = (): number => {
@@ -83,6 +80,12 @@ export function Phase({ageAtStart, ageAtEnd, assetAtStart}: PhaseProps) {
       calc()
     }
   }, [data])
+
+  const operationItems = [
+    {label: '開始時資産', key: 'assetAtStart', disabled: true },
+    {label: 'リターン', key: 'annualInterest', disabled: false },
+    {label: '終了時資産', key: 'assetAtEnd', disabled: true },
+    ]
 
   return (
     <>
@@ -155,38 +158,22 @@ export function Phase({ageAtStart, ageAtEnd, assetAtStart}: PhaseProps) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {/*{rows.map((row) => (*/}
-                  <TableRow key={'test'}>
+                  {operationItems.map((item) => (
+                  <TableRow key={item.label}>
                     <TableCell component="th" scope="row">
-                      開始時資産
+                      {item.label}
                     </TableCell>
                     <TableCell align="right">
-                      <input value={data.assetAtStart}
-                             onChange={v => update('assetAtStart', v.target.value)}
+                      <input value={
+                        // @ts-ignore
+                        data[item.key]
+                      }
+                             disabled={item.disabled}
+                             onChange={v => update(item.key, v.target.value)}
                       />
                     </TableCell>
                   </TableRow>
-                  <TableRow key={'test'}>
-                    <TableCell component="th" scope="row">
-                      リターン
-                    </TableCell>
-                    <TableCell align="right">
-                      <input value={data.annualInterest}
-                             onChange={v => update('annualInterest', v.target.value)}
-                      />
-                    </TableCell>
-                  </TableRow>
-                  <TableRow key={'test'}>
-                    <TableCell component="th" scope="row">
-                      終了時資産
-                    </TableCell>
-                    <TableCell align="right">
-                      <input value={data.assetAtEnd}
-                             onChange={v => update('assetAtEnd', v.target.value)}
-                      />
-                    </TableCell>
-                  </TableRow>
-                  {/*))}*/}
+                  ))}
                 </TableBody>
               </Table>
             </TableContainer>
