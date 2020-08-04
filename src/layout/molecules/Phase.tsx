@@ -23,14 +23,16 @@ function calcAssetAtEndWithoutOperation(data: PhaseData): number {
   return data.assetAtStart + (data.income - data.expense) * data.operationPeriod
 }
 
-interface PhaseProps {
+export interface PhaseProps {
   ageAtStart: number, // フェーズ開始時年齢
   ageAtEnd: number,   // フェーズ終了時年齢
   assetAtStart: number, // 開始時資産
+  ageAtStartEditable: boolean,
+  assetAtStartEditable: boolean,
 }
 
 // 複利計算ページ
-export function Phase({ageAtStart, ageAtEnd, assetAtStart}: PhaseProps) {
+export function Phase({ageAtStart, ageAtEnd, assetAtStart, ageAtStartEditable, assetAtStartEditable}: PhaseProps) {
 
   const classes = useStyles();
   const operationPeriod = ageAtEnd - ageAtStart + 1
