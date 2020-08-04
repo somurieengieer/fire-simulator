@@ -82,18 +82,6 @@ export function Phase({data, setData}: PhaseProps) {
     setData(newData)
   }
 
-  // const calc = () => {
-    // assetAtEndの更新
-    // const assetAtEnd = data.assetAtEnd()
-    // update('assetAtEnd', assetAtEnd)
-  // }
-
-  // useEffect(() => {
-  //   if (data.assetAtEnd !== data.assetAtEnd()) {
-  //     calc()
-  //   }
-  // }, [data])
-
   const operationItems = [
     {label: '開始時資産', value: data.assetAtStart, key: 'assetAtStart', disabled: true },
     {label: 'リターン', value: data.annualInterest, key: 'annualInterest', disabled: false },
