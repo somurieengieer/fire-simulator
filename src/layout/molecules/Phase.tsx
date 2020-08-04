@@ -83,9 +83,13 @@ export function Phase({ageAtStart, ageAtEnd, assetAtStart}: PhaseProps) {
 
   return (
     <>
-      <Grid>
-        <div>{ageAtStart}歳〜{ageAtEnd}歳</div>
+      <Paper>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          {ageAtStart}歳〜{ageAtEnd}歳
+        </Grid>
       </Grid>
+      <Grid  style={{marginLeft: 40}}>
       <Grid container spacing={2}>
         <Grid item xs={9}>
           <TableContainer component={Paper}>
@@ -173,6 +177,8 @@ export function Phase({ageAtStart, ageAtEnd, assetAtStart}: PhaseProps) {
           </TableContainer>
         </Grid>
       </Grid>
+      </Grid>
+      </Paper>
     </>
   );
 }

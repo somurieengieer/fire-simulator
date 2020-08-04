@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import {Paper} from "@material-ui/core";
 import {
   calcCompoundInterestResult,
   CompoundInterestProps,
@@ -32,9 +31,7 @@ export function FirePage() {
 
   return (
     <>
-      <Paper>
         <Phase ageAtStart={32} ageAtEnd={60} assetAtStart={600} />
-      </Paper>
     </>
   );
 }
