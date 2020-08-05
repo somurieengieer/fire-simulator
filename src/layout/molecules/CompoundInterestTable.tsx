@@ -69,7 +69,7 @@ function CompoundInterestCommonTable({label, yearPostWord, result}: CompoundInte
               <TableCell component="th" scope="row">
                 {interestByYear.year}{yearPostWord}
               </TableCell>
-              <TableCell align="right">{interestByYear.amount.toFixed(0)}</TableCell>
+              <TableCell align="right">{Number(interestByYear.amount).toFixed(0)}</TableCell>
             </TableRow>
           ))}
         </TableBody>

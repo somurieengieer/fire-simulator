@@ -10,14 +10,14 @@ const useStyles = makeStyles({
 });
 
 export interface PhaseData {
-  ageAtStart: number, // フェーズ開始時年齢
-  ageAtEnd: number,   // フェーズ終了時年齢
+  ageAtStart?: number, // フェーズ開始時年齢
+  ageAtEnd?: number,   // フェーズ終了時年齢
   ageAtStartEditable: boolean,
   assetAtStartEditable: boolean,
-  income: number, // 収入
-  expense: number, // 支出
-  assetAtStart: number, // 開始時資産
-  annualInterest: number, // 年利
+  income?: number, // 収入
+  expense?: number, // 支出
+  assetAtStart?: number, // 開始時資産
+  annualInterest?: number, // 年利
   // assetAtEnd(): number, // 終了時資産
 }
 
@@ -45,7 +45,7 @@ export class PhaseClass implements PhaseData {
   }
 
   assetAtEnd(): number { // 終了時資産
-    return this.compoundInterestResult().rowByYear.slice(-1)[0].amount
+    return this.compoundInterestResult().rowByYear.slice(-1)[0]?.amount
   }
 
   compoundInterestResult(): CompoundInterestResult {
@@ -78,7 +78,7 @@ export function Phase({data, setData}: PhaseProps) {
   }
 
   const operationItems = [
-    {label: '開始時資産', value: data.assetAtStart, key: 'assetAtStart', disabled: true },
+    {label: '開始時資産', value: data.assetAtStart, key: 'assetAtStart', disabled: !data.assetAtStartEditable },
     {label: 'リターン', value: data.annualInterest, key: 'annualInterest', disabled: false },
     {label: '終了時資産', value: data.assetAtEnd(), key: 'assetAtEnd()', disabled: true },
     ]
@@ -90,6 +90,7 @@ export function Phase({data, setData}: PhaseProps) {
         <Grid item xs={12}>
           <input value={data.ageAtStart}
                  onChange={v => update('ageAtStart', v.target.value)}
+                 disabled={!data.ageAtStartEditable}
                  size={3}
           />
           歳〜
@@ -177,6 +178,7 @@ export function Phase({data, setData}: PhaseProps) {
                       // @ts-ignore
                       item.value
                     }
+                           type={'number'}
                            disabled={item.disabled}
                            onChange={v => update(item.key, v.target.value)}
                     />
