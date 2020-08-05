@@ -6,8 +6,8 @@ import {
   CompoundInterestResult
 } from "../../features/compoundInterest/compoundInterest";
 import {makeStyles} from "@material-ui/core/styles";
-import {CompoundInterestTable} from "../molecules/CompoundInterestTable";
 import {JustifyCenterBox} from "../atoms/JustifyCenterBox";
+import {CompoundInterestTable} from "../molecules/CompoundInterestTable";
 
 const useStyles = makeStyles({
   table: {
@@ -60,7 +60,7 @@ export function CompoundInterestPage() {
 
       {compoundInterestResult && (
         <JustifyCenterBox width={'250px'}>
-          <CompoundInterestTable result={compoundInterestResult.result} />
+          <CompoundInterestTable result={compoundInterestResult} />
         </JustifyCenterBox>
       )}
     </>

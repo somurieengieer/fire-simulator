@@ -7,13 +7,16 @@ export interface CompoundInterestProps {
   annualInterest: number, // 5%の場合5が入る
 }
 
-interface CompoundInterestByYear {
+export interface CompoundInterestByYear {
   year: number, // 何年目か。0〜reserveYearsを表す
   amount: number,
 }
 
 export interface CompoundInterestResult {
-  result: CompoundInterestByYear[],
+  rowByYear: CompoundInterestByYear[],
+}
+export function addYearToCompoundInterestResult(result: CompoundInterestResult, addYear: number): CompoundInterestResult {
+  return { rowByYear: result.rowByYear?.map(r => {return {year: r.year + addYear, amount: r.amount}})}
 }
 
 // 計算方法
@@ -29,5 +32,5 @@ export function calcCompoundInterestResult(
     result.push({year: y, amount: present});
     present = (present * (1.0 + props.annualInterest/100) + props.reserveAmount)
   }
-  return {result: result}
+  return {rowByYear: result}
 }

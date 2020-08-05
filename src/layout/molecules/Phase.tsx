@@ -1,6 +1,6 @@
 import React from 'react';
 import {Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
-import {calcCompoundInterestResult} from "../../features/compoundInterest/compoundInterest";
+import {calcCompoundInterestResult, CompoundInterestResult} from "../../features/compoundInterest/compoundInterest";
 import {makeStyles} from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
@@ -45,22 +45,17 @@ export class PhaseClass implements PhaseData {
   }
 
   assetAtEnd(): number { // 終了時資産
+    return this.compoundInterestResult().rowByYear.slice(-1)[0].amount
+  }
+
+  compoundInterestResult(): CompoundInterestResult {
     return calcCompoundInterestResult({
       presentAmount: this.assetAtStart,
       reserveAmount: this.profitByYear(),
       reserveYears: this.operationPeriod(),
       annualInterest: this.annualInterest,
-    }).result.slice(-1)[0].amount
+    })
   }
-
-  // compoundInterestResult(): number {
-  //   return calcCompoundInterestResult({
-  //     presentAmount: this.assetAtStart,
-  //     reserveAmount: this.profitByYear(),
-  //     reserveYears: this.operationPeriod(),
-  //     annualInterest: this.annualInterest,
-  //   }).result.slice(-1)[0].amount
-  // }
 }
 
 
