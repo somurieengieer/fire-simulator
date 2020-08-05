@@ -88,7 +88,16 @@ export function Phase({data, setData}: PhaseProps) {
       <Paper>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          {data.ageAtStart}歳〜{data.ageAtEnd}歳
+          <input value={data.ageAtStart}
+                 onChange={v => update('ageAtStart', v.target.value)}
+                 size={3}
+          />
+          歳〜
+          <input value={data.ageAtEnd}
+                 onChange={v => update('ageAtEnd', v.target.value)}
+                 size={3}
+          />
+          歳
         </Grid>
       </Grid>
       <Grid  style={{marginLeft: 40}}>
