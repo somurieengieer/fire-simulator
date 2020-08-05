@@ -80,7 +80,7 @@ export function Phase({data, setData}: PhaseProps) {
   const operationItems = [
     {label: '開始時資産', value: data.assetAtStart, key: 'assetAtStart', disabled: !data.assetAtStartEditable },
     {label: 'リターン', value: data.annualInterest, key: 'annualInterest', disabled: false },
-    {label: '終了時資産', value: data.assetAtEnd(), key: 'assetAtEnd()', disabled: true },
+    {label: '終了時資産', value: data.assetAtEnd()?.toFixed(0), key: 'assetAtEnd()', disabled: true },
     ]
 
   return (
