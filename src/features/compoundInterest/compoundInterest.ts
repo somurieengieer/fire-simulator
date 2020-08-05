@@ -16,15 +16,13 @@ export interface CompoundInterestResult {
   rowByYear: CompoundInterestByYear[],
 }
 export function addYearToCompoundInterestResult(result: CompoundInterestResult, addYear: number): CompoundInterestResult {
-  return { rowByYear: result.rowByYear?.map(r => {return {year: r.year + addYear, amount: r.amount}})}
+  return { rowByYear: result.rowByYear?.map(r => {return {year: r.year + Number(addYear), amount: r.amount}})}
 }
 
 // 計算方法
 // ・積立金額は年末に試算に追加される計算
 export function calcCompoundInterestResult(
   props: CompoundInterestProps): CompoundInterestResult {
-
-  console.log('props', props)
 
   let present = props.presentAmount || 0;
   let result: CompoundInterestByYear[] = [];

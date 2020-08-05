@@ -18,7 +18,9 @@ interface CompoundInterestTableByAgeProps {
 }
 
 export function CompoundInterestTableByAge({result, startAge}: CompoundInterestTableByAgeProps) {
+  console.log('result at CompoundInterestTableByAge', result)
   const resultCalculatedByAge = addYearToCompoundInterestResult(result, startAge)
+  console.log('resultCalculatedByAge at CompoundInterestTableByAge', resultCalculatedByAge)
   return (<CompoundInterestCommonTable
     label='年齢'
     yearPostWord='歳'
