@@ -5,6 +5,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import {useDispatch, useSelector} from "react-redux";
 import {selectPhases, updatePhases} from "../../features/fire/fireSlice";
 import {theme} from "../materialui/theme";
+import {TableRowSet} from "./PhaseTableItems";
 
 const useStyles = makeStyles({
   table: {
@@ -87,7 +88,6 @@ export class PhasesClass {
     })
     return results
   }
-
 }
 
 function TableHeaderSet({title, colSpan, cssClass}: {title: string, colSpan: number, cssClass: any}) {
@@ -170,55 +170,35 @@ export function PhasesTable() {
                     </TableBody>
                     <TableHeaderSet title={'収入'} colSpan={titleColSpan()} cssClass={classes.tableHeadRow} />
                     <TableBody>
-                        <TableRow>
-                          <TableCell className={classes.tableCellLabel} component="th" scope="row">
-                            手取り
-                          </TableCell>
-                          {selectedPhases.map((phase: PhaseClass, i: number) => (
-                          <TableCell className={classes.tableCell} align="right">
-                            <input value={phase.income}
-                                   onChange={v => update(i, 'income', v.target.value)}
-                            />
-                          </TableCell>
-                          ))}
-                        </TableRow>
+                      <TableRowSet rowLabel={'手取り'}
+                                   phaseClasses={selectedPhases}
+                                   valueCallback={p => p.income}
+                                   onChange={(newValue, i) => update(i, 'income', newValue)} />
                     </TableBody>
                     <TableHeaderSet title={'支出'} colSpan={titleColSpan()} cssClass={classes.tableHeadRow} />
                     <TableBody>
-                      <TableRow>
-                        <TableCell className={classes.tableCellLabel} component="th" scope="row">
-                          支出総額
-                        </TableCell>
-                        {selectedPhases.map((phase: PhaseClass, i: number) => (
-                          <TableCell className={classes.tableCell} align="right">
-                          <input value={phase.expense}
-                                 onChange={v => update(i, 'expense', v.target.value)}
-                          />
-                        </TableCell>
-                          ))}
-                      </TableRow>
+                      <TableRowSet rowLabel={'支出総額'}
+                                   phaseClasses={selectedPhases}
+                                   valueCallback={p => p.expense}
+                                   onChange={(newValue, i) => update(i, 'expense', newValue)} />
                     </TableBody>
                     <TableHeaderSet title={'資産運用'} colSpan={titleColSpan()} cssClass={classes.tableHeadRow} />
                     <TableBody>
-                      {operationItems.map((item) => (
-                        <TableRow key={item.label}>
-                          <TableCell className={classes.tableCellLabel} component="th" scope="row">
-                            {item.label}
-                          </TableCell>
-                          {selectedPhases.map((phase: PhaseClass, i: number) => (
-                          <TableCell className={classes.tableCell} align="right">
-                            <input value={
-                              // @ts-ignore
-                              item.value(phase)
-                            }
-                                   type={'number'}
-                                   disabled={item.disabled(phase)}
-                                   onChange={v => update(i, item.key, v.target.value)}
-                            />
-                          </TableCell>
-                            ))}
-                        </TableRow>
-                      ))}
+                      <TableRowSet rowLabel={'開始時資産'}
+                                   phaseClasses={selectedPhases}
+                                   valueCallback={p => p.assetAtStart}
+                                   onChange={(newValue, i) => update(i, 'assetAtStart', newValue)}
+                                   disabled={(phase: PhaseClass) => !phase.assetAtStartEditable} />
+                      <TableRowSet rowLabel={'リターン'}
+                                   phaseClasses={selectedPhases}
+                                   valueCallback={p => p.annualInterest}
+                                   onChange={(newValue, i) => update(i, 'annualInterest', newValue)}
+                                   disabled={(phase: PhaseClass) => false} />
+                      <TableRowSet rowLabel={'終了時資産'}
+                                   phaseClasses={selectedPhases}
+                                   valueCallback={p => p.assetAtEnd()?.toFixed(0)}
+                                   onChange={(newValue, i) => update(i, 'assetAtEnd()', newValue)}
+                                   disabled={(phase: PhaseClass) => true} />
                     </TableBody>
                 </Table>
               </TableContainer>
