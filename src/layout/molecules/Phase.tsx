@@ -90,6 +90,15 @@ export class PhasesClass {
 
 }
 
+function TableHeaderSet({title, colSpan, cssClass}: {title: string, colSpan: number, cssClass: any}) {
+  return (
+    <TableHead>
+      <TableRow className={cssClass}>
+        <TableCell colSpan={colSpan}>{title}</TableCell>
+      </TableRow>
+    </TableHead>
+  )
+}
 
 // フェーズ表示
 export function PhasesTable() {
@@ -125,11 +134,7 @@ export function PhasesTable() {
               <Grid item xs={9}>
                 <TableContainer component={Paper} >
                   <Table className={classes.table} aria-label="simple table">
-                    <TableHead>
-                      <TableRow className={classes.tableHeadRow}>
-                        <TableCell colSpan={titleColSpan()}>年齢</TableCell>
-                      </TableRow>
-                    </TableHead>
+                    <TableHeaderSet title={'年齢'} colSpan={titleColSpan()} cssClass={classes.tableHeadRow} />
                     <TableBody>
                       <TableRow>
                         <TableCell className={classes.tableCellLabel} component="th" scope="row">
@@ -163,11 +168,7 @@ export function PhasesTable() {
                         ))}
                       </TableRow>
                     </TableBody>
-                    <TableHead>
-                      <TableRow className={classes.tableHeadRow}>
-                        <TableCell colSpan={titleColSpan()}>収入</TableCell>
-                      </TableRow>
-                    </TableHead>
+                    <TableHeaderSet title={'収入'} colSpan={titleColSpan()} cssClass={classes.tableHeadRow} />
                     <TableBody>
                         <TableRow>
                           <TableCell className={classes.tableCellLabel} component="th" scope="row">
@@ -182,11 +183,7 @@ export function PhasesTable() {
                           ))}
                         </TableRow>
                     </TableBody>
-                    <TableHead>
-                      <TableRow className={classes.tableHeadRow}>
-                        <TableCell colSpan={titleColSpan()}>支出</TableCell>
-                      </TableRow>
-                    </TableHead>
+                    <TableHeaderSet title={'支出'} colSpan={titleColSpan()} cssClass={classes.tableHeadRow} />
                     <TableBody>
                       <TableRow>
                         <TableCell className={classes.tableCellLabel} component="th" scope="row">
@@ -201,11 +198,7 @@ export function PhasesTable() {
                           ))}
                       </TableRow>
                     </TableBody>
-                    <TableHead>
-                      <TableRow className={classes.tableHeadRow}>
-                        <TableCell colSpan={titleColSpan()}>資産運用</TableCell>
-                      </TableRow>
-                    </TableHead>
+                    <TableHeaderSet title={'資産運用'} colSpan={titleColSpan()} cssClass={classes.tableHeadRow} />
                     <TableBody>
                       {operationItems.map((item) => (
                         <TableRow key={item.label}>
