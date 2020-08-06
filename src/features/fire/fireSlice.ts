@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../../app/store';
-import {PhaseClass, PhaseData} from "../../layout/molecules/Phase";
+import {PhaseClass, PhaseData, PhasesClass} from "../../layout/molecules/Phase";
 import {CompoundInterestResult} from "../compoundInterest/compoundInterest";
 
 interface FireState {
@@ -40,12 +40,12 @@ const initialState: FireState = {
   hasError: false,
 };
 
-function calcCompoundInterest(state: FireState): CompoundInterestResult {
-  return {
-    rowByYear: state.phases
-      .flatMap(phase => (new PhaseClass(phase)).compoundInterestResult().rowByYear)
-  }
-}
+// function calcCompoundInterest(state: FireState): CompoundInterestResult {
+//   return {
+//     rowByYear: state.phases
+//       .flatMap(phase => (new PhaseClass(phase)).compoundInterestResult().rowByYear)
+//   }
+// }
 
 const updateRelatedThings = (state: FireState): void => {
   state.hasError = hasError(state)
@@ -57,7 +57,7 @@ const updateRelatedThings = (state: FireState): void => {
     state.phases[i].assetAtStart = (new PhaseClass(state.phases[i-1])).assetAtEnd()
     state.phases[i].ageAtStart = state.phases[i-1].ageAtEnd
   }
-  state.compoundInterestResult = calcCompoundInterest(state)
+  state.compoundInterestResult = new PhasesClass(state.phases.map(data => new PhaseClass(data))).compoundInterestResult()
 }
 function hasError(state: FireState): boolean {
   if (state.phases.find(phase => !phase.ageAtStart || !phase.ageAtEnd)) return true

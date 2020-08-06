@@ -60,6 +60,25 @@ export class PhaseClass implements PhaseData {
   }
 }
 
+export class PhasesClass {
+  phases: PhaseClass[]
+  constructor(phases: PhaseClass[]) {
+    this.phases = phases
+  }
+  compoundInterestResult(): CompoundInterestResult {
+    const results = this.phases.map(phase => phase.compoundInterestResult())
+      .reduce((accum: CompoundInterestResult, cur: CompoundInterestResult) => {
+
+        const lastYear = accum.rowByYear.slice(-1)[0].year
+        const arrangedRows = cur.rowByYear.map(r => Object.assign(r, {year: (r.year + lastYear + 1)}))
+        accum.rowByYear.push(...arrangedRows)
+        return accum
+    })
+    return results
+  }
+
+}
+
 
 // フェーズ表示
 export function PhasesTable() {
