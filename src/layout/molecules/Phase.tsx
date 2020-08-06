@@ -36,7 +36,7 @@ export class PhaseClass implements PhaseData {
     Object.assign(this, data)
   }
   operationPeriod(): number { // 運用期間（年数）
-    return this.ageAtEnd - this.ageAtStart + 1
+    return this.ageAtEnd - this.ageAtStart
   }
 
   assetAtEndWithoutOperation(): number { // 運用しない場合の終了時資産

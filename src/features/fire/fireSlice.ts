@@ -55,7 +55,7 @@ const updateRelatedThings = (state: FireState): void => {
 
   for (let i = 1; i < state.phases.length; i++) {
     state.phases[i].assetAtStart = (new PhaseClass(state.phases[i-1])).assetAtEnd()
-    state.phases[i].ageAtStart = state.phases[i-1].ageAtEnd
+    state.phases[i].ageAtStart = Number(state.phases[i-1].ageAtEnd) + 1
   }
   state.compoundInterestResult = new PhasesClass(state.phases.map(data => new PhaseClass(data))).compoundInterestResult()
 }
