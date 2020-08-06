@@ -40,10 +40,10 @@ const initialState: FireState = {
   hasError: false,
 };
 
-const calcCompoundInterest = (state: FireState): CompoundInterestResult => {
+function calcCompoundInterest(state: FireState): CompoundInterestResult {
   return {
     rowByYear: state.phases
-      .flatMap(phase => new PhaseClass(phase).compoundInterestResult().rowByYear)
+      .flatMap(phase => (new PhaseClass(phase)).compoundInterestResult().rowByYear)
   }
 }
 
@@ -68,11 +68,15 @@ function hasError(state: FireState): boolean {
 }
 
 // 初期化処理（ここに書くのは微妙）
-updateRelatedThings(initialState)
+// updateRelatedThings(initialState)
 
 export const fireSlice = createSlice({
   name: 'fire',
-  initialState,
+  initialState: (function() {
+    // TODO: 初期データ生成タイミングでupdateしておきたい（複利計算等）
+    // updateRelatedThings(initialState)
+    return initialState
+  })(),
   reducers: {
     updatePhases: (state, action: PayloadAction<PhaseData[]>) => {
       state.phases = action.payload
