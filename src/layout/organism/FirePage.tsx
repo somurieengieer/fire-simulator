@@ -2,10 +2,17 @@ import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {PhasesTable} from "../molecules/Phase";
 import {useDispatch, useSelector} from "react-redux";
-import {addPhase, selectCompoundInterestResult, selectHasError, selectPhases} from "../../features/fire/fireSlice";
+import {
+  addPhase,
+  selectCompoundInterestResult,
+  selectHasError,
+  selectPhases,
+  updatePhases
+} from "../../features/fire/fireSlice";
 import {Button, Grid, Typography} from "@material-ui/core";
 import {CompoundInterestTableByAge} from "../molecules/CompoundInterestTable";
 import {JustifyCenterBox} from "../atoms/JustifyCenterBox";
+import {initialStateOfNormalSalaryMan} from "../../features/fire/fireInitialData";
 
 const useStyles = makeStyles({
   table: {
@@ -29,6 +36,10 @@ export function FirePage() {
     <>
       <Grid container spacing={2}>
         <Grid item xs={9}>
+          <Button variant="contained" color="primary"
+                  onClick={() => dispatch(updatePhases(initialStateOfNormalSalaryMan))}>
+            テンプレート（平均的サラリーマン）
+          </Button>
           {selectedHasError && (<Typography>エラーあり！</Typography>)}
           <PhasesTable />
           <Button variant="contained" color="primary" onClick={() => dispatch(addPhase())}>
