@@ -4,11 +4,19 @@ import {calcCompoundInterestResult, CompoundInterestResult} from "../../features
 import {makeStyles} from "@material-ui/core/styles";
 import {useDispatch, useSelector} from "react-redux";
 import {selectPhases, updatePhases} from "../../features/fire/fireSlice";
+import {theme} from "../materialui/theme";
 
 const useStyles = makeStyles({
   table: {
     // width: 650,
   },
+  tableCellLabel: {
+    minWidth: 200,
+    backgroundColor: theme.palette.primary.main,
+  },
+  tableCell: {
+    minWidth: 200,
+  }
 });
 
 export interface PhaseData {
@@ -107,22 +115,56 @@ export function PhasesTable() {
 
   return (
     <>
-      <Paper>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          {/*<input value={data.ageAtStart}*/}
-          {/*       onChange={v => update('ageAtStart', v.target.value)}*/}
-          {/*       disabled={!data.ageAtStartEditable}*/}
-          {/*       size={3}*/}
-          {/*/>*/}
-          {/*歳〜*/}
-          {/*<input value={data.ageAtEnd}*/}
-          {/*       onChange={v => update('ageAtEnd', v.target.value)}*/}
-          {/*       size={3}*/}
-          {/*/>*/}
-          {/*歳*/}
-        </Grid>
-      </Grid>
+      <div style={{width: '100%'}}>
+      <Paper style={{width: '100%'}}>
+          <Grid  style={{marginLeft: 40}}>
+            <Grid container spacing={2}>
+              <Grid item xs={9}>
+                <TableContainer component={Paper} >
+                  <Table className={classes.table} aria-label="simple table">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell colSpan={titleColSpan()}>年齢</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      <TableRow key={'test'}>
+                        <TableCell className={classes.tableCellLabel} component="th" scope="row">
+                          年齢
+                        </TableCell>
+                        {selectedPhases.map((phase: PhaseClass, i: number) => (
+                          <TableCell className={classes.tableCell} align="right">
+                            <input value={phase.ageAtStart}
+                                   onChange={v => update(i, 'ageAtStart', v.target.value)}
+                                   disabled={!phase.ageAtStartEditable}
+                                   size={3}
+                            />
+                            歳〜
+                            <input value={phase.ageAtEnd}
+                                   onChange={v => update(i, 'ageAtEnd', v.target.value)}
+                                   size={3}
+                            />
+                            歳
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                      <TableRow key={'test'}>
+                        <TableCell className={classes.tableCellLabel} component="th" scope="row">
+                          メモ
+                        </TableCell>
+                        {selectedPhases.map((phase: PhaseClass, i: number) => (
+                          <TableCell className={classes.tableCell} align="right">
+                            <input
+                            />
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Grid>
+            </Grid>
+          </Grid>
         <Grid  style={{marginLeft: 40}}>
           <Grid container spacing={2}>
             <Grid item xs={9}>
@@ -130,144 +172,97 @@ export function PhasesTable() {
                 <Table className={classes.table} aria-label="simple table">
                   <TableHead>
                     <TableRow>
-                      <TableCell colSpan={titleColSpan()}>年齢</TableCell>
+                      <TableCell colSpan={titleColSpan()}>収入</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    <TableRow key={'test'}>
-                      <TableCell component="th" scope="row">
-                        年齢
-                      </TableCell>
-                      {selectedPhases.map((phase: PhaseClass, i: number) => (
-                        <TableCell align="right">
-                          <input value={phase.ageAtStart}
-                                 onChange={v => update(i, 'ageAtStart', v.target.value)}
-                                 disabled={!phase.ageAtStartEditable}
-                                 size={3}
-                          />
-                          歳〜
-                          <input value={phase.ageAtEnd}
-                                 onChange={v => update(i, 'ageAtEnd', v.target.value)}
-                                 size={3}
-                          />
-                          歳
+                    {/*{rows.map((row) => (*/}
+                      <TableRow key={'test'}>
+                        <TableCell className={classes.tableCellLabel} component="th" scope="row">
+                          手取り
                         </TableCell>
-                      ))}
-                    </TableRow>
-                    <TableRow key={'test'}>
-                      <TableCell component="th" scope="row">
-                        メモ
-                      </TableCell>
-                      {selectedPhases.map((phase: PhaseClass, i: number) => (
-                        <TableCell align="right">
-                          <input
+                        {selectedPhases.map((phase: PhaseClass, i: number) => (
+                        <TableCell className={classes.tableCell} align="right">
+                          <input value={phase.income}
+                                 onChange={v => update(i, 'income', v.target.value)}
                           />
                         </TableCell>
-                      ))}
+                        ))}
+                      </TableRow>
+                    {/*))}*/}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={2}>
+            <Grid item xs={9}>
+              <TableContainer component={Paper}>
+                <Table className={classes.table} aria-label="simple table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell colSpan={2}>支出</TableCell>
                     </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {/*{rows.map((row) => (*/}
+                    <TableRow key={'test'}>
+                      <TableCell className={classes.tableCellLabel} component="th" scope="row">
+                        支出総額
+                      </TableCell>
+                      {selectedPhases.map((phase: PhaseClass, i: number) => (
+                        <TableCell className={classes.tableCell} align="right">
+                        <input value={phase.expense}
+                               onChange={v => update(i, 'expense', v.target.value)}
+                        />
+                      </TableCell>
+                        ))}
+                    </TableRow>
+                    {/*))}*/}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={2}>
+            <Grid item xs={9}>
+              <TableContainer component={Paper}>
+                <Table className={classes.table} aria-label="simple table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell colSpan={titleColSpan()}>資産運用</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {operationItems.map((item) => (
+                    <TableRow key={item.label}>
+                      <TableCell className={classes.tableCellLabel} component="th" scope="row">
+                        {item.label}
+                      </TableCell>
+                      {selectedPhases.map((phase: PhaseClass, i: number) => (
+                      <TableCell className={classes.tableCell} align="right">
+                        <input value={
+                          // @ts-ignore
+                          item.value(phase)
+                        }
+                               type={'number'}
+                               disabled={item.disabled(phase)}
+                               onChange={v => update(i, item.key, v.target.value)}
+                        />
+                      </TableCell>
+                        ))}
+                    </TableRow>
+                    ))}
                   </TableBody>
                 </Table>
               </TableContainer>
             </Grid>
           </Grid>
         </Grid>
-      <Grid  style={{marginLeft: 40}}>
-        <Grid container spacing={2}>
-          <Grid item xs={9}>
-            <TableContainer component={Paper}>
-              <Table className={classes.table} aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell colSpan={titleColSpan()}>収入</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {/*{rows.map((row) => (*/}
-                    <TableRow key={'test'}>
-                      <TableCell component="th" scope="row">
-                        手取り
-                      </TableCell>
-                      {selectedPhases.map((phase: PhaseClass, i: number) => (
-                      <TableCell align="right">
-                        <input value={phase.income}
-                               onChange={v => update(i, 'income', v.target.value)}
-                        />
-                      </TableCell>
-                      ))}
-                    </TableRow>
-                  {/*))}*/}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Grid>
-        </Grid>
-
-        <Grid container spacing={2}>
-          <Grid item xs={9}>
-            <TableContainer component={Paper}>
-              <Table className={classes.table} aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell colSpan={2}>支出</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {/*{rows.map((row) => (*/}
-                  <TableRow key={'test'}>
-                    <TableCell component="th" scope="row">
-                      支出総額
-                    </TableCell>
-                    {selectedPhases.map((phase: PhaseClass, i: number) => (
-                      <TableCell align="right">
-                      <input value={phase.expense}
-                             onChange={v => update(i, 'expense', v.target.value)}
-                      />
-                    </TableCell>
-                      ))}
-                  </TableRow>
-                  {/*))}*/}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Grid>
-        </Grid>
-
-        <Grid container spacing={2}>
-          <Grid item xs={9}>
-            <TableContainer component={Paper}>
-              <Table className={classes.table} aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell colSpan={titleColSpan()}>資産運用</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {operationItems.map((item) => (
-                  <TableRow key={item.label}>
-                    <TableCell component="th" scope="row">
-                      {item.label}
-                    </TableCell>
-                    {selectedPhases.map((phase: PhaseClass, i: number) => (
-                    <TableCell align="right">
-                      <input value={
-                        // @ts-ignore
-                        item.value(phase)
-                      }
-                             type={'number'}
-                             disabled={item.disabled(phase)}
-                             onChange={v => update(i, item.key, v.target.value)}
-                      />
-                    </TableCell>
-                      ))}
-                  </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Grid>
-        </Grid>
-      </Grid>
       </Paper>
+      </div>
     </>
   );
 }
