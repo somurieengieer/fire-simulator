@@ -1,11 +1,12 @@
 import React from 'react';
-import {Grid, Paper, Table, TableBody, TableCell, TableContainer, TableRow} from "@material-ui/core";
+import {Button, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableRow} from "@material-ui/core";
 import {calcCompoundInterestResult, CompoundInterestResult} from "../../features/compoundInterest/compoundInterest";
 import {makeStyles} from "@material-ui/core/styles";
 import {useDispatch, useSelector} from "react-redux";
-import {selectPhases, updatePhases} from "../../features/fire/fireSlice";
+import {addPhase, selectPhases, updatePhases} from "../../features/fire/fireSlice";
 import {TableHeaderSet, TableRowSet} from "./PhaseTableItems";
 import {theme} from "../materialui/theme";
+import {AlignCenterBox} from "../atoms/alignCenterBox";
 
 const useStyles = makeStyles({
   table: {
@@ -179,6 +180,13 @@ export function PhasesTable() {
                     </TableBody>
                 </Table>
               </TableContainer>
+            </Grid>
+            <Grid item xs={3}>
+              <AlignCenterBox>
+                <Button variant="contained" color="primary" onClick={() => dispatch(addPhase())}>
+                  フェーズを追加
+                </Button>
+              </AlignCenterBox>
             </Grid>
           </Grid>
         </Grid>
