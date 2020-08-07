@@ -5,10 +5,15 @@ import {makeStyles} from "@material-ui/core/styles";
 import {useDispatch, useSelector} from "react-redux";
 import {selectPhases, updatePhases} from "../../features/fire/fireSlice";
 import {TableHeaderSet, TableRowSet} from "./PhaseTableItems";
+import {theme} from "../materialui/theme";
 
 const useStyles = makeStyles({
   table: {
     // width: 650,
+  },
+  tableCellLabel: {
+    minWidth: 200,
+    backgroundColor: theme.palette.primary.main,
   },
   tableCell: {
     minWidth: 200,
