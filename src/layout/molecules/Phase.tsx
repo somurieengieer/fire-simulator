@@ -1,26 +1,18 @@
 import React from 'react';
-import {Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
+import {Grid, Paper, Table, TableBody, TableCell, TableContainer, TableRow} from "@material-ui/core";
 import {calcCompoundInterestResult, CompoundInterestResult} from "../../features/compoundInterest/compoundInterest";
 import {makeStyles} from "@material-ui/core/styles";
 import {useDispatch, useSelector} from "react-redux";
 import {selectPhases, updatePhases} from "../../features/fire/fireSlice";
-import {theme} from "../materialui/theme";
-import {TableRowSet} from "./PhaseTableItems";
+import {TableHeaderSet, TableRowSet} from "./PhaseTableItems";
 
 const useStyles = makeStyles({
   table: {
     // width: 650,
   },
-  tableCellLabel: {
-    minWidth: 200,
-    backgroundColor: theme.palette.primary.main,
-  },
   tableCell: {
     minWidth: 200,
   },
-  tableHeadRow: {
-    backgroundColor: theme.palette.secondary.main,
-  }
 });
 
 export interface PhaseData {
@@ -90,16 +82,6 @@ export class PhasesClass {
   }
 }
 
-function TableHeaderSet({title, colSpan, cssClass}: {title: string, colSpan: number, cssClass: any}) {
-  return (
-    <TableHead>
-      <TableRow className={cssClass}>
-        <TableCell colSpan={colSpan}>{title}</TableCell>
-      </TableRow>
-    </TableHead>
-  )
-}
-
 // フェーズ表示
 export function PhasesTable() {
 
@@ -119,12 +101,6 @@ export function PhasesTable() {
 
   const titleColSpan = () => selectedPhases.length + 1
 
-  const operationItems = [
-    {label: '開始時資産', value: (phase: PhaseClass) => phase.assetAtStart, key: 'assetAtStart', disabled: (phase: PhaseClass) => !phase.assetAtStartEditable },
-    {label: 'リターン', value: (phase: PhaseClass) => phase.annualInterest, key: 'annualInterest', disabled: (phase: PhaseClass) => false },
-    {label: '終了時資産', value: (phase: PhaseClass) => phase.assetAtEnd()?.toFixed(0), key: 'assetAtEnd()', disabled: (phase: PhaseClass) => true },
-    ]
-
   return (
     <>
       <div style={{width: '100%'}}>
@@ -134,7 +110,7 @@ export function PhasesTable() {
               <Grid item xs={9}>
                 <TableContainer component={Paper} >
                   <Table className={classes.table} aria-label="simple table">
-                    <TableHeaderSet title={'年齢'} colSpan={titleColSpan()} cssClass={classes.tableHeadRow} />
+                    <TableHeaderSet title={'年齢'} colSpan={titleColSpan()} />
                     <TableBody>
                       <TableRow>
                         <TableCell className={classes.tableCellLabel} component="th" scope="row">
@@ -168,21 +144,21 @@ export function PhasesTable() {
                         ))}
                       </TableRow>
                     </TableBody>
-                    <TableHeaderSet title={'収入'} colSpan={titleColSpan()} cssClass={classes.tableHeadRow} />
+                    <TableHeaderSet title={'収入'} colSpan={titleColSpan()} />
                     <TableBody>
                       <TableRowSet rowLabel={'手取り'}
                                    phaseClasses={selectedPhases}
                                    valueCallback={p => p.income}
                                    onChange={(newValue, i) => update(i, 'income', newValue)} />
                     </TableBody>
-                    <TableHeaderSet title={'支出'} colSpan={titleColSpan()} cssClass={classes.tableHeadRow} />
+                    <TableHeaderSet title={'支出'} colSpan={titleColSpan()} />
                     <TableBody>
                       <TableRowSet rowLabel={'支出総額'}
                                    phaseClasses={selectedPhases}
                                    valueCallback={p => p.expense}
                                    onChange={(newValue, i) => update(i, 'expense', newValue)} />
                     </TableBody>
-                    <TableHeaderSet title={'資産運用'} colSpan={titleColSpan()} cssClass={classes.tableHeadRow} />
+                    <TableHeaderSet title={'資産運用'} colSpan={titleColSpan()} />
                     <TableBody>
                       <TableRowSet rowLabel={'開始時資産'}
                                    phaseClasses={selectedPhases}

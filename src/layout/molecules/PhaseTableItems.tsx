@@ -20,12 +20,12 @@ const useStyles = makeStyles({
   }
 });
 
-export function TableHeaderSet({title, colSpan, cssClass}
-: {title: string, colSpan: number, cssClass: any}) {
+export function TableHeaderSet({title, colSpan}
+: {title: string, colSpan: number}) {
   const classes = useStyles();
   return (
     <TableHead>
-      <TableRow className={cssClass}>
+      <TableRow className={classes.tableHeadRow}>
         <TableCell colSpan={colSpan}>{title}</TableCell>
       </TableRow>
     </TableHead>
