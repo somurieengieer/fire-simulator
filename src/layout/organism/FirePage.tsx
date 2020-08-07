@@ -8,8 +8,10 @@ import {CompoundInterestTableByAge} from "../molecules/CompoundInterestTable";
 import {JustifyCenterBox} from "../atoms/JustifyCenterBox";
 import {
   initialStateOfNormalSalaryMan,
-  initialStateOfNormalSalaryMan3percent
+  initialStateOfNormalSalaryMan3percent,
+  initialStateOfSolidMan
 } from "../../features/fire/fireInitialData";
+import {CompoundInterestChart} from "../atoms/CompoundInterestChart";
 
 const useStyles = makeStyles({
   table: {
@@ -26,7 +28,7 @@ export function FirePage() {
   const dispatch = useDispatch();
 
   const selectedPhases = useSelector(selectPhases)
-  const selectedCompoundInterestResult= useSelector(selectCompoundInterestResult)
+  const selectedCompoundInterestResult = useSelector(selectCompoundInterestResult)
   const selectedHasError = useSelector(selectHasError)
 
   return (
@@ -41,6 +43,10 @@ export function FirePage() {
                   onClick={() => dispatch(updatePhases(initialStateOfNormalSalaryMan3percent()))}>
             テンプレート（平均的サラリーマン3%運用）
           </Button>
+          <Button variant="contained" color="primary"
+                  onClick={() => dispatch(updatePhases(initialStateOfSolidMan()))}>
+            テンプレート（堅実FIRE）
+          </Button>
           {selectedHasError && (<Typography>エラーあり！</Typography>)}
           <PhasesTable />
         </Grid>
@@ -53,6 +59,9 @@ export function FirePage() {
             </JustifyCenterBox>
           )}
         </Grid>
+      </Grid>
+      <Grid>
+        <CompoundInterestChart />
       </Grid>
     </>
   );

@@ -15,6 +15,7 @@
     "@types/react-dom": "^16.9.0",
     "@types/react-redux": "^7.1.7",
     "@types/react-router": "^5.1.8",
+    "@types/recharts": "^1.8.14",
     "@types/redux-logger": "^3.0.8",
     "connected-react-router": "^6.8.0",
     "react": "^16.13.1",
@@ -22,6 +23,7 @@
     "react-redux": "^7.2.0",
     "react-router": "^5.2.0",
     "react-scripts": "3.4.1",
+    "recharts": "^1.8.5",
     "redux-logger": "^3.0.6",
     "typescript": "~3.8.2"
   },

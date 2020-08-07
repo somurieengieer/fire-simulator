@@ -38,4 +38,38 @@ export const initialStateOfNormalSalaryMan = (): PhaseData[] => [
 export const initialStateOfNormalSalaryMan3percent = (): PhaseData[] =>
   initialStateOfNormalSalaryMan().map(v => Object.assign(v, {annualInterest: 3}))
 
+// 堅実FIREプラン
+export const initialStateOfSolidMan = (): PhaseData[] => [
+  {
+    ageAtStart: 32,
+    ageAtEnd: 50,
+    ageAtStartEditable: true,
+    assetAtStartEditable: true,
+    note: '倹約労働',
+    income: 600,
+    expense: 400,
+    assetAtStart: 2000,
+    annualInterest: 3,
+  },
+  {
+    ageAtStart: 51,
+    ageAtEnd: 70,
+    ageAtStartEditable: false,
+    assetAtStartEditable: false,
+    note: '年金受給前生活',
+    income: 0,
+    expense: 300,
+    annualInterest: 3,
+  },
+  {
+    ageAtStart: 71,
+    ageAtEnd: 85,
+    ageAtStartEditable: false,
+    assetAtStartEditable: false,
+    note: '年金受給生活',
+    income: 140,
+    expense: 300,
+    annualInterest: 3,
+  },
+]
 
