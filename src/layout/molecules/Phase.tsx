@@ -81,10 +81,11 @@ export class PhasesClass {
     const results = this.phases.map(phase => phase.compoundInterestResult())
       .reduce((accum: CompoundInterestResult, cur: CompoundInterestResult) => {
 
-        const lastYear = accum.rowByYear.slice(-1)[0].year
+        const lastYear = accum.rowByYear.slice(-2)[0].year
         const arrangedRows = cur.rowByYear.map(r => Object.assign(r, {year: (r.year + lastYear + 1)}))
-        accum.rowByYear.push(...arrangedRows)
-        return accum
+        const newRowByYear = accum.rowByYear.slice(0, -1)
+        newRowByYear.push(...arrangedRows)
+        return {rowByYear: newRowByYear}
     })
     return results
   }

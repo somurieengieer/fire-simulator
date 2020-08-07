@@ -26,7 +26,7 @@ export function calcCompoundInterestResult(
 
   let present = props.presentAmount || 0;
   let result: CompoundInterestByYear[] = [];
-  for (let y = 0; y <= props.reserveYears; y++) {
+  for (let y = 0; y <= props.reserveYears + 1; y++) {
     result.push({year: y, amount: present});
     present = (present * (1.0 + props.annualInterest/100) + props.reserveAmount)
   }

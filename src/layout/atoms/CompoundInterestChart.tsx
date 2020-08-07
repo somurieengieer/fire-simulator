@@ -23,7 +23,7 @@ export function CompoundInterestChart() {
 
   const data = selectedCompoundInterestResult?.rowByYear
     .map((r: CompoundInterestByYear) => {
-      return {name: r.year + selectedPhases?.[0].ageAtStart, uv: r.amount.toFixed(0)}
+      return {name: r.year + selectedPhases?.[0].ageAtStart, p1: r.amount.toFixed(0)}
     })
 
   return (
@@ -41,9 +41,9 @@ export function CompoundInterestChart() {
         <XAxis dataKey="name" />
         <YAxis />
         <Tooltip />
-        <Area type="monotone" dataKey="uv" stackId="1" stroke="#8884d8" fill="#8884d8" />
-        <Area type="monotone" dataKey="pv" stackId="1" stroke="#82ca9d" fill="#82ca9d" />
-        <Area type="monotone" dataKey="amt" stackId="1" stroke="#ffc658" fill="#ffc658" />
+        <Area type="monotone" name='プラン1' dataKey="p1" stackId="1" stroke="#8884d8" fill="#8884d8" />
+        <Area type="monotone" name='プラン2' dataKey="p2" stackId="1" stroke="#82ca9d" fill="#82ca9d" />
+        <Area type="monotone" name='プラン3' dataKey="p3" stackId="1" stroke="#ffc658" fill="#ffc658" />
       </AreaChart>
       )}
     </>
