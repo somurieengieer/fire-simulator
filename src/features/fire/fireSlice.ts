@@ -61,7 +61,7 @@ function hasError(state: FireState): boolean {
   return false
 }
 
-// 初期化処理（ここに書くのは微妙）
+// TODO: 初期化処理（ここに書くのは微妙）
 // updateRelatedThings(initialState)
 
 export const fireSlice = createSlice({
