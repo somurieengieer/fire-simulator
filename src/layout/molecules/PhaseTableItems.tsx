@@ -32,12 +32,14 @@ export function TableHeaderSet({title, colSpan}
   )
 }
 
-export function TableRowSet({rowLabel, phaseClasses, valueCallback, onChange, disabled}
+export function TableRowSet({rowLabel, phaseClasses, valueCallback, onChange, disabled, isTypeString}
 : {rowLabel: string,
   phaseClasses: PhaseClass[],
   valueCallback(phaseClass: PhaseClass): string | number,
   onChange(newValue: string, index: number): void,
-  disabled?(phaseClass: PhaseClass): boolean}) {
+  disabled?(phaseClass: PhaseClass): boolean,
+  isTypeString?: boolean,
+}) {
 
   const showValue = (phase: PhaseClass): string | number => {
     return disabled ? Number(valueCallback(phase))?.toFixed(0) : valueCallback(phase)
@@ -52,6 +54,7 @@ export function TableRowSet({rowLabel, phaseClasses, valueCallback, onChange, di
       {phaseClasses.map((phase: PhaseClass, i: number) => (
         <TableCell className={classes.tableCell} align="right">
           <input value={showValue(phase)}
+                 type={isTypeString ? 'string' : 'number'}
                  onChange={v => onChange(v.target.value, i)}
                  disabled={disabled && disabled(phase)}
           />

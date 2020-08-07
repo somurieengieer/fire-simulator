@@ -40,13 +40,6 @@ const initialState: FireState = {
   hasError: false,
 };
 
-// function calcCompoundInterest(state: FireState): CompoundInterestResult {
-//   return {
-//     rowByYear: state.phases
-//       .flatMap(phase => (new PhaseClass(phase)).compoundInterestResult().rowByYear)
-//   }
-// }
-
 const updateRelatedThings = (state: FireState): void => {
   state.hasError = hasError(state)
   if (state.hasError) {

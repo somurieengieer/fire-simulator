@@ -25,6 +25,7 @@ export interface PhaseData {
   ageAtEnd?: number,   // フェーズ終了時年齢
   ageAtStartEditable: boolean,
   assetAtStartEditable: boolean,
+  note?: string,
   income?: number, // 収入
   expense?: number, // 支出
   assetAtStart?: number, // 開始時資産
@@ -37,6 +38,7 @@ export class PhaseClass implements PhaseData {
   ageAtEnd!: number;
   ageAtStartEditable!: boolean;
   assetAtStartEditable!: boolean;
+  note!: string;
   income!: number;
   expense!: number;
   assetAtStart!: number;
@@ -137,17 +139,11 @@ export function PhasesTable() {
                           </TableCell>
                         ))}
                       </TableRow>
-                      <TableRow>
-                        <TableCell className={classes.tableCellLabel} component="th" scope="row">
-                          メモ
-                        </TableCell>
-                        {selectedPhases.map((phase: PhaseClass, i: number) => (
-                          <TableCell className={classes.tableCell} align="right">
-                            <input
-                            />
-                          </TableCell>
-                        ))}
-                      </TableRow>
+                      <TableRowSet rowLabel={'メモ'}
+                                   phaseClasses={selectedPhases}
+                                   valueCallback={p => p.note}
+                                   isTypeString={true}
+                                   onChange={(newValue, i) => update(i, 'note', newValue)} />
                     </TableBody>
                     <TableHeaderSet title={'収入'} colSpan={titleColSpan()} />
                     <TableBody>
