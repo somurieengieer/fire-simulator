@@ -47,6 +47,7 @@ const updateRelatedThings = (state: FireState): void => {
   }
 
   for (let i = 1; i < state.phases.length; i++) {
+    console.log(state.phases[i])
     state.phases[i].assetAtStart = (new PhaseClass(state.phases[i-1])).assetAtEnd()
     state.phases[i].ageAtStart = Number(state.phases[i-1].ageAtEnd) + 1
   }
@@ -56,7 +57,7 @@ function hasError(state: FireState): boolean {
   if (state.phases.find(phase => !phase.ageAtStart || !phase.ageAtEnd)) return true
   // @ts-ignore
   if (state.phases.find(phase => phase.ageAtStart > phase.ageAtEnd)) return true
-  if (state.phases.find(phase => !phase.annualInterest)) return true
+  if (state.phases.find(phase => !phase.annualInterest && phase.annualInterest != 0)) return true
   return false
 }
 
@@ -72,6 +73,10 @@ export const fireSlice = createSlice({
   })(),
   reducers: {
     updatePhases: (state, action: PayloadAction<PhaseData[]>) => {
+      if (action.payload.length > 2) {
+        console.log('payload length > 2', action.payload[1])
+        action.payload[1].assetAtStart = 0
+      }
       state.phases = action.payload
       updateRelatedThings(state)
     },

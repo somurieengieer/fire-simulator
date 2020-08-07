@@ -6,7 +6,10 @@ import {selectCompoundInterestResult, selectHasError, selectPhases, updatePhases
 import {Button, Grid, Typography} from "@material-ui/core";
 import {CompoundInterestTableByAge} from "../molecules/CompoundInterestTable";
 import {JustifyCenterBox} from "../atoms/JustifyCenterBox";
-import {initialStateOfNormalSalaryMan} from "../../features/fire/fireInitialData";
+import {
+  initialStateOfNormalSalaryMan,
+  initialStateOfNormalSalaryMan3percent
+} from "../../features/fire/fireInitialData";
 
 const useStyles = makeStyles({
   table: {
@@ -31,8 +34,12 @@ export function FirePage() {
       <Grid container spacing={2}>
         <Grid item xs={9}>
           <Button variant="contained" color="primary"
-                  onClick={() => dispatch(updatePhases(initialStateOfNormalSalaryMan))}>
+                  onClick={() => {dispatch(updatePhases(initialStateOfNormalSalaryMan()))}}>
             テンプレート（平均的サラリーマン）
+          </Button>
+          <Button variant="contained" color="primary"
+                  onClick={() => dispatch(updatePhases(initialStateOfNormalSalaryMan3percent()))}>
+            テンプレート（平均的サラリーマン3%運用）
           </Button>
           {selectedHasError && (<Typography>エラーあり！</Typography>)}
           <PhasesTable />

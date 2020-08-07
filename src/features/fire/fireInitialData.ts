@@ -1,7 +1,7 @@
 import {PhaseData} from "../../layout/molecules/Phase";
 
 // 平均的なサラリーマン
-export const initialStateOfNormalSalaryMan: PhaseData[] = [
+export const initialStateOfNormalSalaryMan = (): PhaseData[] => [
   {
     ageAtStart: 22,
     ageAtEnd: 60,
@@ -11,7 +11,7 @@ export const initialStateOfNormalSalaryMan: PhaseData[] = [
     income: 600,
     expense: 500,
     assetAtStart: 0,
-    annualInterest: 3,
+    annualInterest: 0,
   },
   {
     ageAtStart: 61,
@@ -21,7 +21,7 @@ export const initialStateOfNormalSalaryMan: PhaseData[] = [
     note: '年金受給前生活',
     income: 0,
     expense: 250,
-    annualInterest: 3,
+    annualInterest: 0,
   },
   {
     ageAtStart: 71,
@@ -31,8 +31,11 @@ export const initialStateOfNormalSalaryMan: PhaseData[] = [
     note: '年金受給生活',
     income: 200,
     expense: 250,
-    annualInterest: 3,
+    annualInterest: 0,
   },
 ];
+// 平均的なサラリーマン（3%運用）
+export const initialStateOfNormalSalaryMan3percent = (): PhaseData[] =>
+  initialStateOfNormalSalaryMan().map(v => Object.assign(v, {annualInterest: 3}))
 
 
