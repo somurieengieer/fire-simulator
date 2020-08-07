@@ -39,6 +39,10 @@ export function TableRowSet({rowLabel, phaseClasses, valueCallback, onChange, di
   onChange(newValue: string, index: number): void,
   disabled?(phaseClass: PhaseClass): boolean}) {
 
+  const showValue = (phase: PhaseClass): string | number => {
+    return disabled ? Number(valueCallback(phase))?.toFixed(0) : valueCallback(phase)
+  }
+
   const classes = useStyles();
   return (
     <TableRow>
@@ -47,7 +51,7 @@ export function TableRowSet({rowLabel, phaseClasses, valueCallback, onChange, di
       </TableCell>
       {phaseClasses.map((phase: PhaseClass, i: number) => (
         <TableCell className={classes.tableCell} align="right">
-          <input value={valueCallback(phase)}
+          <input value={showValue(phase)}
                  onChange={v => onChange(v.target.value, i)}
                  disabled={disabled && disabled(phase)}
           />
