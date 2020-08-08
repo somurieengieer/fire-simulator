@@ -2,7 +2,7 @@ import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {useSelector} from "react-redux";
 import {FirePattern, selectFirePatterns} from "../../features/fire/fireSlice";
-import {Area, AreaChart, CartesianGrid, Tooltip, XAxis, YAxis} from "recharts";
+import {CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis} from "recharts";
 import {CompoundInterestByYear} from "../../features/compoundInterest/compoundInterest";
 
 const useStyles = makeStyles({
@@ -37,12 +37,21 @@ export function CompoundInterestChart() {
     return dataByPattern.reduce((accums: ChartData[], curs: ChartData[]) => {
       if (!curs || curs.length === 0) return accums
       const newKey = Object.keys(curs[0]).find(k => k !== 'name') as string
+      let isAdded = false
       curs.forEach(cur => {
         const targetAccum = accums.find(a => a.name === cur.name)
         if (targetAccum) {
           targetAccum[newKey] = cur[newKey]
+        } else {
+          accums.push(cur)
+          isAdded = true
         }
       })
+      // sort
+      if (isAdded) {
+        accums.sort((a, b) => a.name - b.name)
+      }
+
       return accums
     })
   }
@@ -55,22 +64,30 @@ export function CompoundInterestChart() {
   return (
     <>
     {createData() && (
-      <AreaChart
+      <LineChart
         width={500}
         height={400}
         data={createData()}
         margin={{
-          top: 10, right: 30, left: 0, bottom: 0,
+          top: 5, right: 30, left: 20, bottom: 5,
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
         <YAxis />
         <Tooltip />
-        <Area type="monotone" name='プラン1' dataKey="p1" stackId="1" stroke="#8884d8" fill="#8884d8" />
-        <Area type="monotone" name='プラン2' dataKey="p2" stackId="1" stroke="#82ca9d" fill="#82ca9d" />
-        <Area type="monotone" name='プラン3' dataKey="p3" stackId="1" stroke="#ffc658" fill="#ffc658" />
-      </AreaChart>
+        <Legend />
+        <Line type="monotone" dataKey="p1" stroke="#8884d8" dot={{ r:2 }} activeDot={{ r: 7 }}
+              name='プラン1' />
+        <Line type="monotone" dataKey="p2" stroke="#82ca9d" dot={{ r:2 }} activeDot={{ r: 7 }}
+              name='プラン2' />
+        <Line type="monotone" dataKey="p3" stroke="#ca9d82" dot={{ r:2 }} activeDot={{ r: 7 }}
+              name='プラン3' />
+
+        {/*<Area type="monotone" name='プラン1' dataKey="p1" stackId="1" stroke="#8884d8" fill="#8884d8" />*/}
+        {/*<Area type="monotone" name='プラン2' dataKey="p2" stackId="1" stroke="#82ca9d" fill="#82ca9d" />*/}
+        {/*<Area type="monotone" name='プラン3' dataKey="p3" stackId="1" stroke="#ffc658" fill="#ffc658" />*/}
+      </LineChart>
       )}
     </>
   );
