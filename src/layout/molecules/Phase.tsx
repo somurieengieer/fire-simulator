@@ -126,7 +126,7 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
                   <Table className={classes.table} aria-label="simple table"
                          size={'small'}
                   >
-                    <TablePatternHeaderSet firePattern={firePattern} title={'パターン１'} colSpan={titleColSpan()} />
+                    <TablePatternHeaderSet firePattern={firePattern} colSpan={titleColSpan()} />
                     <TableBody>
                       <TableRow>
                         <TableCell className={classes.tableCellLabel} component="th" scope="row">

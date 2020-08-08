@@ -29,14 +29,20 @@ const useStyles = makeStyles({
 
 interface TablePatternHeaderSetProps {
   firePattern: FirePattern,
-  title: string,
   colSpan: number,
 }
 
-export function TablePatternHeaderSet({firePattern, title, colSpan}: TablePatternHeaderSetProps) {
+export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeaderSetProps) {
   const classes = useStyles();
 
   const dispatch = useDispatch();
+
+  const title = (): string => {
+    return 'パターン' + firePattern.patternNumber.toString()
+      .replace(/[0-9]/g, function(s) {
+        return String.fromCharCode(s.charCodeAt(0) + 0xFEE0);
+      });
+  }
 
   const updateByTemplate = (optionsIndex: number) => {
     if (Number(optionsIndex) == -1) return
@@ -56,8 +62,9 @@ export function TablePatternHeaderSet({firePattern, title, colSpan}: TablePatter
   return (
     <TableHead>
       <TableRow className={classes.tableHeadRow}>
-        <TableCell colSpan={colSpan}>{title}
-          <select onChange={v => updateByTemplate(Number(v.target.value))}>
+        <TableCell colSpan={colSpan}>{title()}
+          <select onChange={v => updateByTemplate(Number(v.target.value))}
+                  style={{verticalAlign: 'text-bottom'}}>
             <option value='-1'>▼テンプレートを選択</option>
             {options.map((o, i) => (
               <option value={i}>{o.label}</option>
