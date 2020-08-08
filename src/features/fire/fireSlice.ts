@@ -93,7 +93,8 @@ export const fireSlice = createSlice({
       updateRelatedThings(state)
     },
     addPhase: (state, action: PayloadAction<number>) => {
-      const firePatternIndex = action.payload
+      // PayloadはPatternNumber。Indexは -1 する
+      const firePatternIndex = action.payload - 1
       const targetFirePattern = state.firePatterns[firePatternIndex]
       targetFirePattern.phases.push(createNewPhase(targetFirePattern))
       updateRelatedThings(state)
