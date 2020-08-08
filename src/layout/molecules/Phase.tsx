@@ -14,7 +14,7 @@ const useStyles = makeStyles({
   },
   tableCellLabel: {
     minWidth: 200,
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.secondary.light,
   },
   tableCell: {
     minWidth: 200,

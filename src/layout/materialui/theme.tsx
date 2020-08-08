@@ -7,8 +7,8 @@ const base = {
       contrastText: '#000000',
     },
     secondary: {
-      main: '#F3D3B8',
-      dark: '#E59D5C',
+      light: '#F3D3B8',
+      main: '#E59D5C',
       contrastText: '#000000',
     },
     // error: {
