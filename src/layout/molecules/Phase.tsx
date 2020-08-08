@@ -1,12 +1,11 @@
 import React from 'react';
-import {Button, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableRow} from "@material-ui/core";
+import {Grid, Paper, Table, TableBody, TableCell, TableContainer, TableRow} from "@material-ui/core";
 import {calcCompoundInterestResult, CompoundInterestResult} from "../../features/compoundInterest/compoundInterest";
 import {makeStyles} from "@material-ui/core/styles";
 import {useDispatch} from "react-redux";
 import {addPhase, FirePattern, updatePhases} from "../../features/fire/fireSlice";
 import {SubHeaderRowSet, TablePatternHeaderSet, TableRowSet} from "./PhaseTableItems";
 import {theme} from "../materialui/theme";
-import {AlignCenterBox} from "../atoms/alignCenterBox";
 import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = makeStyles({
@@ -20,6 +19,11 @@ const useStyles = makeStyles({
   tableCell: {
     minWidth: 200,
   },
+  linkCell: {
+    '&:hover': {
+      cursor: 'pointer',
+    },
+  }
 });
 
 export interface PhaseData {
@@ -127,7 +131,7 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
                   <Table className={classes.table} aria-label="simple table"
                          size={'small'}
                   >
-                    <TablePatternHeaderSet firePattern={firePattern} colSpan={titleColSpan()} />
+                    <TablePatternHeaderSet firePattern={firePattern} colSpan={titleColSpan() + 1} />
                     <TableBody>
                       <TableRow>
                         <TableCell className={classes.tableCellLabel} component="th" scope="row">
@@ -149,6 +153,7 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
                           </TableCell>
                         ))}
                         <TableCell rowSpan={10} width={40} style={{backgroundColor: theme.palette.primary.main}}
+                                   className={classes.linkCell}
                                    onClick={() => dispatch(addPhase(firePattern.patternNumber))}
                         >
                           {/*<Box style={{height: '100%', width: '100%'}}>*/}
@@ -195,13 +200,6 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
                     </TableBody>
                 </Table>
               </TableContainer>
-            </Grid>
-            <Grid item xs={3}>
-              <AlignCenterBox>
-                <Button variant="contained" color="primary" onClick={() => dispatch(addPhase(firePattern.patternNumber))}>
-                  フェーズを追加
-                </Button>
-              </AlignCenterBox>
             </Grid>
           </Grid>
         </Grid>

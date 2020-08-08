@@ -60,7 +60,6 @@ function CompoundInterestCommonTable({label, yearPostWord, result}: CompoundInte
           <TableRow>
             <TableCell>{label}</TableCell>
             <TableCell align="right">資産総額</TableCell>
-
           </TableRow>
         </TableHead>
         <TableBody>
