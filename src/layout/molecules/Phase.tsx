@@ -124,7 +124,9 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
             <Grid container spacing={2}>
               <Grid item xs={9}>
                 <TableContainer component={Paper} >
-                  <Table className={classes.table} aria-label="simple table">
+                  <Table className={classes.table} aria-label="simple table"
+                         size={'small'}
+                  >
                     <TableHeaderSet title={'年齢'} colSpan={titleColSpan()} />
                     <TableBody>
                       <TableRow>

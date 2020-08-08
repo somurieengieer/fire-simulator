@@ -4,8 +4,6 @@ import {PhaseData, PhasesTable} from "./Phase";
 import {useDispatch} from "react-redux";
 import {FirePattern, updatePhases} from "../../features/fire/fireSlice";
 import {Button, Grid, Typography} from "@material-ui/core";
-import {CompoundInterestTableByAge} from "./CompoundInterestTable";
-import {JustifyCenterBox} from "../atoms/JustifyCenterBox";
 import {
   initialPhasesOfNormalSalaryMan,
   initialPhasesOfNormalSalaryMan3percent,
@@ -60,13 +58,13 @@ export function FirePatternPaper({firePattern}: FirePatternPaperProps) {
           <PhasesTable firePattern={firePattern} />
         </Grid>
         <Grid item xs={3}>
-          {compoundInterestResult && (
-            <JustifyCenterBox width={'250px'}>
-              <CompoundInterestTableByAge result={compoundInterestResult}
-                                          startAge={phases[0].ageAtStart || 0}
-              />
-            </JustifyCenterBox>
-          )}
+          {/*{compoundInterestResult && (*/}
+          {/*  <JustifyCenterBox width={'250px'}>*/}
+          {/*    <CompoundInterestTableByAge result={compoundInterestResult}*/}
+          {/*                                startAge={phases[0].ageAtStart || 0}*/}
+          {/*    />*/}
+          {/*  </JustifyCenterBox>*/}
+          {/*)}*/}
         </Grid>
       </Grid>
     </>
