@@ -4,7 +4,7 @@ import {calcCompoundInterestResult, CompoundInterestResult} from "../../features
 import {makeStyles} from "@material-ui/core/styles";
 import {useDispatch} from "react-redux";
 import {addPhase, FirePattern, updatePhases} from "../../features/fire/fireSlice";
-import {TableHeaderSet, TableRowSet} from "./PhaseTableItems";
+import {TableHeaderSet, TablePatternHeaderSet, TableRowSet} from "./PhaseTableItems";
 import {theme} from "../materialui/theme";
 import {AlignCenterBox} from "../atoms/alignCenterBox";
 
@@ -119,7 +119,6 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
   return (
     <>
       <div style={{width: '100%'}}>
-      <Paper style={{width: '100%'}}>
           <Grid  style={{marginLeft: 40}}>
             <Grid container spacing={2}>
               <Grid item xs={9}>
@@ -127,7 +126,7 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
                   <Table className={classes.table} aria-label="simple table"
                          size={'small'}
                   >
-                    <TableHeaderSet title={'年齢'} colSpan={titleColSpan()} />
+                    <TablePatternHeaderSet firePattern={firePattern} title={'パターン１'} colSpan={titleColSpan()} />
                     <TableBody>
                       <TableRow>
                         <TableCell className={classes.tableCellLabel} component="th" scope="row">
@@ -199,7 +198,6 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
             </Grid>
           </Grid>
         </Grid>
-      </Paper>
       </div>
     </>
   );

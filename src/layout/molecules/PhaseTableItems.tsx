@@ -3,6 +3,13 @@ import {TableCell, TableHead, TableRow} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import {theme} from "../materialui/theme";
 import {PhaseClass} from "./Phase";
+import {FirePattern, updatePhases} from "../../features/fire/fireSlice";
+import {useDispatch} from "react-redux";
+import {
+  initialPhasesOfNormalSalaryMan,
+  initialPhasesOfNormalSalaryMan3percent,
+  initialPhasesOfSolidMan
+} from "../../features/fire/fireInitialData";
 
 const useStyles = makeStyles({
   table: {
@@ -19,6 +26,48 @@ const useStyles = makeStyles({
     backgroundColor: theme.palette.secondary.main,
   }
 });
+
+interface TablePatternHeaderSetProps {
+  firePattern: FirePattern,
+  title: string,
+  colSpan: number,
+}
+
+export function TablePatternHeaderSet({firePattern, title, colSpan}: TablePatternHeaderSetProps) {
+  const classes = useStyles();
+
+  const dispatch = useDispatch();
+
+  const updateByTemplate = (optionsIndex: number) => {
+    if (Number(optionsIndex) == -1) return
+    const phaseData = options[optionsIndex].createPhaseData()
+    dispatch(updatePhases({
+      patternNumber: firePattern.patternNumber,
+      phases: phaseData,
+    }))
+  }
+
+  const options = [
+    {label: '平均的サラリーマン', createPhaseData: initialPhasesOfNormalSalaryMan},
+    {label: '平均的サラリーマン3%運用', createPhaseData: initialPhasesOfNormalSalaryMan3percent},
+    {label: '堅実FIRE', createPhaseData: initialPhasesOfSolidMan},
+  ]
+
+  return (
+    <TableHead>
+      <TableRow className={classes.tableHeadRow}>
+        <TableCell colSpan={colSpan}>{title}
+          <select onChange={v => updateByTemplate(Number(v.target.value))}>
+            <option value='-1'>▼テンプレートを選択</option>
+            {options.map((o, i) => (
+              <option value={i}>{o.label}</option>
+            ))}
+          </select>
+        </TableCell>
+      </TableRow>
+    </TableHead>
+  )
+}
 
 export function TableHeaderSet({title, colSpan}
 : {title: string, colSpan: number}) {
