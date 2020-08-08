@@ -4,9 +4,10 @@ import {calcCompoundInterestResult, CompoundInterestResult} from "../../features
 import {makeStyles} from "@material-ui/core/styles";
 import {useDispatch} from "react-redux";
 import {addPhase, FirePattern, updatePhases} from "../../features/fire/fireSlice";
-import {TableHeaderSet, TablePatternHeaderSet, TableRowSet} from "./PhaseTableItems";
+import {SubHeaderRowSet, TablePatternHeaderSet, TableRowSet} from "./PhaseTableItems";
 import {theme} from "../materialui/theme";
 import {AlignCenterBox} from "../atoms/alignCenterBox";
+import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = makeStyles({
   table: {
@@ -147,29 +148,35 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
                             歳
                           </TableCell>
                         ))}
+                        <TableCell rowSpan={10} width={40} style={{backgroundColor: theme.palette.primary.main}}
+                                   onClick={() => dispatch(addPhase(firePattern.patternNumber))}
+                        >
+                          {/*<Box style={{height: '100%', width: '100%'}}>*/}
+                          {/*  テスト*/}
+                          {/*</Box>*/}
+                          {/*<Button variant="contained" color="primary" onClick={() => dispatch(addPhase(firePattern.patternNumber))}*/}
+                          {/*        style={{height: '100%', width: '100%'}}*/}
+                          {/*>*/}
+                            <AddIcon />
+                          {/*</Button>*/}
+                        </TableCell>
                       </TableRow>
                       <TableRowSet rowLabel={'メモ'}
                                    phaseClasses={phases}
                                    valueCallback={p => p.note}
                                    isTypeString={true}
                                    onChange={(newValue, i) => update(i, 'note', newValue)} />
-                    </TableBody>
-                    <TableHeaderSet title={'収入'} colSpan={titleColSpan()} />
-                    <TableBody>
+                      <SubHeaderRowSet title={'収入'} colSpan={titleColSpan()} />
                       <TableRowSet rowLabel={'手取り'}
                                    phaseClasses={phases}
                                    valueCallback={p => p.income}
                                    onChange={(newValue, i) => update(i, 'income', newValue)} />
-                    </TableBody>
-                    <TableHeaderSet title={'支出'} colSpan={titleColSpan()} />
-                    <TableBody>
+                      <SubHeaderRowSet title={'支出'} colSpan={titleColSpan()} />
                       <TableRowSet rowLabel={'支出総額'}
                                    phaseClasses={phases}
                                    valueCallback={p => p.expense}
                                    onChange={(newValue, i) => update(i, 'expense', newValue)} />
-                    </TableBody>
-                    <TableHeaderSet title={'資産運用'} colSpan={titleColSpan()} />
-                    <TableBody>
+                      <SubHeaderRowSet title={'資産運用'} colSpan={titleColSpan()} />
                       <TableRowSet rowLabel={'開始時資産'}
                                    phaseClasses={phases}
                                    valueCallback={p => p.assetAtStart}

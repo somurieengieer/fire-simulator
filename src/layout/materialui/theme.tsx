@@ -3,17 +3,26 @@ import {createMuiTheme} from '@material-ui/core/styles'
 const base = {
   palette: {
     primary: {
-      light: '#ffffff',
-      main: '#fff3e0',
-      dark: '#ccc0ae',
+      main: '#A5C3CF',
       contrastText: '#000000',
     },
     secondary: {
-      light: '#ffddc1',
-      main: '#ffab91',
-      dark: '#c97b63',
+      main: '#F3D3B8',
+      dark: '#E59D5C',
       contrastText: '#000000',
     },
+    // error: {
+    //
+    // },
+    // warning: {
+    //
+    // },
+    // info: {
+    //
+    // },
+    // success: {
+    //
+    // }
   },
   typography: {
     fontFamily: [

@@ -76,15 +76,13 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
   )
 }
 
-export function TableHeaderSet({title, colSpan}
+export function SubHeaderRowSet({title, colSpan}
 : {title: string, colSpan: number}) {
   const classes = useStyles();
   return (
-    <TableHead>
-      <TableRow className={classes.tableHeadRow}>
-        <TableCell colSpan={colSpan}>{title}</TableCell>
-      </TableRow>
-    </TableHead>
+    <TableRow className={classes.tableHeadRow}>
+      <TableCell colSpan={colSpan}>{title}</TableCell>
+    </TableRow>
   )
 }
 
