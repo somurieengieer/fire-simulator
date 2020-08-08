@@ -1,7 +1,7 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {useSelector} from "react-redux";
-import {selectCompoundInterestResult, selectPhases} from "../../features/fire/fireSlice";
+import {FirePattern, selectFirePatterns} from "../../features/fire/fireSlice";
 import {Area, AreaChart, CartesianGrid, Tooltip, XAxis, YAxis} from "recharts";
 import {CompoundInterestByYear} from "../../features/compoundInterest/compoundInterest";
 
@@ -11,28 +11,54 @@ const useStyles = makeStyles({
   },
 });
 
-
+interface ChartData {
+  name: number,
+  [key: string]: number | string;
+}
 
 // 複利計算ページ
 export function CompoundInterestChart() {
 
   const classes = useStyles();
 
-  const selectedPhases = useSelector(selectPhases)
-  const selectedCompoundInterestResult = useSelector(selectCompoundInterestResult)
+  const selectedFirePatterns = useSelector(selectFirePatterns)
 
-  const data = selectedCompoundInterestResult?.rowByYear
-    .map((r: CompoundInterestByYear) => {
-      return {name: r.year + selectedPhases?.[0].ageAtStart, p1: r.amount.toFixed(0)}
+  const createData = (): ChartData[] => {
+    const dataByPattern: ChartData[][] = selectedFirePatterns.map((pattern: FirePattern) => {
+      const startAge = Number(pattern.phases[0]?.ageAtStart)
+      const valueKey = `p${pattern.patternNumber}`
+      return pattern.compoundInterestResult?.rowByYear
+        .map((r: CompoundInterestByYear) => {
+          const row: ChartData = {name: r.year + startAge}
+          row[valueKey] = r.amount.toFixed(0)
+          return row
+        })
     })
+    return dataByPattern.reduce((accums: ChartData[], curs: ChartData[]) => {
+      if (!curs || curs.length === 0) return accums
+      const newKey = Object.keys(curs[0]).find(k => k !== 'name') as string
+      curs.forEach(cur => {
+        const targetAccum = accums.find(a => a.name === cur.name)
+        if (targetAccum) {
+          targetAccum[newKey] = cur[newKey]
+        }
+      })
+      return accums
+    })
+  }
+
+  // const data = selectedCompoundInterestResult?.rowByYear
+  //   .map((r: CompoundInterestByYear) => {
+  //     return {name: r.year + selectedPhases?.[0].ageAtStart, p1: r.amount.toFixed(0)}
+  //   })
 
   return (
     <>
-    {data && (
+    {createData() && (
       <AreaChart
         width={500}
         height={400}
-        data={data}
+        data={createData()}
         margin={{
           top: 10, right: 30, left: 0, bottom: 0,
         }}

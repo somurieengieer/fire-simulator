@@ -2,15 +2,14 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../../app/store';
 import {PhaseClass, PhaseData, PhasesClass} from "../../layout/molecules/Phase";
 import {CompoundInterestResult} from "../compoundInterest/compoundInterest";
+import {initialPhasesDefault} from "./fireInitialData";
 
 interface FireState {
-  phases: PhaseData[],
-  compoundInterestResult?: CompoundInterestResult,
-  hasError: boolean,
+  firePatterns: FirePattern[]
 }
 
-function createNewPhase(state: FireState): PhaseData {
-  const lastPhase = state.phases.slice(-1)[0]
+function createNewPhase(firePattern: FirePattern): PhaseData {
+  const lastPhase = firePattern.phases.slice(-1)[0]
   return {
     ageAtStart: Number(lastPhase.ageAtEnd || 0) + 1,
     ageAtEnd: Number(lastPhase.ageAtEnd || 0) + 11,
@@ -23,43 +22,50 @@ function createNewPhase(state: FireState): PhaseData {
   }
 }
 
+export interface FirePattern {
+  patternNumber: number,
+  phases: PhaseData[],
+  compoundInterestResult?: CompoundInterestResult,
+  hasError?: boolean,
+}
+
+const createFirePattern = (patternNumber: number): FirePattern => ({
+  patternNumber: patternNumber,
+  phases: initialPhasesDefault(),
+})
+
 const initialState: FireState = {
-  phases: [
-    {
-      ageAtStart: 22,
-      ageAtEnd: 60,
-      ageAtStartEditable: true,
-      assetAtStartEditable: true,
-      income: 500,
-      expense: 400,
-      assetAtStart: 600,
-      annualInterest: 3,
-    }
-  ],
-  compoundInterestResult: undefined,
-  hasError: false,
-};
+  firePatterns: [
+    createFirePattern(1),
+    createFirePattern(2),
+    createFirePattern(3),
+  ]
+}
 
 const updateRelatedThings = (state: FireState): void => {
-  state.hasError = hasError(state)
-  if (state.hasError) {
+  state.firePatterns.map(p => updateFirePatternRelatedThings(p))
+}
+const updateFirePatternRelatedThings = (firePattern: FirePattern): void => {
+  firePattern.hasError = hasError(firePattern)
+  if (firePattern.hasError) {
     return
   }
 
-  for (let i = 1; i < state.phases.length; i++) {
-    console.log(state.phases[i])
-    state.phases[i].assetAtStart = (new PhaseClass(state.phases[i-1])).assetAtEnd()
-    state.phases[i].ageAtStart = Number(state.phases[i-1].ageAtEnd) + 1
+  for (let i = 1; i < firePattern.phases.length; i++) {
+    console.log(firePattern.phases[i])
+    firePattern.phases[i].assetAtStart = (new PhaseClass(firePattern.phases[i-1])).assetAtEnd()
+    firePattern.phases[i].ageAtStart = Number(firePattern.phases[i-1].ageAtEnd) + 1
   }
-  state.compoundInterestResult = new PhasesClass(state.phases.map(data => new PhaseClass(data))).compoundInterestResult()
+  firePattern.compoundInterestResult = new PhasesClass(firePattern.phases.map(data => new PhaseClass(data))).compoundInterestResult()
 }
-function hasError(state: FireState): boolean {
-  if (state.phases.find(phase => !phase.ageAtStart || !phase.ageAtEnd)) return true
+function hasError(firePattern: FirePattern): boolean {
+  if (firePattern.phases.find(phase => !phase.ageAtStart || !phase.ageAtEnd)) return true
   // @ts-ignore
-  if (state.phases.find(phase => phase.ageAtStart > phase.ageAtEnd)) return true
-  if (state.phases.find(phase => !phase.annualInterest && phase.annualInterest != 0)) return true
+  if (firePattern.phases.find(phase => phase.ageAtStart > phase.ageAtEnd)) return true
+  if (firePattern.phases.find(phase => !phase.annualInterest && phase.annualInterest != 0)) return true
   return false
 }
+
 
 // TODO: 初期化処理（ここに書くのは微妙）
 // updateRelatedThings(initialState)
@@ -72,16 +78,24 @@ export const fireSlice = createSlice({
     return initialState
   })(),
   reducers: {
-    updatePhases: (state, action: PayloadAction<PhaseData[]>) => {
-      if (action.payload.length > 2) {
-        console.log('payload length > 2', action.payload[1])
-        action.payload[1].assetAtStart = 0
+    updatePhases: (state, action: PayloadAction<FirePattern>) => {
+      const patternNumber= action.payload.patternNumber
+      const updatedPhases = action.payload.phases
+      if (updatedPhases.length > 2) {
+        console.log('payload length > 2', updatedPhases[1])
+        updatedPhases[1].assetAtStart = 0
       }
-      state.phases = action.payload
+
+      state.firePatterns
+        .filter(p => p.patternNumber === patternNumber)
+        .forEach(p => p.phases = updatedPhases)
+
       updateRelatedThings(state)
     },
-    addPhase: (state) => {
-      state.phases.push(createNewPhase(state))
+    addPhase: (state, action: PayloadAction<number>) => {
+      const firePatternIndex = action.payload
+      const targetFirePattern = state.firePatterns[firePatternIndex]
+      targetFirePattern.phases.push(createNewPhase(targetFirePattern))
       updateRelatedThings(state)
     }
   },
@@ -92,8 +106,6 @@ export const { updatePhases, addPhase } = fireSlice.actions;
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.fire.value)`
-export const selectPhases = (state: RootState) => state.fire.phases;
-export const selectCompoundInterestResult = (state: RootState) => state.fire.compoundInterestResult;
-export const selectHasError = (state: RootState) => state.fire.hasError;
+export const selectFirePatterns = (state: RootState) => state.fire.firePatterns;
 
 export default fireSlice.reducer;

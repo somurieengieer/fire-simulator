@@ -2,8 +2,8 @@ import React from 'react';
 import {Button, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableRow} from "@material-ui/core";
 import {calcCompoundInterestResult, CompoundInterestResult} from "../../features/compoundInterest/compoundInterest";
 import {makeStyles} from "@material-ui/core/styles";
-import {useDispatch, useSelector} from "react-redux";
-import {addPhase, selectPhases, updatePhases} from "../../features/fire/fireSlice";
+import {useDispatch} from "react-redux";
+import {addPhase, FirePattern, updatePhases} from "../../features/fire/fireSlice";
 import {TableHeaderSet, TableRowSet} from "./PhaseTableItems";
 import {theme} from "../materialui/theme";
 import {AlignCenterBox} from "../atoms/alignCenterBox";
@@ -91,24 +91,30 @@ export class PhasesClass {
   }
 }
 
+
+interface PhasesTableProps {
+  firePattern: FirePattern,
+}
+
 // フェーズ表示
-export function PhasesTable() {
+export function PhasesTable({firePattern}: PhasesTableProps) {
+
+  const phases = firePattern.phases.map(phaseData => new PhaseClass(phaseData))
 
   const classes = useStyles();
   const dispatch = useDispatch();
-  const selectedPhases = useSelector(selectPhases).map((phaseData: PhaseData) => new PhaseClass(phaseData))
 
   const update = (index: number, key: string, updatedValue: any): void => {
 
-    const newData = Object.assign({}, selectedPhases[index])
+    const newData = Object.assign({}, phases[index])
     // @ts-ignore
     newData[key] = updatedValue
-    const newPhases = JSON.parse(JSON.stringify(selectedPhases))
+    const newPhases = JSON.parse(JSON.stringify(phases))
     newPhases[index] = newData
     dispatch(updatePhases(newPhases))
   }
 
-  const titleColSpan = () => selectedPhases.length + 1
+  const titleColSpan = () => phases.length + 1
 
   return (
     <>
@@ -125,7 +131,7 @@ export function PhasesTable() {
                         <TableCell className={classes.tableCellLabel} component="th" scope="row">
                           年齢
                         </TableCell>
-                        {selectedPhases.map((phase: PhaseClass, i: number) => (
+                        {phases.map((phase: PhaseClass, i: number) => (
                           <TableCell className={classes.tableCell} align="right">
                             <input value={phase.ageAtStart}
                                    onChange={v => update(i, 'ageAtStart', v.target.value)}
@@ -142,7 +148,7 @@ export function PhasesTable() {
                         ))}
                       </TableRow>
                       <TableRowSet rowLabel={'メモ'}
-                                   phaseClasses={selectedPhases}
+                                   phaseClasses={phases}
                                    valueCallback={p => p.note}
                                    isTypeString={true}
                                    onChange={(newValue, i) => update(i, 'note', newValue)} />
@@ -150,31 +156,31 @@ export function PhasesTable() {
                     <TableHeaderSet title={'収入'} colSpan={titleColSpan()} />
                     <TableBody>
                       <TableRowSet rowLabel={'手取り'}
-                                   phaseClasses={selectedPhases}
+                                   phaseClasses={phases}
                                    valueCallback={p => p.income}
                                    onChange={(newValue, i) => update(i, 'income', newValue)} />
                     </TableBody>
                     <TableHeaderSet title={'支出'} colSpan={titleColSpan()} />
                     <TableBody>
                       <TableRowSet rowLabel={'支出総額'}
-                                   phaseClasses={selectedPhases}
+                                   phaseClasses={phases}
                                    valueCallback={p => p.expense}
                                    onChange={(newValue, i) => update(i, 'expense', newValue)} />
                     </TableBody>
                     <TableHeaderSet title={'資産運用'} colSpan={titleColSpan()} />
                     <TableBody>
                       <TableRowSet rowLabel={'開始時資産'}
-                                   phaseClasses={selectedPhases}
+                                   phaseClasses={phases}
                                    valueCallback={p => p.assetAtStart}
                                    onChange={(newValue, i) => update(i, 'assetAtStart', newValue)}
                                    disabled={(phase: PhaseClass) => !phase.assetAtStartEditable} />
                       <TableRowSet rowLabel={'リターン'}
-                                   phaseClasses={selectedPhases}
+                                   phaseClasses={phases}
                                    valueCallback={p => p.annualInterest}
                                    onChange={(newValue, i) => update(i, 'annualInterest', newValue)}
                                    disabled={(phase: PhaseClass) => false} />
                       <TableRowSet rowLabel={'終了時資産'}
-                                   phaseClasses={selectedPhases}
+                                   phaseClasses={phases}
                                    valueCallback={p => p.assetAtEnd()?.toFixed(0)}
                                    onChange={(newValue, i) => update(i, 'assetAtEnd()', newValue)}
                                    disabled={(phase: PhaseClass) => true} />
@@ -184,7 +190,7 @@ export function PhasesTable() {
             </Grid>
             <Grid item xs={3}>
               <AlignCenterBox>
-                <Button variant="contained" color="primary" onClick={() => dispatch(addPhase())}>
+                <Button variant="contained" color="primary" onClick={() => dispatch(addPhase(firePattern.patternNumber))}>
                   フェーズを追加
                 </Button>
               </AlignCenterBox>

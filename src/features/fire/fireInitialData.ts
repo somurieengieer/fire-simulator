@@ -1,7 +1,21 @@
 import {PhaseData} from "../../layout/molecules/Phase";
 
+// デフォルト値
+export const initialPhasesDefault = (): PhaseData[] => [
+  {
+    ageAtStart: 22,
+    ageAtEnd: 60,
+    ageAtStartEditable: true,
+    assetAtStartEditable: true,
+    income: 500,
+    expense: 400,
+    assetAtStart: 600,
+    annualInterest: 3,
+  }
+]
+
 // 平均的なサラリーマン
-export const initialStateOfNormalSalaryMan = (): PhaseData[] => [
+export const initialPhasesOfNormalSalaryMan = (): PhaseData[] => [
   {
     ageAtStart: 22,
     ageAtEnd: 60,
@@ -35,11 +49,11 @@ export const initialStateOfNormalSalaryMan = (): PhaseData[] => [
   },
 ];
 // 平均的なサラリーマン（3%運用）
-export const initialStateOfNormalSalaryMan3percent = (): PhaseData[] =>
-  initialStateOfNormalSalaryMan().map(v => Object.assign(v, {annualInterest: 3}))
+export const initialPhasesOfNormalSalaryMan3percent = (): PhaseData[] =>
+  initialPhasesOfNormalSalaryMan().map(v => Object.assign(v, {annualInterest: 3}))
 
 // 堅実FIREプラン
-export const initialStateOfSolidMan = (): PhaseData[] => [
+export const initialPhasesOfSolidMan = (): PhaseData[] => [
   {
     ageAtStart: 32,
     ageAtEnd: 50,
