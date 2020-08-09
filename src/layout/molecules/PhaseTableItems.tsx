@@ -41,21 +41,22 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
   const selectedPatternNumbers = useSelector(selectPatternNumbers)
   const selectedFirePatterns = useSelector(selectFirePatterns)
   const [copiedPatternNumber, setCopiedPatternNumber] = useState<undefined | number>(undefined)
+  const [copiedTemplateNumber, setCopiedTemplateNumber] = useState<undefined | number>(undefined)
 
   const title = (): string => {
     return 'パターン' + numberFromHalfWidthToFullWidth(firePattern.patternNumber)
   }
 
-  const updateByTemplate = (optionsIndex: number) => {
-    if (Number(optionsIndex) == -1) return
-    const phaseData = options[optionsIndex].createPhaseData()
-    dispatch(updatePhases({
-      patternNumber: firePattern.patternNumber,
-      phases: phaseData,
-    }))
-  }
+  // const updateByTemplate = (optionsIndex: number) => {
+  //   if (Number(optionsIndex) == -1) return
+  //   const phaseData = options[optionsIndex].createPhaseData()
+  //   dispatch(updatePhases({
+  //     patternNumber: firePattern.patternNumber,
+  //     phases: phaseData,
+  //   }))
+  // }
 
-  const execCopy = () => {
+  const execCopyByPattern = () => {
     if (copiedPatternNumber) {
       const newPhases: PhaseData[] = JSON.parse(JSON.stringify(selectedFirePatterns[copiedPatternNumber - 1].phases))
       dispatch(updatePhases({
@@ -65,7 +66,18 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
     }
   }
 
+  const execCopyByTemplate = () => {
+    if (!copiedTemplateNumber) return
+    // @ts-ignore // 0の場合はcreatePhaseDataがないが、その場合は↑でreturnする
+    const phaseData = options[copiedTemplateNumber].createPhaseData()
+    dispatch(updatePhases({
+      patternNumber: firePattern.patternNumber,
+      phases: phaseData,
+    }))
+  }
+
   const options = [
+    {label: '▼テンプレートを選択'},
     {label: '平均的サラリーマン', createPhaseData: initialPhasesOfNormalSalaryMan},
     {label: '平均的サラリーマン3%運用', createPhaseData: initialPhasesOfNormalSalaryMan3percent},
     {label: '堅実FIRE', createPhaseData: initialPhasesOfSolidMan},
@@ -74,14 +86,22 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
   return (
     <TableHead>
       <TableRow className={classes.tableHeadRow}>
-        <TableCell colSpan={colSpan}>{title()}
-          <select onChange={v => updateByTemplate(Number(v.target.value))}
+        <TableCell colSpan={colSpan}>{title()}&nbsp;
+          <select onChange={v => setCopiedTemplateNumber(Number(v.target.value))}
+                  value={copiedTemplateNumber}
                   style={{height: '2em'}}>
-            <option value='-1'>▼テンプレートを選択</option>
             {options.map((o, i) => (
               <option value={i}>{o.label}</option>
             ))}
           </select>
+          {copiedTemplateNumber && (
+            <ConfirmDialog message={'入力されている値が上書きされますがよろしいですか'}
+                           openFlag={copiedTemplateNumber !== 0}
+                           closeFlag={() => setCopiedTemplateNumber(undefined)}
+                           callBackWhenYes={execCopyByTemplate}
+                           callBackWhenNo={() => setCopiedTemplateNumber(0)}
+            />
+          )}
           {selectedPatternNumbers?.filter((i: number) => i !== firePattern.patternNumber).map((i: number) => (
             <button onClick={() => setCopiedPatternNumber(i)}>パターン{numberFromHalfWidthToFullWidth(i)}からコピー</button>
           ))}
@@ -89,7 +109,7 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
             <ConfirmDialog message={'入力されている値が上書きされますがよろしいですか'}
                            openFlag={Boolean(copiedPatternNumber)}
                            closeFlag={() => setCopiedPatternNumber(undefined)}
-                           callBackWhenYes={execCopy} />
+                           callBackWhenYes={execCopyByPattern} />
           )}
         </TableCell>
       </TableRow>

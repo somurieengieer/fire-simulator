@@ -12,9 +12,10 @@ export type ConfirmDialogProps = {
   openFlag: boolean,
   closeFlag: () => void,
   callBackWhenYes: () => void,
+  callBackWhenNo?: () => void,
 }
 
-const ConfirmDialog: React.FC<ConfirmDialogProps> = ({title, message, openFlag, closeFlag, callBackWhenYes}) => {
+const ConfirmDialog: React.FC<ConfirmDialogProps> = ({title, message, openFlag, closeFlag, callBackWhenYes, callBackWhenNo}) => {
   const handleAlertClose = (e: any) => {
     e.stopPropagation(); //親要素のonClickを呼ばないように制御
     closeFlag();
@@ -23,6 +24,13 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({title, message, openFlag, 
   const exec = (e: any) => {
     handleAlertClose(e)
     callBackWhenYes()
+  }
+
+  const selectedNo = (e: any) => {
+    handleAlertClose(e)
+    if (callBackWhenNo) {
+      callBackWhenNo()
+    }
   }
   return (
     <div>
@@ -42,7 +50,7 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({title, message, openFlag, 
           <Button onClick={exec}  autoFocus>
             はい
           </Button>
-          <Button onClick={handleAlertClose}  autoFocus>
+          <Button onClick={selectedNo}  autoFocus>
             いいえ
           </Button>
         </DialogActions>
