@@ -40,30 +40,27 @@ function createPhaseDataForWorker(props: PhaseDataForWorkerProps ): PhaseData[] 
       annualInterest: props.annualInterest,
     },
     {
-      // ageAtStart: props.ageAtRetirement + 1,
       ageAtEnd: props.ageAtRetirement + 1,
       ageAtStartEditable: false,
       assetAtStartEditable: false,
       note: '退職金受け取り',
       income: props.retirementAllowance,
-      expense: props.expense,
+      expense: props.expenseAfterRetirement ? props.expenseAfterRetirement + 20 : props.expense,
       annualInterest: props.annualInterest,
     },
     ]
   if (props.ageAtRetirement < 60) {
     result.push({
-        // ageAtStart: props.ageAtRetirement + 2,
         ageAtEnd: 60,
         ageAtStartEditable: false,
         assetAtStartEditable: false,
         note: '年金受給前生活（年金支払いあり）',
         income: 0,
-        expense: props.expense,
+        expense: props.expenseAfterRetirement ? props.expenseAfterRetirement + 20 : props.expense,
         annualInterest: props.annualInterest,
       })
   }
   result.push({
-      // ageAtStart: (props.ageAtRetirement === 60 ? 62 : 61), // 60以下でリタイアする前提
       ageAtEnd: 70,
       ageAtStartEditable: false,
       assetAtStartEditable: false,
@@ -73,7 +70,6 @@ function createPhaseDataForWorker(props: PhaseDataForWorkerProps ): PhaseData[] 
       annualInterest: props.annualInterest,
     },
     {
-      // ageAtStart: 71,
       ageAtEnd: 85,
       ageAtStartEditable: false,
       assetAtStartEditable: false,
@@ -102,42 +98,8 @@ const templateOfNormalSalaryMan = {
       assetAtStart: 0,
       annualInterest: 0,
     })
-    // phaseData.splice(1, 1)
     return phaseData
   }
-  // createPhaseData: () => [
-  //   {
-  //     ageAtStart: 22,
-  //     ageAtEnd: 60,
-  //     ageAtStartEditable: true,
-  //     assetAtStartEditable: true,
-  //     note: 'サラリーマン生活',
-  //     income: 600,
-  //     expense: 500,
-  //     assetAtStart: 0,
-  //     annualInterest: 0,
-  //   },
-  //   {
-  //     ageAtStart: 61,
-  //     ageAtEnd: 70,
-  //     ageAtStartEditable: false,
-  //     assetAtStartEditable: false,
-  //     note: '年金受給前生活',
-  //     income: 0,
-  //     expense: 250,
-  //     annualInterest: 0,
-  //   },
-  //   {
-  //     ageAtStart: 71,
-  //     ageAtEnd: 85,
-  //     ageAtStartEditable: false,
-  //     assetAtStartEditable: false,
-  //     note: '年金受給生活',
-  //     income: 200,
-  //     expense: 250,
-  //     annualInterest: 0,
-  //   },
-  // ]
 }
 
 const templateOfNormalSalaryMan3percent = {
@@ -155,6 +117,7 @@ const templateOfSolidMan = {
       income: 470,
       retirementAllowance: 800,
       expense: 270,
+      expenseAfterRetirement: 200,
       annuity: 140, // 年金
       assetAtStart: 2000,
       annualInterest: 3,
@@ -183,6 +146,7 @@ const initialPhasesOf100MPYfire = {
       income: 400,
       retirementAllowance: 800,
       expense: 300,
+      expenseAfterRetirement: 240,
       annuity: 160, // 年金
       assetAtStart: 0,
       annualInterest: 4,
