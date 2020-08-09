@@ -46,7 +46,7 @@ const initialState: FireState = {
 const updateRelatedThings = (state: FireState): void => {
   state.firePatterns.map(p => updateFirePatternRelatedThings(p))
 }
-const updateFirePatternRelatedThings = (firePattern: FirePattern): void => {
+export const updateFirePatternRelatedThings = (firePattern: FirePattern): void => {
   firePattern.hasError = hasError(firePattern)
   if (firePattern.hasError) {
     return

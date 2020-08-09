@@ -1,5 +1,5 @@
 import React from 'react';
-import {FirePattern} from "../../features/fire/fireSlice";
+import {FirePattern, updateFirePatternRelatedThings} from "../../features/fire/fireSlice";
 import {Area, AreaChart, CartesianGrid, Tooltip, XAxis, YAxis} from "recharts";
 import {ChartData, createChartData, mergeChartData} from "./CompoundInterestChart";
 import {PhaseData} from "../../features/fire/Phase";
@@ -10,8 +10,9 @@ interface Props {
 }
 
 function addAnnualInterest(firePattern: FirePattern, addPercent: number, valueKey: string): ChartData[] {
-  const copiedFirePattern = Object.assign(firePattern)
+  const copiedFirePattern = JSON.parse(JSON.stringify(firePattern))
   copiedFirePattern.phases.forEach((p: PhaseData) => p.annualInterest = Number(p.annualInterest || 0) + addPercent )
+  updateFirePatternRelatedThings(copiedFirePattern)
   return createChartData(copiedFirePattern, valueKey) as ChartData[]
 }
 
@@ -25,6 +26,7 @@ export function CompoundInterestAreaChartNearPercent({firePattern, nearPercent}:
     const dataPlusAlpha: ChartData[] = addAnnualInterest(firePattern, Math.abs(nearPercent), 'plus')
     const dataMinusAlpha: ChartData[] = addAnnualInterest(firePattern, -Math.abs(nearPercent), 'minus')
 
+    console.log('before resultData', dataPlusAlpha, data, dataMinusAlpha)
     const resultData = mergeChartData(dataPlusAlpha, data, dataMinusAlpha)
     resultData.forEach(d => {
       // @ts-ignore
@@ -32,6 +34,7 @@ export function CompoundInterestAreaChartNearPercent({firePattern, nearPercent}:
       // @ts-ignore
       d.base = d.base - d.minus
     })
+    console.log('processed resultData', resultData)
     return resultData
   }
 
@@ -49,10 +52,16 @@ export function CompoundInterestAreaChartNearPercent({firePattern, nearPercent}:
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
         <YAxis />
-        <Tooltip />
-        <Area type="monotone" dataKey="minus" stackId="1" stroke="#8884d8" fill="#8884d8" />
-        <Area type="monotone" dataKey="base" stackId="1" stroke="#82ca9d" fill="#82ca9d" />
-        <Area type="monotone" dataKey="plus" stackId="1" stroke="#ffc658" fill="#ffc658" />
+        <Tooltip labelFormatter={label => `${label}歳`}
+                 formatter={((value, name, entry, index) => {
+                   let amount = value
+                   if (name.charAt(0) !== '-') amount += entry.payload.minus
+                   if (name.charAt(0) === '+') amount += entry.payload.base
+                   return `${amount}万`
+                     })} />
+        <Area type="monotone" name={`-${nearPercent}運用`} dataKey="minus" stackId="1" stroke="#8884d8" fill="#8884d8" />
+        <Area type="monotone" name='想定通り運用' dataKey="base" stackId="1" stroke="#82ca9d" fill="#82ca9d" />
+        <Area type="monotone" name={`+${nearPercent}運用`} dataKey="plus" stackId="1" stroke="#ffc658" fill="#ffc658" />
       </AreaChart>
 
       // <LineChart
