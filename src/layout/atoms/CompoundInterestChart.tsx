@@ -76,8 +76,9 @@ export function CompoundInterestChart() {
       >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" tickFormatter={(tickItem) => `${tickItem}歳`} />
-        <YAxis tickFormatter={(tickItem) => `${tickItem}万`} />
-        <Tooltip />
+        <YAxis tickFormatter={(tickItem) => `${tickItem.toLocaleString()}万`} />
+        <Tooltip labelFormatter={label => `${label}歳`}
+        formatter={item => `${item.toLocaleString()}万`}/>
         <Legend />
         <Line type="monotone" dataKey="p1" stroke="#8884d8" dot={{ r:2 }} activeDot={{ r: 7 }}
               name='プラン1' />
@@ -85,10 +86,6 @@ export function CompoundInterestChart() {
               name='プラン2' />
         <Line type="monotone" dataKey="p3" stroke="#ca9d82" dot={{ r:2 }} activeDot={{ r: 7 }}
               name='プラン3' />
-
-        {/*<Area type="monotone" name='プラン1' dataKey="p1" stackId="1" stroke="#8884d8" fill="#8884d8" />*/}
-        {/*<Area type="monotone" name='プラン2' dataKey="p2" stackId="1" stroke="#82ca9d" fill="#82ca9d" />*/}
-        {/*<Area type="monotone" name='プラン3' dataKey="p3" stackId="1" stroke="#ffc658" fill="#ffc658" />*/}
       </LineChart>
       )}
     </>
