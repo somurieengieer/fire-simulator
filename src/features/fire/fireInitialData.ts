@@ -1,4 +1,4 @@
-import {PhaseData} from "../../layout/molecules/Phase";
+import {PhaseData} from "./Phase";
 
 // デフォルト値
 export const initialPhasesDefault = (): PhaseData[] => [

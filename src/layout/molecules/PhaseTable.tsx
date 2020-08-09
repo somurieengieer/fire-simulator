@@ -6,7 +6,7 @@ import {addPhase, FirePattern, updatePhases} from "../../features/fire/fireSlice
 import {SubHeaderRowSet, TablePatternHeaderSet, TableRowSet} from "./PhaseTableItems";
 import {theme} from "../materialui/theme";
 import AddIcon from '@material-ui/icons/Add';
-import {PhaseClass} from "./Phase";
+import {PhaseClass} from "../../features/fire/Phase";
 
 const useStyles = makeStyles({
   table: {

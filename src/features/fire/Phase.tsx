@@ -1,25 +1,5 @@
 import React from 'react';
-import {calcCompoundInterestResult, CompoundInterestResult} from "../../features/compoundInterest/compoundInterest";
-import {makeStyles} from "@material-ui/core/styles";
-import {theme} from "../materialui/theme";
-
-const useStyles = makeStyles({
-  table: {
-    // width: 650,
-  },
-  tableCellLabel: {
-    minWidth: 200,
-    backgroundColor: theme.palette.secondary.light,
-  },
-  tableCell: {
-    minWidth: 200,
-  },
-  linkCell: {
-    '&:hover': {
-      cursor: 'pointer',
-    },
-  }
-});
+import {calcCompoundInterestResult, CompoundInterestResult} from "../compoundInterest/compoundInterest";
 
 export interface PhaseData {
   ageAtStart?: number, // フェーズ開始時年齢

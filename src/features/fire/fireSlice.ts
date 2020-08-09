@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../../app/store';
-import {PhaseClass, PhaseData, PhasesClass} from "../../layout/molecules/Phase";
+import {PhaseClass, PhaseData, PhasesClass} from "./Phase";
 import {CompoundInterestResult} from "../compoundInterest/compoundInterest";
 import {initialPhasesDefault} from "./fireInitialData";
 

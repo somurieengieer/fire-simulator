@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {TableCell, TableHead, TableRow} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import {theme} from "../materialui/theme";
-import {PhaseClass, PhaseData} from "./Phase";
+import {PhaseClass, PhaseData} from "../../features/fire/Phase";
 import {FirePattern, selectFirePatterns, selectPatternNumbers, updatePhases} from "../../features/fire/fireSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {
