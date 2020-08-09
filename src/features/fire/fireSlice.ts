@@ -59,10 +59,23 @@ const updateFirePatternRelatedThings = (firePattern: FirePattern): void => {
   firePattern.compoundInterestResult = new PhasesClass(firePattern.phases.map(data => new PhaseClass(data))).compoundInterestResult()
 }
 function hasError(firePattern: FirePattern): boolean {
-  if (firePattern.phases.find(phase => !phase.ageAtStart || !phase.ageAtEnd)) return true
+  if (!firePattern.phases[0].ageAtStart) {
+    console.log('hasError, ageAtStart does not set. firePattern=', firePattern.patternNumber, ', ageAtStart=', firePattern.phases[0].ageAtStart)
+    return true
+  }
+  if (firePattern.phases.find(phase => !phase.ageAtEnd)) {
+    console.log('hasError, ageAtEnd does not set. firePattern=', firePattern.patternNumber, 'ageAtEnd', firePattern.phases.map(p => p.ageAtEnd))
+    return true
+  }
   // @ts-ignore
-  if (firePattern.phases.find(phase => phase.ageAtStart > phase.ageAtEnd)) return true
-  if (firePattern.phases.find(phase => !phase.annualInterest && phase.annualInterest != 0)) return true
+  if (firePattern.phases.find(phase => phase.ageAtStart > phase.ageAtEnd)) {
+    console.log('hasError, ageAtStart > ageAtEnd. firePattern=', firePattern.patternNumber, 'ageAtStart', firePattern.phases.map(p => p.ageAtStart), 'ageAtEnd', firePattern.phases.map(p => p.ageAtEnd))
+    return true
+  }
+  if (firePattern.phases.find(phase => !phase.annualInterest && phase.annualInterest != 0)) {
+    console.log('hasError, annualInterest does not set. firePattern=', firePattern.patternNumber, 'annualInterest', firePattern.phases.map(p => p.annualInterest))
+    return true
+  }
   return false
 }
 

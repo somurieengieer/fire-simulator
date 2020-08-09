@@ -19,6 +19,7 @@ interface PhaseDataForWorkerProps {
   ageAtStart?: number,
   ageAtRetirement: number,
   income: number,
+  retirementAllowance: number,
   expense: number,
   expenseAfterRetirement?: number,
   annuity: number, // 年金
@@ -26,7 +27,7 @@ interface PhaseDataForWorkerProps {
   annualInterest: number,
 }
 function createPhaseDataForWorker(props: PhaseDataForWorkerProps ): PhaseData[] {
-  return [
+  const result = [
     {
       ageAtStart: props.ageAtStart || 22,
       ageAtEnd: props.ageAtRetirement,
@@ -39,17 +40,30 @@ function createPhaseDataForWorker(props: PhaseDataForWorkerProps ): PhaseData[] 
       annualInterest: props.annualInterest,
     },
     {
-      ageAtStart: props.ageAtRetirement,
-      ageAtEnd: 60,
+      // ageAtStart: props.ageAtRetirement + 1,
+      ageAtEnd: props.ageAtRetirement + 1,
       ageAtStartEditable: false,
       assetAtStartEditable: false,
-      note: '年金受給前生活（年金支払いあり）',
-      income: 0,
+      note: '退職金受け取り',
+      income: props.retirementAllowance,
       expense: props.expense,
       annualInterest: props.annualInterest,
     },
-    {
-      ageAtStart: 61,
+    ]
+  if (props.ageAtRetirement < 60) {
+    result.push({
+        // ageAtStart: props.ageAtRetirement + 2,
+        ageAtEnd: 60,
+        ageAtStartEditable: false,
+        assetAtStartEditable: false,
+        note: '年金受給前生活（年金支払いあり）',
+        income: 0,
+        expense: props.expense,
+        annualInterest: props.annualInterest,
+      })
+  }
+  result.push({
+      // ageAtStart: (props.ageAtRetirement === 60 ? 62 : 61), // 60以下でリタイアする前提
       ageAtEnd: 70,
       ageAtStartEditable: false,
       assetAtStartEditable: false,
@@ -59,7 +73,7 @@ function createPhaseDataForWorker(props: PhaseDataForWorkerProps ): PhaseData[] 
       annualInterest: props.annualInterest,
     },
     {
-      ageAtStart: 71,
+      // ageAtStart: 71,
       ageAtEnd: 85,
       ageAtStartEditable: false,
       assetAtStartEditable: false,
@@ -68,8 +82,9 @@ function createPhaseDataForWorker(props: PhaseDataForWorkerProps ): PhaseData[] 
       expense: props.expenseAfterRetirement || props.expense - 20,
       annualInterest: props.annualInterest,
     },
-  ]
-
+  )
+  console.log('result', result)
+  return result
 }
 
 const templateOfNormalSalaryMan = {
@@ -80,13 +95,14 @@ const templateOfNormalSalaryMan = {
       ageAtStart: 22,
       ageAtRetirement: 60,
       income: 470,
+      retirementAllowance: 1500,
       expense: 420,
       expenseAfterRetirement: 200,
       annuity: 200, // 年金
       assetAtStart: 0,
       annualInterest: 0,
     })
-    phaseData.splice(1, 1)
+    // phaseData.splice(1, 1)
     return phaseData
   }
   // createPhaseData: () => [
@@ -137,6 +153,7 @@ const templateOfSolidMan = {
       ageAtStart: 32,
       ageAtRetirement: 50,
       income: 470,
+      retirementAllowance: 800,
       expense: 270,
       annuity: 140, // 年金
       assetAtStart: 2000,
@@ -150,6 +167,7 @@ const initialPhasesOf40fire = {
     createPhaseDataForWorker({
       ageAtRetirement: 40,
       income: 470,
+      retirementAllowance: 500,
       expense: 260,
       annuity: 140, // 年金
       assetAtStart: 0,
@@ -163,6 +181,7 @@ const initialPhasesOf100MPYfire = {
     createPhaseDataForWorker({
       ageAtRetirement: 52,
       income: 400,
+      retirementAllowance: 800,
       expense: 300,
       annuity: 160, // 年金
       assetAtStart: 0,
