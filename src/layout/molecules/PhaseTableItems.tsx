@@ -94,7 +94,7 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
               <option value={i}>{o.label}</option>
             ))}
           </select>
-          {copiedTemplateNumber && (
+          {Boolean(copiedTemplateNumber) && (
             <ConfirmDialog message={'入力されている値が上書きされますがよろしいですか'}
                            openFlag={copiedTemplateNumber !== 0}
                            closeFlag={() => setCopiedTemplateNumber(undefined)}

@@ -2,7 +2,7 @@ import React from 'react';
 import {Grid, Paper, Table, TableBody, TableCell, TableContainer, TableRow} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import {useDispatch} from "react-redux";
-import {addPhase, FirePattern, updatePhases} from "../../features/fire/fireSlice";
+import {addPhase, deletePhase, FirePattern, updatePhases} from "../../features/fire/fireSlice";
 import {SubHeaderRowSet, TablePatternHeaderSet, TableRowSet} from "./PhaseTableItems";
 import {theme} from "../materialui/theme";
 import AddIcon from '@material-ui/icons/Add';
@@ -79,11 +79,14 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
                                    size={3}
                             />
                             歳
+                            {i !== 0 && (
+                              <button onClick={() => dispatch(deletePhase({patternNumber: firePattern.patternNumber, phaseIndex: i}))}>✗</button>
+                            )}
                           </TableCell>
                         ))}
                         <TableCell rowSpan={10} width={40} style={{backgroundColor: theme.palette.primary.main}}
                                    className={classes.linkCell}
-                                   onClick={() => dispatch(addPhase(firePattern.patternNumber))}
+                                   onClick={() => dispatch(addPhase({patternNumber: firePattern.patternNumber}))}
                         >
                           {/*<Box style={{height: '100%', width: '100%'}}>*/}
                           {/*  テスト*/}

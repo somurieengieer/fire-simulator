@@ -92,9 +92,14 @@ export const fireSlice = createSlice({
 
       updateRelatedThings(state)
     },
-    addPhase: (state, action: PayloadAction<number>) => {
-      // PayloadはPatternNumber。Indexは -1 する
-      const firePatternIndex = action.payload - 1
+    deletePhase: (state, action: PayloadAction<{patternNumber: number, phaseIndex: number}>) => {
+      const patternIndex = action.payload.patternNumber - 1
+      const phaseIndex = action.payload.phaseIndex
+      state.firePatterns[patternIndex].phases.splice(phaseIndex, 1)
+      updateRelatedThings(state)
+    },
+    addPhase: (state, action: PayloadAction<{patternNumber: number}>) => {
+      const firePatternIndex = action.payload.patternNumber - 1
       const targetFirePattern = state.firePatterns[firePatternIndex]
       targetFirePattern.phases.push(createNewPhase(targetFirePattern))
       updateRelatedThings(state)
@@ -102,7 +107,7 @@ export const fireSlice = createSlice({
   },
 });
 
-export const { updatePhases, addPhase } = fireSlice.actions;
+export const { updatePhases, deletePhase, addPhase } = fireSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
