@@ -5,12 +5,7 @@ import {theme} from "../materialui/theme";
 import {PhaseClass, PhaseData} from "../../features/fire/Phase";
 import {FirePattern, selectFirePatterns, selectPatternNumbers, updatePhases} from "../../features/fire/fireSlice";
 import {useDispatch, useSelector} from "react-redux";
-import {
-  initialPhasesOf40fire,
-  initialPhasesOfNormalSalaryMan,
-  initialPhasesOfNormalSalaryMan3percent,
-  initialPhasesOfSolidMan
-} from "../../features/fire/fireInitialData";
+import {PhasesTemplate, phasesTemplates} from "../../features/fire/fireInitialData";
 import {numberFromHalfWidthToFullWidth} from "../../features/utils/Utils";
 import ConfirmDialog from "../../features/utils/ConfirmDialog";
 
@@ -50,7 +45,7 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
 
   // const updateByTemplate = (optionsIndex: number) => {
   //   if (Number(optionsIndex) == -1) return
-  //   const phaseData = options[optionsIndex].createPhaseData()
+  //   const phaseData = templateOptions[optionsIndex].createPhaseData()
   //   dispatch(updatePhases({
   //     patternNumber: firePattern.patternNumber,
   //     phases: phaseData,
@@ -70,22 +65,20 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
   const execCopyByTemplate = () => {
     if (!copiedTemplateNumber) return
     // @ts-ignore // 0の場合はcreatePhaseDataがないが、その場合は↑でreturnする
-    const phaseData = options[copiedTemplateNumber].createPhaseData()
+    const phaseData = templateOptions()[copiedTemplateNumber].createPhaseData()
     dispatch(updatePhases({
       patternNumber: firePattern.patternNumber,
       phases: phaseData,
     }))
   }
 
-  const options = [
-    {label: '▼テンプレートを選択'},
-    {label: '平均的サラリーマン', createPhaseData: initialPhasesOfNormalSalaryMan},
-    {label: '平均的サラリーマン3%運用', createPhaseData: initialPhasesOfNormalSalaryMan3percent},
-    {label: '堅実FIRE', createPhaseData: initialPhasesOfSolidMan},
-    {label: '堅実FIRE', createPhaseData: initialPhasesOfSolidMan},
-    {label: '40歳FIREプラン（4%運用）', createPhaseData: initialPhasesOf40fire},
-
-  ]
+  const templateOptions = (): PhasesTemplate[] => {
+    return [
+      // @ts-ignore
+      {label: '▼テンプレートを選択'},
+      ...phasesTemplates
+    ]
+  }
 
   return (
     <TableHead>
@@ -94,7 +87,7 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
           <select onChange={v => setCopiedTemplateNumber(Number(v.target.value))}
                   value={copiedTemplateNumber}
                   style={{height: '2em'}}>
-            {options.map((o, i) => (
+            {templateOptions().map((o, i) => (
               <option value={i}>{o.label}</option>
             ))}
           </select>
