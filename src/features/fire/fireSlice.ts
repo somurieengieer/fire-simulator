@@ -68,7 +68,7 @@ function hasError(firePattern: FirePattern): boolean {
 
 
 // TODO: 初期化処理（ここに書くのは微妙）
-// updateRelatedThings(initialState)
+updateRelatedThings(initialState)
 
 export const fireSlice = createSlice({
   name: 'fire',

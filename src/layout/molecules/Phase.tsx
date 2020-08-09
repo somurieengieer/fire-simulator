@@ -114,9 +114,9 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
     const newData = Object.assign({}, phases[index])
     // @ts-ignore
     newData[key] = updatedValue
-    const newPhases = JSON.parse(JSON.stringify(phases))
-    newPhases[index] = newData
-    dispatch(updatePhases(newPhases))
+    const newFirePattern = JSON.parse(JSON.stringify(firePattern))
+    newFirePattern.phases[index] = newData
+    dispatch(updatePhases(newFirePattern))
   }
 
   const titleColSpan = () => phases.length + 1

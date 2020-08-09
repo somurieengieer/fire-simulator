@@ -47,6 +47,7 @@ export function CompoundInterestChart() {
           isAdded = true
         }
       })
+
       // sort
       if (isAdded) {
         accums.sort((a, b) => a.name - b.name)
@@ -54,12 +55,13 @@ export function CompoundInterestChart() {
 
       return accums
     })
+      .map(data => {
+        // 数字に変換
+        const newData: ChartData = {name: data.name}
+        Object.keys(data).forEach(key => newData[key] = Number(data[key]))
+        return newData as ChartData
+      })
   }
-
-  // const data = selectedCompoundInterestResult?.rowByYear
-  //   .map((r: CompoundInterestByYear) => {
-  //     return {name: r.year + selectedPhases?.[0].ageAtStart, p1: r.amount.toFixed(0)}
-  //   })
 
   return (
     <>
@@ -73,8 +75,8 @@ export function CompoundInterestChart() {
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
+        <XAxis dataKey="name" tickFormatter={(tickItem) => `${tickItem}歳`} />
+        <YAxis tickFormatter={(tickItem) => `${tickItem}万`} />
         <Tooltip />
         <Legend />
         <Line type="monotone" dataKey="p1" stroke="#8884d8" dot={{ r:2 }} activeDot={{ r: 7 }}
