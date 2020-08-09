@@ -94,23 +94,18 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
               <option value={i}>{o.label}</option>
             ))}
           </select>
-          {Boolean(copiedTemplateNumber) && (
-            <ConfirmDialog message={'入力されている値が上書きされますがよろしいですか'}
-                           openFlag={copiedTemplateNumber !== 0}
-                           closeFlag={() => setCopiedTemplateNumber(undefined)}
-                           callBackWhenYes={execCopyByTemplate}
-                           callBackWhenNo={() => setCopiedTemplateNumber(0)}
-            />
-          )}
+          <ConfirmDialog message={'入力されている値が上書きされますがよろしいですか'}
+                         openFlag={!!copiedTemplateNumber}
+                         closeFlag={() => setCopiedTemplateNumber(undefined)}
+                         callBackWhenYes={execCopyByTemplate}
+                         callBackWhenNo={() => setCopiedTemplateNumber(0)} />
           {selectedPatternNumbers?.filter((i: number) => i !== firePattern.patternNumber).map((i: number) => (
             <button onClick={() => setCopiedPatternNumber(i)}>パターン{numberFromHalfWidthToFullWidth(i)}からコピー</button>
           ))}
-          {copiedPatternNumber && (
-            <ConfirmDialog message={'入力されている値が上書きされますがよろしいですか'}
-                           openFlag={Boolean(copiedPatternNumber)}
-                           closeFlag={() => setCopiedPatternNumber(undefined)}
-                           callBackWhenYes={execCopyByPattern} />
-          )}
+          <ConfirmDialog message={'入力されている値が上書きされますがよろしいですか'}
+                         openFlag={!!copiedPatternNumber}
+                         closeFlag={() => setCopiedPatternNumber(undefined)}
+                         callBackWhenYes={execCopyByPattern} />
         </TableCell>
       </TableRow>
     </TableHead>

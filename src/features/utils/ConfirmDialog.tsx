@@ -33,29 +33,27 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({title, message, openFlag, 
     }
   }
   return (
-    <div>
-      <Dialog
-        open={openFlag}
-        onClose={handleAlertClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{title || '確認'}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            {message}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={exec}  autoFocus>
-            はい
-          </Button>
-          <Button onClick={selectedNo}  autoFocus>
-            いいえ
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+    <Dialog
+      open={openFlag}
+      onClose={handleAlertClose}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle id="alert-dialog-title">{title || '確認'}</DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+          {message}
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={exec}  autoFocus>
+          はい
+        </Button>
+        <Button onClick={selectedNo}  autoFocus>
+          いいえ
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 }
 
