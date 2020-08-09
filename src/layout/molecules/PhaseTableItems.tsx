@@ -10,6 +10,7 @@ import {
   initialPhasesOfNormalSalaryMan3percent,
   initialPhasesOfSolidMan
 } from "../../features/fire/fireInitialData";
+import {numberFromHalfWidthToFullWidth} from "../../features/Utils";
 
 const useStyles = makeStyles({
   table: {
@@ -38,10 +39,7 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
   const dispatch = useDispatch();
 
   const title = (): string => {
-    return 'パターン' + firePattern.patternNumber.toString()
-      .replace(/[0-9]/g, function(s) {
-        return String.fromCharCode(s.charCodeAt(0) + 0xFEE0);
-      });
+    return 'パターン' + numberFromHalfWidthToFullWidth(firePattern.patternNumber)
   }
 
   const updateByTemplate = (optionsIndex: number) => {
@@ -64,12 +62,15 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
       <TableRow className={classes.tableHeadRow}>
         <TableCell colSpan={colSpan}>{title()}
           <select onChange={v => updateByTemplate(Number(v.target.value))}
-                  style={{verticalAlign: 'text-bottom'}}>
+                  style={{height: '2em'}}>
             <option value='-1'>▼テンプレートを選択</option>
             {options.map((o, i) => (
               <option value={i}>{o.label}</option>
             ))}
           </select>
+          {[1,2,3].filter(i => i !== firePattern.patternNumber).map(i => (
+            <button>パターン{numberFromHalfWidthToFullWidth(i)}からコピー</button>
+          ))}
         </TableCell>
       </TableRow>
     </TableHead>
