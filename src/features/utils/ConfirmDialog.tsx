@@ -46,10 +46,10 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({title, message, openFlag, 
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={exec}  autoFocus>
+        <Button onClick={exec} autoFocus>
           はい
         </Button>
-        <Button onClick={selectedNo}  autoFocus>
+        <Button onClick={selectedNo}>
           いいえ
         </Button>
       </DialogActions>

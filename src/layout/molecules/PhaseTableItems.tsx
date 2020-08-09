@@ -6,6 +6,7 @@ import {PhaseClass, PhaseData} from "../../features/fire/Phase";
 import {FirePattern, selectFirePatterns, selectPatternNumbers, updatePhases} from "../../features/fire/fireSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {
+  initialPhasesOf40fire,
   initialPhasesOfNormalSalaryMan,
   initialPhasesOfNormalSalaryMan3percent,
   initialPhasesOfSolidMan
@@ -81,6 +82,9 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
     {label: '平均的サラリーマン', createPhaseData: initialPhasesOfNormalSalaryMan},
     {label: '平均的サラリーマン3%運用', createPhaseData: initialPhasesOfNormalSalaryMan3percent},
     {label: '堅実FIRE', createPhaseData: initialPhasesOfSolidMan},
+    {label: '堅実FIRE', createPhaseData: initialPhasesOfSolidMan},
+    {label: '40歳FIREプラン（4%運用）', createPhaseData: initialPhasesOf40fire},
+
   ]
 
   return (
