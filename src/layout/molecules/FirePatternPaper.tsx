@@ -1,7 +1,6 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
-import {PhasesTable} from "./Phase";
-import {useDispatch} from "react-redux";
+import {PhasesTable} from "./PhaseTable";
 import {FirePattern} from "../../features/fire/fireSlice";
 import {Box, Paper, Typography} from "@material-ui/core";
 
@@ -19,11 +18,6 @@ interface FirePatternPaperProps {
 export function FirePatternPaper({firePattern}: FirePatternPaperProps) {
 
   const classes = useStyles();
-  const dispatch = useDispatch();
-
-  const patternNumber = firePattern.patternNumber
-  const phases = firePattern.phases
-  const compoundInterestResult = firePattern.compoundInterestResult
   const hasError = firePattern.hasError
 
   return (
