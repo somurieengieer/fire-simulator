@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {TableCell, TableHead, TableRow} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import {theme} from "../materialui/theme";
@@ -7,7 +7,6 @@ import {FirePattern, selectFirePatterns, selectPatternNumbers, updatePhases} fro
 import {useDispatch, useSelector} from "react-redux";
 import {PhasesTemplate, phasesTemplates} from "../../features/fire/fireInitialData";
 import {numberFromHalfWidthToFullWidth} from "../../features/utils/Utils";
-import ConfirmDialog from "../../features/utils/ConfirmDialog";
 
 const useStyles = makeStyles({
   table: {
@@ -36,8 +35,6 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
   const dispatch = useDispatch();
   const selectedPatternNumbers = useSelector(selectPatternNumbers)
   const selectedFirePatterns = useSelector(selectFirePatterns)
-  const [copiedPatternNumber, setCopiedPatternNumber] = useState<undefined | number>(undefined)
-  const [copiedTemplateNumber, setCopiedTemplateNumber] = useState<undefined | number>(undefined)
 
   const title = (): string => {
     return 'パターン' + numberFromHalfWidthToFullWidth(firePattern.patternNumber)
@@ -52,20 +49,17 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
   //   }))
   // }
 
-  const execCopyByPattern = () => {
-    if (copiedPatternNumber) {
-      const newPhases: PhaseData[] = JSON.parse(JSON.stringify(selectedFirePatterns[copiedPatternNumber - 1].phases))
-      dispatch(updatePhases({
-        patternNumber: firePattern.patternNumber,
-        phases: newPhases,
-      }))
-    }
+  const copyPatternByPatternNumber = (patternNumber: number) => {
+     const newPhases: PhaseData[] = JSON.parse(JSON.stringify(selectedFirePatterns[patternNumber - 1].phases))
+     dispatch(updatePhases({
+       patternNumber: firePattern.patternNumber,
+       phases: newPhases,
+     }))
   }
 
-  const execCopyByTemplate = () => {
-    if (!copiedTemplateNumber) return
+  const copyPatternByTemplateNumber = (templateIndex: number) => {
     // @ts-ignore // 0の場合はcreatePhaseDataがないが、その場合は↑でreturnする
-    const phaseData = templateOptions()[copiedTemplateNumber].createPhaseData()
+    const phaseData = templateOptions()[templateIndex].createPhaseData()
     dispatch(updatePhases({
       patternNumber: firePattern.patternNumber,
       phases: phaseData,
@@ -84,25 +78,15 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
     <TableHead>
       <TableRow className={classes.tableHeadRow}>
         <TableCell colSpan={colSpan}>{title()}&nbsp;
-          <select onChange={v => setCopiedTemplateNumber(Number(v.target.value))}
-                  value={copiedTemplateNumber}
+          <select onChange={v => copyPatternByTemplateNumber(Number(v.target.value))}
                   style={{height: '2em'}}>
             {templateOptions().map((o, i) => (
               <option value={i}>{o.label}</option>
             ))}
           </select>
-          <ConfirmDialog message={'入力されている値が上書きされますがよろしいですか'}
-                         openFlag={!!copiedTemplateNumber}
-                         closeFlag={() => setCopiedTemplateNumber(undefined)}
-                         callBackWhenYes={execCopyByTemplate}
-                         callBackWhenNo={() => setCopiedTemplateNumber(0)} />
           {selectedPatternNumbers?.filter((i: number) => i !== firePattern.patternNumber).map((i: number) => (
-            <button onClick={() => setCopiedPatternNumber(i)}>パターン{numberFromHalfWidthToFullWidth(i)}からコピー</button>
+            <button onClick={() => copyPatternByPatternNumber(i)}>パターン{numberFromHalfWidthToFullWidth(i)}からコピー</button>
           ))}
-          <ConfirmDialog message={'入力されている値が上書きされますがよろしいですか'}
-                         openFlag={!!copiedPatternNumber}
-                         closeFlag={() => setCopiedPatternNumber(undefined)}
-                         callBackWhenYes={execCopyByPattern} />
         </TableCell>
       </TableRow>
     </TableHead>
