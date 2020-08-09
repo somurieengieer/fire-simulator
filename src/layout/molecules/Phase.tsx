@@ -31,7 +31,7 @@ export interface PhaseData {
   ageAtEnd?: number,   // フェーズ終了時年齢
   ageAtStartEditable: boolean,
   assetAtStartEditable: boolean,
-  note?: string,
+  note: string,
   income?: number, // 収入
   expense?: number, // 支出
   assetAtStart?: number, // 開始時資産

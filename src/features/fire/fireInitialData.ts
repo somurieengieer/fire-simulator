@@ -7,6 +7,7 @@ export const initialPhasesDefault = (): PhaseData[] => [
     ageAtEnd: 60,
     ageAtStartEditable: true,
     assetAtStartEditable: true,
+    note: '',
     income: 500,
     expense: 400,
     assetAtStart: 600,

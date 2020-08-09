@@ -15,6 +15,7 @@ function createNewPhase(firePattern: FirePattern): PhaseData {
     ageAtEnd: Number(lastPhase.ageAtEnd || 0) + 11,
     ageAtStartEditable: false,
     assetAtStartEditable: false,
+    note: '',
     income: lastPhase.income,
     expense: lastPhase.expense,
     assetAtStart: lastPhase.assetAtStart,
@@ -52,7 +53,6 @@ const updateFirePatternRelatedThings = (firePattern: FirePattern): void => {
   }
 
   for (let i = 1; i < firePattern.phases.length; i++) {
-    console.log(firePattern.phases[i])
     firePattern.phases[i].assetAtStart = (new PhaseClass(firePattern.phases[i-1])).assetAtEnd()
     firePattern.phases[i].ageAtStart = Number(firePattern.phases[i-1].ageAtEnd) + 1
   }
