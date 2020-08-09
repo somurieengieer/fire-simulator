@@ -48,6 +48,11 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
     dispatch(updatePhases(newFirePattern))
   }
 
+  const execDeletePhase = (phaseIndex: number) => {
+    if (!phaseIndex) return
+    dispatch(deletePhase({patternNumber: firePattern.patternNumber, phaseIndex: phaseIndex}))
+  }
+
   const titleColSpan = () => phases.length + 1
 
   return (
@@ -79,8 +84,8 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
                                    size={3}
                             />
                             歳
-                            {i !== 0 && (
-                              <button onClick={() => dispatch(deletePhase({patternNumber: firePattern.patternNumber, phaseIndex: i}))}>✗</button>
+                            { !!i && (
+                              <button onClick={() => execDeletePhase(i)}>✗</button>
                             )}
                           </TableCell>
                         ))}
@@ -88,14 +93,7 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
                                    className={classes.linkCell}
                                    onClick={() => dispatch(addPhase({patternNumber: firePattern.patternNumber}))}
                         >
-                          {/*<Box style={{height: '100%', width: '100%'}}>*/}
-                          {/*  テスト*/}
-                          {/*</Box>*/}
-                          {/*<Button variant="contained" color="primary" onClick={() => dispatch(addPhase(firePattern.patternNumber))}*/}
-                          {/*        style={{height: '100%', width: '100%'}}*/}
-                          {/*>*/}
-                            <AddIcon />
-                          {/*</Button>*/}
+                          <AddIcon />
                         </TableCell>
                       </TableRow>
                       <TableRowSet rowLabel={'メモ'}
