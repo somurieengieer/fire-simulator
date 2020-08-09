@@ -11,9 +11,48 @@ const useStyles = makeStyles({
   },
 });
 
-interface ChartData {
+export interface ChartData {
   name: number,
   [key: string]: number | string;
+}
+
+export function createChartData(pattern: FirePattern, valueKey: string) {
+  const startAge = Number(pattern.phases[0]?.ageAtStart)
+  return pattern.compoundInterestResult?.rowByYear
+    .map((r: CompoundInterestByYear) => {
+      const row: ChartData = {name: r.year + startAge}
+      row[valueKey] = r.amount.toFixed(0)
+      return row
+    })
+}
+
+export function mergeChartData(...dataAry: ChartData[][]): ChartData[] {
+  return dataAry.reduce((accums: ChartData[], curs: ChartData[]) => {
+    if (!curs || curs.length === 0) return accums
+    const newKey = Object.keys(curs[0]).find(k => k !== 'name') as string
+    let isAdded = false
+    curs.forEach(cur => {
+      const targetAccum = accums.find(a => a.name === cur.name)
+      if (targetAccum) {
+        targetAccum[newKey] = cur[newKey]
+      } else {
+        accums.push(cur)
+        isAdded = true
+      }
+    })
+
+    // sort
+    if (isAdded) {
+      accums.sort((a, b) => a.name - b.name)
+    }
+
+    return accums
+  }).map(data => {
+      // 数字に変換
+      const newData: ChartData = {name: data.name}
+      Object.keys(data).forEach(key => newData[key] = Number(data[key]))
+      return newData as ChartData
+    })
 }
 
 // 複利計算ページ
@@ -24,43 +63,10 @@ export function CompoundInterestChart() {
   const selectedFirePatterns = useSelector(selectFirePatterns)
 
   const createData = (): ChartData[] => {
-    const dataByPattern: ChartData[][] = selectedFirePatterns.map((pattern: FirePattern) => {
-      const startAge = Number(pattern.phases[0]?.ageAtStart)
-      const valueKey = `p${pattern.patternNumber}`
-      return pattern.compoundInterestResult?.rowByYear
-        .map((r: CompoundInterestByYear) => {
-          const row: ChartData = {name: r.year + startAge}
-          row[valueKey] = r.amount.toFixed(0)
-          return row
-        })
-    })
-    return dataByPattern.reduce((accums: ChartData[], curs: ChartData[]) => {
-      if (!curs || curs.length === 0) return accums
-      const newKey = Object.keys(curs[0]).find(k => k !== 'name') as string
-      let isAdded = false
-      curs.forEach(cur => {
-        const targetAccum = accums.find(a => a.name === cur.name)
-        if (targetAccum) {
-          targetAccum[newKey] = cur[newKey]
-        } else {
-          accums.push(cur)
-          isAdded = true
-        }
-      })
+    const dataByPattern: ChartData[][] = selectedFirePatterns
+      .map((pattern: FirePattern) => createChartData(pattern, `p${pattern.patternNumber}`))
 
-      // sort
-      if (isAdded) {
-        accums.sort((a, b) => a.name - b.name)
-      }
-
-      return accums
-    })
-      .map(data => {
-        // 数字に変換
-        const newData: ChartData = {name: data.name}
-        Object.keys(data).forEach(key => newData[key] = Number(data[key]))
-        return newData as ChartData
-      })
+    return mergeChartData(...dataByPattern)
   }
 
   return (

@@ -7,6 +7,7 @@ import {SubHeaderRowSet, TablePatternHeaderSet, TableRowSet} from "./PhaseTableI
 import {theme} from "../materialui/theme";
 import AddIcon from '@material-ui/icons/Add';
 import {PhaseClass} from "../../features/fire/Phase";
+import {CompoundInterestAreaChartNearPercent} from "../atoms/CompoundInterestAreaChartNearPercent";
 
 const useStyles = makeStyles({
   table: {
@@ -58,78 +59,81 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
   return (
     <>
       <div style={{width: '100%'}}>
-          <Grid  style={{marginLeft: 40}}>
-            <Grid container spacing={2}>
-              <Grid item xs={9}>
-                <TableContainer component={Paper} >
-                  <Table className={classes.table} aria-label="simple table"
-                         size={'small'}
-                  >
-                    <TablePatternHeaderSet firePattern={firePattern} colSpan={titleColSpan() + 1} />
-                    <TableBody>
-                      <TableRow>
-                        <TableCell className={classes.tableCellLabel} component="th" scope="row">
-                          年齢
+        <Grid  style={{marginLeft: 40}}>
+          <Grid container spacing={2}>
+            <Grid item xs={7}>
+              <TableContainer component={Paper} >
+                <Table className={classes.table} aria-label="simple table"
+                       size={'small'}
+                >
+                  <TablePatternHeaderSet firePattern={firePattern} colSpan={titleColSpan() + 1} />
+                  <TableBody>
+                    <TableRow>
+                      <TableCell className={classes.tableCellLabel} component="th" scope="row">
+                        年齢
+                      </TableCell>
+                      {phases.map((phase: PhaseClass, i: number) => (
+                        <TableCell className={classes.tableCell} align="right">
+                          <input value={phase.ageAtStart}
+                                 onChange={v => update(i, 'ageAtStart', v.target.value)}
+                                 disabled={!phase.ageAtStartEditable}
+                                 size={3}
+                          />
+                          歳〜
+                          <input value={phase.ageAtEnd}
+                                 onChange={v => update(i, 'ageAtEnd', v.target.value)}
+                                 size={3}
+                          />
+                          歳
+                          { !!i && (
+                            <button onClick={() => execDeletePhase(i)}>✗</button>
+                          )}
                         </TableCell>
-                        {phases.map((phase: PhaseClass, i: number) => (
-                          <TableCell className={classes.tableCell} align="right">
-                            <input value={phase.ageAtStart}
-                                   onChange={v => update(i, 'ageAtStart', v.target.value)}
-                                   disabled={!phase.ageAtStartEditable}
-                                   size={3}
-                            />
-                            歳〜
-                            <input value={phase.ageAtEnd}
-                                   onChange={v => update(i, 'ageAtEnd', v.target.value)}
-                                   size={3}
-                            />
-                            歳
-                            { !!i && (
-                              <button onClick={() => execDeletePhase(i)}>✗</button>
-                            )}
-                          </TableCell>
-                        ))}
-                        <TableCell rowSpan={10} width={40} style={{backgroundColor: theme.palette.primary.main}}
-                                   className={classes.linkCell}
-                                   onClick={() => dispatch(addPhase({patternNumber: firePattern.patternNumber}))}
-                        >
-                          <AddIcon />
-                        </TableCell>
-                      </TableRow>
-                      <TableRowSet rowLabel={'メモ'}
-                                   phaseClasses={phases}
-                                   valueCallback={p => p.note}
-                                   isTypeString={true}
-                                   onChange={(newValue, i) => update(i, 'note', newValue)} />
-                      <SubHeaderRowSet title={'収入'} colSpan={titleColSpan()} />
-                      <TableRowSet rowLabel={'手取り'}
-                                   phaseClasses={phases}
-                                   valueCallback={p => p.income}
-                                   onChange={(newValue, i) => update(i, 'income', newValue)} />
-                      <SubHeaderRowSet title={'支出'} colSpan={titleColSpan()} />
-                      <TableRowSet rowLabel={'支出総額'}
-                                   phaseClasses={phases}
-                                   valueCallback={p => p.expense}
-                                   onChange={(newValue, i) => update(i, 'expense', newValue)} />
-                      <SubHeaderRowSet title={'資産運用'} colSpan={titleColSpan()} />
-                      <TableRowSet rowLabel={'開始時資産'}
-                                   phaseClasses={phases}
-                                   valueCallback={p => p.assetAtStart}
-                                   onChange={(newValue, i) => update(i, 'assetAtStart', newValue)}
-                                   disabled={(phase: PhaseClass) => !phase.assetAtStartEditable} />
-                      <TableRowSet rowLabel={'リターン'}
-                                   phaseClasses={phases}
-                                   valueCallback={p => p.annualInterest}
-                                   onChange={(newValue, i) => update(i, 'annualInterest', newValue)}
-                                   disabled={(phase: PhaseClass) => false} />
-                      <TableRowSet rowLabel={'終了時資産'}
-                                   phaseClasses={phases}
-                                   valueCallback={p => p.assetAtEnd()?.toFixed(0)}
-                                   onChange={(newValue, i) => update(i, 'assetAtEnd()', newValue)}
-                                   disabled={(phase: PhaseClass) => true} />
-                    </TableBody>
+                      ))}
+                      <TableCell rowSpan={10} width={40} style={{backgroundColor: theme.palette.primary.main}}
+                                 className={classes.linkCell}
+                                 onClick={() => dispatch(addPhase({patternNumber: firePattern.patternNumber}))}
+                      >
+                        <AddIcon />
+                      </TableCell>
+                    </TableRow>
+                    <TableRowSet rowLabel={'メモ'}
+                                 phaseClasses={phases}
+                                 valueCallback={p => p.note}
+                                 isTypeString={true}
+                                 onChange={(newValue, i) => update(i, 'note', newValue)} />
+                    <SubHeaderRowSet title={'収入'} colSpan={titleColSpan()} />
+                    <TableRowSet rowLabel={'手取り'}
+                                 phaseClasses={phases}
+                                 valueCallback={p => p.income}
+                                 onChange={(newValue, i) => update(i, 'income', newValue)} />
+                    <SubHeaderRowSet title={'支出'} colSpan={titleColSpan()} />
+                    <TableRowSet rowLabel={'支出総額'}
+                                 phaseClasses={phases}
+                                 valueCallback={p => p.expense}
+                                 onChange={(newValue, i) => update(i, 'expense', newValue)} />
+                    <SubHeaderRowSet title={'資産運用'} colSpan={titleColSpan()} />
+                    <TableRowSet rowLabel={'開始時資産'}
+                                 phaseClasses={phases}
+                                 valueCallback={p => p.assetAtStart}
+                                 onChange={(newValue, i) => update(i, 'assetAtStart', newValue)}
+                                 disabled={(phase: PhaseClass) => !phase.assetAtStartEditable} />
+                    <TableRowSet rowLabel={'リターン'}
+                                 phaseClasses={phases}
+                                 valueCallback={p => p.annualInterest}
+                                 onChange={(newValue, i) => update(i, 'annualInterest', newValue)}
+                                 disabled={(phase: PhaseClass) => false} />
+                    <TableRowSet rowLabel={'終了時資産'}
+                                 phaseClasses={phases}
+                                 valueCallback={p => p.assetAtEnd()?.toFixed(0)}
+                                 onChange={(newValue, i) => update(i, 'assetAtEnd()', newValue)}
+                                 disabled={(phase: PhaseClass) => true} />
+                  </TableBody>
                 </Table>
               </TableContainer>
+            </Grid>
+            <Grid item xs={5}>
+              <CompoundInterestAreaChartNearPercent firePattern={firePattern} nearPercent={0.5} />
             </Grid>
           </Grid>
         </Grid>
