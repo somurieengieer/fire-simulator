@@ -1,16 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {TableCell, TableHead, TableRow} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import {theme} from "../materialui/theme";
-import {PhaseClass} from "./Phase";
-import {FirePattern, updatePhases} from "../../features/fire/fireSlice";
-import {useDispatch} from "react-redux";
+import {PhaseClass, PhaseData} from "./Phase";
+import {FirePattern, selectFirePatterns, selectPatternNumbers, updatePhases} from "../../features/fire/fireSlice";
+import {useDispatch, useSelector} from "react-redux";
 import {
   initialPhasesOfNormalSalaryMan,
   initialPhasesOfNormalSalaryMan3percent,
   initialPhasesOfSolidMan
 } from "../../features/fire/fireInitialData";
-import {numberFromHalfWidthToFullWidth} from "../../features/Utils";
+import {numberFromHalfWidthToFullWidth} from "../../features/utils/Utils";
+import ConfirmDialog from "../../features/utils/ConfirmDialog";
 
 const useStyles = makeStyles({
   table: {
@@ -37,6 +38,9 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
   const classes = useStyles();
 
   const dispatch = useDispatch();
+  const selectedPatternNumbers = useSelector(selectPatternNumbers)
+  const selectedFirePatterns = useSelector(selectFirePatterns)
+  const [copiedPatternNumber, setCopiedPatternNumber] = useState<undefined | number>(undefined)
 
   const title = (): string => {
     return 'パターン' + numberFromHalfWidthToFullWidth(firePattern.patternNumber)
@@ -49,6 +53,16 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
       patternNumber: firePattern.patternNumber,
       phases: phaseData,
     }))
+  }
+
+  const execCopy = () => {
+    if (copiedPatternNumber) {
+      const newPhases: PhaseData[] = JSON.parse(JSON.stringify(selectedFirePatterns[copiedPatternNumber - 1].phases))
+      dispatch(updatePhases({
+        patternNumber: firePattern.patternNumber,
+        phases: newPhases,
+      }))
+    }
   }
 
   const options = [
@@ -68,9 +82,15 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
               <option value={i}>{o.label}</option>
             ))}
           </select>
-          {[1,2,3].filter(i => i !== firePattern.patternNumber).map(i => (
-            <button>パターン{numberFromHalfWidthToFullWidth(i)}からコピー</button>
+          {selectedPatternNumbers?.filter((i: number) => i !== firePattern.patternNumber).map((i: number) => (
+            <button onClick={() => setCopiedPatternNumber(i)}>パターン{numberFromHalfWidthToFullWidth(i)}からコピー</button>
           ))}
+          {copiedPatternNumber && (
+            <ConfirmDialog message={'入力されている値が上書きされますがよろしいですか'}
+                           openFlag={Boolean(copiedPatternNumber)}
+                           closeFlag={() => setCopiedPatternNumber(undefined)}
+                           callBackWhenYes={execCopy} />
+          )}
         </TableCell>
       </TableRow>
     </TableHead>

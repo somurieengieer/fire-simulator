@@ -108,5 +108,6 @@ export const { updatePhases, addPhase } = fireSlice.actions;
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.fire.value)`
 export const selectFirePatterns = (state: RootState) => state.fire.firePatterns;
+export const selectPatternNumbers = (state: RootState) => state.fire.firePatterns.map((p: FirePattern) => p.patternNumber);
 
 export default fireSlice.reducer;
