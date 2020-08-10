@@ -12,7 +12,6 @@ const useStyles = makeStyles({
   },
   input: {
     width: 60,
-    // width: 42,
   },
 });
 

@@ -26,7 +26,7 @@ export function CompoundInterestAreaChartNearPercent({firePattern, nearPercent}:
     const dataPlusAlpha: ChartData[] = addAnnualInterest(firePattern, Math.abs(nearPercent), 'plus')
     const dataMinusAlpha: ChartData[] = addAnnualInterest(firePattern, -Math.abs(nearPercent), 'minus')
 
-    console.log('before resultData', dataPlusAlpha, data, dataMinusAlpha)
+    console.log('before resultData', firePattern.patternNumber, dataPlusAlpha, data, dataMinusAlpha)
     const resultData = mergeChartData(dataPlusAlpha, data, dataMinusAlpha)
     resultData.forEach(d => {
       // @ts-ignore
@@ -38,15 +38,17 @@ export function CompoundInterestAreaChartNearPercent({firePattern, nearPercent}:
     return resultData
   }
 
+  const existsData = () => firePattern.compoundInterestResult
+
   return (
     <>
-    {createData() && (
+    {existsData() && (
       <AreaChart
         width={500}
         height={400}
         data={createData()}
         margin={{
-          top: 10, right: 30, left: 0, bottom: 0,
+          top: 10, right: 30, left: 16, bottom: 0,
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
@@ -63,7 +65,7 @@ export function CompoundInterestAreaChartNearPercent({firePattern, nearPercent}:
                    let amount = value
                    if (name.charAt(0) !== '-') amount += entry.payload.minus
                    if (name.charAt(0) === '+') amount += entry.payload.base
-                   return `${amount}万`
+                   return `${Number(amount || 0).toLocaleString()}万`
                      })} />
         <Area type="monotone" name={`-${nearPercent}運用`} dataKey="minus" stackId="1" stroke="#8884d8" fill="#8884d8" />
         <Area type="monotone" name='想定通り運用' dataKey="base" stackId="1" stroke="#82ca9d" fill="#82ca9d" />
