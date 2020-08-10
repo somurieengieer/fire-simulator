@@ -53,6 +53,12 @@ export function CompoundInterestAreaChartNearPercent({firePattern, nearPercent}:
         <XAxis dataKey="name" />
         <YAxis />
         <Tooltip labelFormatter={label => `${label}歳`}
+                 itemSorter={(a, b) => {
+                   let result = 2;
+                   if (a.dataKey === 'plus') result = 0
+                   if (a.dataKey === 'base') result = 1
+                   return result
+                 }}
                  formatter={((value, name, entry, index) => {
                    let amount = value
                    if (name.charAt(0) !== '-') amount += entry.payload.minus
