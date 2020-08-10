@@ -7,7 +7,7 @@ import {SubHeaderRowSet, TablePatternHeaderSet, TableRowSet} from "./PhaseTableI
 import {theme} from "../materialui/theme";
 import AddIcon from '@material-ui/icons/Add';
 import {PhaseClass} from "../../features/fire/Phase";
-import {CompoundInterestAreaChartNearPercent} from "../atoms/CompoundInterestAreaChartNearPercent";
+import {CompoundInterestByPattern} from "./CompoundInterestByPattern";
 
 const useStyles = makeStyles({
   table: {
@@ -133,7 +133,7 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
               </TableContainer>
             </Grid>
             <Grid item xs={5}>
-              <CompoundInterestAreaChartNearPercent firePattern={firePattern} nearPercent={0.5} />
+              <CompoundInterestByPattern firePattern={firePattern} />
             </Grid>
           </Grid>
         </Grid>
