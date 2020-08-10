@@ -50,8 +50,8 @@ export function CompoundInterestAreaChartNearPercent({firePattern, nearPercent}:
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
+        <XAxis dataKey="name" tickFormatter={(tickItem) => `${tickItem}歳`} />
+        <YAxis tickFormatter={(tickItem) => `${tickItem.toLocaleString()}万`} />
         <Tooltip labelFormatter={label => `${label}歳`}
                  itemSorter={(a, b) => {
                    let result = 2;
@@ -69,28 +69,6 @@ export function CompoundInterestAreaChartNearPercent({firePattern, nearPercent}:
         <Area type="monotone" name='想定通り運用' dataKey="base" stackId="1" stroke="#82ca9d" fill="#82ca9d" />
         <Area type="monotone" name={`+${nearPercent}運用`} dataKey="plus" stackId="1" stroke="#ffc658" fill="#ffc658" />
       </AreaChart>
-
-      // <LineChart
-      //   width={500}
-      //   height={400}
-      //   data={createData()}
-      //   margin={{
-      //     top: 5, right: 30, left: 20, bottom: 5,
-      //   }}
-      // >
-      //   <CartesianGrid strokeDasharray="3 3" />
-      //   <XAxis dataKey="name" tickFormatter={(tickItem) => `${tickItem}歳`} />
-      //   <YAxis tickFormatter={(tickItem) => `${tickItem.toLocaleString()}万`} />
-      //   <Tooltip labelFormatter={label => `${label}歳`}
-      //   formatter={item => `${item.toLocaleString()}万`}/>
-      //   <Legend />
-      //   <Line type="monotone" dataKey="base" stroke="#8884d8" dot={{ r:2 }} activeDot={{ r: 7 }}
-      //         name='プラン1' />
-      //   <Line type="monotone" dataKey="p2" stroke="#82ca9d" dot={{ r:2 }} activeDot={{ r: 7 }}
-      //         name='プラン2' />
-      //   <Line type="monotone" dataKey="p3" stroke="#ca9d82" dot={{ r:2 }} activeDot={{ r: 7 }}
-      //         name='プラン3' />
-      // </LineChart>
       )}
     </>
   );
