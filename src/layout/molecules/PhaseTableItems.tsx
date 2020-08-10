@@ -8,19 +8,26 @@ import {useDispatch, useSelector} from "react-redux";
 import {PhasesTemplate, phasesTemplates} from "../../features/fire/fireInitialData";
 import {numberFromHalfWidthToFullWidth} from "../../features/utils/Utils";
 
-const useStyles = makeStyles({
+export const usePatternTableStyles = makeStyles({
   table: {
     // width: 650,
   },
   tableCellLabel: {
-    minWidth: 200,
+    // minWidth: 120,
+    width: 120,
+    minWidth: 120,
     backgroundColor: theme.palette.secondary.light,
   },
   tableCell: {
-    minWidth: 200,
+    minWidth: 140,
   },
   tableHeadRow: {
     backgroundColor: theme.palette.secondary.main,
+  },
+  linkCell: {
+    '&:hover': {
+      cursor: 'pointer',
+    },
   }
 });
 
@@ -30,7 +37,7 @@ interface TablePatternHeaderSetProps {
 }
 
 export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeaderSetProps) {
-  const classes = useStyles();
+  const classes = usePatternTableStyles();
 
   const dispatch = useDispatch();
   const selectedPatternNumbers = useSelector(selectPatternNumbers)
@@ -39,15 +46,6 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
   const title = (): string => {
     return 'パターン' + numberFromHalfWidthToFullWidth(firePattern.patternNumber)
   }
-
-  // const updateByTemplate = (optionsIndex: number) => {
-  //   if (Number(optionsIndex) == -1) return
-  //   const phaseData = templateOptions[optionsIndex].createPhaseData()
-  //   dispatch(updatePhases({
-  //     patternNumber: firePattern.patternNumber,
-  //     phases: phaseData,
-  //   }))
-  // }
 
   const copyPatternByPatternNumber = (patternNumber: number) => {
      const newPhases: PhaseData[] = JSON.parse(JSON.stringify(selectedFirePatterns[patternNumber - 1].phases))
@@ -95,7 +93,7 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
 
 export function SubHeaderRowSet({title, colSpan}
 : {title: string, colSpan: number}) {
-  const classes = useStyles();
+  const classes = usePatternTableStyles();
   return (
     <TableRow className={classes.tableHeadRow}>
       <TableCell colSpan={colSpan}>{title}</TableCell>
@@ -116,7 +114,7 @@ export function TableRowSet({rowLabel, phaseClasses, valueCallback, onChange, di
     return disabled ? Number(valueCallback(phase))?.toFixed(0) : valueCallback(phase)
   }
 
-  const classes = useStyles();
+  const classes = usePatternTableStyles();
   return (
     <TableRow>
       <TableCell className={classes.tableCellLabel} component="th" scope="row">
@@ -128,6 +126,7 @@ export function TableRowSet({rowLabel, phaseClasses, valueCallback, onChange, di
                  type={isTypeString ? 'string' : 'number'}
                  onChange={v => onChange(v.target.value, i)}
                  disabled={disabled && disabled(phase)}
+                 style={{width: '140px'}}
           />
         </TableCell>
       ))}

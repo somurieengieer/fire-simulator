@@ -3,28 +3,13 @@ import {Grid, Paper, Table, TableBody, TableCell, TableContainer, TableRow} from
 import {makeStyles} from "@material-ui/core/styles";
 import {useDispatch} from "react-redux";
 import {addPhase, deletePhase, FirePattern, updatePhases} from "../../features/fire/fireSlice";
-import {SubHeaderRowSet, TablePatternHeaderSet, TableRowSet} from "./PhaseTableItems";
+import {SubHeaderRowSet, TablePatternHeaderSet, TableRowSet, usePatternTableStyles} from "./PhaseTableItems";
 import {theme} from "../materialui/theme";
 import AddIcon from '@material-ui/icons/Add';
 import {PhaseClass} from "../../features/fire/Phase";
 import {CompoundInterestByPattern} from "./CompoundInterestByPattern";
 
 const useStyles = makeStyles({
-  table: {
-    // width: 650,
-  },
-  tableCellLabel: {
-    minWidth: 200,
-    backgroundColor: theme.palette.secondary.light,
-  },
-  tableCell: {
-    minWidth: 200,
-  },
-  linkCell: {
-    '&:hover': {
-      cursor: 'pointer',
-    },
-  }
 });
 
 interface PhasesTableProps {
@@ -37,6 +22,7 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
   const phases = firePattern.phases.map(phaseData => new PhaseClass(phaseData))
 
   const classes = useStyles();
+  const tableClasses = usePatternTableStyles();
   const dispatch = useDispatch();
 
   const update = (index: number, key: string, updatedValue: any): void => {
@@ -63,23 +49,23 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
           <Grid container spacing={2}>
             <Grid item xs={7}>
               <TableContainer component={Paper} >
-                <Table className={classes.table} aria-label="simple table"
+                <Table className={tableClasses.table} aria-label="simple table"
                        size={'small'}
                 >
                   <TablePatternHeaderSet firePattern={firePattern} colSpan={titleColSpan() + 1} />
                   <TableBody>
                     <TableRow>
-                      <TableCell className={classes.tableCellLabel} component="th" scope="row">
+                      <TableCell className={tableClasses.tableCellLabel} component="th" scope="row">
                         年齢
                       </TableCell>
                       {phases.map((phase: PhaseClass, i: number) => (
-                        <TableCell className={classes.tableCell} align="right">
+                        <TableCell className={tableClasses.tableCell} align="right">
                           <input value={phase.ageAtStart}
                                  onChange={v => update(i, 'ageAtStart', v.target.value)}
                                  disabled={!phase.ageAtStartEditable}
                                  size={3}
                           />
-                          歳〜
+                          〜
                           <input value={phase.ageAtEnd}
                                  onChange={v => update(i, 'ageAtEnd', v.target.value)}
                                  size={3}
@@ -91,7 +77,7 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
                         </TableCell>
                       ))}
                       <TableCell rowSpan={10} width={40} style={{backgroundColor: theme.palette.primary.main}}
-                                 className={classes.linkCell}
+                                 className={tableClasses.linkCell}
                                  onClick={() => dispatch(addPhase({patternNumber: firePattern.patternNumber}))}
                       >
                         <AddIcon />
