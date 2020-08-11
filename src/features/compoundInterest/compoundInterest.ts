@@ -24,7 +24,7 @@ export function addYearToCompoundInterestResult(result: CompoundInterestResult, 
 export function calcCompoundInterestResult(
   props: CompoundInterestProps): CompoundInterestResult {
 
-  let present = props.presentAmount || 0;
+  let present = Number(props.presentAmount || 0);
   let result: CompoundInterestByYear[] = [];
   for (let y = 0; y <= props.reserveYears + 1; y++) {
     result.push({year: y, amount: present});
