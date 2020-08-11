@@ -24,7 +24,7 @@ export function FirePage() {
   return (
     <>
       <Grid>
-        {selectedFirePatterns.map((pattern: FirePattern) => (
+        {selectedFirePatterns.map((pattern: FirePattern, i: number) => (
           <FirePatternPaper firePattern={pattern} />
         ))}
       </Grid>

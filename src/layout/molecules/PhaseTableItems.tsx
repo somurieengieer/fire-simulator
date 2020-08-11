@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {TableCell, TableHead, TableRow} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import {theme} from "../materialui/theme";
@@ -7,6 +7,7 @@ import {FirePattern, selectFirePatterns, selectPatternNumbers, updatePhases} fro
 import {useDispatch, useSelector} from "react-redux";
 import {PhasesTemplate, phasesTemplates} from "../../features/fire/fireInitialData";
 import {numberFromHalfWidthToFullWidth} from "../../features/utils/Utils";
+import {useLocation} from "react-router";
 
 export const usePatternTableStyles = makeStyles({
   table: {
@@ -42,6 +43,8 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
   const dispatch = useDispatch();
   const selectedPatternNumbers = useSelector(selectPatternNumbers)
   const selectedFirePatterns = useSelector(selectFirePatterns)
+  const [templateIndex, setTemplateIndex] = useState<number>(0)
+  const location = useLocation();
 
   const title = (): string => {
     return 'パターン' + numberFromHalfWidthToFullWidth(firePattern.patternNumber)
@@ -57,12 +60,27 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
 
   const copyPatternByTemplateNumber = (templateIndex: number) => {
     // @ts-ignore // 0の場合はcreatePhaseDataがないが、その場合は↑でreturnする
+    if (!templateIndex) return
     const phaseData = templateOptions()[templateIndex].createPhaseData()
     dispatch(updatePhases({
       patternNumber: firePattern.patternNumber,
       phases: phaseData,
     }))
   }
+
+  useEffect(() => {
+    copyPatternByTemplateNumber(templateIndex)
+  }, [templateIndex])
+
+  useEffect(() => {
+    const getParams = new URLSearchParams(location.search);
+    const templateIndexParam = getParams.get(`t${firePattern.patternNumber}`)
+    if (templateIndexParam &&
+      0 <= Number(templateIndexParam) &&
+      Number(templateIndexParam) < templateOptions().length) {
+      setTemplateIndex(Number(templateIndexParam))
+    }
+  }, [location])
 
   const templateOptions = (): PhasesTemplate[] => {
     return [
@@ -76,7 +94,8 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
     <TableHead>
       <TableRow className={classes.tableHeadRow}>
         <TableCell colSpan={colSpan}>{title()}&nbsp;
-          <select onChange={v => copyPatternByTemplateNumber(Number(v.target.value))}
+          <select value={templateIndex}
+                  onChange={v => setTemplateIndex(Number(v.target.value))}
                   style={{height: '2em'}}>
             {templateOptions().map((o, i) => (
               <option value={i}>{o.label}</option>

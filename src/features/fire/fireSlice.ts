@@ -91,6 +91,13 @@ export const fireSlice = createSlice({
     return initialState
   })(),
   reducers: {
+    initializePhases: (state, action: PayloadAction<{patternNumber: number, phases: PhaseData[]}>) => {
+      state.firePatterns
+        .filter(p => p.patternNumber === action.payload.patternNumber)
+        .forEach(p => p.phases = action.payload.phases)
+
+      updateRelatedThings(state)
+    },
     updatePhases: (state, action: PayloadAction<FirePattern>) => {
       const patternNumber= action.payload.patternNumber
       const updatedPhases = action.payload.phases
@@ -116,7 +123,7 @@ export const fireSlice = createSlice({
   },
 });
 
-export const { updatePhases, deletePhase, addPhase } = fireSlice.actions;
+export const { initializePhases, updatePhases, deletePhase, addPhase } = fireSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of

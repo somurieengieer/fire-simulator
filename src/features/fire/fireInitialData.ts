@@ -152,6 +152,20 @@ const initialPhasesOf100MPYfire = {
       annualInterest: 4,
     })
 }
+const initialPhasesOf150MPYfire = {
+  label:  '年150万貯金FIREプラン（4%運用）',
+  createPhaseData: () =>
+    createPhaseDataForWorker({
+      ageAtRetirement: 46,
+      income: 400,
+      retirementAllowance: 800,
+      expense: 250,
+      expenseAfterRetirement: 240,
+      annuity: 160, // 年金
+      assetAtStart: 0,
+      annualInterest: 4,
+    })
+}
 
 export interface PhasesTemplate {
   label: string,
@@ -163,5 +177,6 @@ export const phasesTemplates: PhasesTemplate[] = [
   templateOfNormalSalaryMan3percent,
   templateOfSolidMan,
   initialPhasesOf40fire,
-  initialPhasesOf100MPYfire
+  initialPhasesOf100MPYfire,
+  initialPhasesOf150MPYfire
 ]
