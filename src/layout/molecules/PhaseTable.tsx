@@ -59,7 +59,7 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
                         年齢
                       </TableCell>
                       {phases.map((phase: PhaseClass, i: number) => (
-                        <TableCell className={tableClasses.tableCell} align="right">
+                        <TableCell className={tableClasses.tableCell} align="center">
                           <input value={phase.ageAtStart}
                                  onChange={v => update(i, 'ageAtStart', v.target.value)}
                                  disabled={!phase.ageAtStartEditable}
@@ -103,17 +103,17 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
                                  phaseClasses={phases}
                                  valueCallback={p => p.assetAtStart}
                                  onChange={(newValue, i) => update(i, 'assetAtStart', newValue)}
-                                 disabled={(phase: PhaseClass) => !phase.assetAtStartEditable} />
+                                 disabledCallback={(phase: PhaseClass) => !phase.assetAtStartEditable} />
                     <TableRowSet rowLabel={'リターン'}
                                  phaseClasses={phases}
                                  valueCallback={p => p.annualInterest}
                                  onChange={(newValue, i) => update(i, 'annualInterest', newValue)}
-                                 disabled={(phase: PhaseClass) => false} />
+                                 disabledCallback={(phase: PhaseClass) => false} />
                     <TableRowSet rowLabel={'終了時資産'}
                                  phaseClasses={phases}
                                  valueCallback={p => p.assetAtEnd()?.toFixed(0)}
                                  onChange={(newValue, i) => update(i, 'assetAtEnd()', newValue)}
-                                 disabled={(phase: PhaseClass) => true} />
+                                 disabledCallback={(phase: PhaseClass) => true} />
                   </TableBody>
                 </Table>
               </TableContainer>

@@ -101,17 +101,19 @@ export function SubHeaderRowSet({title, colSpan}
   )
 }
 
-export function TableRowSet({rowLabel, phaseClasses, valueCallback, onChange, disabled, isTypeString}
+export function TableRowSet({rowLabel, phaseClasses, valueCallback, onChange, disabledCallback, isTypeString}
 : {rowLabel: string,
   phaseClasses: PhaseClass[],
   valueCallback(phaseClass: PhaseClass): string | number,
   onChange(newValue: string, index: number): void,
-  disabled?(phaseClass: PhaseClass): boolean,
+  disabledCallback?(phaseClass: PhaseClass): boolean,
   isTypeString?: boolean,
 }) {
 
+  const disabled = (phaseClass: PhaseClass) => disabledCallback && disabledCallback(phaseClass)
+
   const showValue = (phase: PhaseClass): string | number => {
-    return disabled ? Number(valueCallback(phase))?.toFixed(0) : valueCallback(phase)
+    return disabled(phase) ? Number(valueCallback(phase))?.toFixed(0) : valueCallback(phase)
   }
 
   const classes = usePatternTableStyles();
@@ -121,11 +123,11 @@ export function TableRowSet({rowLabel, phaseClasses, valueCallback, onChange, di
         {rowLabel}
       </TableCell>
       {phaseClasses.map((phase: PhaseClass, i: number) => (
-        <TableCell className={classes.tableCell} align="right">
+        <TableCell className={classes.tableCell} align="center">
           <input value={showValue(phase)}
                  type={isTypeString ? 'string' : 'number'}
                  onChange={v => onChange(v.target.value, i)}
-                 disabled={disabled && disabled(phase)}
+                 disabled={disabled(phase)}
                  style={{width: '140px'}}
           />
         </TableCell>

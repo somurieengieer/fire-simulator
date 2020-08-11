@@ -94,10 +94,6 @@ export const fireSlice = createSlice({
     updatePhases: (state, action: PayloadAction<FirePattern>) => {
       const patternNumber= action.payload.patternNumber
       const updatedPhases = action.payload.phases
-      if (updatedPhases.length > 2) {
-        console.log('payload length > 2', updatedPhases[1])
-        updatedPhases[1].assetAtStart = 0
-      }
 
       state.firePatterns
         .filter(p => p.patternNumber === patternNumber)
