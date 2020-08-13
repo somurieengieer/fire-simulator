@@ -45,7 +45,9 @@ function createPhaseDataForWorker(props: PhaseDataForWorkerProps ): PhaseData[] 
       assetAtStartEditable: false,
       note: '退職金受け取り',
       income: props.retirementAllowance,
-      expense: props.expenseAfterRetirement ? props.expenseAfterRetirement + 20 : props.expense,
+      expense: (props.expenseAfterRetirement ?
+        (props.ageAtRetirement < 60 ? props.expenseAfterRetirement + 20 : props.expenseAfterRetirement)
+        : props.expense),
       annualInterest: props.annualInterest,
     },
     ]
@@ -79,7 +81,6 @@ function createPhaseDataForWorker(props: PhaseDataForWorkerProps ): PhaseData[] 
       annualInterest: props.annualInterest,
     },
   )
-  console.log('result', result)
   return result
 }
 
@@ -93,7 +94,7 @@ const templateOfNormalSalaryMan = {
       income: 470,
       retirementAllowance: 1500,
       expense: 420,
-      expenseAfterRetirement: 200,
+      expenseAfterRetirement: 240,
       annuity: 200, // 年金
       assetAtStart: 0,
       annualInterest: 0,
@@ -158,8 +159,22 @@ const initialPhasesOf150MPYfire = {
     createPhaseDataForWorker({
       ageAtRetirement: 46,
       income: 400,
-      retirementAllowance: 800,
+      retirementAllowance: 700,
       expense: 250,
+      expenseAfterRetirement: 240,
+      annuity: 160, // 年金
+      assetAtStart: 0,
+      annualInterest: 4,
+    })
+}
+const initialPhasesOf200MPYfire = {
+  label:  '年200万貯金FIREプラン（4%運用）',
+  createPhaseData: () =>
+    createPhaseDataForWorker({
+      ageAtRetirement: 41,
+      income: 400,
+      retirementAllowance: 600,
+      expense: 200,
       expenseAfterRetirement: 240,
       annuity: 160, // 年金
       assetAtStart: 0,
@@ -178,5 +193,6 @@ export const phasesTemplates: PhasesTemplate[] = [
   templateOfSolidMan,
   initialPhasesOf40fire,
   initialPhasesOf100MPYfire,
-  initialPhasesOf150MPYfire
+  initialPhasesOf150MPYfire,
+  initialPhasesOf200MPYfire
 ]
