@@ -3,11 +3,12 @@ import {FirePattern} from "../../features/fire/fireSlice";
 import {CompoundInterestAreaChartNearPercent} from "../atoms/CompoundInterestAreaChartNearPercent";
 import {Grid, Input, Slider} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
-import OpenWithIcon from '@material-ui/icons/OpenWith';
+import EqualizerIcon from '@material-ui/icons/Equalizer';
 
 const useStyles = makeStyles({
   root: {},
   sliderRoot: {
+    marginLeft: 70,
     width: 400,
   },
   input: {
@@ -36,7 +37,7 @@ export function CompoundInterestByPattern({firePattern}: Props) {
             component="span"
       >
         <Grid item component="span">
-          <OpenWithIcon />
+          <EqualizerIcon />
         </Grid>
         <Grid item component="span">
           変動リスク
