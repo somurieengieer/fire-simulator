@@ -35,7 +35,7 @@ function createPhaseDataForWorker(props: PhaseDataForWorkerProps ): PhaseData[] 
       ageAtEnd: props.babyBirthYear ? props.babyBirthYear - 1 : props.ageAtRetirement,
       ageAtStartEditable: true,
       assetAtStartEditable: true,
-      note: 'サラリーマン生活',
+      note: '仕事中心生活',
       income: props.income,
       expense: props.expense,
       assetAtStart: 0,
@@ -253,7 +253,7 @@ const withChildren = () => {
 
 const expense20MynPerYear = () => {
   const salary400Myn = {
-    label:  '年収400万サラリーマン（3%運用）',
+    label:  'サラリーマン・年収400万',
     createPhaseData: () =>
       createPhaseDataForWorker({
         ageAtRetirement: 58,
@@ -267,7 +267,7 @@ const expense20MynPerYear = () => {
       })
   }
   const salary500Myn = {
-    label:  '年収500万サラリーマン（3%運用）',
+    label:  'サラリーマン・年収500万',
     createPhaseData: () =>
       createPhaseDataForWorker({
         ageAtRetirement: 49,
@@ -281,7 +281,7 @@ const expense20MynPerYear = () => {
       })
   }
   const salary600Myn = {
-    label:  '年収600万サラリーマン（3%運用）',
+    label:  'サラリーマン・年収600万',
     createPhaseData: () =>
       createPhaseDataForWorker({
         ageAtRetirement: 43,
@@ -294,10 +294,70 @@ const expense20MynPerYear = () => {
         annualInterest: 3,
       })
   }
+  const soleProprietorSaving50Myn = {
+    label:  '個人事業主・年50万投資',
+    createPhaseData: () =>
+      createPhaseDataForWorker({
+        ageAtRetirement: 62,
+        income: 290,
+        retirementAllowance: 2500,
+        expense: 240,
+        expenseAfterRetirement: 240,
+        annuity: 74, // 年金
+        assetAtStart: 0,
+        annualInterest: 3,
+      })
+  }
+  const soleProprietorSaving100Myn = {
+    label:  '個人事業主・年100万投資',
+    createPhaseData: () =>
+      createPhaseDataForWorker({
+        ageAtRetirement: 53,
+        income: 340,
+        retirementAllowance: 2500,
+        expense: 240,
+        expenseAfterRetirement: 240,
+        annuity: 74, // 年金
+        assetAtStart: 0,
+        annualInterest: 3,
+      })
+  }
+  const soleProprietorSaving150Myn = {
+    label:  '個人事業主・年150万投資',
+    createPhaseData: () =>
+      createPhaseDataForWorker({
+        ageAtRetirement: 48,
+        income: 390,
+        retirementAllowance: 2200,
+        expense: 240,
+        expenseAfterRetirement: 240,
+        annuity: 74, // 年金
+        assetAtStart: 0,
+        annualInterest: 3,
+      })
+  }
+  const soleProprietorSaving200Myn = {
+    label:  '個人事業主・年200万投資',
+    createPhaseData: () =>
+      createPhaseDataForWorker({
+        ageAtRetirement: 44,
+        income: 440,
+        retirementAllowance: 2000,
+        expense: 240,
+        expenseAfterRetirement: 240,
+        annuity: 74, // 年金
+        assetAtStart: 0,
+        annualInterest: 3,
+      })
+  }
   return [
     salary400Myn,
     salary500Myn,
     salary600Myn,
+    soleProprietorSaving50Myn,
+    soleProprietorSaving100Myn,
+    soleProprietorSaving150Myn,
+    soleProprietorSaving200Myn,
   ]
 }
 
