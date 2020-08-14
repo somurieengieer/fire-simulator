@@ -38,7 +38,6 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
   }
 
   const execDeletePhase = (phaseIndex: number) => {
-    if (!phaseIndex) return
     dispatch(deletePhase({patternNumber: firePattern.patternNumber, phaseIndex: phaseIndex}))
   }
 
@@ -75,9 +74,7 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
                                  className={classNames({[tableClasses.inputError]: phase.ageAtStart > phase.ageAtEnd}) }
                           />
                           歳
-                          { !!i && (
-                            <button onClick={() => execDeletePhase(i)}>✗</button>
-                          )}
+                          <button onClick={() => execDeletePhase(i)}>✗</button>
                         </TableCell>
                       ))}
                       <TableCell rowSpan={10} width={40} style={{backgroundColor: theme.palette.primary.main}}

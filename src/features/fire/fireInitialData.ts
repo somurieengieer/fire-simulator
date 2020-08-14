@@ -28,6 +28,12 @@ interface PhaseDataForWorkerProps {
   babyCost?: number,
   babyBirthYear?: number,
 }
+function create(editable: boolean, obj: any): PhaseData {
+  return Object.assign({
+    ageAtStartEditable: editable,
+    assetAtStartEditable: editable,
+  }, obj) as PhaseData
+}
 function createPhaseDataForWorker(props: PhaseDataForWorkerProps ): PhaseData[] {
   const result: PhaseData[] = []
     result.push(
@@ -43,16 +49,17 @@ function createPhaseDataForWorker(props: PhaseDataForWorkerProps ): PhaseData[] 
       annualInterest: props.annualInterest,
     })
   if (props.babyBirthYear) {
+    result.push({
+      ageAtEnd: props.babyBirthYear + 22,
+      ageAtStartEditable: false,
+      assetAtStartEditable: false,
+      note: '子育て期間',
+      income: props.income,
+      expense: props.expense + (props.babyCost || 0),
+      annualInterest: props.annualInterest,
+    })
+    if (props.babyBirthYear + 22 < props.ageAtRetirement) {
       result.push({
-        ageAtEnd: props.babyBirthYear + 22,
-        ageAtStartEditable: false,
-        assetAtStartEditable: false,
-        note: '子育て期間',
-        income: props.income,
-        expense: props.expense + (props.babyCost || 0),
-        annualInterest: props.annualInterest,
-      },
-      {
         ageAtStart: props.babyBirthYear + 23,
         ageAtEnd: props.ageAtRetirement,
         ageAtStartEditable: false,
@@ -61,8 +68,8 @@ function createPhaseDataForWorker(props: PhaseDataForWorkerProps ): PhaseData[] 
         income: props.income,
         expense: props.expense,
         annualInterest: props.annualInterest,
-      }
-    )
+      })
+    }
   }
   result.push({
     ageAtEnd: props.ageAtRetirement + 1,
@@ -75,16 +82,22 @@ function createPhaseDataForWorker(props: PhaseDataForWorkerProps ): PhaseData[] 
       : props.expense),
     annualInterest: props.annualInterest,
   })
+  result.push(...createPhaseDataAfterRetirement(props))
+  return result
+}
+
+function createPhaseDataAfterRetirement(props: PhaseDataForWorkerProps ): PhaseData[] {
+  const result: PhaseData[] = []
   if (props.ageAtRetirement < 59) {
     result.push({
-        ageAtEnd: 60,
-        ageAtStartEditable: false,
-        assetAtStartEditable: false,
-        note: '年金受給前生活（年金支払いあり）',
-        income: 0,
-        expense: props.expenseAfterRetirement ? props.expenseAfterRetirement + 20 : props.expense,
-        annualInterest: props.annualInterest,
-      })
+      ageAtEnd: 60,
+      ageAtStartEditable: false,
+      assetAtStartEditable: false,
+      note: '年金受給前生活（年金支払いあり）',
+      income: 0,
+      expense: props.expenseAfterRetirement ? props.expenseAfterRetirement + 20 : props.expense,
+      annualInterest: props.annualInterest,
+    })
   }
   result.push({
       ageAtEnd: 70,
@@ -499,12 +512,12 @@ const expense30MynPerYearWithChildren = () => {
 }
 
 const somethingElse = () => {
-  const solidManBy700income = {
-    label: '個人事業主・月30万生活・子供あり（3%運用）',
+  const liveByMySelf = {
+    label: '個人事業主・月30万生活・子供あり・細々働く・独力（3%運用）',
     createPhaseData: () =>
       createPhaseDataForWorker({
         ageAtStart: 32,
-        ageAtRetirement: 56,
+        ageAtRetirement: 55,
         income: 560,
         retirementAllowance: 1800,
         expense: 360,
@@ -516,8 +529,47 @@ const somethingElse = () => {
         babyBirthYear: 33,
       })
   }
+  const sharedPayAfterRetirement = {
+    label: '個人事業主・月30万生活・子供あり・細々働く・独力（3%運用）',
+    createPhaseData: () => [
+      create(true, {
+        ageAtStart: 33,
+        ageAtEnd: 35,
+        note: '子育て生活（実家）',
+        income: 600,
+        expense: 200,
+        assetAtStart: 2200,
+        annualInterest: 3,
+      }),
+      create(false, {
+        ageAtEnd: 46,
+        note: '子育て生活（都内）',
+        income: 300,
+        expense: 200,
+        annualInterest: 3,
+      }),
+      create(false, {
+        ageAtEnd: 56,
+        note: '子育て生活（都内）細々働く',
+        income: 100,
+        expense: 200,
+        annualInterest: 3,
+      }),
+      ...createPhaseDataAfterRetirement({
+        ageAtRetirement: 57,
+        income: 0,
+        retirementAllowance: 0,
+        expense: 200,
+        expenseAfterRetirement: 200,
+        annuity: 160, // 年金
+        assetAtStart: 0,
+        annualInterest: 3,
+      })
+    ]
+  }
   return [
-    solidManBy700income
+    liveByMySelf,
+    sharedPayAfterRetirement
   ]
 
 }

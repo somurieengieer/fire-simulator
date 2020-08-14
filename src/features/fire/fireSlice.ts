@@ -47,8 +47,12 @@ const updateRelatedThings = (state: FireState): void => {
   state.firePatterns.map(p => updateFirePatternRelatedThings(p))
 }
 export const updateFirePatternRelatedThings = (firePattern: FirePattern): void => {
+  firePattern.phases[0].ageAtStartEditable = true
+  firePattern.phases[0].assetAtStartEditable = true
   for (let i = 1; i < firePattern.phases.length; i++) {
     firePattern.phases[i].ageAtStart = Number(firePattern.phases[i-1].ageAtEnd) + 1
+    firePattern.phases[i].ageAtStartEditable = false
+    firePattern.phases[i].assetAtStartEditable = false
   }
 
   firePattern.hasError = hasError(firePattern)
