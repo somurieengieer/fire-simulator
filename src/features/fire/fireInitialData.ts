@@ -25,12 +25,14 @@ interface PhaseDataForWorkerProps {
   annuity: number, // 年金
   assetAtStart: number,
   annualInterest: number,
+  babyCost?: number,
+  babyBirthYear?: number,
 }
 function createPhaseDataForWorker(props: PhaseDataForWorkerProps ): PhaseData[] {
-  const result = [
+  const result: PhaseData[] = [
     {
       ageAtStart: props.ageAtStart || 22,
-      ageAtEnd: props.ageAtRetirement,
+      ageAtEnd: props.babyBirthYear ? props.babyBirthYear - 1 : props.ageAtRetirement,
       ageAtStartEditable: true,
       assetAtStartEditable: true,
       note: 'サラリーマン生活',
@@ -38,19 +40,40 @@ function createPhaseDataForWorker(props: PhaseDataForWorkerProps ): PhaseData[] 
       expense: props.expense,
       assetAtStart: 0,
       annualInterest: props.annualInterest,
-    },
-    {
-      ageAtEnd: props.ageAtRetirement + 1,
-      ageAtStartEditable: false,
-      assetAtStartEditable: false,
-      note: '退職金受け取り',
-      income: props.retirementAllowance,
-      expense: (props.expenseAfterRetirement ?
-        (props.ageAtRetirement < 60 ? props.expenseAfterRetirement + 20 : props.expenseAfterRetirement)
-        : props.expense),
-      annualInterest: props.annualInterest,
-    },
-    ]
+    },]
+  if (props.babyBirthYear) {
+      result.push({
+        ageAtEnd: props.babyBirthYear + 22,
+        ageAtStartEditable: false,
+        assetAtStartEditable: false,
+        note: '子育て期間',
+        income: props.income,
+        expense: props.expense + (props.babyCost || 0),
+        annualInterest: props.annualInterest,
+      },
+      {
+        ageAtStart: props.babyBirthYear + 23,
+        ageAtEnd: props.ageAtRetirement,
+        ageAtStartEditable: false,
+        assetAtStartEditable: false,
+        note: 'サラリーマン生活',
+        income: props.income,
+        expense: props.expense,
+        annualInterest: props.annualInterest,
+      }
+    )
+  }
+  result.push({
+    ageAtEnd: props.ageAtRetirement + 1,
+    ageAtStartEditable: false,
+    assetAtStartEditable: false,
+    note: '退職金受け取り',
+    income: props.retirementAllowance,
+    expense: (props.expenseAfterRetirement ?
+      (props.ageAtRetirement < 60 ? props.expenseAfterRetirement + 20 : props.expenseAfterRetirement)
+      : props.expense),
+    annualInterest: props.annualInterest,
+  })
   if (props.ageAtRetirement < 60) {
     result.push({
         ageAtEnd: 60,
@@ -139,47 +162,54 @@ const initialPhasesOf40fire = {
     })
 }
 
-const initialPhasesOf100MPYfire = {
-  label:  '年100万貯金FIREプラン（4%運用）',
-  createPhaseData: () =>
-    createPhaseDataForWorker({
-      ageAtRetirement: 52,
-      income: 400,
-      retirementAllowance: 800,
-      expense: 300,
-      expenseAfterRetirement: 240,
-      annuity: 160, // 年金
-      assetAtStart: 0,
-      annualInterest: 4,
-    })
-}
-const initialPhasesOf150MPYfire = {
-  label:  '年150万貯金FIREプラン（4%運用）',
-  createPhaseData: () =>
-    createPhaseDataForWorker({
-      ageAtRetirement: 46,
-      income: 400,
-      retirementAllowance: 700,
-      expense: 250,
-      expenseAfterRetirement: 240,
-      annuity: 160, // 年金
-      assetAtStart: 0,
-      annualInterest: 4,
-    })
-}
-const initialPhasesOf200MPYfire = {
-  label:  '年200万貯金FIREプラン（4%運用）',
-  createPhaseData: () =>
-    createPhaseDataForWorker({
-      ageAtRetirement: 41,
-      income: 400,
-      retirementAllowance: 600,
-      expense: 200,
-      expenseAfterRetirement: 240,
-      annuity: 160, // 年金
-      assetAtStart: 0,
-      annualInterest: 4,
-    })
+const fixedAmountInvestigate = () => {
+  const by100MYN = {
+    label:  '年100万貯金FIREプラン（4%運用）',
+    createPhaseData: () =>
+      createPhaseDataForWorker({
+        ageAtRetirement: 52,
+        income: 400,
+        retirementAllowance: 800,
+        expense: 300,
+        expenseAfterRetirement: 240,
+        annuity: 160, // 年金
+        assetAtStart: 0,
+        annualInterest: 4,
+      })
+  }
+  const by150MYN = {
+    label:  '年150万貯金FIREプラン（4%運用）',
+    createPhaseData: () =>
+      createPhaseDataForWorker({
+        ageAtRetirement: 46,
+        income: 400,
+        retirementAllowance: 700,
+        expense: 250,
+        expenseAfterRetirement: 240,
+        annuity: 160, // 年金
+        assetAtStart: 0,
+        annualInterest: 4,
+      })
+  }
+  const by200MYN = {
+    label:  '年200万貯金FIREプラン（4%運用）',
+    createPhaseData: () =>
+      createPhaseDataForWorker({
+        ageAtRetirement: 41,
+        income: 400,
+        retirementAllowance: 600,
+        expense: 200,
+        expenseAfterRetirement: 240,
+        annuity: 160, // 年金
+        assetAtStart: 0,
+        annualInterest: 4,
+      })
+  }
+  return [
+    by100MYN,
+    by150MYN,
+    by200MYN,
+  ]
 }
 
 const templateOfSolidMiddleRitchMan = {
@@ -198,9 +228,87 @@ const templateOfSolidMiddleRitchMan = {
     })
 }
 
+const withChildren = () => {
+  const solidManBy600income = {
+    label: '年収600万サラリーマン堅実FIREプラン（3%運用）',
+    createPhaseData: () =>
+      createPhaseDataForWorker({
+        ageAtStart: 22,
+        ageAtRetirement: 53,
+        income: 470,
+        retirementAllowance: 800,
+        expense: 270,
+        expenseAfterRetirement: 200,
+        annuity: 140, // 年金
+        assetAtStart: 2000,
+        annualInterest: 3,
+        babyCost: 100,
+        babyBirthYear: 30,
+      })
+  }
+  return [
+    solidManBy600income,
+  ]
+}
+
+const expense20MynPerYear = () => {
+  const salary400Myn = {
+    label:  '年収400万サラリーマン（3%運用）',
+    createPhaseData: () =>
+      createPhaseDataForWorker({
+        ageAtRetirement: 58,
+        income: 310,
+        retirementAllowance: 800,
+        expense: 240,
+        expenseAfterRetirement: 240,
+        annuity: 160, // 年金
+        assetAtStart: 0,
+        annualInterest: 3,
+      })
+  }
+  const salary500Myn = {
+    label:  '年収500万サラリーマン（3%運用）',
+    createPhaseData: () =>
+      createPhaseDataForWorker({
+        ageAtRetirement: 49,
+        income: 390,
+        retirementAllowance: 700,
+        expense: 240,
+        expenseAfterRetirement: 240,
+        annuity: 160, // 年金
+        assetAtStart: 0,
+        annualInterest: 3,
+      })
+  }
+  const salary600Myn = {
+    label:  '年収600万サラリーマン（3%運用）',
+    createPhaseData: () =>
+      createPhaseDataForWorker({
+        ageAtRetirement: 43,
+        income: 460,
+        retirementAllowance: 800,
+        expense: 240,
+        expenseAfterRetirement: 240,
+        annuity: 160, // 年金
+        assetAtStart: 0,
+        annualInterest: 3,
+      })
+  }
+  return [
+    salary400Myn,
+    salary500Myn,
+    salary600Myn,
+  ]
+}
+
+export const templateLabel = (label: string): PhasesTemplate => {
+  return {label: ` --- ${label} --- `, createPhaseData: () => undefined}
+}
+
+
 export interface PhasesTemplate {
   label: string,
-  createPhaseData: () => PhaseData[],
+  createPhaseData: () => PhaseData[] | undefined,
 }
 
 export const phasesTemplates: PhasesTemplate[] = [
@@ -208,8 +316,13 @@ export const phasesTemplates: PhasesTemplate[] = [
   templateOfNormalSalaryMan3percent,
   templateOfSolidMan,
   initialPhasesOf40fire,
-  initialPhasesOf100MPYfire,
-  initialPhasesOf150MPYfire,
-  initialPhasesOf200MPYfire,
-  templateOfSolidMiddleRitchMan
+  // 定期投資
+  templateLabel('定額投資'),
+  ...fixedAmountInvestigate(),
+  templateOfSolidMiddleRitchMan,
+  // 子供あり
+  templateLabel('子供あり'),
+  ...withChildren(),
+  templateLabel('月20万円で生活するFIRE'),
+  ...expense20MynPerYear(),
 ]

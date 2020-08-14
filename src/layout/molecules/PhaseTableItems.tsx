@@ -66,6 +66,7 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
     // @ts-ignore // 0の場合はcreatePhaseDataがないが、その場合は↑でreturnする
     if (!templateIndex) return
     const phaseData = templateOptions()[templateIndex].createPhaseData()
+    if (!phaseData) return
     dispatch(updatePhases({
       patternNumber: firePattern.patternNumber,
       phases: phaseData,

@@ -59,9 +59,8 @@ export const incomes = (): Tax[] => {
       calcAmount: (income: Tax): number =>
         salaryDeductionProgressiveRate(income.amount || 0)
     }
-  ]
-  },
     ]
+  }]
 }
 
 export interface commonDeduction extends Deduction {
