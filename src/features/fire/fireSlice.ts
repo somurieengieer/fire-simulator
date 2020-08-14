@@ -47,6 +47,10 @@ const updateRelatedThings = (state: FireState): void => {
   state.firePatterns.map(p => updateFirePatternRelatedThings(p))
 }
 export const updateFirePatternRelatedThings = (firePattern: FirePattern): void => {
+  for (let i = 1; i < firePattern.phases.length; i++) {
+    firePattern.phases[i].ageAtStart = Number(firePattern.phases[i-1].ageAtEnd) + 1
+  }
+
   firePattern.hasError = hasError(firePattern)
   if (firePattern.hasError) {
     return
@@ -54,7 +58,6 @@ export const updateFirePatternRelatedThings = (firePattern: FirePattern): void =
 
   for (let i = 1; i < firePattern.phases.length; i++) {
     firePattern.phases[i].assetAtStart = (new PhaseClass(firePattern.phases[i-1])).assetAtEnd()
-    firePattern.phases[i].ageAtStart = Number(firePattern.phases[i-1].ageAtEnd) + 1
   }
   firePattern.compoundInterestResult = new PhasesClass(firePattern.phases.map(data => new PhaseClass(data))).compoundInterestResult()
 }

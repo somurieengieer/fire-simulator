@@ -11,3 +11,10 @@ export function numberFromHalfWidthToFullWidth(n: number): string {
       return String.fromCharCode(s.charCodeAt(0) + 0xFEE0);
     })
 }
+
+export function empty(value: string | number): boolean {
+  if (typeof value === "string") {
+    return value.length === 0
+  }
+  return value.toString().length === 0
+}

@@ -8,6 +8,8 @@ import {theme} from "../materialui/theme";
 import AddIcon from '@material-ui/icons/Add';
 import {PhaseClass} from "../../features/fire/Phase";
 import {CompoundInterestByPattern} from "./CompoundInterestByPattern";
+import classNames from 'classnames'
+import {empty} from "../../features/utils/Utils";
 
 const useStyles = makeStyles({
 });
@@ -64,11 +66,13 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
                                  onChange={v => update(i, 'ageAtStart', v.target.value)}
                                  disabled={!phase.ageAtStartEditable}
                                  size={3}
+                                 className={classNames({[tableClasses.inputError]: i === 0 && empty(phase.ageAtStart)}) }
                           />
                           〜
                           <input value={phase.ageAtEnd}
                                  onChange={v => update(i, 'ageAtEnd', v.target.value)}
                                  size={3}
+                                 className={classNames({[tableClasses.inputError]: phase.ageAtStart > phase.ageAtEnd}) }
                           />
                           歳
                           { !!i && (
@@ -108,6 +112,7 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
                                  phaseClasses={phases}
                                  valueCallback={p => p.annualInterest}
                                  onChange={(newValue, i) => update(i, 'annualInterest', newValue)}
+                                 validate={p => empty(p.annualInterest)}
                                  disabledCallback={(phase: PhaseClass) => false} />
                     <TableRowSet rowLabel={'終了時資産'}
                                  phaseClasses={phases}

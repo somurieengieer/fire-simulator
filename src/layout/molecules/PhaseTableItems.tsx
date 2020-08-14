@@ -8,6 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {PhasesTemplate, phasesTemplates} from "../../features/fire/fireInitialData";
 import {numberFromHalfWidthToFullWidth} from "../../features/utils/Utils";
 import {useLocation} from "react-router";
+import classNames from 'classnames'
 
 export const usePatternTableStyles = makeStyles({
   table: {
@@ -29,6 +30,9 @@ export const usePatternTableStyles = makeStyles({
     '&:hover': {
       cursor: 'pointer',
     },
+  },
+  inputError: {
+    backgroundColor: theme.palette.error.main,
   }
 });
 
@@ -120,13 +124,14 @@ export function SubHeaderRowSet({title, colSpan}
   )
 }
 
-export function TableRowSet({rowLabel, phaseClasses, valueCallback, onChange, disabledCallback, isTypeString}
+export function TableRowSet({rowLabel, phaseClasses, valueCallback, onChange, disabledCallback, isTypeString, validate}
 : {rowLabel: string,
   phaseClasses: PhaseClass[],
   valueCallback(phaseClass: PhaseClass): string | number,
   onChange(newValue: string, index: number): void,
   disabledCallback?(phaseClass: PhaseClass): boolean,
   isTypeString?: boolean,
+  validate?(phaseClass: PhaseClass): boolean,
 }) {
 
   const disabled = (phaseClass: PhaseClass) => disabledCallback && disabledCallback(phaseClass)
@@ -148,6 +153,7 @@ export function TableRowSet({rowLabel, phaseClasses, valueCallback, onChange, di
                  onChange={v => onChange(v.target.value, i)}
                  disabled={disabled(phase)}
                  style={{width: '140px'}}
+                 className={classNames({[classes.inputError]: validate && validate(phase)})}
           />
         </TableCell>
       ))}

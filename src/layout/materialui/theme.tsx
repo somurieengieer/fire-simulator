@@ -11,9 +11,10 @@ const base = {
       main: '#E59D5C',
       contrastText: '#000000',
     },
-    // error: {
-    //
-    // },
+    error: {
+      main: '#FF8888'
+
+    },
     // warning: {
     //
     // },

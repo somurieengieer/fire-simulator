@@ -182,6 +182,22 @@ const initialPhasesOf200MPYfire = {
     })
 }
 
+const templateOfSolidMiddleRitchMan = {
+  label: 'アッパーミドル層堅実FIREプラン（3%運用）',
+  createPhaseData: () =>
+    createPhaseDataForWorker({
+      ageAtStart: 22,
+      ageAtRetirement: 56,
+      income: 590,
+      retirementAllowance: 1600,
+      expense: 440,
+      expenseAfterRetirement: 360,
+      annuity: 180, // 年金
+      assetAtStart: 2000,
+      annualInterest: 3,
+    })
+}
+
 export interface PhasesTemplate {
   label: string,
   createPhaseData: () => PhaseData[],
@@ -194,5 +210,6 @@ export const phasesTemplates: PhasesTemplate[] = [
   initialPhasesOf40fire,
   initialPhasesOf100MPYfire,
   initialPhasesOf150MPYfire,
-  initialPhasesOf200MPYfire
+  initialPhasesOf200MPYfire,
+  templateOfSolidMiddleRitchMan
 ]
