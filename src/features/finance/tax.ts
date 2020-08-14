@@ -30,7 +30,7 @@ const salaryDeductionProgressiveRate = (amount: number) => {
 }
 
 // 所得
-export interface Income {
+export interface Tax {
   name: string,
   incomeDeductions: IncomeDeduction[],
   amount?: number,
@@ -49,14 +49,14 @@ export interface Deduction {
 
 // 所得控除
 interface IncomeDeduction extends Deduction {
-  calcAmount: (income: Income) => number
+  calcAmount: (income: Tax) => number
 }
 
-export const incomes = (): Income[] => {
+export const incomes = (): Tax[] => {
   return [{name: '給与所得',
     incomeDeductions: [{
       name: '給与所得控除',
-      calcAmount: (income: Income): number =>
+      calcAmount: (income: Tax): number =>
         salaryDeductionProgressiveRate(income.amount || 0)
     }
   ]
