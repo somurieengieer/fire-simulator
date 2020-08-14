@@ -2,12 +2,13 @@ import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {PhasesTable} from "./PhaseTable";
 import {FirePattern} from "../../features/fire/fireSlice";
-import {Box, Paper, Typography} from "@material-ui/core";
+import {Box, Paper} from "@material-ui/core";
 
 const useStyles = makeStyles({
-  table: {
-    // width: 650,
-  },
+  paper: {
+    width: '100%',
+    marginBottom: 20,
+  }
 });
 
 interface FirePatternPaperProps {
@@ -22,8 +23,7 @@ export function FirePatternPaper({firePattern}: FirePatternPaperProps) {
 
   return (
     <Box m={1}>
-      <Paper style={{width: '100%'}}>
-            {hasError && (<Typography>エラーあり！</Typography>)}
+      <Paper className={classes.paper}>
             <PhasesTable firePattern={firePattern} />
       </Paper>
     </Box>
