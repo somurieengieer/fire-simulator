@@ -25,6 +25,7 @@ export const usePatternTableStyles = makeStyles({
   },
   tableHeadRow: {
     backgroundColor: theme.palette.secondary.main,
+    fontSize: '1.0rem',
   },
   select: {
     height: '2em',
@@ -113,7 +114,7 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
   return (
     <TableHead>
       <TableRow className={classes.tableHeadRow}>
-        <TableCell colSpan={colSpan} style={{fontSize: '14px'}}>
+        <TableCell colSpan={colSpan}>
           {title()}&nbsp;
           <select value={templateIndex}
                   onChange={v => setTemplateIndex(Number(v.target.value))}
@@ -136,7 +137,7 @@ export function SubHeaderRowSet({title, colSpan}
   const classes = usePatternTableStyles();
   return (
     <TableRow className={classes.tableHeadRow}>
-      <TableCell colSpan={colSpan} style={{fontSize: '14px'}}>{title}</TableCell>
+      <TableCell colSpan={colSpan}>{title}</TableCell>
     </TableRow>
   )
 }

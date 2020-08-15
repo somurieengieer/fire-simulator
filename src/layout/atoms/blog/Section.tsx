@@ -14,11 +14,11 @@ const useStyles = makeStyles(theme => createStyles({
   title: {
     color: '#6594e0',/*文字色*/
     borderBottom: 'dashed 2px #6594e0',
-    fontSize: '1.5em',
+    fontSize: '1.3rem',
   },
   content: {
     margin: 20,
-    fontSize: '1.2em',
+    fontSize: '1.0rem',
     [theme.breakpoints.down('sm')]: {
       margin: 5,
     }
