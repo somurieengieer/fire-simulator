@@ -470,11 +470,11 @@ const expense20MynPerYearWithChildren = () => {
     label:  '個人事業主・年200万投資',
     createPhaseData: () =>
       createPhaseDataForWorker({
-        ageAtRetirement: 55,
-        income: 560,
-        retirementAllowance: 2900,
-        expense: 360,
-        expenseAfterRetirement: 360,
+        ageAtRetirement: 51,
+        income: 440,
+        retirementAllowance: 2000,
+        expense: 240,
+        expenseAfterRetirement: 240,
         annuity: 74, // 年金
         assetAtStart: 0,
         annualInterest: 3,
@@ -506,14 +506,31 @@ const expense30MynPerYearWithChildren = () => {
         babyBirthYear: 26,
       })
   }
+  const soleProprietorSaving150Myn = {
+    label:  '個人事業主・年200万投資',
+    createPhaseData: () =>
+      createPhaseDataForWorker({
+        ageAtRetirement: 55,
+        income: 560,
+        retirementAllowance: 2900,
+        expense: 360,
+        expenseAfterRetirement: 360,
+        annuity: 74, // 年金
+        assetAtStart: 0,
+        annualInterest: 3,
+        babyCost: 100,
+        babyBirthYear: 26,
+      })
+  }
   return [
-    solidManBy700income
+    solidManBy700income,
+    soleProprietorSaving150Myn
   ]
 }
 
 const somethingElse = () => {
   const liveByMySelf = {
-    label: '個人事業主・月30万生活・子供あり・細々働く・独力（3%運用）',
+    label: '個人事業主・月30万生活・子供あり・完全に引退せず細々働く・独力',
     createPhaseData: () =>
       createPhaseDataForWorker({
         ageAtStart: 32,
@@ -530,7 +547,7 @@ const somethingElse = () => {
       })
   }
   const sharedPayAfterRetirement = {
-    label: '個人事業主・月30万生活・子供あり・細々働く・独力（3%運用）',
+    label: '個人事業主・月30万生活・子供あり・完全に引退せず細々働く',
     createPhaseData: () => [
       create(true, {
         ageAtStart: 33,
@@ -549,9 +566,16 @@ const somethingElse = () => {
         annualInterest: 3,
       }),
       create(false, {
-        ageAtEnd: 56,
+        ageAtEnd: 55,
         note: '子育て生活（都内）細々働く',
         income: 100,
+        expense: 200,
+        annualInterest: 3,
+      }),
+      create(false, {
+        ageAtEnd: 56,
+        note: '退職金もらう',
+        income: 560,
         expense: 200,
         annualInterest: 3,
       }),
@@ -598,6 +622,6 @@ export const phasesTemplates: PhasesTemplate[] = [
   ...expense20MynPerYearWithChildren(),
   templateLabel('月30万円で生活するFIRE（3%運用）・子供あり'),
   ...expense30MynPerYearWithChildren(),
-  templateLabel('月30万円で生活するFIRE（3%運用）・子供あり'),
-  ...somethingElse(),
+  // templateLabel('月30万円で生活するFIRE（3%運用）・子供あり'),
+  // ...somethingElse(),
 ]

@@ -34,11 +34,10 @@ export default function TopBarMenu({children}: Props) {
   const title = () => {
     switch (location.pathname) {
       case '/fire':
-        return '資産運用シミュレーション'
+        return 'FIREシミュレーター'
     }
     return 'トップ'
   }
-
 
   return (
     <div className={classes.root}>
@@ -46,7 +45,7 @@ export default function TopBarMenu({children}: Props) {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            堅実にFIREを実現する -{title()}-
+            堅実にFIREを実現する - {title()} -
           </Typography>
         </Toolbar>
       </AppBar>
