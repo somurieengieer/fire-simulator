@@ -80,11 +80,23 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
   useEffect(() => {
     const getParams = new URLSearchParams(location.search);
     const templateIndexParam = getParams.get(`t${firePattern.patternNumber}`)
+
+    let templateIndex = 3;
+    switch (firePattern.patternNumber) {
+      case 2:
+        templateIndex = 5
+        break
+      case 3:
+        templateIndex = 25
+        break
+    }
+
     if (templateIndexParam &&
       0 <= Number(templateIndexParam) &&
       Number(templateIndexParam) < templateOptions().length) {
-      setTemplateIndex(Number(templateIndexParam))
+      templateIndex = Number(templateIndexParam)
     }
+    setTemplateIndex(templateIndex)
   }, [location])
 
   const templateOptions = (): PhasesTemplate[] => {
