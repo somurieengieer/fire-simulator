@@ -114,7 +114,7 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
     <TableHead>
       <TableRow className={classes.tableHeadRow}>
         <TableCell colSpan={colSpan}>
-          <Typography variant={"body2"} display={"inline"} style={{marginRight: 5}}>
+          <Typography variant={"body2"} display={"inline"} style={{marginRight: 5, fontSize: '0.4em'}}>
             {title()}
           </Typography>
           <select value={templateIndex}
