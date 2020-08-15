@@ -7,6 +7,7 @@ import {CompoundInterestChart} from "../atoms/CompoundInterestChart";
 import {FirePatternPaper} from "../molecules/FirePatternPaper";
 import {Section, SectionContent, SectionList, SectionTitle} from "../atoms/blog/Section";
 import {JustifyCenterBox} from "../atoms/JustifyCenterBox";
+import {GoogleAdsSmall} from "../../ads/GoogleAdsSmall";
 
 const useStyles = makeStyles({
   table: {
@@ -25,6 +26,7 @@ export function FirePage() {
 
   return (
     <>
+      <GoogleAdsSmall />
       <JustifyCenterBox width={'800'}>
         <Section maxWidth={800}>
           <SectionTitle>使い方</SectionTitle>
@@ -45,6 +47,7 @@ export function FirePage() {
           </SectionContent>
         </Section>
       </JustifyCenterBox>
+      <GoogleAdsSmall />
       <Grid>
         {selectedFirePatterns.map((pattern: FirePattern, i: number) => (
           <FirePatternPaper firePattern={pattern} />
@@ -53,6 +56,7 @@ export function FirePage() {
       <Grid>
         <CompoundInterestChart />
       </Grid>
+      <GoogleAdsSmall />
     </>
   );
 }
