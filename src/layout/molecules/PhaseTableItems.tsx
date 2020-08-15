@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {TableCell, TableHead, TableRow, Typography} from "@material-ui/core";
+import {TableCell, TableHead, TableRow} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import {theme} from "../materialui/theme";
 import {PhaseClass, PhaseData} from "../../features/fire/Phase";
@@ -113,10 +113,8 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
   return (
     <TableHead>
       <TableRow className={classes.tableHeadRow}>
-        <TableCell colSpan={colSpan}>
-          <Typography variant={"body2"} display={"inline"} style={{marginRight: 5, fontSize: '0.8em'}}>
-            {title()}
-          </Typography>
+        <TableCell colSpan={colSpan} style={{fontSize: '0.8em'}}>
+          {title()}&nbsp;
           <select value={templateIndex}
                   onChange={v => setTemplateIndex(Number(v.target.value))}
                   className={classes.select} >
