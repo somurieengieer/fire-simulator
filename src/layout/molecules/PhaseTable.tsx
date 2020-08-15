@@ -10,10 +10,11 @@ import {PhaseClass} from "../../features/fire/Phase";
 import {CompoundInterestByPattern} from "./CompoundInterestByPattern";
 import classNames from 'classnames'
 import {empty} from "../../features/utils/Utils";
+import {JustifyCenterBox} from "../atoms/JustifyCenterBox";
 
 const useStyles = makeStyles({
   root: {
-    marginLeft: 40,
+    marginLeft: 20,
     marginTop: 5,
     marginBottom: 5,
   }
@@ -52,7 +53,7 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
     <>
       <Grid  className={classes.root}>
         <Grid container spacing={2}>
-          <Grid item xs={7}>
+          <Grid item xs={12} lg={7}>
             <TableContainer component={Paper}>
               <Table className={tableClasses.table} aria-label="simple table"
                      size={'small'}
@@ -124,8 +125,10 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
               </Table>
             </TableContainer>
           </Grid>
-          <Grid item xs={5}>
-            <CompoundInterestByPattern firePattern={firePattern} />
+          <Grid item xs={12} lg={5}>
+            <JustifyCenterBox>
+              <CompoundInterestByPattern firePattern={firePattern} />
+            </JustifyCenterBox>
           </Grid>
         </Grid>
       </Grid>

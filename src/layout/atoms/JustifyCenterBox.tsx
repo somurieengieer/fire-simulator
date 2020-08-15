@@ -9,20 +9,24 @@ const useStyles = makeStyles({
 });
 
 interface Props {
-  width: string,
+  width?: string,
   children: React.ReactNode;
 }
 
 // 複利計算ページ
 export function JustifyCenterBox({width, children}: Props) {
   return (
-    <>
-      <Box display="flex" justifyContent="center">
+    <Box display="flex" justifyContent="center">
+      {width ? (
         <Box style={{width: width}}>
           {children}
         </Box>
-      </Box>
-    </>
+      ) : (
+        <>
+          {children}
+        </>
+      )}
+    </Box>
   );
 }
 

@@ -1,12 +1,14 @@
 import React, {useState} from 'react';
 import {FirePattern} from "../../features/fire/fireSlice";
 import {CompoundInterestAreaChartNearPercent} from "../atoms/CompoundInterestAreaChartNearPercent";
-import {Grid, Input, Slider} from "@material-ui/core";
+import {Box, Grid, Input, Slider} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import EqualizerIcon from '@material-ui/icons/Equalizer';
 
 const useStyles = makeStyles({
-  root: {},
+  root: {
+    width: 500,
+  },
   sliderRoot: {
     marginLeft: 40,
     width: 450,
@@ -27,7 +29,7 @@ export function CompoundInterestByPattern({firePattern}: Props) {
   const [nearPercent, setNearPercent] = useState<number>(1.0)
 
   return (
-    <>
+    <Box className={classes.root}>
       <CompoundInterestAreaChartNearPercent
         firePattern={firePattern}
         nearPercent={nearPercent} />
@@ -70,7 +72,7 @@ export function CompoundInterestByPattern({firePattern}: Props) {
           />
         </Grid>
       </Grid>
-    </>
+    </Box>
   );
 }
 

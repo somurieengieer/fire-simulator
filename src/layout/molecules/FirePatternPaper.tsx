@@ -24,7 +24,7 @@ export function FirePatternPaper({firePattern}: FirePatternPaperProps) {
   return (
     <Box m={1}>
       <Paper className={classes.paper}>
-            <PhasesTable firePattern={firePattern} />
+        <PhasesTable firePattern={firePattern} />
       </Paper>
     </Box>
   );
