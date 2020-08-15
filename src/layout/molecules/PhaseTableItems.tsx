@@ -115,8 +115,8 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
     <TableHead>
       <TableRow className={classes.tableHeadRow}>
         <TableCell colSpan={colSpan}>
-          <Typography variant={"body2"} display={"inline"}>
-            {title()}&nbsp;
+          <Typography variant={"body2"} display={"inline"} style={{marginRight: 5}}>
+            {title()}
           </Typography>
           <select value={templateIndex}
                   onChange={v => setTemplateIndex(Number(v.target.value))}
