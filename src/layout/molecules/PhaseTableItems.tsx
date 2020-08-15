@@ -113,7 +113,7 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
   return (
     <TableHead>
       <TableRow className={classes.tableHeadRow}>
-        <TableCell colSpan={colSpan} style={{fontSize: '0.8em'}}>
+        <TableCell colSpan={colSpan} style={{fontSize: '0.8rem'}}>
           {title()}&nbsp;
           <select value={templateIndex}
                   onChange={v => setTemplateIndex(Number(v.target.value))}
@@ -136,7 +136,7 @@ export function SubHeaderRowSet({title, colSpan}
   const classes = usePatternTableStyles();
   return (
     <TableRow className={classes.tableHeadRow}>
-      <TableCell colSpan={colSpan} style={{fontSize: '0.8em'}}>{title}</TableCell>
+      <TableCell colSpan={colSpan} style={{fontSize: '0.8rem'}}>{title}</TableCell>
     </TableRow>
   )
 }
