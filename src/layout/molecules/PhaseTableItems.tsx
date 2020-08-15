@@ -25,7 +25,6 @@ export const usePatternTableStyles = makeStyles({
   },
   tableHeadRow: {
     backgroundColor: theme.palette.secondary.main,
-    fontSize: '1em',
   },
   select: {
     height: '2em',
