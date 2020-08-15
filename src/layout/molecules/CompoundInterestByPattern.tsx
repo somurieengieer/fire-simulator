@@ -17,8 +17,8 @@ const useStyles = makeStyles({
     marginLeft: 40,
     width: 450,
     [theme.breakpoints.down('sm')]: {
-      marginLeft: 10,
-      width: 320,
+      marginLeft: 0,
+      width: 340,
     }
   },
   input: {
@@ -44,7 +44,7 @@ export function CompoundInterestByPattern({firePattern}: Props) {
 
       <Grid container spacing={2} alignItems="center"
             className={classes.sliderRoot}
-            component="span"
+            component="div"
       >
         <Grid item component="span">
           <EqualizerIcon />
@@ -59,7 +59,7 @@ export function CompoundInterestByPattern({firePattern}: Props) {
             aria-labelledby="input-slider"
             color="secondary"
             min={0}
-            max={5.0}
+            max={3.0}
             step={0.1}
           />
         </Grid>
