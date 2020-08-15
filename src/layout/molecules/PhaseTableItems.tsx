@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {TableCell, TableHead, TableRow, Typography} from "@material-ui/core";
+import {TableCell, TableHead, TableRow} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import {theme} from "../materialui/theme";
 import {PhaseClass, PhaseData} from "../../features/fire/Phase";
@@ -25,7 +25,6 @@ export const usePatternTableStyles = makeStyles({
   },
   tableHeadRow: {
     backgroundColor: theme.palette.secondary.main,
-    fontSize: '1.0rem',
   },
   select: {
     height: '2em',
@@ -114,10 +113,8 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
   return (
     <TableHead>
       <TableRow className={classes.tableHeadRow}>
-        <TableCell colSpan={colSpan} style={{fontSize: '0.875rem'}}>
-          <Typography variant={"body2"} component={'span'} style={{fontSize: '0.875rem'}}>
-            {title()}&nbsp;
-          </Typography>
+        <TableCell colSpan={colSpan}>
+          {title()}&nbsp;
           <select value={templateIndex}
                   onChange={v => setTemplateIndex(Number(v.target.value))}
                   className={classes.select} >
@@ -140,9 +137,7 @@ export function SubHeaderRowSet({title, colSpan}
   return (
     <TableRow className={classes.tableHeadRow}>
       <TableCell colSpan={colSpan}>
-        <Typography variant={"body2"}>
-          {title}
-        </Typography>
+        {title}
       </TableCell>
     </TableRow>
   )
