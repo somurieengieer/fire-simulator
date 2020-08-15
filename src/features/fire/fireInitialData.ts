@@ -399,7 +399,7 @@ const expense30MynPerYear = (): PhasesTemplate[] => {
 
 const expense20MynPerYearWithChildren = (): PhasesTemplate[] => {
   return [{
-    label: 'サラリーマン・年収600万・子供あり（3%運用）',
+    label: 'サラリーマン・年収600万・子供あり',
     createPhaseData: () =>
       createPhaseDataForWorker({
         ageAtStart: 22,
@@ -435,7 +435,7 @@ const expense20MynPerYearWithChildren = (): PhasesTemplate[] => {
 
 const expense30MynPerYearWithChildren = (): PhasesTemplate[] => {
   return [{
-    label: 'サラリーマン・年収700万・子供あり（3%運用）',
+    label: 'サラリーマン・年収700万・子供あり',
     createPhaseData: () =>
       createPhaseDataForWorker({
         ageAtStart: 22,
@@ -546,16 +546,16 @@ export interface PhasesTemplate {
 export const phasesTemplates: PhasesTemplate[] = [
   templateOfNormalSalaryMan,
   templateOfNormalSalaryMan3percent,
-  templateLabel('月20万円で生活するFIRE（3%運用）'),
+  templateLabel('月20万円で生活するFIRE'),
   ...expense20MynPerYear(),
-  templateLabel('月25万円で生活するFIRE（3%運用）'),
+  templateLabel('月25万円で生活するFIRE'),
   ...expense25MynPerYear(),
-  templateLabel('月30万円で生活するFIRE（3%運用）'),
+  templateLabel('月30万円で生活するFIRE'),
   ...expense30MynPerYear(),
   // 子供あり
-  templateLabel('月20万円で生活するFIRE（3%運用）・子供あり'),
+  templateLabel('月20万円で生活するFIRE・子供あり'),
   ...expense20MynPerYearWithChildren(),
-  templateLabel('月30万円で生活するFIRE（3%運用）・子供あり'),
+  templateLabel('月30万円で生活するFIRE・子供あり'),
   ...expense30MynPerYearWithChildren(),
   // templateLabel('月30万円で生活するFIRE（3%運用）・子供あり'),
   // ...somethingElse(),
