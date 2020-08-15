@@ -21,7 +21,7 @@ export const usePatternTableStyles = makeStyles({
     backgroundColor: theme.palette.secondary.light,
   },
   tableCell: {
-    minWidth: 140,
+    minWidth: 180,
   },
   tableHeadRow: {
     backgroundColor: theme.palette.secondary.main,
