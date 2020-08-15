@@ -112,7 +112,7 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
     <TableHead>
       <TableRow className={classes.tableHeadRow}>
         <TableCell colSpan={colSpan}>
-          <label>{title()}&nbsp;</label>
+          <label style={{fontSize: '1em'}}>{title()}&nbsp;</label>
           <select value={templateIndex}
                   onChange={v => setTemplateIndex(Number(v.target.value))}
                   style={{height: '2em'}}>
