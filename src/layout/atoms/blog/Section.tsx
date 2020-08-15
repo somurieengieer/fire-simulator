@@ -18,7 +18,6 @@ const useStyles = makeStyles(theme => createStyles({
   },
   content: {
     margin: 20,
-    fontSize: '1.0rem',
     [theme.breakpoints.down('sm')]: {
       margin: 5,
     }
@@ -73,7 +72,7 @@ interface SectionListProps {
 }
 export function SectionList({items}: SectionListProps) {
   return (
-    <ul>
+    <ul style={{paddingLeft: '1.5rem'}}>
       {items.map(item => (
         <li>{item}</li>
       ))}
