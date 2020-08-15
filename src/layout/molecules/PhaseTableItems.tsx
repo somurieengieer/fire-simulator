@@ -27,6 +27,11 @@ export const usePatternTableStyles = makeStyles({
     backgroundColor: theme.palette.secondary.main,
     fontSize: '1em',
   },
+  select: {
+    [theme.breakpoints.up('sm')]: {
+      height: '2em',
+    }
+  },
   linkCell: {
     '&:hover': {
       cursor: 'pointer',
@@ -112,10 +117,10 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
     <TableHead>
       <TableRow className={classes.tableHeadRow}>
         <TableCell colSpan={colSpan}>
-          <label style={{fontSize: '1em'}}>{title()}&nbsp;</label>
+          {title()}&nbsp;
           <select value={templateIndex}
                   onChange={v => setTemplateIndex(Number(v.target.value))}
-                  style={{height: '2em'}}>
+                  className={classes.select} >
             {templateOptions().map((o, i) => (
               <option value={i}>{o.label}</option>
             ))}
