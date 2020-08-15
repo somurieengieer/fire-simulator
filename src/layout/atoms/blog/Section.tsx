@@ -1,11 +1,15 @@
 import React from 'react';
 import {Box} from "@material-ui/core";
-import {makeStyles} from "@material-ui/core/styles";
+import {createStyles, makeStyles} from "@material-ui/core/styles";
 
-const useStyles = makeStyles({
+
+const useStyles = makeStyles(theme => createStyles({
   section: {
     margin: 20,
     marginBottom: 60,
+    [theme.breakpoints.down('sm')]: {
+      margin: 10,
+    }
   },
   title: {
     color: '#6594e0',/*文字色*/
@@ -15,8 +19,11 @@ const useStyles = makeStyles({
   content: {
     margin: 20,
     fontSize: '1.2em',
+    [theme.breakpoints.down('sm')]: {
+      margin: 5,
+    }
   },
-});
+}));
 
 interface Props {
   children: React.ReactNode;

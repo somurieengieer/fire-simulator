@@ -6,6 +6,8 @@ import {CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis} from "rec
 import {CompoundInterestByYear} from "../../features/compoundInterest/compoundInterest";
 import {Box, Paper, Typography} from "@material-ui/core";
 import {JustifyCenterBox} from "./JustifyCenterBox";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import {theme} from "../materialui/theme";
 
 const useStyles = makeStyles({
   paper: {
@@ -65,6 +67,8 @@ export function CompoundInterestChart() {
   const classes = useStyles();
 
   const selectedFirePatterns = useSelector(selectFirePatterns)
+  const isPhoneMode = useMediaQuery(theme.breakpoints.down('xs'));
+
 
   const createData = (): ChartData[] => {
     const dataByPattern: ChartData[][] = selectedFirePatterns
@@ -73,10 +77,22 @@ export function CompoundInterestChart() {
     return mergeChartData(...dataByPattern)
   }
 
-  if (!createData()) {
-    return (<></>)
+  const LineChartWithSize = ({width, height, children}: {width: number, height: number, children: React.ReactNode}) => {
+    return (
+      <LineChart
+        width={width}
+        height={height}
+        data={createData()}
+        margin={{
+          top: 5, right: 30, left: 20, bottom: 5,
+        }}
+      >
+        {children}
+      </LineChart>
+    )
   }
 
+  if (!createData()) return (<></>)
   return (
     <Box m={1}>
       <Paper className={classes.paper}>
@@ -84,14 +100,8 @@ export function CompoundInterestChart() {
           <Typography>プラン1-3の比較</Typography>
         </JustifyCenterBox>
         <JustifyCenterBox>
-          <LineChart
-            width={500}
-            height={400}
-            data={createData()}
-            margin={{
-              top: 5, right: 30, left: 20, bottom: 5,
-            }}
-          >
+          <LineChartWithSize width={isPhoneMode ? 340 : 500}
+                             height={isPhoneMode ? 272 : 400}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" tickFormatter={(tickItem) => `${tickItem}歳`} />
             <YAxis tickFormatter={(tickItem) => `${tickItem.toLocaleString()}万`} />
@@ -104,7 +114,7 @@ export function CompoundInterestChart() {
                   name='プラン2' />
             <Line type="monotone" dataKey="p3" stroke="#ca9d82" dot={{ r:2 }} activeDot={{ r: 7 }}
                   name='プラン3' />
-          </LineChart>
+          </LineChartWithSize>
         </JustifyCenterBox>
       </Paper>
     </Box>

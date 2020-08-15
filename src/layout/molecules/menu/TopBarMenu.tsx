@@ -5,18 +5,29 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import {useLocation} from "react-router";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import {theme} from "../../materialui/theme";
+import classNames from 'classnames'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
+      width: '100%',
+      minWidth: 375,
       flexGrow: 1,
     },
     title: {
       flexGrow: 1,
     },
+    center: {
+      textAlign: 'center',
+    },
     content: {
       flexGrow: 1,
       padding: theme.spacing(3),
+      [theme.breakpoints.down('sm')]: {
+        padding: theme.spacing(0.5),
+      }
     },
   }),
 );
@@ -39,13 +50,17 @@ export default function TopBarMenu({children}: Props) {
     return 'トップ'
   }
 
+  const isPhoneMode = useMediaQuery(theme.breakpoints.down('xs'));
+
   return (
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            堅実にFIREを実現する - {title()} -
+          <Typography variant="h6" className={classNames(classes.title, {[classes.center]: isPhoneMode})}>
+            堅実にFIREを実現する
+            {isPhoneMode && (<br />)}
+            - {title()} -
           </Typography>
         </Toolbar>
       </AppBar>

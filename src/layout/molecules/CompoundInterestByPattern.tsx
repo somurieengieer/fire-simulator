@@ -4,14 +4,22 @@ import {CompoundInterestAreaChartNearPercent} from "../atoms/CompoundInterestAre
 import {Box, Grid, Input, Slider} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import EqualizerIcon from '@material-ui/icons/Equalizer';
+import {theme} from "../materialui/theme";
 
 const useStyles = makeStyles({
   root: {
     width: 500,
+    [theme.breakpoints.down('sm')]: {
+      width: 340,
+    }
   },
   sliderRoot: {
     marginLeft: 40,
     width: 450,
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: 10,
+      width: 320,
+    }
   },
   input: {
     width: 60,
@@ -42,7 +50,7 @@ export function CompoundInterestByPattern({firePattern}: Props) {
           <EqualizerIcon />
         </Grid>
         <Grid item component="span">
-          運用利回り変動リスク
+          利回り変動率
         </Grid>
         <Grid item xs component="span">
           <Slider

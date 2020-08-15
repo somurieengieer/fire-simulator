@@ -17,6 +17,10 @@ const useStyles = makeStyles({
     marginLeft: 20,
     marginTop: 5,
     marginBottom: 5,
+    padding: theme.spacing(0.5),
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: 0,
+    }
   }
 });
 

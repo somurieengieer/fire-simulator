@@ -3,6 +3,8 @@ import {FirePattern, updateFirePatternRelatedThings} from "../../features/fire/f
 import {Area, AreaChart, CartesianGrid, Tooltip, XAxis, YAxis} from "recharts";
 import {ChartData, createChartData, mergeChartData} from "./CompoundInterestChart";
 import {PhaseData} from "../../features/fire/Phase";
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import {theme} from "../materialui/theme";
 
 interface Props {
   firePattern: FirePattern,
@@ -26,7 +28,6 @@ export function CompoundInterestAreaChartNearPercent({firePattern, nearPercent}:
     const dataPlusAlpha: ChartData[] = addAnnualInterest(firePattern, Math.abs(nearPercent), 'plus')
     const dataMinusAlpha: ChartData[] = addAnnualInterest(firePattern, -Math.abs(nearPercent), 'minus')
 
-    console.log('before resultData', firePattern.patternNumber, dataPlusAlpha, data, dataMinusAlpha)
     const resultData = mergeChartData(dataPlusAlpha, data, dataMinusAlpha)
     resultData.forEach(d => {
       // @ts-ignore
@@ -34,23 +35,32 @@ export function CompoundInterestAreaChartNearPercent({firePattern, nearPercent}:
       // @ts-ignore
       d.base = d.base - d.minus
     })
-    console.log('processed resultData', resultData)
     return resultData
   }
 
   const existsData = () => firePattern.compoundInterestResult
 
-  return (
-    <>
-    {existsData() && (
+  const AreaChartWithSize = ({width, height, children}: {width: number, height: number, children: React.ReactNode}) => {
+    return (
       <AreaChart
-        width={500}
-        height={400}
+        width={width}
+        height={height}
         data={createData()}
         margin={{
           top: 10, right: 30, left: 16, bottom: 0,
         }}
       >
+        {children}
+      </AreaChart>
+    )
+  }
+
+  const isPhoneMode = useMediaQuery(theme.breakpoints.down('xs'));
+
+  if (!existsData()) return (<></>)
+  return (
+    <AreaChartWithSize width={isPhoneMode ? 340 : 500}
+                       height={isPhoneMode ? 272 : 400}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" tickFormatter={(tickItem) => `${tickItem}歳`} />
         <YAxis tickFormatter={(tickItem) => `${tickItem.toLocaleString()}万`} />
@@ -70,9 +80,7 @@ export function CompoundInterestAreaChartNearPercent({firePattern, nearPercent}:
         <Area type="monotone" name={`-${nearPercent}％運用`} dataKey="minus" stackId="1" stroke="#ff5858" fill="#FFFFFF" />
         <Area type="monotone" name='想定通り運用' dataKey="base" stackId="1" stroke="#82ca9d" fill="#ff5858" />
         <Area type="monotone" name={`+${nearPercent}％運用`} dataKey="plus" stackId="1" stroke="#8884d8" fill="#8884d8" />
-      </AreaChart>
-      )}
-    </>
+      </AreaChartWithSize>
   );
 }
 
