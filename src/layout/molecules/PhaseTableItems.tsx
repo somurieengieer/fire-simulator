@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {TableCell, TableHead, TableRow} from "@material-ui/core";
+import {TableCell, TableHead, TableRow, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import {theme} from "../materialui/theme";
 import {PhaseClass, PhaseData} from "../../features/fire/Phase";
@@ -28,9 +28,7 @@ export const usePatternTableStyles = makeStyles({
     fontSize: '1em',
   },
   select: {
-    [theme.breakpoints.up('sm')]: {
-      height: '2em',
-    }
+    height: '2em',
   },
   linkCell: {
     '&:hover': {
@@ -117,7 +115,9 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
     <TableHead>
       <TableRow className={classes.tableHeadRow}>
         <TableCell colSpan={colSpan}>
-          {title()}&nbsp;
+          <Typography variant={"body2"} display={"inline"}>
+            {title()}&nbsp;
+          </Typography>
           <select value={templateIndex}
                   onChange={v => setTemplateIndex(Number(v.target.value))}
                   className={classes.select} >
