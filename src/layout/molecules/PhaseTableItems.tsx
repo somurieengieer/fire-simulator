@@ -25,6 +25,7 @@ export const usePatternTableStyles = makeStyles({
   },
   tableHeadRow: {
     backgroundColor: theme.palette.secondary.main,
+    fontSize: '1em',
   },
   linkCell: {
     '&:hover': {
@@ -111,7 +112,7 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
     <TableHead>
       <TableRow className={classes.tableHeadRow}>
         <TableCell colSpan={colSpan}>
-          {title()}&nbsp;
+          <label>{title()}&nbsp;</label>
           <select value={templateIndex}
                   onChange={v => setTemplateIndex(Number(v.target.value))}
                   style={{height: '2em'}}>
