@@ -146,22 +146,9 @@ const templateOfNormalSalaryMan3percent = {
     templateOfNormalSalaryMan.createPhaseData().map(v => Object.assign(v, {annualInterest: 3}))
 }
 
-const expense20MynPerYear = () => {
-  const salary400Myn = {
-    label:  'サラリーマン・年収400万',
-    createPhaseData: () =>
-      createPhaseDataForWorker({
-        ageAtRetirement: 58,
-        income: 310,
-        retirementAllowance: 800,
-        expense: 240,
-        expenseAfterRetirement: 240,
-        annuity: 160, // 年金
-        assetAtStart: 0,
-        annualInterest: 3,
-      })
-  }
-  const salary500Myn = {
+const expense20MynPerYear = (): PhasesTemplate[] => {
+  return [
+  {
     label:  'サラリーマン・年収500万',
     createPhaseData: () =>
       createPhaseDataForWorker({
@@ -174,8 +161,8 @@ const expense20MynPerYear = () => {
         assetAtStart: 0,
         annualInterest: 3,
       })
-  }
-  const salary600Myn = {
+  },
+  {
     label:  'サラリーマン・年収600万',
     createPhaseData: () =>
       createPhaseDataForWorker({
@@ -188,22 +175,8 @@ const expense20MynPerYear = () => {
         assetAtStart: 0,
         annualInterest: 3,
       })
-  }
-  const soleProprietorSaving50Myn = {
-    label:  '個人事業主・年50万投資',
-    createPhaseData: () =>
-      createPhaseDataForWorker({
-        ageAtRetirement: 62,
-        income: 290,
-        retirementAllowance: 2500,
-        expense: 240,
-        expenseAfterRetirement: 240,
-        annuity: 74, // 年金
-        assetAtStart: 0,
-        annualInterest: 3,
-      })
-  }
-  const soleProprietorSaving100Myn = {
+  },
+  {
     label:  '個人事業主・年100万投資',
     createPhaseData: () =>
       createPhaseDataForWorker({
@@ -216,8 +189,8 @@ const expense20MynPerYear = () => {
         assetAtStart: 0,
         annualInterest: 3,
       })
-  }
-  const soleProprietorSaving150Myn = {
+  },
+  {
     label:  '個人事業主・年150万投資',
     createPhaseData: () =>
       createPhaseDataForWorker({
@@ -230,8 +203,8 @@ const expense20MynPerYear = () => {
         assetAtStart: 0,
         annualInterest: 3,
       })
-  }
-  const soleProprietorSaving200Myn = {
+  },
+  {
     label:  '個人事業主・年200万投資',
     createPhaseData: () =>
       createPhaseDataForWorker({
@@ -245,19 +218,11 @@ const expense20MynPerYear = () => {
         annualInterest: 3,
       })
   }
-  return [
-    salary400Myn,
-    salary500Myn,
-    salary600Myn,
-    soleProprietorSaving50Myn,
-    soleProprietorSaving100Myn,
-    soleProprietorSaving150Myn,
-    soleProprietorSaving200Myn,
   ]
 }
 
-const expense25MynPerYear = () => {
-  const salary500Myn = {
+const expense25MynPerYear = (): PhasesTemplate[] => {
+  return [{
     label:  'サラリーマン・年収500万',
     createPhaseData: () =>
       createPhaseDataForWorker({
@@ -270,8 +235,8 @@ const expense25MynPerYear = () => {
         assetAtStart: 0,
         annualInterest: 3,
       })
-  }
-  const salary600Myn = {
+  },
+  {
     label:  'サラリーマン・年収600万',
     createPhaseData: () =>
       createPhaseDataForWorker({
@@ -284,8 +249,8 @@ const expense25MynPerYear = () => {
         assetAtStart: 0,
         annualInterest: 3,
       })
-  }
-  const soleProprietorSaving100Myn = {
+  },
+  {
     label:  '個人事業主・年100万投資',
     createPhaseData: () =>
       createPhaseDataForWorker({
@@ -298,8 +263,8 @@ const expense25MynPerYear = () => {
         assetAtStart: 0,
         annualInterest: 3,
       })
-  }
-  const soleProprietorSaving150Myn = {
+  },
+  {
     label:  '個人事業主・年150万投資',
     createPhaseData: () =>
       createPhaseDataForWorker({
@@ -312,8 +277,8 @@ const expense25MynPerYear = () => {
         assetAtStart: 0,
         annualInterest: 3,
       })
-  }
-  const soleProprietorSaving200Myn = {
+  },
+  {
     label:  '個人事業主・年200万投資',
     createPhaseData: () =>
       createPhaseDataForWorker({
@@ -326,19 +291,12 @@ const expense25MynPerYear = () => {
         assetAtStart: 0,
         annualInterest: 3,
       })
-  }
-  return [
-    salary500Myn,
-    salary600Myn,
-    soleProprietorSaving100Myn,
-    soleProprietorSaving150Myn,
-    soleProprietorSaving200Myn,
-  ]
+  }]
 }
 
 
-const expense30MynPerYear = () => {
-  const salary600Myn = {
+const expense30MynPerYear = (): PhasesTemplate[] => {
+  return [{
     label:  'サラリーマン・年収600万',
     createPhaseData: () =>
       createPhaseDataForWorker({
@@ -351,8 +309,8 @@ const expense30MynPerYear = () => {
         assetAtStart: 0,
         annualInterest: 3,
       })
-  }
-  const salary700Myn = {
+  },
+  {
     label:  'サラリーマン・年収700万',
     createPhaseData: () =>
       createPhaseDataForWorker({
@@ -365,8 +323,8 @@ const expense30MynPerYear = () => {
         assetAtStart: 0,
         annualInterest: 3,
       })
-  }
-  const salary800Myn = {
+  },
+  {
     label:  'サラリーマン・年収800万',
     createPhaseData: () =>
       createPhaseDataForWorker({
@@ -379,8 +337,8 @@ const expense30MynPerYear = () => {
         assetAtStart: 0,
         annualInterest: 3,
       })
-  }
-  const soleProprietorSaving100Myn = {
+  },
+  {
     label:  '個人事業主・年100万投資',
     createPhaseData: () =>
       createPhaseDataForWorker({
@@ -393,8 +351,8 @@ const expense30MynPerYear = () => {
         assetAtStart: 0,
         annualInterest: 3,
       })
-  }
-  const soleProprietorSaving150Myn = {
+  },
+  {
     label:  '個人事業主・年150万投資',
     createPhaseData: () =>
       createPhaseDataForWorker({
@@ -407,8 +365,8 @@ const expense30MynPerYear = () => {
         assetAtStart: 0,
         annualInterest: 3,
       })
-  }
-  const soleProprietorSaving200Myn = {
+  },
+  {
     label:  '個人事業主・年200万投資',
     createPhaseData: () =>
       createPhaseDataForWorker({
@@ -421,8 +379,8 @@ const expense30MynPerYear = () => {
         assetAtStart: 0,
         annualInterest: 3,
       })
-  }
-  const soleProprietorSaving250Myn = {
+  },
+  {
     label:  '個人事業主・年250万投資',
     createPhaseData: () =>
       createPhaseDataForWorker({
@@ -435,21 +393,12 @@ const expense30MynPerYear = () => {
         assetAtStart: 0,
         annualInterest: 3,
       })
-  }
-  return [
-    salary600Myn,
-    salary700Myn,
-    salary800Myn,
-    soleProprietorSaving100Myn,
-    soleProprietorSaving150Myn,
-    soleProprietorSaving200Myn,
-    soleProprietorSaving250Myn,
-  ]
+  }]
 }
 
 
-const expense20MynPerYearWithChildren = () => {
-  const solidManBy600income = {
+const expense20MynPerYearWithChildren = (): PhasesTemplate[] => {
+  return [{
     label: 'サラリーマン・年収600万・子供あり（3%運用）',
     createPhaseData: () =>
       createPhaseDataForWorker({
@@ -465,8 +414,8 @@ const expense20MynPerYearWithChildren = () => {
         babyCost: 100,
         babyBirthYear: 26,
       })
-  }
-  const soleProprietorSaving150Myn = {
+  },
+  {
     label:  '個人事業主・年200万投資',
     createPhaseData: () =>
       createPhaseDataForWorker({
@@ -481,15 +430,11 @@ const expense20MynPerYearWithChildren = () => {
         babyCost: 100,
         babyBirthYear: 26,
       })
-  }
-  return [
-    solidManBy600income,
-    soleProprietorSaving150Myn,
-  ]
+  }]
 }
 
-const expense30MynPerYearWithChildren = () => {
-  const solidManBy700income = {
+const expense30MynPerYearWithChildren = (): PhasesTemplate[] => {
+  return [{
     label: 'サラリーマン・年収700万・子供あり（3%運用）',
     createPhaseData: () =>
       createPhaseDataForWorker({
@@ -505,8 +450,8 @@ const expense30MynPerYearWithChildren = () => {
         babyCost: 100,
         babyBirthYear: 26,
       })
-  }
-  const soleProprietorSaving150Myn = {
+  },
+  {
     label:  '個人事業主・年200万投資',
     createPhaseData: () =>
       createPhaseDataForWorker({
@@ -521,15 +466,11 @@ const expense30MynPerYearWithChildren = () => {
         babyCost: 100,
         babyBirthYear: 26,
       })
-  }
-  return [
-    solidManBy700income,
-    soleProprietorSaving150Myn
-  ]
+  }]
 }
 
-const somethingElse = () => {
-  const liveByMySelf = {
+const somethingElse = (): PhasesTemplate[] => {
+  return [{
     label: '個人事業主・月30万生活・子供あり・完全に引退せず細々働く・独力',
     createPhaseData: () =>
       createPhaseDataForWorker({
@@ -545,8 +486,8 @@ const somethingElse = () => {
         babyCost: 100,
         babyBirthYear: 33,
       })
-  }
-  const sharedPayAfterRetirement = {
+  },
+  {
     label: '個人事業主・月30万生活・子供あり・完全に引退せず細々働く',
     createPhaseData: () => [
       create(true, {
@@ -590,18 +531,12 @@ const somethingElse = () => {
         annualInterest: 3,
       })
     ]
-  }
-  return [
-    liveByMySelf,
-    sharedPayAfterRetirement
-  ]
-
+  }]
 }
 
 export const templateLabel = (label: string): PhasesTemplate => {
   return {label: ` --- ${label} --- `, createPhaseData: () => undefined}
 }
-
 
 export interface PhasesTemplate {
   label: string,
