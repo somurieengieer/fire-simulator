@@ -5,6 +5,8 @@ import {FirePattern, selectFirePatterns} from "../../features/fire/fireSlice";
 import {Grid} from "@material-ui/core";
 import {CompoundInterestChart} from "../atoms/CompoundInterestChart";
 import {FirePatternPaper} from "../molecules/FirePatternPaper";
+import {Section, SectionContent, SectionList, SectionTitle} from "../atoms/blog/Section";
+import {JustifyCenterBox} from "../atoms/JustifyCenterBox";
 
 const useStyles = makeStyles({
   table: {
@@ -23,6 +25,25 @@ export function FirePage() {
 
   return (
     <>
+      <JustifyCenterBox width={'800'}>
+        <Section maxWidth={800}>
+          <SectionTitle>使い方</SectionTitle>
+          <SectionContent>
+            堅実なFIREを実現するためのシミュレーションができます。<br/>
+            収入（手取り）・支出・運用利回りを元に簡易的な計算をしているため、預金を含めた資産運用率の設定・運用における税金等を考慮した支出総額・運用利回りを設定するようお気をつけください。<br/>
+            <br/>
+            メジャーなパターンはテンプレートを用意してありますので、テンプレートを選択してから値を書き換えるのがオススメです。<br/>
+            テンプレートの概要は以下の通りです。
+            <SectionList items={[
+              '利回り3%運用（堅実運用）',
+              '超堅実運用利回り2%且つ平均寿命（86歳）時点でサラリーマンは2000万、個人事業主は3000万の貯蓄がある状態をゴールとする',
+              '子供は1人。26歳で誕生。年100万かかる前提',
+              '年金は70歳から受給（そのうち70歳になるんだろうなと悲観的に予想）',
+              '引退後60歳までの支出に国民年金・国民健康保険料を含む（年25万）',
+              ]} />
+          </SectionContent>
+        </Section>
+      </JustifyCenterBox>
       <Grid>
         {selectedFirePatterns.map((pattern: FirePattern, i: number) => (
           <FirePatternPaper firePattern={pattern} />

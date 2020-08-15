@@ -8,8 +8,8 @@ import EqualizerIcon from '@material-ui/icons/Equalizer';
 const useStyles = makeStyles({
   root: {},
   sliderRoot: {
-    marginLeft: 70,
-    width: 400,
+    marginLeft: 40,
+    width: 450,
   },
   input: {
     width: 60,
@@ -40,7 +40,7 @@ export function CompoundInterestByPattern({firePattern}: Props) {
           <EqualizerIcon />
         </Grid>
         <Grid item component="span">
-          変動リスク
+          運用利回り変動リスク
         </Grid>
         <Grid item xs component="span">
           <Slider

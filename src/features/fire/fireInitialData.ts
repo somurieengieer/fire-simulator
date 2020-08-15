@@ -95,7 +95,7 @@ function createPhaseDataAfterRetirement(props: PhaseDataForWorkerProps ): PhaseD
       assetAtStartEditable: false,
       note: '年金受給前生活（年金支払いあり）',
       income: 0,
-      expense: props.expenseAfterRetirement ? props.expenseAfterRetirement + 20 : props.expense,
+      expense: props.expenseAfterRetirement ? props.expenseAfterRetirement + 25 : props.expense,
       annualInterest: props.annualInterest,
     })
   }
@@ -179,7 +179,7 @@ const expense20MynPerYear = () => {
     label:  'サラリーマン・年収600万',
     createPhaseData: () =>
       createPhaseDataForWorker({
-        ageAtRetirement: 43,
+        ageAtRetirement: 44,
         income: 460,
         retirementAllowance: 800,
         expense: 240,
@@ -235,7 +235,7 @@ const expense20MynPerYear = () => {
     label:  '個人事業主・年200万投資',
     createPhaseData: () =>
       createPhaseDataForWorker({
-        ageAtRetirement: 44,
+        ageAtRetirement: 45,
         income: 440,
         retirementAllowance: 2000,
         expense: 240,
@@ -317,7 +317,7 @@ const expense25MynPerYear = () => {
     label:  '個人事業主・年200万投資',
     createPhaseData: () =>
       createPhaseDataForWorker({
-        ageAtRetirement: 46,
+        ageAtRetirement: 48,
         income: 500,
         retirementAllowance: 2000,
         expense: 300,

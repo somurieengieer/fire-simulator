@@ -3,12 +3,12 @@ import './App.css';
 import {CompoundInterestPage} from "./layout/organism/CompoundInterestPage";
 import {Route, Switch} from "react-router";
 import {myUrl} from "./layout/Urls";
-import ResponsiveDrawer from "./layout/molecules/DrawerMenu";
 import {FirePage} from "./layout/organism/FirePage";
+import MenuFrame from "./layout/molecules/menu/MenuFrame";
 
 function App() {
   return (
-    <ResponsiveDrawer>
+    <MenuFrame>
       <Switch>
         <Route exact path={myUrl.top}>
           <CompoundInterestPage />
@@ -17,7 +17,7 @@ function App() {
           <FirePage />
         </Route>
       </Switch>
-    </ResponsiveDrawer>
+    </MenuFrame>
   );
 }
 
