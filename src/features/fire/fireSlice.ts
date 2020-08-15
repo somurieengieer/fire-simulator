@@ -112,6 +112,7 @@ export const fireSlice = createSlice({
       const patternIndex = action.payload.patternNumber - 1
       const phaseIndex = action.payload.phaseIndex
       state.firePatterns[patternIndex].phases.splice(phaseIndex, 1)
+      state.firePatterns[patternIndex].phases[0].assetAtStart = Number(Number(state.firePatterns[patternIndex].phases[0].assetAtStart).toFixed(0))
       updateRelatedThings(state)
     },
     addPhase: (state, action: PayloadAction<{patternNumber: number}>) => {

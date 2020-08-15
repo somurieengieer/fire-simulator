@@ -503,8 +503,6 @@ export interface PhasesTemplate {
 }
 
 export const phasesTemplates: PhasesTemplate[] = [
-  templateOfNormalSalaryMan,
-  templateOfNormalSalaryMan3percent,
   templateLabel('月20万円で生活するFIRE'),
   ...expense20MynPerYear(),
   templateLabel('月25万円で生活するFIRE'),
@@ -516,6 +514,9 @@ export const phasesTemplates: PhasesTemplate[] = [
   ...expense20MynPerYearWithChildren(),
   templateLabel('月30万円で生活するFIRE・子供あり'),
   ...expense30MynPerYearWithChildren(),
+  templateLabel('おまけ - 平均的なサラリーマン'),
+  templateOfNormalSalaryMan,
+  templateOfNormalSalaryMan3percent,
   // templateLabel('月30万円で生活するFIRE（3%運用）・子供あり'),
   // ...somethingElse(),
 ]

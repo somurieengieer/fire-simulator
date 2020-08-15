@@ -67,9 +67,9 @@ export function CompoundInterestAreaChartNearPercent({firePattern, nearPercent}:
                    if (name.charAt(0) === '+') amount += entry.payload.base
                    return `${Number(amount || 0).toLocaleString()}万`
                      })} />
-        <Area type="monotone" name={`-${nearPercent}運用`} dataKey="minus" stackId="1" stroke="#ff5858" fill="#FFFFFF" />
+        <Area type="monotone" name={`-${nearPercent}％運用`} dataKey="minus" stackId="1" stroke="#ff5858" fill="#FFFFFF" />
         <Area type="monotone" name='想定通り運用' dataKey="base" stackId="1" stroke="#82ca9d" fill="#ff5858" />
-        <Area type="monotone" name={`+${nearPercent}運用`} dataKey="plus" stackId="1" stroke="#8884d8" fill="#8884d8" />
+        <Area type="monotone" name={`+${nearPercent}％運用`} dataKey="plus" stackId="1" stroke="#8884d8" fill="#8884d8" />
       </AreaChart>
       )}
     </>
