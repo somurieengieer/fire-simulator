@@ -411,12 +411,12 @@ const expense30MynPerYearWithChildren = (): PhasesTemplate[] => {
       })
   },
   {
-    label:  '個人事業主・年200万投資',
+    label:  '個人事業主・年250万投資',
     createPhaseData: () =>
       createPhaseDataForWorker({
-        ageAtRetirement: 55,
-        income: 560,
-        retirementAllowance: 2900,
+        ageAtRetirement: 52,
+        income: 610,
+        retirementAllowance: 2600,
         expense: 360,
         expenseAfterRetirement: 360,
         annuity: 74, // 年金
