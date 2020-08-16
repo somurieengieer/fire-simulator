@@ -177,6 +177,14 @@ export function TableRowSet({rowLabel, phaseClasses, valueCallback, onChange, di
           />
         </TableCell>
       ))}
+      <EmptyTableCell />
     </TableRow>
+  )
+}
+
+export function EmptyTableCell() {
+  return (
+    <TableCell width={10}>
+    </TableCell>
   )
 }

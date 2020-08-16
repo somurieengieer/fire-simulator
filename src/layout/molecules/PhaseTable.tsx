@@ -3,9 +3,14 @@ import {Box, Grid, IconButton, Paper, Table, TableBody, TableCell, TableContaine
 import {makeStyles} from "@material-ui/core/styles";
 import {useDispatch} from "react-redux";
 import {addPhase, deletePhase, FirePattern, updatePhases} from "../../features/fire/fireSlice";
-import {SubHeaderRowSet, TablePatternHeaderSet, TableRowSet, usePatternTableStyles} from "./PhaseTableItems";
+import {
+  EmptyTableCell,
+  SubHeaderRowSet,
+  TablePatternHeaderSet,
+  TableRowSet,
+  usePatternTableStyles
+} from "./PhaseTableItems";
 import {theme} from "../materialui/theme";
-import AddIcon from '@material-ui/icons/Add';
 import {PhaseClass} from "../../features/fire/Phase";
 import {CompoundInterestByPattern} from "./CompoundInterestByPattern";
 import classNames from 'classnames'
@@ -62,7 +67,7 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
       || (index !== 0 && phases[index-1].ageAtStart !== phases[index-1].ageAtEnd))
   }
 
-  const titleColSpan = () => phases.length + 1
+  const titleColSpan = () => phases.length + 2
 
   return (
     <>
@@ -73,7 +78,7 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
               <Table className={tableClasses.table} aria-label="simple table"
                      size={'small'}
               >
-                <TablePatternHeaderSet firePattern={firePattern} colSpan={titleColSpan() + 1} />
+                <TablePatternHeaderSet firePattern={firePattern} colSpan={titleColSpan()} />
                 <TableBody>
                   <TableRow>
                     <TableCell className={tableClasses.tableCellLabel} component="th" scope="row">
@@ -102,6 +107,7 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
                           left: -26,
                         }}>
                           <IconButton onClick={() => insertPhase(i)}
+                                      className={tableClasses.linkCell}
                                       disabled={!insertPhaseButtonActive(i)}
                                       aria-label="add">
                             <AddCircleIcon />
@@ -115,6 +121,7 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
                             right: -22,
                           }}>
                             <IconButton onClick={() => dispatch(addPhase({patternNumber: firePattern.patternNumber}))}
+                                        className={tableClasses.linkCell}
                                         aria-label="add">
                               <AddCircleIcon />
                             </IconButton>
@@ -122,12 +129,7 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
                         )}
                       </TableCell>
                     ))}
-                    <TableCell rowSpan={10} width={40} style={{backgroundColor: theme.palette.primary.main}}
-                               className={tableClasses.linkCell}
-                               onClick={() => dispatch(addPhase({patternNumber: firePattern.patternNumber}))}
-                    >
-                      <AddIcon />
-                    </TableCell>
+                    <EmptyTableCell />
                   </TableRow>
                   <TableRowSet rowLabel={'メモ'}
                                phaseClasses={phases}
