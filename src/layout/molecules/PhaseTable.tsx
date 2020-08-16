@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid, Paper, Table, TableBody, TableCell, TableContainer, TableRow} from "@material-ui/core";
+import {Box, Grid, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableRow} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import {useDispatch} from "react-redux";
 import {addPhase, deletePhase, FirePattern, updatePhases} from "../../features/fire/fireSlice";
@@ -11,6 +11,7 @@ import {CompoundInterestByPattern} from "./CompoundInterestByPattern";
 import classNames from 'classnames'
 import {empty} from "../../features/utils/Utils";
 import {JustifyCenterBox} from "../atoms/JustifyCenterBox";
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 const useStyles = makeStyles({
   root: {
@@ -51,6 +52,17 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
     dispatch(deletePhase({patternNumber: firePattern.patternNumber, phaseIndex: phaseIndex}))
   }
 
+  const insertPhase = (index: number) => {
+    console.log('called insertPhase')
+    dispatch(addPhase({patternNumber: firePattern.patternNumber, phaseIndex: index}))
+  }
+
+  const insertPhaseButtonActive = (index: number) => {
+    const phases = firePattern.phases
+    return ((phases[index] && phases[index].ageAtStart !== phases[index].ageAtEnd)
+      || (index !== 0 && phases[index-1].ageAtStart !== phases[index-1].ageAtEnd))
+  }
+
   const titleColSpan = () => phases.length + 1
 
   return (
@@ -84,6 +96,17 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
                         />
                         歳
                         <button onClick={() => execDeletePhase(i)}>✗</button>
+                        <Box style={{
+                          position: 'absolute',
+                          top: 10,
+                          left: -26,
+                        }}>
+                          <IconButton onClick={() => insertPhase(i)}
+                                      disabled={!insertPhaseButtonActive(i)}
+                                      aria-label="add">
+                            <AddCircleIcon />
+                          </IconButton>
+                        </Box>
                       </TableCell>
                     ))}
                     <TableCell rowSpan={10} width={40} style={{backgroundColor: theme.palette.primary.main}}

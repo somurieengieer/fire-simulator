@@ -115,11 +115,31 @@ export const fireSlice = createSlice({
       state.firePatterns[patternIndex].phases[0].assetAtStart = Number(Number(state.firePatterns[patternIndex].phases[0].assetAtStart).toFixed(0))
       updateRelatedThings(state)
     },
-    addPhase: (state, action: PayloadAction<{patternNumber: number}>) => {
+    addPhase: (state, action: PayloadAction<{patternNumber: number, phaseIndex?: number}>) => {
       const firePatternIndex = action.payload.patternNumber - 1
       const targetFirePattern = state.firePatterns[firePatternIndex]
-      targetFirePattern.phases.push(createNewPhase(targetFirePattern))
-      updateRelatedThings(state)
+
+      const phaseIndex = action.payload.phaseIndex
+      if (phaseIndex === undefined) {
+
+        targetFirePattern.phases.push(createNewPhase(targetFirePattern))
+      } else {
+
+        const rightPhase = targetFirePattern.phases[phaseIndex]
+        const leftPhase = phaseIndex > 0 && targetFirePattern.phases[phaseIndex - 1]
+        if (rightPhase.ageAtStart !== rightPhase.ageAtEnd) {
+          const newPhase = JSON.parse(JSON.stringify(rightPhase))
+          rightPhase.ageAtStart = Number(rightPhase.ageAtStart) + 1
+          newPhase.ageAtEnd = newPhase.ageAtStart
+          targetFirePattern.phases.splice(phaseIndex, 0, newPhase)
+        } else if (leftPhase && leftPhase.ageAtStart !== leftPhase.ageAtEnd) {
+          const newPhase = JSON.parse(JSON.stringify(leftPhase))
+          leftPhase.ageAtEnd = Number(leftPhase.ageAtEnd) - 1
+          newPhase.ageAtStart = newPhase.ageAtEnd
+          targetFirePattern.phases.splice(phaseIndex, 0, newPhase)
+        }
+        updateRelatedThings(state)
+      }
     }
   },
 });
