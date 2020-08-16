@@ -53,7 +53,6 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
   }
 
   const insertPhase = (index: number) => {
-    console.log('called insertPhase')
     dispatch(addPhase({patternNumber: firePattern.patternNumber, phaseIndex: index}))
   }
 
@@ -98,6 +97,7 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
                         <button onClick={() => execDeletePhase(i)}>✗</button>
                         <Box style={{
                           position: 'absolute',
+                          zIndex: 10,
                           top: 10,
                           left: -26,
                         }}>
@@ -107,6 +107,19 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
                             <AddCircleIcon />
                           </IconButton>
                         </Box>
+                        {(i === firePattern.phases.length - 1) && (
+                          <Box style={{
+                            position: 'absolute',
+                            zIndex: 10,
+                            top: 10,
+                            right: -22,
+                          }}>
+                            <IconButton onClick={() => dispatch(addPhase({patternNumber: firePattern.patternNumber}))}
+                                        aria-label="add">
+                              <AddCircleIcon />
+                            </IconButton>
+                          </Box>
+                        )}
                       </TableCell>
                     ))}
                     <TableCell rowSpan={10} width={40} style={{backgroundColor: theme.palette.primary.main}}
