@@ -58,7 +58,7 @@ export default function TopBarMenu({children}: Props) {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" className={classNames(classes.title, {[classes.center]: isPhoneMode})}>
-            堅実にFIREを実現する
+            堅実にFIREを実現する&nbsp;
             {isPhoneMode && (<br />)}
             - {title()} -
           </Typography>
