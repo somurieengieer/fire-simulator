@@ -445,52 +445,98 @@ const somethingElse = (): PhasesTemplate[] => {
         babyCost: 100,
         babyBirthYear: 33,
       })
-  },
-  {
-    label: '個人事業主・月30万生活・子供あり・完全に引退せず細々働く',
-    createPhaseData: () => [
-      create(true, {
-        ageAtStart: 33,
-        ageAtEnd: 35,
-        note: '子育て生活（実家）',
-        income: 600,
-        expense: 200,
-        assetAtStart: 2200,
-        annualInterest: 3,
-      }),
-      create(false, {
-        ageAtEnd: 46,
-        note: '子育て生活（都内）',
-        income: 300,
-        expense: 200,
-        annualInterest: 3,
-      }),
-      create(false, {
-        ageAtEnd: 55,
-        note: '子育て生活（都内）細々働く',
-        income: 100,
-        expense: 200,
-        annualInterest: 3,
-      }),
-      create(false, {
-        ageAtEnd: 56,
-        note: '退職金もらう',
-        income: 560,
-        expense: 200,
-        annualInterest: 3,
-      }),
-      ...createPhaseDataAfterRetirement({
-        ageAtRetirement: 57,
-        income: 0,
-        retirementAllowance: 0,
-        expense: 200,
-        expenseAfterRetirement: 200,
-        annuity: 160, // 年金
-        assetAtStart: 0,
-        annualInterest: 3,
-      })
-    ]
-  }]
+    },
+    {
+      label: '個人事業主・月30万生活・子供あり・完全に引退せず細々働く',
+      createPhaseData: () => [
+        create(true, {
+          ageAtStart: 33,
+          ageAtEnd: 35,
+          note: '子育て生活（実家）',
+          income: 600,
+          expense: 200,
+          assetAtStart: 2200,
+          annualInterest: 3,
+        }),
+        create(false, {
+          ageAtEnd: 46,
+          note: '子育て生活（都内）',
+          income: 300,
+          expense: 200,
+          annualInterest: 3,
+        }),
+        create(false, {
+          ageAtEnd: 55,
+          note: '子育て生活（都内）細々働く',
+          income: 100,
+          expense: 200,
+          annualInterest: 3,
+        }),
+        create(false, {
+          ageAtEnd: 56,
+          note: '退職金もらう',
+          income: 560,
+          expense: 200,
+          annualInterest: 3,
+        }),
+        ...createPhaseDataAfterRetirement({
+          ageAtRetirement: 57,
+          income: 0,
+          retirementAllowance: 0,
+          expense: 200,
+          expenseAfterRetirement: 200,
+          annuity: 160, // 年金
+          assetAtStart: 0,
+          annualInterest: 3,
+        })
+      ]
+    },
+    {
+      label: '法人化・月30万生活・子供あり・完全に引退せず細々働く',
+      createPhaseData: () => [
+        create(true, {
+          ageAtStart: 33,
+          ageAtEnd: 35,
+          note: '子育て生活（実家）',
+          income: 600,
+          expense: 200,
+          assetAtStart: 2200,
+          annualInterest: 3,
+        }),
+        create(false, {
+          ageAtEnd: 46,
+          note: '子育て生活（都内）',
+          income: 400,
+          expense: 200,
+          annualInterest: 3,
+        }),
+        create(false, {
+          ageAtEnd: 55,
+          note: '子育て生活（都内）細々働く',
+          income: 100,
+          expense: 200,
+          annualInterest: 3,
+        }),
+        create(false, {
+          ageAtEnd: 56,
+          note: '退職金もらう',
+          income: 560,
+          expense: 200,
+          annualInterest: 3,
+        }),
+        ...createPhaseDataAfterRetirement({
+          ageAtRetirement: 57,
+          income: 0,
+          retirementAllowance: 0,
+          expense: 200,
+          expenseAfterRetirement: 200,
+          annuity: 160, // 年金
+          assetAtStart: 0,
+          annualInterest: 3,
+        })
+      ]
+    }
+  ]
 }
 
 export const templateLabel = (label: string): PhasesTemplate => {
@@ -499,24 +545,31 @@ export const templateLabel = (label: string): PhasesTemplate => {
 
 export interface PhasesTemplate {
   label: string,
-  createPhaseData: () => PhaseData[] | undefined,
+  createPhaseData?: () => PhaseData[] | undefined,
 }
 
-export const phasesTemplates: PhasesTemplate[] = [
-  templateLabel('月20万円で生活するFIRE'),
-  ...expense20MynPerYear(),
-  templateLabel('月25万円で生活するFIRE'),
-  ...expense25MynPerYear(),
-  templateLabel('月30万円で生活するFIRE'),
-  ...expense30MynPerYear(),
-  // 子供あり
-  templateLabel('月20万円で生活するFIRE・子供あり'),
-  ...expense20MynPerYearWithChildren(),
-  templateLabel('月30万円で生活するFIRE・子供あり'),
-  ...expense30MynPerYearWithChildren(),
-  templateLabel('おまけ - 平均的なサラリーマン'),
-  templateOfNormalSalaryMan,
-  templateOfNormalSalaryMan3percent,
-  // templateLabel('月30万円で生活するFIRE（3%運用）・子供あり'),
-  // ...somethingElse(),
-]
+export const phasesTemplates = (pData: boolean): PhasesTemplate[] => {
+  const res = [
+    templateLabel('月20万円で生活するFIRE'),
+    ...expense20MynPerYear(),
+    templateLabel('月25万円で生活するFIRE'),
+    ...expense25MynPerYear(),
+    templateLabel('月30万円で生活するFIRE'),
+    ...expense30MynPerYear(),
+    // 子供あり
+    templateLabel('月20万円で生活するFIRE・子供あり'),
+    ...expense20MynPerYearWithChildren(),
+    templateLabel('月30万円で生活するFIRE・子供あり'),
+    ...expense30MynPerYearWithChildren(),
+    templateLabel('おまけ - 平均的なサラリーマン'),
+    templateOfNormalSalaryMan,
+    templateOfNormalSalaryMan3percent,
+  ]
+  if (pData) {
+    res.push(
+      templateLabel('月30万円で生活するFIRE（3%運用）・子供あり'),
+      ...somethingElse(),
+    )
+  }
+  return res
+}

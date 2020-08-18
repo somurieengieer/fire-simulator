@@ -53,6 +53,7 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
   const selectedFirePatterns = useSelector(selectFirePatterns)
   const [templateIndex, setTemplateIndex] = useState<number>(0)
   const location = useLocation();
+  const [templateOptions, setTemplateOptions] = useState<PhasesTemplate[]>([{label: '▼テンプレートを選択'},])
 
   const title = (): string => {
     return 'パターン' + numberFromHalfWidthToFullWidth(firePattern.patternNumber)
@@ -66,10 +67,11 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
      }))
   }
 
-  const copyPatternByTemplateNumber = (templateIndex: number) => {
+  const copyPatternByTemplateNumber = (index: number) => {
     // @ts-ignore // 0の場合はcreatePhaseDataがないが、その場合は↑でreturnする
-    if (!templateIndex) return
-    const phaseData = templateOptions()[templateIndex].createPhaseData()
+    if (!templateOptions[index].createPhaseData) return
+    // @ts-ignore
+    const phaseData = templateOptions[index].createPhaseData()
     if (!phaseData) return
     dispatch(updatePhases({
       patternNumber: firePattern.patternNumber,
@@ -77,39 +79,63 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
     }))
   }
 
-  useEffect(() => {
-    copyPatternByTemplateNumber(templateIndex)
-  }, [templateIndex])
-
-  useEffect(() => {
+  const updateTemplateIndex = () => {
     const getParams = new URLSearchParams(location.search);
     const templateIndexParam = getParams.get(`t${firePattern.patternNumber}`)
 
-    let templateIndex = 3;
+    let newIndex = 3;
     switch (firePattern.patternNumber) {
       case 2:
-        templateIndex = 5
+        newIndex = 5
         break
       case 3:
-        templateIndex = 25
+        newIndex = 25
         break
     }
 
     if (templateIndexParam &&
       0 <= Number(templateIndexParam) &&
-      Number(templateIndexParam) < templateOptions().length) {
-      templateIndex = Number(templateIndexParam)
+      Number(templateIndexParam) < templateOptions.length) {
+      newIndex = Number(templateIndexParam)
     }
-    setTemplateIndex(templateIndex)
+    setTemplateIndex(newIndex)
+  }
+
+  const updateTemplateIndexForPData = () => {
+    setTemplateIndex(phasesTemplates(true).length - (3 - firePattern.patternNumber))
+  }
+
+  const isPDataMode = (): boolean => {
+    const getParams = new URLSearchParams(location.search);
+    return Boolean(getParams.get(`pData`))
+  }
+
+  const updateTemplateOptions = () => {
+    setTemplateOptions([
+      {label: '▼テンプレートを選択'},
+      ...phasesTemplates(isPDataMode())
+    ])
+    if (isPDataMode()) {
+      setTemplateIndex(-1)
+    }
+  }
+
+  // 以下のuseEffectは上から順に動く
+  useEffect(() => {
+    updateTemplateOptions()
   }, [location])
 
-  const templateOptions = (): PhasesTemplate[] => {
-    return [
-      // @ts-ignore
-      {label: '▼テンプレートを選択'},
-      ...phasesTemplates
-    ]
-  }
+  useEffect(() => {
+    if (isPDataMode()) {
+      updateTemplateIndexForPData()
+    } else {
+      updateTemplateIndex()
+    }
+  }, [templateOptions])
+
+  useEffect(() => {
+    copyPatternByTemplateNumber(templateIndex)
+  }, [templateIndex])
 
   return (
     <TableHead>
@@ -119,7 +145,7 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
           <select value={templateIndex}
                   onChange={v => setTemplateIndex(Number(v.target.value))}
                   className={classes.select} >
-            {templateOptions().map((o, i) => (
+            {templateOptions.map((o, i) => (
               <option value={i}>{o.label}</option>
             ))}
           </select>

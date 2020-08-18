@@ -99,7 +99,8 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
                                className={classNames({[tableClasses.inputError]: phase.ageAtStart > phase.ageAtEnd}) }
                         />
                         歳
-                        <button onClick={() => execDeletePhase(i)}>✗</button>
+                        <button disabled={phases.length === 1}
+                                onClick={() => execDeletePhase(i)}>✗</button>
                         <Box style={{
                           position: 'absolute',
                           zIndex: 10,
