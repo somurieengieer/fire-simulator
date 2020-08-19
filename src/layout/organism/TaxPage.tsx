@@ -2,9 +2,8 @@ import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {Grid} from "@material-ui/core";
 import {TaxPaper} from "../molecules/TaxPaper";
-import {TaxSet} from "../../features/tax/tax";
 import {useSelector} from "react-redux";
-import {selectTaxSet} from "../../features/tax/taxSlice";
+import {selectTaxSet, TaxSet} from "../../features/tax/taxSlice";
 
 const useStyles = makeStyles({
   table: {

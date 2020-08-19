@@ -1,43 +1,45 @@
 // 所得に関するロジック
 
 // 所得と控除のセット（Redux保存用クラス）
-export interface TaxSet {
-  incomes: Income[],
-  deductions: EditableDeduction[], //控除
-  calculatedDeductions: AutoCalclatedDeduction[], //控除（自動導出）
+import {Deduction, Income, TaxSet} from "./taxSlice";
+
+export interface InnerTaxSet {
+  incomes: InnerIncome[],
+  deductions: InnerEditableDeduction[], //控除
+  calculatedDeductions: InnerAutoCalculatedDeduction[], //控除（自動導出）
 }
 
 // 所得
-export interface Income {
+export interface InnerIncome {
   name: string,
   amount: number,
-  deductions?: EditableDeduction[], //控除
-  calculatedDeductions?: AutoCalclatedDeduction[], //控除（自動導出）
+  deductions: InnerEditableDeduction[], //控除
+  calculatedDeductions: InnerAutoCalculatedDeduction[], //控除（自動導出）
 }
 
-// 課税標準（課税対象となる所得の合計）
-interface BaseOfTaxation {
-  amount: number,
-}
 
 // 控除
-export interface Deduction {
+export interface InnerDeduction {
   name: string,
   amount?: number | string,
 }
 
 // 編集可能控除
-interface EditableDeduction extends Deduction {
+export interface InnerEditableDeduction extends InnerDeduction {
   editable: boolean,
   checkBox?: boolean,
   checked?: boolean,
 }
 
 // 自動算出控除
-interface AutoCalclatedDeduction extends Deduction {
+interface InnerAutoCalculatedDeduction extends InnerDeduction {
   calcAmount: (amount: number) => number
 }
 
+// 課税標準（課税対象となる所得の合計）
+interface BaseOfTaxation {
+  amount: number,
+}
 
 // 累進控除
 interface ProgressiveRateItem {
@@ -70,10 +72,11 @@ const salaryDeductionProgressiveRate = (amount: number) => {
 }
 
 // 給与所得
-const salaryIncome = (): Income => {
+const salaryIncome = (): InnerIncome => {
   return {
     name: '給与所得',
     amount: 0,
+    deductions: [],
     calculatedDeductions: [{
       name: '給与所得控除',
       calcAmount: (amount: number): number =>
@@ -84,7 +87,7 @@ const salaryIncome = (): Income => {
 }
 
 // 事業所得
-const soleProprietorIncome = (): Income => {
+const soleProprietorIncome = (): InnerIncome => {
   return {
     name: '事業所得',
     amount: 0,
@@ -99,20 +102,20 @@ const soleProprietorIncome = (): Income => {
       name: '経費',
       amount: 0,
       editable: true,
-    },
-    ]
+    }],
+    calculatedDeductions: []
   }
 }
 
 
 // 所得控除
-export const commonDeductions = (): EditableDeduction[] => {
+export const commonDeductions = (): InnerEditableDeduction[] => {
   return [{name: '医療費控除',
     amount: 0,
     editable: false}
     ]
 }
-export const commonCalculatedDeductions = (): AutoCalclatedDeduction[] => {
+export const commonCalculatedDeductions = (): InnerAutoCalculatedDeduction[] => {
   return [{name: '基礎控除',
     calcAmount: (totalIncome: number): number => {
       if (totalIncome <= 2400) return 48
@@ -124,7 +127,7 @@ export const commonCalculatedDeductions = (): AutoCalclatedDeduction[] => {
 }
 
 
-export const defaultIncomeAndDeductionSet = (): TaxSet => {
+export const defaultIncomeAndDeductionSet = (): InnerTaxSet => {
   return {
     incomes: [
       salaryIncome(),
@@ -133,4 +136,29 @@ export const defaultIncomeAndDeductionSet = (): TaxSet => {
     deductions: commonDeductions(),
     calculatedDeductions: commonCalculatedDeductions(),
   }
+}
+
+export function taxSetConvert(taxSet: TaxSet): TaxSet {
+  const innerSet = defaultIncomeAndDeductionSet()
+  innerSet.incomes.forEach(innerIncome => {
+    const income = taxSet.incomes.find(i => i.name === innerIncome.name) as Income
+    innerIncome.calculatedDeductions.map(innerDed => {
+      const ded = income.deductions.find(d => d.name === innerDed.name) as Deduction
+      ded.amount = innerDed.calcAmount(income.amount)
+    })
+  })
+  // 課税標準
+  taxSet.baseOfTaxation = taxSet.incomes
+    .map(income => Math.max(
+      income.amount
+        - (income.deductions.map(ded => Number(ded.amount || 0))
+          .reduce((a, b) => a + b) || 0),
+      0)
+    ).reduce((a, b) => a + b)
+
+  innerSet.calculatedDeductions.forEach(innerDed => {
+    const ded = taxSet.deductions.find(d => d.name === innerDed.name) as Deduction
+    ded.amount = innerDed.calcAmount(taxSet.baseOfTaxation)
+  })
+  return taxSet
 }
