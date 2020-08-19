@@ -3,6 +3,7 @@ export const myUrl = {
 
   fukuri: '/fukuri',
   fire: '/fire',
+  tax: '/tax',
   examKamiShimoById(id: string) {
     return '/exam/kamishimo/' + id
   },

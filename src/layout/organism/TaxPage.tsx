@@ -1,10 +1,8 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
-import {useSelector} from "react-redux";
-import {FirePattern, selectFirePatterns} from "../../features/fire/fireSlice";
 import {Grid} from "@material-ui/core";
-import {CompoundInterestChart} from "../atoms/CompoundInterestChart";
 import {TaxPaper} from "../molecules/TaxPaper";
+import {defaultIncomeAndDeductionSet} from "../../features/tax/tax";
 
 const useStyles = makeStyles({
   table: {
@@ -19,17 +17,16 @@ export function TaxPage() {
 
   const classes = useStyles();
 
-  const selectedFirePatterns = useSelector(selectFirePatterns)
+  // const selectedFirePatterns = useSelector(selectFirePatterns)
+  const selectedIncomeAndDeductionSet = defaultIncomeAndDeductionSet()
 
   return (
     <>
       <Grid>
-        {selectedFirePatterns.map((pattern: FirePattern, i: number) => (
-          <TaxPaper firePattern={pattern} />
-        ))}
-      </Grid>
-      <Grid>
-        <CompoundInterestChart />
+        {/*{selectedFirePatterns.map((pattern: FirePattern, i: number) => (*/}
+        {/*  <TaxPaper firePattern={pattern} />*/}
+        {/*))}*/}
+        <TaxPaper incomeAndDeductionSet={selectedIncomeAndDeductionSet} />
       </Grid>
     </>
   );

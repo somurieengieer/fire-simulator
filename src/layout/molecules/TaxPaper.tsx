@@ -1,8 +1,8 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
-import {PhasesTable} from "./PhaseTable";
-import {FirePattern} from "../../features/fire/fireSlice";
-import {Box, Paper, Typography} from "@material-ui/core";
+import {Box, Paper} from "@material-ui/core";
+import {TaxTable} from "./TaxTable";
+import {IncomeAndDeductionSet} from "../../features/tax/tax";
 
 const useStyles = makeStyles({
   table: {
@@ -11,19 +11,17 @@ const useStyles = makeStyles({
 });
 
 interface FirePatternPaperProps {
-  firePattern: FirePattern,
+  incomeAndDeductionSet: IncomeAndDeductionSet,
 }
 
-export function TaxPaper({firePattern}: FirePatternPaperProps) {
+export function TaxPaper({incomeAndDeductionSet}: FirePatternPaperProps) {
 
   const classes = useStyles();
-  const hasError = firePattern.hasError
 
   return (
     <Box m={1}>
       <Paper style={{width: '100%'}}>
-            {hasError && (<Typography>エラーあり！</Typography>)}
-            <PhasesTable firePattern={firePattern} />
+            <TaxTable incomeAndDeductionSet={incomeAndDeductionSet}/>
       </Paper>
     </Box>
   );
