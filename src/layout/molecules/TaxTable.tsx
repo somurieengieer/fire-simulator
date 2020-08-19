@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid, Paper, Table, TableBody, TableCell, TableContainer, TableRow} from "@material-ui/core";
+import {Grid, Paper, Table, TableBody, TableContainer} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import {usePatternTableStyles} from "./PhaseTableItems";
 import {theme} from "../materialui/theme";
@@ -38,6 +38,10 @@ export function TaxTable({incomeAndDeductionSet}: PhasesTableProps) {
     // dispatch(updatePhases(newFirePattern))
   }
 
+  const updateIncome = (incomeIndex: number, updatedValue: any): void => {
+
+  }
+
   const updateChecked = (incomeIndex: number, index: number, updatedValue: any): void => {
 
   }
@@ -55,25 +59,25 @@ export function TaxTable({incomeAndDeductionSet}: PhasesTableProps) {
                 <TaxHeaderRowSet title={'タイトル'} />
                 <TableBody>
                   <TaxSubHeaderRowSet title={'サブタイトル'} />
-                  <TableRow>
-                    <TableCell className={tableClasses.tableCellLabel} component="th" scope="row">
-                      所得
-                    </TableCell>
-                  </TableRow>
                   {incomeAndDeductionSet.incomes.map((income: Income, incomeIndex: number) => (
                     <>
-                      <TableRow>
-                        <TableCell className={tableClasses.tableCellLabel} component="th" scope="row">
-                          {income.name}
-                        </TableCell>
-                      </TableRow>
-                      {income.deductions.map((deduction, i) => (
+                      <TaxIncomeTableRowSet rowLabel={income.name}
+                                            value={income.amount || ''}
+                                            onChange={v => updateIncome(incomeIndex, v)}
+                      />
+                      {income.deductions && income.deductions.map((deduction, i) => (
                         <TaxIncomeTableRowSet rowLabel={deduction.name}
                                               value={deduction.amount || ''}
                                               onChange={v => update(incomeIndex, i, v)}
                                               onChangeCheck={v => updateChecked(incomeIndex, i, v)}
+                                              disabled={!deduction.editable}
                         />
-
+                      ))}
+                      {income.calculatedDeductions && income.calculatedDeductions.map((deduction, i) => (
+                        <TaxIncomeTableRowSet rowLabel={deduction.name}
+                                              value={deduction.calcAmount(income.amount) || ''}
+                                              disabled={true}
+                        />
                       ))}
                       {/*<TableCell className={tableClasses.tableCell} align="center">*/}
                       {/*  {income.}*/}

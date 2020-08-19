@@ -31,8 +31,8 @@ export function TaxSubHeaderRowSet({title}
 export function TaxIncomeTableRowSet({rowLabel, value, onChange, onChangeCheck, disabled}
 : {rowLabel: string,
   value: string | number,
-  onChange(newValue: string): void,
-  onChangeCheck(newValue: boolean): void,
+  onChange?(newValue: string): void,
+  onChangeCheck?(newValue: boolean): void,
   disabled?: boolean,
 }) {
 
@@ -48,7 +48,7 @@ export function TaxIncomeTableRowSet({rowLabel, value, onChange, onChangeCheck, 
       <TableCell className={classes.tableCell} align="center">
         <input value={showValue()}
                type={'number'}
-               onChange={v => onChange(v.target.value)}
+               onChange={v => onChange && onChange(v.target.value)}
                disabled={disabled}
                style={{width: '140px'}}
         />

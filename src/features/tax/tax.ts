@@ -3,14 +3,16 @@
 // 所得と控除のセット（Redux保存用クラス）
 export interface IncomeAndDeductionSet {
   incomes: Income[],
-  incomeDeduction: IncomeDeduction[]
+  deductions: EditableDeduction[], //控除
+  calculatedDeductions: AutoCalclatedDeduction[], //控除（自動導出）
 }
 
 // 所得
 export interface Income {
   name: string,
   amount: number,
-  deductions: (EditableDeduction | AutoCalclatedDeduction)[], //控除
+  deductions?: EditableDeduction[], //控除
+  calculatedDeductions?: AutoCalclatedDeduction[], //控除（自動導出）
 }
 
 // 課税標準（課税対象となる所得の合計）
@@ -21,7 +23,7 @@ interface BaseOfTaxation {
 // 控除
 export interface Deduction {
   name: string,
-  amount?: number,
+  amount?: number | string,
 }
 
 // 編集可能控除
@@ -53,7 +55,7 @@ function calcProgressiveRate(amount: number, items: ProgressiveRateItem[]): numb
 // 給与所得控除
 const salaryDeductionProgressiveRate = (amount: number) => {
   const items = [
-    [0, 180, 0.4, 0],
+    [-1, 180, 0.4, 0],
     [180, 360, 0.3, 18],
     [360, 660, 0.2, 54],
     [660, 1000, 0.1, 120],
@@ -72,7 +74,7 @@ const salaryIncome = (): Income => {
   return {
     name: '給与所得',
     amount: 0,
-    deductions: [{
+    calculatedDeductions: [{
       name: '給与所得控除',
       calcAmount: (amount: number): number =>
         salaryDeductionProgressiveRate(amount || 0)
@@ -104,9 +106,13 @@ const soleProprietorIncome = (): Income => {
 
 
 // 所得控除
-type IncomeDeduction = EditableDeduction | AutoCalclatedDeduction
-
-export const commonDeductions = (): IncomeDeduction[] => {
+export const commonDeductions = (): EditableDeduction[] => {
+  return [{name: '医療費控除',
+    amount: 0,
+    editable: false}
+    ]
+}
+export const commonCalculatedDeductions = (): AutoCalclatedDeduction[] => {
   return [{name: '基礎控除',
     calcAmount: (totalIncome: number): number => {
       if (totalIncome <= 2400) return 48
@@ -114,15 +120,17 @@ export const commonDeductions = (): IncomeDeduction[] => {
       if (totalIncome <= 2500) return 16
       return 0
     },
-    editable: false }]
+  }]
 }
 
 
 export const defaultIncomeAndDeductionSet = (): IncomeAndDeductionSet => {
   return {
     incomes: [
-      salaryIncome()
+      salaryIncome(),
+      soleProprietorIncome(),
     ],
-    incomeDeduction: commonDeductions()
+    deductions: commonDeductions(),
+    calculatedDeductions: commonCalculatedDeductions(),
   }
 }
