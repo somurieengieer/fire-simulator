@@ -1,7 +1,7 @@
 // 所得に関するロジック
 
 // 所得と控除のセット（Redux保存用クラス）
-export interface IncomeAndDeductionSet {
+export interface TaxSet {
   incomes: Income[],
   deductions: EditableDeduction[], //控除
   calculatedDeductions: AutoCalclatedDeduction[], //控除（自動導出）
@@ -124,7 +124,7 @@ export const commonCalculatedDeductions = (): AutoCalclatedDeduction[] => {
 }
 
 
-export const defaultIncomeAndDeductionSet = (): IncomeAndDeductionSet => {
+export const defaultIncomeAndDeductionSet = (): TaxSet => {
   return {
     incomes: [
       salaryIncome(),

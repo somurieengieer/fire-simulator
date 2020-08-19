@@ -3,8 +3,10 @@ import {Grid, Paper, Table, TableBody, TableContainer} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import {usePatternTableStyles} from "./PhaseTableItems";
 import {theme} from "../materialui/theme";
-import {Income, IncomeAndDeductionSet} from "../../features/tax/tax";
+import {Income, TaxSet} from "../../features/tax/tax";
 import {TaxHeaderRowSet, TaxIncomeTableRowSet, TaxSubHeaderRowSet} from "./TaxTableItems";
+import {updateTaxSet} from "../../features/tax/taxSlice"
+import {useDispatch} from "react-redux";
 
 const useStyles = makeStyles({
   root: {
@@ -19,23 +21,21 @@ const useStyles = makeStyles({
 });
 
 interface PhasesTableProps {
-  incomeAndDeductionSet: IncomeAndDeductionSet,
+  incomeAndDeductionSetIndex: number,
+  taxSet: TaxSet,
 }
 
-export function TaxTable({incomeAndDeductionSet}: PhasesTableProps) {
+export function TaxTable({incomeAndDeductionSetIndex, taxSet}: PhasesTableProps) {
 
   const classes = useStyles();
   const tableClasses = usePatternTableStyles();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  const update = (incomeIndex: number, index: number, updatedValue: any): void => {
-
-    // const newData = Object.assign({}, phases[index])
+  const updateDeductions = (incomeIndex: number, index: number, updatedValue: any): void => {
+    const newIncomeAndDeductionSet = Object.assign({}, taxSet)
     // @ts-ignore
-    // newData[key] = updatedValue
-    // const newFirePattern = JSON.parse(JSON.stringify(firePattern))
-    // newFirePattern.phases[index] = newData
-    // dispatch(updatePhases(newFirePattern))
+    newIncomeAndDeductionSet.incomes[incomeIndex].deductions[index] = updatedValue
+    dispatch(updateTaxSet({incomeAndDeductionSet: newIncomeAndDeductionSet, index: incomeAndDeductionSetIndex}))
   }
 
   const updateIncome = (incomeIndex: number, updatedValue: any): void => {
@@ -59,7 +59,7 @@ export function TaxTable({incomeAndDeductionSet}: PhasesTableProps) {
                 <TaxHeaderRowSet title={'タイトル'} />
                 <TableBody>
                   <TaxSubHeaderRowSet title={'サブタイトル'} />
-                  {incomeAndDeductionSet.incomes.map((income: Income, incomeIndex: number) => (
+                  {taxSet.incomes.map((income: Income, incomeIndex: number) => (
                     <>
                       <TaxIncomeTableRowSet rowLabel={income.name}
                                             value={income.amount || ''}
@@ -68,7 +68,7 @@ export function TaxTable({incomeAndDeductionSet}: PhasesTableProps) {
                       {income.deductions && income.deductions.map((deduction, i) => (
                         <TaxIncomeTableRowSet rowLabel={deduction.name}
                                               value={deduction.amount || ''}
-                                              onChange={v => update(incomeIndex, i, v)}
+                                              onChange={v => updateDeductions(incomeIndex, i, v)}
                                               onChangeCheck={v => updateChecked(incomeIndex, i, v)}
                                               disabled={!deduction.editable}
                         />
@@ -88,7 +88,7 @@ export function TaxTable({incomeAndDeductionSet}: PhasesTableProps) {
                   {/*<TableRowSet rowLabel={'手取り'}*/}
                   {/*             phaseClasses={phases}*/}
                   {/*             valueCallback={p => p.income}*/}
-                  {/*             onChange={(newValue, i) => update(i, 'income', newValue)} />*/}
+                  {/*             onChange={(newValue, i) => updateDeductions(i, 'income', newValue)} />*/}
                 </TableBody>
               </Table>
             </TableContainer>
