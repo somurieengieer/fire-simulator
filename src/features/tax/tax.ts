@@ -112,7 +112,7 @@ const soleProprietorIncome = (): InnerIncome => {
 export const commonDeductions = (): InnerEditableDeduction[] => {
   return [{name: '医療費控除',
     amount: 0,
-    editable: false}
+    editable: true}
     ]
 }
 export const commonCalculatedDeductions = (): InnerAutoCalculatedDeduction[] => {

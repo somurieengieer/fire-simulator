@@ -22,7 +22,7 @@ export function TaxPaper({taxSet, index}: FirePatternPaperProps) {
   return (
     <Box m={1}>
       <Paper style={{width: '100%'}}>
-        <TaxTable taxSet={taxSet} incomeAndDeductionSetIndex={index}/>
+        <TaxTable taxSet={taxSet} taxSetIndex={index}/>
       </Paper>
     </Box>
   );

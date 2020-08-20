@@ -4,7 +4,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import {usePatternTableStyles} from "./PhaseTableItems";
 import {theme} from "../materialui/theme";
 import {TaxHeaderRowSet, TaxIncomeTableRowSet, TaxSubHeaderRowSet} from "./TaxTableItems";
-import {Income, TaxSet, updateTaxSet} from "../../features/tax/taxSlice"
+import {Deduction, Income, TaxSet, updateTaxSet} from "../../features/tax/taxSlice"
 import {useDispatch} from "react-redux";
 
 const useStyles = makeStyles({
@@ -20,28 +20,33 @@ const useStyles = makeStyles({
 });
 
 interface PhasesTableProps {
-  incomeAndDeductionSetIndex: number,
+  taxSetIndex: number,
   taxSet: TaxSet,
 }
 
-export function TaxTable({incomeAndDeductionSetIndex, taxSet}: PhasesTableProps) {
+export function TaxTable({taxSetIndex, taxSet}: PhasesTableProps) {
 
   const classes = useStyles();
   const tableClasses = usePatternTableStyles();
   const dispatch = useDispatch();
 
-  const updateDeductions = (incomeIndex: number, index: number, updatedValue: any): void => {
+  const updateIncomeDeductions = (incomeIndex: number, index: number, updatedValue: any): void => {
     const newTaxSet = JSON.parse(JSON.stringify(taxSet))
-    // @ts-ignore
     newTaxSet.incomes[incomeIndex].deductions[index] = updatedValue
-    dispatch(updateTaxSet({taxSet: newTaxSet, index: incomeAndDeductionSetIndex}))
+    dispatch(updateTaxSet({taxSet: newTaxSet, index: taxSetIndex}))
   }
 
   const updateIncome = (incomeIndex: number, updatedValue: any): void => {
     console.log('updatedIncome called', taxSet, incomeIndex, updatedValue)
     const newIncomeAndDeductionSet = JSON.parse(JSON.stringify(taxSet))
     newIncomeAndDeductionSet.incomes[incomeIndex].amount = updatedValue
-    dispatch(updateTaxSet({taxSet: newIncomeAndDeductionSet, index: incomeAndDeductionSetIndex}))
+    dispatch(updateTaxSet({taxSet: newIncomeAndDeductionSet, index: taxSetIndex}))
+  }
+
+  const updateDeduction = (deductionIndex: number, updatedValue: any): void => {
+    const newTaxSet = JSON.parse(JSON.stringify(taxSet))
+    newTaxSet.deductions[deductionIndex] = updatedValue
+    dispatch(updateTaxSet({taxSet: newTaxSet, index: taxSetIndex}))
   }
 
   const updateChecked = (incomeIndex: number, index: number, updatedValue: any): void => {
@@ -58,9 +63,9 @@ export function TaxTable({incomeAndDeductionSetIndex, taxSet}: PhasesTableProps)
                      size={'small'}
               >
 
-                <TaxHeaderRowSet title={'タイトル'} />
+                <TaxHeaderRowSet title={'パターン１〜などの列タイトル'} />
                 <TableBody>
-                  <TaxSubHeaderRowSet title={'サブタイトル'} />
+                  <TaxSubHeaderRowSet title={'所得'} />
                   {taxSet.incomes.map((income: Income, incomeIndex: number) => (
                     <>
                       <TaxIncomeTableRowSet rowLabel={income.name}
@@ -70,21 +75,31 @@ export function TaxTable({incomeAndDeductionSetIndex, taxSet}: PhasesTableProps)
                       {income.deductions && income.deductions.map((deduction, i) => (
                         <TaxIncomeTableRowSet rowLabel={deduction.name}
                                               value={deduction.amount || ''}
-                                              onChange={v => updateDeductions(incomeIndex, i, v)}
+                                              onChange={v => updateIncomeDeductions(incomeIndex, i, v)}
                                               onChangeCheck={v => updateChecked(incomeIndex, i, v)}
                                               disabled={!deduction.editable}
                         />
                       ))}
-                      {/*<TableCell className={tableClasses.tableCell} align="center">*/}
-                      {/*  {income.}*/}
-                      {/*</TableCell>*/}
                     </>
                     ))}
                   {/*<SubHeaderRowSet title={'収入'} colSpan={titleColSpan()} />*/}
                   {/*<TableRowSet rowLabel={'手取り'}*/}
                   {/*             phaseClasses={phases}*/}
                   {/*             valueCallback={p => p.income}*/}
-                  {/*             onChange={(newValue, i) => updateDeductions(i, 'income', newValue)} />*/}
+                  {/*             onChange={(newValue, i) => updateIncomeDeductions(i, 'income', newValue)} />*/}
+                  <TaxSubHeaderRowSet title={'課税標準'} />
+                  <TaxIncomeTableRowSet rowLabel={'課税標準'}
+                                        value={taxSet.baseOfTaxation || ''}
+                                        disabled={true}
+                  />
+                  <TaxSubHeaderRowSet title={'控除'} />
+                  {taxSet.deductions.map((deduction: Deduction, deductionIndex: number) => (
+                    <TaxIncomeTableRowSet rowLabel={deduction.name}
+                                          value={deduction.amount || ''}
+                                          onChange={v => updateDeduction(deductionIndex, v)}
+                                          disabled={!deduction.editable}
+                    />
+                    ))}
                 </TableBody>
               </Table>
             </TableContainer>
