@@ -45,7 +45,7 @@ export function TaxTable({taxSetIndex, taxSet}: PhasesTableProps) {
 
   const updateDeduction = (deductionIndex: number, updatedValue: any): void => {
     const newTaxSet = JSON.parse(JSON.stringify(taxSet))
-    newTaxSet.deductions[deductionIndex] = updatedValue
+    newTaxSet.deductions[deductionIndex].amount = updatedValue
     dispatch(updateTaxSet({taxSet: newTaxSet, index: taxSetIndex}))
   }
 

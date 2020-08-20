@@ -2,11 +2,12 @@
 
 // 所得と控除のセット（Redux保存用クラス）
 import {Deduction, Income, TaxSet} from "./taxSlice";
+import {manYen} from "../utils/Utils";
 
 export interface InnerTaxSet {
   incomes: InnerIncome[],
   deductions: InnerEditableDeduction[], //控除
-  calculatedDeductions: InnerAutoCalculatedDeduction[], //控除（自動導出）
+  calculatedDeductions: InnerAutoCalculatedDeduction [], //控除（自動導出）
 }
 
 // 所得
@@ -14,7 +15,7 @@ export interface InnerIncome {
   name: string,
   amount: number,
   deductions: InnerEditableDeduction[], //控除
-  calculatedDeductions: InnerAutoCalculatedDeduction[], //控除（自動導出）
+  calculatedDeductions: InnerAutoCalculatedIncomeDeduction[], //控除（自動導出）
 }
 
 
@@ -31,9 +32,13 @@ export interface InnerEditableDeduction extends InnerDeduction {
   checked?: boolean,
 }
 
-// 自動算出控除
+// 自動算出控除（所得専用）
+interface InnerAutoCalculatedIncomeDeduction extends InnerDeduction {
+  calcAmount: (income: Income) => number
+}
+// 自動算出控除（所得控除）
 interface InnerAutoCalculatedDeduction extends InnerDeduction {
-  calcAmount: (amount: number) => number
+  calcAmount: (taxSet: TaxSet) => number
 }
 
 // 課税標準（課税対象となる所得の合計）
@@ -71,6 +76,73 @@ const salaryDeductionProgressiveRate = (amount: number) => {
   return result
 }
 
+// TODO: 厳密には賞与の繰入上限がある（年間573万）
+// 社会保険料
+// 令和２年４月〜　東京
+const socialInsurance = (standardSalaryByMonth: number): any => {
+  const data = [
+    [1,58000,0,63000,5724.6,2862.3,6762.8,3381.4,16104.00,8052.00],
+    [2,68000,63000,73000,6711.6,3355.8,7928.8,3964.4,16104.00,8052.00],
+    [3,78000,73000,83000,7698.6,3849.3,9094.8,4547.4,16104.00,8052.00],
+    [4,88000,83000,93000,8685.6,4342.8,10260.8,5130.4,16104.00,8052.00],
+    [5,98000,93000,101000,9672.6,4836.3,11426.8,5713.4,17934.00,8967.00],
+    [6,104000,101000,107000,10264.8,5132.4,12126.4,6063.2,19032.00,9516.00],
+    [7,110000,107000,114000,10857.0,5428.5,12826.0,6413.0,20130.00,10065.00],
+    [8,118000,114000,122000,11646.6,5823.3,13758.8,6879.4,21594.00,10797.00],
+    [9,126000,122000,130000,12436.2,6218.1,14691.6,7345.8,23058.00,11529.00],
+    [10,134000,130000,138000,13225.8,6612.9,15624.4,7812.2,24522.00,12261.00],
+    [11,142000,138000,146000,14015.4,7007.7,16557.2,8278.6,25986.00,12993.00],
+    [12,150000,146000,155000,14805.0,7402.5,17490.0,8745.0,27450.00,13725.00],
+    [13,160000,155000,165000,15792.0,7896.0,18656.0,9328.0,29280.00,14640.00],
+    [14,170000,165000,175000,16779.0,8389.5,19822.0,9911.0,31110.00,15555.00],
+    [15,180000,175000,185000,17766.0,8883.0,20988.0,10494.0,32940.00,16470.00],
+    [16,190000,185000,195000,18753.0,9376.5,22154.0,11077.0,34770.00,17385.00],
+    [17,200000,195000,210000,19740.0,9870.0,23320.0,11660.0,36600.00,18300.00],
+    [18,220000,210000,230000,21714.0,10857.0,25652.0,12826.0,40260.00,20130.00],
+    [19,240000,230000,250000,23688.0,11844.0,27984.0,13992.0,43920.00,21960.00],
+    [20,260000,250000,270000,25662.0,12831.0,30316.0,15158.0,47580.00,23790.00],
+    [21,280000,270000,290000,27636.0,13818.0,32648.0,16324.0,51240.00,25620.00],
+    [22,300000,290000,310000,29610.0,14805.0,34980.0,17490.0,54900.00,27450.00],
+    [23,320000,310000,330000,31584.0,15792.0,37312.0,18656.0,58560.00,29280.00],
+    [24,340000,330000,350000,33558.0,16779.0,39644.0,19822.0,62220.00,31110.00],
+    [25,360000,350000,370000,35532.0,17766.0,41976.0,20988.0,65880.00,32940.00],
+    [26,380000,370000,395000,37506.0,18753.0,44308.0,22154.0,69540.00,34770.00],
+    [27,410000,395000,425000,40467.0,20233.5,47806.0,23903.0,75030.00,37515.00],
+    [28,440000,425000,455000,43428.0,21714.0,51304.0,25652.0,80520.00,40260.00],
+    [29,470000,455000,485000,46389.0,23194.5,54802.0,27401.0,86010.00,43005.00],
+    [30,500000,485000,515000,49350.0,24675.0,58300.0,29150.0,91500.00,45750.00],
+    [31,530000,515000,545000,52311.0,26155.5,61798.0,30899.0,96990.00,48495.00],
+    [32,560000,545000,575000,55272.0,27636.0,65296.0,32648.0,102480.00,51240.00],
+    [33,590000,575000,605000,58233.0,29116.5,68794.0,34397.0,107970.00,53985.00],
+    [34,620000,605000,635000,61194.0,30597.0,72292.0,36146.0,113460.00,56730.00],
+    [35,650000,635000,665000,64155.0,32077.5,75790.0,37895.0,113460.00,56730.00],
+    [36,680000,665000,695000,67116.0,33558.0,79288.0,39644.0,113460.00,56730.00],
+    [37,710000,695000,730000,70077.0,35038.5,82786.0,41393.0,113460.00,56730.00],
+    [38,750000,730000,770000,74025.0,37012.5,87450.0,43725.0,113460.00,56730.00],
+    [39,790000,770000,810000,77973.0,38986.5,92114.0,46057.0,113460.00,56730.00],
+    [40,830000,810000,855000,81921.0,40960.5,96778.0,48389.0,113460.00,56730.00],
+    [41,880000,855000,905000,86856.0,43428.0,102608.0,51304.0,113460.00,56730.00],
+    [42,930000,905000,955000,91791.0,45895.5,108438.0,54219.0,113460.00,56730.00],
+    [43,980000,955000,1005000,96726.0,48363.0,114268.0,57134.0,113460.00,56730.00],
+    [44,1030000,1005000,1055000,101661.0,50830.5,120098.0,60049.0,113460.00,56730.00],
+    [45,1090000,1055000,1115000,107583.0,53791.5,127094.0,63547.0,113460.00,56730.00],
+    [46,1150000,1115000,1175000,113505.0,56752.5,134090.0,67045.0,113460.00,56730.00],
+    [47,1210000,1175000,1235000,119427.0,59713.5,141086.0,70543.0,113460.00,56730.00],
+    [48,1270000,1235000,1295000,125349.0,62674.5,148082.0,74041.0,113460.00,56730.00],
+    [49,1330000,1295000,1355000,131271.0,65635.5,155078.0,77539.0,113460.00,56730.00],
+    [50,1390000,1355000,9999999999999999999,137193.0,68596.5,162074.0,81037.0,113460.00,56730.00],
+  ]
+  return data.find(d => d[2] <= standardSalaryByMonth*10000
+    && standardSalaryByMonth*10000 < d[3])
+}
+
+const annuity = (taxSet: TaxSet): number => {
+  return manYen(socialInsurance(taxSet.baseOfTaxation/12)[taxSet.age >= 40 ? 7 : 5])
+}
+const healthInsurance = (taxSet: TaxSet): number => {
+  return manYen(socialInsurance(taxSet.baseOfTaxation/12)[9])
+}
+
 // 給与所得
 const salaryIncome = (): InnerIncome => {
   return {
@@ -79,8 +151,8 @@ const salaryIncome = (): InnerIncome => {
     deductions: [],
     calculatedDeductions: [{
       name: '給与所得控除',
-      calcAmount: (amount: number): number =>
-        salaryDeductionProgressiveRate(amount || 0)
+      calcAmount: (income: Income): number =>
+        salaryDeductionProgressiveRate(income.amount || 0)
     }
     ]
   }
@@ -116,14 +188,27 @@ export const commonDeductions = (): InnerEditableDeduction[] => {
     ]
 }
 export const commonCalculatedDeductions = (): InnerAutoCalculatedDeduction[] => {
-  return [{name: '基礎控除',
-    calcAmount: (totalIncome: number): number => {
-      if (totalIncome <= 2400) return 48
-      if (totalIncome <= 2450) return 32
-      if (totalIncome <= 2500) return 16
-      return 0
+  const existsSalary = (taxSet: TaxSet): boolean => {
+    return Boolean(taxSet.incomes.find(i => i.name === salaryIncome().name && Number(i.amount || 0) > 0))
+  }
+  return [
+    { name: '基礎控除',
+      calcAmount: (taxSet: TaxSet): number => {
+        if (taxSet.baseOfTaxation <= 2400) return 48
+        if (taxSet.baseOfTaxation <= 2450) return 32
+        if (taxSet.baseOfTaxation <= 2500) return 16
+        return 0
+      },
     },
-  }]
+    { name: '社会保険料控除（健康保険）',
+      calcAmount: (taxSet: TaxSet): number =>
+        existsSalary(taxSet) ? healthInsurance(taxSet) : 0
+    },
+    { name: '社会保険料控除（厚生年金）',
+      calcAmount: (taxSet: TaxSet): number =>
+        existsSalary(taxSet) ? annuity(taxSet) : 0
+    },
+  ]
 }
 
 
@@ -144,7 +229,7 @@ export function taxSetConvert(taxSet: TaxSet): TaxSet {
     const income = taxSet.incomes.find(i => i.name === innerIncome.name) as Income
     innerIncome.calculatedDeductions.map(innerDed => {
       const ded = income.deductions.find(d => d.name === innerDed.name) as Deduction
-      ded.amount = innerDed.calcAmount(income.amount)
+      ded.amount = innerDed.calcAmount(income)
     })
   })
   // 課税標準
@@ -158,7 +243,7 @@ export function taxSetConvert(taxSet: TaxSet): TaxSet {
 
   innerSet.calculatedDeductions.forEach(innerDed => {
     const ded = taxSet.deductions.find(d => d.name === innerDed.name) as Deduction
-    ded.amount = innerDed.calcAmount(taxSet.baseOfTaxation)
+    ded.amount = innerDed.calcAmount(taxSet)
   })
   return taxSet
 }

@@ -5,6 +5,7 @@ import {defaultIncomeAndDeductionSet, InnerEditableDeduction, taxSetConvert} fro
 export interface TaxSet {
   incomes: Income[],
   baseOfTaxation: number,
+  age: number,
   deductions: Deduction[], //控除
 }
 
@@ -36,18 +37,19 @@ const createTaxSet = (): TaxSet => {
           ...income.calculatedDeductions.map(d => {
             return {
               name: d.name,
-              amount: d.calcAmount(income.amount),
+              amount: d.calcAmount(income),
               editable: false,
             }
           })
         ]
       }}),
+    age: 30,
     baseOfTaxation: 0, // 後でアップデートかけるので簡略化するために0とする
     deductions: [
       ...innerSet.deductions,
       ...innerSet.calculatedDeductions.map(d => {return {
         name: d.name,
-        amount: d.calcAmount(0),
+        amount: 0, // 後でアップデートかけるので簡略化するために0とする
         editable: false,
       }})
     ]

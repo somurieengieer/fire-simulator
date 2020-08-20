@@ -12,9 +12,15 @@ export function numberFromHalfWidthToFullWidth(n: number): string {
     })
 }
 
+export function manYen(yen: number | string | undefined): number {
+  return Number(yen || 0)
+  // return Math.round(Number(yen || 0) / 1000) / 10
+}
+
 export function empty(value: string | number): boolean {
   if (typeof value === "string") {
     return value.length === 0
   }
   return value.toString().length === 0
 }
+
