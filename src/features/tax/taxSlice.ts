@@ -1,12 +1,21 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../../app/store';
-import {defaultIncomeAndDeductionSet, InnerEditableDeduction, taxSetConvert} from "./tax";
+import {defaultIncomeAndDeductionSet, taxSetConvert} from "./tax";
 
+export interface NumberItem {
+  name: string,
+  amount?: number | string,
+  editable: boolean,
+  checkBox?: boolean,
+  checked?: boolean,
+}
 export interface TaxSet {
   incomes: Income[],
   baseOfTaxation: number,
   age: number,
-  deductions: Deduction[], //控除
+  deductions: Deduction[], // 控除
+  socialInsurance: SocialInsurance[], // 社会保険料
+  personalTax: PersonalTax[], // 税金
 }
 
 // 所得
@@ -17,12 +26,21 @@ export interface Income {
 }
 
 // 控除
-export interface Deduction extends InnerEditableDeduction {
+export interface Deduction extends NumberItem {
 }
 
 interface TaxState {
   taxSet: TaxSet[]
 }
+
+// 社会保険料
+export interface SocialInsurance extends NumberItem {
+}
+
+// 税金
+export interface PersonalTax extends NumberItem {
+}
+
 
 // 内部的クラスから表示用JSONに変換
 const createTaxSet = (): TaxSet => {
@@ -52,7 +70,21 @@ const createTaxSet = (): TaxSet => {
         amount: 0, // 後でアップデートかけるので簡略化するために0とする
         editable: false,
       }})
-    ]
+    ],
+    socialInsurance: [
+      ...innerSet.socialInsurance.map(i => {return {
+        name: i.name,
+        amount: 0, // 後でアップデートかけるので簡略化するために0とする
+        editable: false,
+      }})
+    ],
+    personalTax: [
+      ...innerSet.personalTax.map(p => {return {
+        name: p.name,
+        amount: 0, // 後でアップデートかけるので簡略化するために0とする
+        editable: false,
+      }})
+    ],
   })
 }
 

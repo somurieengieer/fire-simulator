@@ -1,13 +1,15 @@
 // 所得に関するロジック
 
 // 所得と控除のセット（Redux保存用クラス）
-import {Deduction, Income, TaxSet} from "./taxSlice";
+import {Deduction, Income, SocialInsurance, TaxSet} from "./taxSlice";
 import {manYen} from "../utils/Utils";
 
 export interface InnerTaxSet {
   incomes: InnerIncome[],
   deductions: InnerEditableDeduction[], //控除
-  calculatedDeductions: InnerAutoCalculatedDeduction [], //控除（自動導出）
+  calculatedDeductions: InnerAutoCalculatedItem [], //控除（自動導出）
+  socialInsurance: InnerAutoCalculatedItem[], // 社会保険料
+  personalTax: InnerAutoCalculatedItem[], // 税金
 }
 
 // 所得
@@ -20,24 +22,24 @@ export interface InnerIncome {
 
 
 // 控除
-export interface InnerDeduction {
+export interface InnerNumberItem {
   name: string,
   amount?: number | string,
 }
 
 // 編集可能控除
-export interface InnerEditableDeduction extends InnerDeduction {
+export interface InnerEditableDeduction extends InnerNumberItem {
   editable: boolean,
   checkBox?: boolean,
   checked?: boolean,
 }
 
 // 自動算出控除（所得専用）
-interface InnerAutoCalculatedIncomeDeduction extends InnerDeduction {
+interface InnerAutoCalculatedIncomeDeduction extends InnerNumberItem {
   calcAmount: (income: Income) => number
 }
-// 自動算出控除（所得控除）
-interface InnerAutoCalculatedDeduction extends InnerDeduction {
+// 自動算出（その他用）
+interface InnerAutoCalculatedItem extends InnerNumberItem {
   calcAmount: (taxSet: TaxSet) => number
 }
 
@@ -187,10 +189,7 @@ export const commonDeductions = (): InnerEditableDeduction[] => {
     editable: true}
     ]
 }
-export const commonCalculatedDeductions = (): InnerAutoCalculatedDeduction[] => {
-  const existsSalary = (taxSet: TaxSet): boolean => {
-    return Boolean(taxSet.incomes.find(i => i.name === salaryIncome().name && Number(i.amount || 0) > 0))
-  }
+export const commonCalculatedDeductions = (): InnerAutoCalculatedItem[] => {
   return [
     { name: '基礎控除',
       calcAmount: (taxSet: TaxSet): number => {
@@ -200,6 +199,14 @@ export const commonCalculatedDeductions = (): InnerAutoCalculatedDeduction[] => 
         return 0
       },
     },
+    ...commonInnerSocialInsurances()
+  ]
+}
+export const commonInnerSocialInsurances = (): InnerAutoCalculatedItem[] => {
+  const existsSalary = (taxSet: TaxSet): boolean => {
+    return Boolean(taxSet.incomes.find(i => i.name === salaryIncome().name && Number(i.amount || 0) > 0))
+  }
+  return [
     { name: '社会保険料控除（健康保険）',
       calcAmount: (taxSet: TaxSet): number =>
         existsSalary(taxSet) ? healthInsurance(taxSet) : 0
@@ -207,6 +214,31 @@ export const commonCalculatedDeductions = (): InnerAutoCalculatedDeduction[] => 
     { name: '社会保険料控除（厚生年金）',
       calcAmount: (taxSet: TaxSet): number =>
         existsSalary(taxSet) ? annuity(taxSet) : 0
+    },
+  ]
+}
+
+// 所得税
+const incomeTax = (baseOfTaxation: number): number => {
+  const data = [
+    [1000, 1949000, 5, 0],
+    [1950000, 3299000, 10, 97500],
+    [3300000, 6949000, 20, 427500],
+    [6950000, 8999000, 23, 636000],
+    [9000000, 17999000, 33, 1536000],
+    [18000000, 39999000, 40, 2796000],
+    [40000000, 9999999999999999, 45, 4796000],
+  ]
+  if (baseOfTaxation < 1000) return 0
+  const row = data.find(d => d[0] <= baseOfTaxation && baseOfTaxation < d[1]) as number[]
+  return baseOfTaxation * row[2] - row[3]
+
+}
+export const commonInnerPersonalTax = (): InnerAutoCalculatedItem[] => {
+  return [
+    { name: '所得税',
+      calcAmount: (taxSet: TaxSet): number =>
+        incomeTax(taxSet.baseOfTaxation)
     },
   ]
 }
@@ -220,6 +252,8 @@ export const defaultIncomeAndDeductionSet = (): InnerTaxSet => {
     ],
     deductions: commonDeductions(),
     calculatedDeductions: commonCalculatedDeductions(),
+    socialInsurance: commonInnerSocialInsurances(), // 社会保険料
+    personalTax: commonInnerPersonalTax(), // 税金
   }
 }
 
@@ -241,9 +275,17 @@ export function taxSetConvert(taxSet: TaxSet): TaxSet {
       0)
     ).reduce((a, b) => a + b)
 
+  // 所得控除
   innerSet.calculatedDeductions.forEach(innerDed => {
     const ded = taxSet.deductions.find(d => d.name === innerDed.name) as Deduction
     ded.amount = innerDed.calcAmount(taxSet)
   })
+
+  // 社会保険料
+  innerSet.socialInsurance.forEach(innerSoc=> {
+    const soc = taxSet.socialInsurance.find(s => s.name === innerSoc.name) as SocialInsurance
+    soc.amount = innerSoc.calcAmount(taxSet)
+  })
+
   return taxSet
 }

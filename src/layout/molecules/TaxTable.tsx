@@ -100,6 +100,20 @@ export function TaxTable({taxSetIndex, taxSet}: PhasesTableProps) {
                                           disabled={!deduction.editable}
                     />
                     ))}
+                  <TaxSubHeaderRowSet title={'社会保険料'} />
+                  {taxSet.socialInsurance.map((socialInsurance) => (
+                    <TaxIncomeTableRowSet rowLabel={socialInsurance.name}
+                                          value={socialInsurance.amount || ''}
+                                          disabled={true}
+                    />
+                  ))}
+                  <TaxSubHeaderRowSet title={'税金'} />
+                  {taxSet.personalTax.map((personalTax) => (
+                    <TaxIncomeTableRowSet rowLabel={personalTax.name}
+                                          value={personalTax.amount || ''}
+                                          disabled={true}
+                    />
+                  ))}
                 </TableBody>
               </Table>
             </TableContainer>
