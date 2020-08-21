@@ -2,7 +2,7 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../../app/store';
 import {defaultIncomeAndDeductionSet, taxSetConvert} from "./tax";
 
-export interface NumberItem {
+export interface ShowableItem {
   name: string,
   amount?: number | string,
   editable: boolean,
@@ -11,10 +11,11 @@ export interface NumberItem {
 }
 export interface TaxSet {
   incomes: Income[],
-  baseOfTaxation: number,
+  baseOfTaxation: number, // 課税標準
   age: number,
   deductions: Deduction[], // 控除
   socialInsurance: SocialInsurance[], // 社会保険料
+  taxableIncomeAmount: number, // 課税所得金額
   personalTax: PersonalTax[], // 税金
 }
 
@@ -26,7 +27,7 @@ export interface Income {
 }
 
 // 控除
-export interface Deduction extends NumberItem {
+export interface Deduction extends ShowableItem {
 }
 
 interface TaxState {
@@ -34,11 +35,11 @@ interface TaxState {
 }
 
 // 社会保険料
-export interface SocialInsurance extends NumberItem {
+export interface SocialInsurance extends ShowableItem {
 }
 
 // 税金
-export interface PersonalTax extends NumberItem {
+export interface PersonalTax extends ShowableItem {
 }
 
 
@@ -78,6 +79,7 @@ const createTaxSet = (): TaxSet => {
         editable: false,
       }})
     ],
+    taxableIncomeAmount: 0, // 後でアップデートかけるので簡略化するために0とする
     personalTax: [
       ...innerSet.personalTax.map(p => {return {
         name: p.name,

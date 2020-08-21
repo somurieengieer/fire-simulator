@@ -14,7 +14,7 @@ export function numberFromHalfWidthToFullWidth(n: number): string {
 
 export function manYen(yen: number | string | undefined): number {
   // return Number(yen || 0)
-  return Math.round(Number(yen || 0) * 12 / 1000) / 10
+  return Math.round(Number(yen || 0) / 1000) / 10
 }
 
 export function empty(value: string | number): boolean {
@@ -24,3 +24,7 @@ export function empty(value: string | number): boolean {
   return value.toString().length === 0
 }
 
+export function sumAmount(ary: {amount?: string | number}[]) {
+  return ary.map(ded => Number(ded.amount || 0))
+    .reduce((a, b) => a + b) || 0
+}

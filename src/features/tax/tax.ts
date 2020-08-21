@@ -1,8 +1,8 @@
 // 所得に関するロジック
 
 // 所得と控除のセット（Redux保存用クラス）
-import {Deduction, Income, SocialInsurance, TaxSet} from "./taxSlice";
-import {manYen} from "../utils/Utils";
+import {Deduction, Income, ShowableItem, TaxSet} from "./taxSlice";
+import {manYen, sumAmount} from "../utils/Utils";
 
 export interface InnerTaxSet {
   incomes: InnerIncome[],
@@ -21,32 +21,36 @@ export interface InnerIncome {
 }
 
 
-// 控除
-export interface InnerNumberItem {
+// 画面で表示可能な項目
+export interface InnerShowableItem {
   name: string,
   amount?: number | string,
 }
 
 // 編集可能控除
-export interface InnerEditableDeduction extends InnerNumberItem {
+export interface InnerEditableDeduction extends InnerShowableItem {
   editable: boolean,
   checkBox?: boolean,
   checked?: boolean,
 }
 
+interface InnerAutoCalculable<T> extends InnerShowableItem {
+  calcAmount: (t: T) => number
+
+}
 // 自動算出控除（所得専用）
-interface InnerAutoCalculatedIncomeDeduction extends InnerNumberItem {
-  calcAmount: (income: Income) => number
+interface InnerAutoCalculatedIncomeDeduction extends InnerAutoCalculable<Income> {
 }
 // 自動算出（その他用）
-interface InnerAutoCalculatedItem extends InnerNumberItem {
-  calcAmount: (taxSet: TaxSet) => number
+interface InnerAutoCalculatedItem extends InnerAutoCalculable<TaxSet> {
 }
 
 // 課税標準（課税対象となる所得の合計）
 interface BaseOfTaxation {
   amount: number,
 }
+
+
 
 // 累進控除
 interface ProgressiveRateItem {
@@ -139,10 +143,10 @@ const socialInsurance = (standardSalaryByMonth: number): any => {
 }
 
 const annuity = (taxSet: TaxSet): number => {
-  return manYen(socialInsurance(taxSet.baseOfTaxation/12)[taxSet.age >= 40 ? 7 : 5])
+  return manYen(socialInsurance(taxSet.baseOfTaxation/12)[taxSet.age >= 40 ? 7 : 5] * 12)
 }
 const healthInsurance = (taxSet: TaxSet): number => {
-  return manYen(socialInsurance(taxSet.baseOfTaxation/12)[9])
+  return manYen(socialInsurance(taxSet.baseOfTaxation/12)[9] * 12)
 }
 
 // 給与所得
@@ -219,7 +223,7 @@ export const commonInnerSocialInsurances = (): InnerAutoCalculatedItem[] => {
 }
 
 // 所得税
-const incomeTax = (baseOfTaxation: number): number => {
+const incomeTax = (taxableIncomeAmount: number): number => {
   const data = [
     [1000, 1949000, 5, 0],
     [1950000, 3299000, 10, 97500],
@@ -229,16 +233,28 @@ const incomeTax = (baseOfTaxation: number): number => {
     [18000000, 39999000, 40, 2796000],
     [40000000, 9999999999999999, 45, 4796000],
   ]
-  if (baseOfTaxation < 1000) return 0
-  const row = data.find(d => d[0] <= baseOfTaxation && baseOfTaxation < d[1]) as number[]
-  return baseOfTaxation * row[2] - row[3]
-
+  const taxableIncomeAmount10000 = taxableIncomeAmount * 10000
+  if (taxableIncomeAmount10000 < 1000) return 0
+  const row = data.find(d => d[0] <= taxableIncomeAmount10000 && taxableIncomeAmount10000 < d[1]) as number[]
+  console.log(taxableIncomeAmount10000, row[2], row[3], manYen(taxableIncomeAmount10000 * row[2] / 100 - row[3]))
+  return manYen(taxableIncomeAmount10000 * row[2] / 100 - row[3])
+}
+// 住民税
+const residentTax = (taxSet: TaxSet): number => {
+  const taxableIncomeAmountForResidentTax = taxSet.taxableIncomeAmount
+    - (Number(taxSet.deductions.find(ded => ded.name === '基礎控除')?.amount || 0) - 33) // 基礎控除の差。所得税は48、住民税は33
+  // 東京23区計算
+  const taxByEquality = 0.5
+  const taxByIncome = taxableIncomeAmountForResidentTax * 0.1
+  return Math.max(taxByEquality + taxByIncome, 0)
 }
 export const commonInnerPersonalTax = (): InnerAutoCalculatedItem[] => {
   return [
     { name: '所得税',
-      calcAmount: (taxSet: TaxSet): number =>
-        incomeTax(taxSet.baseOfTaxation)
+      calcAmount: (taxSet: TaxSet): number => incomeTax(taxSet.taxableIncomeAmount)
+    },
+    { name: '住民税',
+      calcAmount: (taxSet: TaxSet): number => residentTax(taxSet)
     },
   ]
 }
@@ -258,6 +274,12 @@ export const defaultIncomeAndDeductionSet = (): InnerTaxSet => {
 }
 
 export function taxSetConvert(taxSet: TaxSet): TaxSet {
+  const calcAutoAmount = (calculables: InnerAutoCalculable<any>[], showableItems: ShowableItem[]) => {
+    calculables.forEach(calculable => {
+      const ded = showableItems.find(item => item.name === calculable.name) as ShowableItem
+      ded.amount = calculable.calcAmount(taxSet)
+    })
+  }
   const innerSet = defaultIncomeAndDeductionSet()
   innerSet.incomes.forEach(innerIncome => {
     const income = taxSet.incomes.find(i => i.name === innerIncome.name) as Income
@@ -269,23 +291,23 @@ export function taxSetConvert(taxSet: TaxSet): TaxSet {
   // 課税標準
   taxSet.baseOfTaxation = taxSet.incomes
     .map(income => Math.max(
-      income.amount
-        - (income.deductions.map(ded => Number(ded.amount || 0))
-          .reduce((a, b) => a + b) || 0),
+      income.amount - sumAmount(income.deductions),
       0)
     ).reduce((a, b) => a + b)
 
   // 所得控除
-  innerSet.calculatedDeductions.forEach(innerDed => {
-    const ded = taxSet.deductions.find(d => d.name === innerDed.name) as Deduction
-    ded.amount = innerDed.calcAmount(taxSet)
-  })
+  calcAutoAmount(innerSet.calculatedDeductions, taxSet.deductions)
 
   // 社会保険料
-  innerSet.socialInsurance.forEach(innerSoc=> {
-    const soc = taxSet.socialInsurance.find(s => s.name === innerSoc.name) as SocialInsurance
-    soc.amount = innerSoc.calcAmount(taxSet)
-  })
+  calcAutoAmount(innerSet.socialInsurance, taxSet.socialInsurance)
+
+  // 課税所得金額
+  taxSet.taxableIncomeAmount = Math.max(taxSet.baseOfTaxation
+    - sumAmount(taxSet.deductions),
+  0)
+
+  // 税金
+  calcAutoAmount(innerSet.personalTax, taxSet.personalTax)
 
   return taxSet
 }

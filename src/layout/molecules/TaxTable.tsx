@@ -107,6 +107,11 @@ export function TaxTable({taxSetIndex, taxSet}: PhasesTableProps) {
                                           disabled={true}
                     />
                   ))}
+                  <TaxSubHeaderRowSet title={'課税所得金額'} />
+                  <TaxIncomeTableRowSet rowLabel={'課税所得金額'}
+                                        value={taxSet.taxableIncomeAmount || ''}
+                                        disabled={true}
+                  />
                   <TaxSubHeaderRowSet title={'税金'} />
                   {taxSet.personalTax.map((personalTax) => (
                     <TaxIncomeTableRowSet rowLabel={personalTax.name}
