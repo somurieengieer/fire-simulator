@@ -41,10 +41,12 @@ export function TaxSubHeaderRowSet({title, amount}
   )
 }
 
-export function TaxIncomeTableRowSet({rowLabel, value, onChange, onChangeCheck, disabled}
+export function TaxIncomeTableRowSet({rowLabel, value, onChange, availableCheckBox, checkValue, onChangeCheck, disabled}
 : {rowLabel: string,
   value: string | number,
   onChange?(newValue: string): void,
+  availableCheckBox?: boolean,
+  checkValue?: boolean,
   onChangeCheck?(newValue: boolean): void,
   disabled?: boolean,
 }) {
@@ -59,6 +61,12 @@ export function TaxIncomeTableRowSet({rowLabel, value, onChange, onChangeCheck, 
         {rowLabel}
       </TableCell>
       <TableCell className={classes.tableCell} align="center">
+        {availableCheckBox && (
+          <input type={'checkBox'}
+                 checked={checkValue}
+                 onChange={v => onChangeCheck && onChangeCheck(!checkValue)}
+          />
+        )}
         <input value={showValue()}
                type={'number'}
                onChange={v => onChange && onChange(v.target.value)}

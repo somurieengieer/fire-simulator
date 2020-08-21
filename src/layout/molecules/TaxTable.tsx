@@ -37,20 +37,24 @@ export function TaxTable({taxSetIndex, taxSet}: PhasesTableProps) {
     dispatch(updateTaxSet({taxSet: newTaxSet, index: taxSetIndex}))
   }
 
-  const updateIncome = (incomeIndex: number, updatedValue: any): void => {
+  const updateIncome = (incomeIndex: number, updatedValue: string): void => {
     console.log('updatedIncome called', taxSet, incomeIndex, updatedValue)
     const newIncomeAndDeductionSet = JSON.parse(JSON.stringify(taxSet))
     newIncomeAndDeductionSet.incomes[incomeIndex].amount = updatedValue
     dispatch(updateTaxSet({taxSet: newIncomeAndDeductionSet, index: taxSetIndex}))
   }
 
-  const updateDeduction = (deductionIndex: number, updatedValue: any): void => {
+  const updateDeduction = (deductionIndex: number, updatedValue: string): void => {
     const newTaxSet = JSON.parse(JSON.stringify(taxSet))
     newTaxSet.deductions[deductionIndex].amount = updatedValue
     dispatch(updateTaxSet({taxSet: newTaxSet, index: taxSetIndex}))
   }
 
-  const updateChecked = (incomeIndex: number, index: number, updatedValue: any): void => {
+  const updateDeductionChecked = (deductionIndex: number, updatedValue: boolean): void => {
+    console.log('updateDeductionChecked', updatedValue)
+    const newTaxSet = JSON.parse(JSON.stringify(taxSet))
+    newTaxSet.deductions[deductionIndex].checked = updatedValue
+    dispatch(updateTaxSet({taxSet: newTaxSet, index: taxSetIndex}))
 
   }
 
@@ -77,7 +81,6 @@ export function TaxTable({taxSetIndex, taxSet}: PhasesTableProps) {
                         <TaxIncomeTableRowSet rowLabel={deduction.name}
                                               value={deduction.amount || ''}
                                               onChange={v => updateIncomeDeductions(incomeIndex, i, v)}
-                                              onChangeCheck={v => updateChecked(incomeIndex, i, v)}
                                               disabled={!deduction.editable}
                         />
                       ))}
@@ -98,6 +101,9 @@ export function TaxTable({taxSetIndex, taxSet}: PhasesTableProps) {
                     <TaxIncomeTableRowSet rowLabel={deduction.name}
                                           value={deduction.amount || ''}
                                           onChange={v => updateDeduction(deductionIndex, v)}
+                                          availableCheckBox={deduction.availableCheckBox}
+                                          checkValue={deduction.checked}
+                                          onChangeCheck={v => updateDeductionChecked(deductionIndex, v)}
                                           disabled={!deduction.editable}
                     />
                     ))}

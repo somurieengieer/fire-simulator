@@ -1,7 +1,7 @@
 // 所得に関するロジック
 
 // 所得と控除のセット（Redux保存用クラス）
-import {Deduction, Income, ShowableItem, TaxSet} from "./taxSlice";
+import {Deduction, Income, ShowableItem, SocialInsurance, TaxSet} from "./taxSlice";
 import {manYen, sumAmount} from "../utils/Utils";
 
 export interface InnerTaxSet {
@@ -25,18 +25,18 @@ export interface InnerIncome {
 export interface InnerShowableItem {
   name: string,
   amount?: number | string,
+  availableCheckBox?: boolean,
+  checked?: boolean,
+  tooltip?: string,
 }
 
 // 編集可能控除
 export interface InnerEditableDeduction extends InnerShowableItem {
   editable: boolean,
-  checkBox?: boolean,
-  checked?: boolean,
 }
 
 interface InnerAutoCalculable<T> extends InnerShowableItem {
   calcAmount: (t: T) => number
-
 }
 // 自動算出控除（所得専用）
 interface InnerAutoCalculatedIncomeDeduction extends InnerAutoCalculable<Income> {
@@ -149,6 +149,19 @@ const healthInsurance = (taxSet: TaxSet): number => {
   return manYen(socialInsurance(taxSet.baseOfTaxation/12)[9] * 12)
 }
 
+// 国民健康保険料（世田谷区令和２年度）
+// https://www.city.setagaya.lg.jp/mokuji/kurashi/003/002/003/d00032129.html
+const socialInsuranceForFree = (taxSet: TaxSet): number => {
+  console.log('国保a', taxSet.baseOfTaxation, taxSet)
+  const baseOfIncome = Math.max(taxSet.baseOfTaxation - 33, 0)
+  const base = Math.min(baseOfIncome * 0.0714 + taxSet.numberOfFamily * 3.99, 63) // 基礎（医療）分
+  const support = Math.min(baseOfIncome * 0.0229 + taxSet.numberOfFamily * 1.29, 19) // 支援金分
+  const care = taxSet.numberOfFamilyOver40 ?
+    Math.min(baseOfIncome * 2.05 + taxSet.numberOfFamilyOver40 * 1.56, 17) : 0 // 介護分
+  // TODO: 厳密には所得割は「40歳～64歳の方の賦課基準額」をベースにする。今回は本人の所得ベースで計算
+  return base + support + care
+}
+
 // 給与所得
 const salaryIncome = (): InnerIncome => {
   return {
@@ -173,8 +186,6 @@ const soleProprietorIncome = (): InnerIncome => {
       name: '青色申告特別控除',
       amount: 65,
       editable: false,
-      checkBox: true,
-      checked: true,
     },
     {
       name: '経費',
@@ -222,12 +233,36 @@ export const commonInnerSocialInsurances = (): InnerAutoCalculatedItem[] => {
   }
   return [
     { name: '健康保険料',
-      calcAmount: (taxSet: TaxSet): number =>
-        existsSalary(taxSet) ? healthInsurance(taxSet) : 0
+      calcAmount: (taxSet: TaxSet): number => {
+        const premium = taxSet.deductions.find(s => s.name === '健康保険料') as SocialInsurance
+        if (premium.availableCheckBox && !premium.checked) {
+          premium.editable = true
+          return premium.amount as number
+        }
+        premium.editable = false
+        return existsSalary(taxSet) ? healthInsurance(taxSet) : 0
+      },
+      availableCheckBox: true,
+      checked: true
     },
     { name: '厚生年金保険料',
-      calcAmount: (taxSet: TaxSet): number =>
-        existsSalary(taxSet) ? annuity(taxSet) : 0
+      calcAmount: (taxSet: TaxSet): number => {
+        const premium = taxSet.deductions.find(s => s.name === '厚生年金保険料') as SocialInsurance
+        if (premium.availableCheckBox && !premium.checked) return 0
+        return existsSalary(taxSet) ? annuity(taxSet) : 0
+      },
+      availableCheckBox: true,
+      checked: true
+    },
+    { name: '国民健康保険料',
+      calcAmount: (taxSet: TaxSet): number => {
+        const premium = taxSet.deductions.find(s => s.name === '国民健康保険料') as SocialInsurance
+        if (premium.availableCheckBox && !premium.checked) return 0
+        return !existsSalary(taxSet) ? socialInsuranceForFree(taxSet) : 0
+      },
+      availableCheckBox: true,
+      checked: false,
+      tooltip: '厳密には所得割は「40歳～64歳の方の賦課基準額」をベースにする。今回は本人の所得ベースで計算',
     },
   ]
 }
