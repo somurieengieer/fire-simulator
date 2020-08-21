@@ -17,6 +17,7 @@ export interface TaxSet {
   socialInsurance: SocialInsurance[], // 社会保険料
   taxableIncomeAmount: number, // 課税所得金額
   personalTax: PersonalTax[], // 税金
+  disposableIncome: number, // 可処分所得
 }
 
 // 所得
@@ -87,6 +88,7 @@ const createTaxSet = (): TaxSet => {
         editable: false,
       }})
     ],
+    disposableIncome: 0, // 後でアップデートかけるので簡略化するために0とする
   })
 }
 

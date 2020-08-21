@@ -119,6 +119,11 @@ export function TaxTable({taxSetIndex, taxSet}: PhasesTableProps) {
                                           disabled={true}
                     />
                   ))}
+                  <TaxSubHeaderRowSet title={'可処分所得（社会保険・税引後金額）'} />
+                  <TaxIncomeTableRowSet rowLabel={'可処分所得'}
+                                        value={taxSet.disposableIncome}
+                                        disabled={true}
+                  />
                 </TableBody>
               </Table>
             </TableContainer>

@@ -309,5 +309,10 @@ export function taxSetConvert(taxSet: TaxSet): TaxSet {
   // 税金
   calcAutoAmount(innerSet.personalTax, taxSet.personalTax)
 
+  // 可処分所得
+  taxSet.disposableIncome = sumAmount(taxSet.incomes)
+    - sumAmount(taxSet.socialInsurance)
+    - sumAmount(taxSet.personalTax)
+
   return taxSet
 }
