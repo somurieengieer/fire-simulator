@@ -9,12 +9,15 @@ export interface ShowableItem {
   availableCheckBox?: boolean,
   checked?: boolean,
 }
-export interface TaxSet {
-  incomes: Income[],
-  baseOfTaxation: number, // 課税標準
+export interface PersonalInfo {
   age: number,
   numberOfFamily: number, // 家族人数（国民健康保険料算出用）
   numberOfFamilyOver40: number, // 家族人数（国民健康保険料算出用）
+}
+export interface TaxSet {
+  incomes: Income[],
+  baseOfTaxation: number, // 課税標準
+  personalInfo: PersonalInfo,
   deductions: Deduction[], // 控除
   socialInsurance: SocialInsurance[], // 社会保険料
   taxableIncomeAmount: number, // 課税所得金額
@@ -65,9 +68,11 @@ const createTaxSet = (): TaxSet => {
           })
         ]
       }}),
-    age: 30,
-    numberOfFamily: 2,
-    numberOfFamilyOver40: 0,
+    personalInfo: {
+      age: 30,
+      numberOfFamily: 2,
+      numberOfFamilyOver40: 0,
+    },
     baseOfTaxation: 0, // 後でアップデートかけるので簡略化するために0とする
     deductions: [
       ...innerSet.deductions,

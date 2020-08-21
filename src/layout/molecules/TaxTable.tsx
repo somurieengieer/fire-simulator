@@ -77,16 +77,16 @@ export function TaxTable({taxSetIndex, taxSet}: PhasesTableProps) {
                 <TableBody>
                   <TaxSubHeaderRowSet title={'個人設定'} />
                   <TaxIncomeTableRowSet rowLabel={'年齢'}
-                                        value={taxSet.age}
-                                        onChange={v => updateTaxSetItem(set => {set.age = Number(v)})}
+                                        value={taxSet.personalInfo.age}
+                                        onChange={v => updateTaxSetItem(set => {set.personalInfo.age = Number(v)})}
                   />
                   <TaxIncomeTableRowSet rowLabel={'家族人数（40歳未満）'}
-                                        value={taxSet.numberOfFamily}
-                                        onChange={v => updateTaxSetItem(set => {set.numberOfFamily = Number(v)})}
+                                        value={taxSet.personalInfo.numberOfFamily}
+                                        onChange={v => updateTaxSetItem(set => {set.personalInfo.numberOfFamily = Number(v)})}
                   />
                   <TaxIncomeTableRowSet rowLabel={'家族人数（40歳以上）'}
-                                        value={taxSet.numberOfFamilyOver40}
-                                        onChange={v => updateTaxSetItem(set => {set.numberOfFamilyOver40 = Number(v)})}
+                                        value={taxSet.personalInfo.numberOfFamilyOver40}
+                                        onChange={v => updateTaxSetItem(set => {set.personalInfo.numberOfFamilyOver40 = Number(v)})}
                   />
                   <TaxSubHeaderRowSet title={'所得'} amount={sumAmount(taxSet.incomes)} />
                   {taxSet.incomes.map((income: Income, incomeIndex: number) => (

@@ -143,7 +143,7 @@ const socialInsurance = (standardSalaryByMonth: number): any => {
 }
 
 const annuity = (taxSet: TaxSet): number => {
-  return manYen(socialInsurance(taxSet.baseOfTaxation/12)[taxSet.age >= 40 ? 7 : 5] * 12)
+  return manYen(socialInsurance(taxSet.baseOfTaxation/12)[taxSet.personalInfo.age >= 40 ? 7 : 5] * 12)
 }
 const healthInsurance = (taxSet: TaxSet): number => {
   return manYen(socialInsurance(taxSet.baseOfTaxation/12)[9] * 12)
@@ -154,10 +154,10 @@ const healthInsurance = (taxSet: TaxSet): number => {
 const socialInsuranceForFree = (taxSet: TaxSet): number => {
   console.log('国保a', taxSet.baseOfTaxation, taxSet)
   const baseOfIncome = Math.max(taxSet.baseOfTaxation - 33, 0)
-  const base = Math.min(baseOfIncome * 0.0714 + taxSet.numberOfFamily * 3.99, 63) // 基礎（医療）分
-  const support = Math.min(baseOfIncome * 0.0229 + taxSet.numberOfFamily * 1.29, 19) // 支援金分
-  const care = taxSet.numberOfFamilyOver40 ?
-    Math.min(baseOfIncome * 2.05 + taxSet.numberOfFamilyOver40 * 1.56, 17) : 0 // 介護分
+  const base = Math.min(baseOfIncome * 0.0714 + taxSet.personalInfo.numberOfFamily * 3.99, 63) // 基礎（医療）分
+  const support = Math.min(baseOfIncome * 0.0229 + taxSet.personalInfo.numberOfFamily * 1.29, 19) // 支援金分
+  const care = taxSet.personalInfo.numberOfFamilyOver40 ?
+    Math.min(baseOfIncome * 2.05 + taxSet.personalInfo.numberOfFamilyOver40 * 1.56, 17) : 0 // 介護分
   // TODO: 厳密には所得割は「40歳～64歳の方の賦課基準額」をベースにする。今回は本人の所得ベースで計算
   return base + support + care
 }
