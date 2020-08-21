@@ -77,8 +77,16 @@ export function TaxTable({taxSetIndex, taxSet}: PhasesTableProps) {
                 <TableBody>
                   <TaxSubHeaderRowSet title={'個人設定'} />
                   <TaxIncomeTableRowSet rowLabel={'年齢'}
-                                        value={taxSet.age || ''}
+                                        value={taxSet.age}
                                         onChange={v => updateTaxSetItem(set => {set.age = Number(v)})}
+                  />
+                  <TaxIncomeTableRowSet rowLabel={'家族人数（40歳未満）'}
+                                        value={taxSet.numberOfFamily}
+                                        onChange={v => updateTaxSetItem(set => {set.numberOfFamily = Number(v)})}
+                  />
+                  <TaxIncomeTableRowSet rowLabel={'家族人数（40歳以上）'}
+                                        value={taxSet.numberOfFamilyOver40}
+                                        onChange={v => updateTaxSetItem(set => {set.numberOfFamilyOver40 = Number(v)})}
                   />
                   <TaxSubHeaderRowSet title={'所得'} amount={sumAmount(taxSet.incomes)} />
                   {taxSet.incomes.map((income: Income, incomeIndex: number) => (
@@ -96,11 +104,6 @@ export function TaxTable({taxSetIndex, taxSet}: PhasesTableProps) {
                       ))}
                     </>
                     ))}
-                  {/*<SubHeaderRowSet title={'収入'} colSpan={titleColSpan()} />*/}
-                  {/*<TableRowSet rowLabel={'手取り'}*/}
-                  {/*             phaseClasses={phases}*/}
-                  {/*             valueCallback={p => p.income}*/}
-                  {/*             onChange={(newValue, i) => updateIncomeDeductions(i, 'income', newValue)} />*/}
                   <TaxSubHeaderRowSet title={'課税標準'} />
                   <TaxIncomeTableRowSet rowLabel={'課税標準'}
                                         value={taxSet.baseOfTaxation || ''}
