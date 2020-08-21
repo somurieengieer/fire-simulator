@@ -6,6 +6,7 @@ import {theme} from "../materialui/theme";
 import {TaxHeaderRowSet, TaxIncomeTableRowSet, TaxSubHeaderRowSet} from "./TaxTableItems";
 import {Deduction, Income, TaxSet, updateTaxSet} from "../../features/tax/taxSlice"
 import {useDispatch} from "react-redux";
+import {sumAmount} from "../../features/utils/Utils";
 
 const useStyles = makeStyles({
   root: {
@@ -65,7 +66,7 @@ export function TaxTable({taxSetIndex, taxSet}: PhasesTableProps) {
 
                 <TaxHeaderRowSet title={'パターン１〜などの列タイトル'} />
                 <TableBody>
-                  <TaxSubHeaderRowSet title={'所得'} />
+                  <TaxSubHeaderRowSet title={'所得'} amount={sumAmount(taxSet.incomes)} />
                   {taxSet.incomes.map((income: Income, incomeIndex: number) => (
                     <>
                       <TaxIncomeTableRowSet rowLabel={income.name}
@@ -92,7 +93,7 @@ export function TaxTable({taxSetIndex, taxSet}: PhasesTableProps) {
                                         value={taxSet.baseOfTaxation || ''}
                                         disabled={true}
                   />
-                  <TaxSubHeaderRowSet title={'控除'} />
+                  <TaxSubHeaderRowSet title={'控除'} amount={sumAmount(taxSet.deductions)} />
                   {taxSet.deductions.map((deduction: Deduction, deductionIndex: number) => (
                     <TaxIncomeTableRowSet rowLabel={deduction.name}
                                           value={deduction.amount || ''}
@@ -100,7 +101,7 @@ export function TaxTable({taxSetIndex, taxSet}: PhasesTableProps) {
                                           disabled={!deduction.editable}
                     />
                     ))}
-                  <TaxSubHeaderRowSet title={'社会保険料'} />
+                  <TaxSubHeaderRowSet title={'社会保険料'} amount={sumAmount(taxSet.socialInsurance)} />
                   {taxSet.socialInsurance.map((socialInsurance) => (
                     <TaxIncomeTableRowSet rowLabel={socialInsurance.name}
                                           value={socialInsurance.amount || ''}
@@ -112,14 +113,14 @@ export function TaxTable({taxSetIndex, taxSet}: PhasesTableProps) {
                                         value={taxSet.taxableIncomeAmount || ''}
                                         disabled={true}
                   />
-                  <TaxSubHeaderRowSet title={'税金'} />
+                  <TaxSubHeaderRowSet title={'税金'} amount={sumAmount(taxSet.personalTax)} />
                   {taxSet.personalTax.map((personalTax) => (
                     <TaxIncomeTableRowSet rowLabel={personalTax.name}
                                           value={personalTax.amount || ''}
                                           disabled={true}
                     />
                   ))}
-                  <TaxSubHeaderRowSet title={'可処分所得（社会保険・税引後金額）'} />
+                  <TaxSubHeaderRowSet title={'可処分所得'} />
                   <TaxIncomeTableRowSet rowLabel={'可処分所得'}
                                         value={taxSet.disposableIncome}
                                         disabled={true}

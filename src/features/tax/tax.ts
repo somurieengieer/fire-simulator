@@ -188,9 +188,19 @@ const soleProprietorIncome = (): InnerIncome => {
 
 // 所得控除
 export const commonDeductions = (): InnerEditableDeduction[] => {
-  return [{name: '医療費控除',
-    amount: 0,
-    editable: true}
+  return [
+    { name: '医療費控除',
+      amount: 0,
+      editable: true
+    },
+    { name: '小規模企業共済',
+      amount: 0,
+      editable: true
+    },
+    { name: 'iDeco',
+      amount: 0,
+      editable: true
+    }
     ]
 }
 export const commonCalculatedDeductions = (): InnerAutoCalculatedItem[] => {
@@ -203,7 +213,7 @@ export const commonCalculatedDeductions = (): InnerAutoCalculatedItem[] => {
         return 0
       },
     },
-    ...commonInnerSocialInsurances()
+    ...commonInnerSocialInsurances(),
   ]
 }
 export const commonInnerSocialInsurances = (): InnerAutoCalculatedItem[] => {
@@ -211,11 +221,11 @@ export const commonInnerSocialInsurances = (): InnerAutoCalculatedItem[] => {
     return Boolean(taxSet.incomes.find(i => i.name === salaryIncome().name && Number(i.amount || 0) > 0))
   }
   return [
-    { name: '社会保険料控除（健康保険）',
+    { name: '健康保険料',
       calcAmount: (taxSet: TaxSet): number =>
         existsSalary(taxSet) ? healthInsurance(taxSet) : 0
     },
-    { name: '社会保険料控除（厚生年金）',
+    { name: '厚生年金保険料',
       calcAmount: (taxSet: TaxSet): number =>
         existsSalary(taxSet) ? annuity(taxSet) : 0
     },

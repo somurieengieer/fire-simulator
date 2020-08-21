@@ -16,14 +16,27 @@ export function TaxHeaderRowSet({title}
   )
 }
 
-export function TaxSubHeaderRowSet({title}
-: {title: string}) {
+export function TaxSubHeaderRowSet({title, amount}
+: {title: string, amount?: number}) {
   const classes = usePatternTableStyles();
   return (
     <TableRow className={classes.tableHeadRow}>
-      <TableCell colSpan={2}>
-        {title}
-      </TableCell>
+      {amount !== undefined ? (
+        <>
+          <TableCell>
+            {title}
+          </TableCell>
+          <TableCell className={classes.tableCell} align="center">
+            <input value={amount}
+                   type={'number'}
+                   disabled={true} />
+          </TableCell>
+        </>
+      ) : (
+        <TableCell colSpan={2}>
+          {title}
+        </TableCell>
+      )}
     </TableRow>
   )
 }
@@ -50,7 +63,6 @@ export function TaxIncomeTableRowSet({rowLabel, value, onChange, onChangeCheck, 
                type={'number'}
                onChange={v => onChange && onChange(v.target.value)}
                disabled={disabled}
-               style={{width: '140px'}}
         />
       </TableCell>
     </TableRow>
