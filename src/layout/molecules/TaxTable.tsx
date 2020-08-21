@@ -31,6 +31,12 @@ export function TaxTable({taxSetIndex, taxSet}: PhasesTableProps) {
   const tableClasses = usePatternTableStyles();
   const dispatch = useDispatch();
 
+  const updateTaxSetItem = (updateValue: (set: TaxSet) => void) => {
+    const newTaxSet = JSON.parse(JSON.stringify(taxSet)) as TaxSet
+    updateValue(newTaxSet)
+    dispatch(updateTaxSet({taxSet: newTaxSet, index: taxSetIndex}))
+  }
+
   const updateIncomeDeductions = (incomeIndex: number, index: number, updatedValue: any): void => {
     const newTaxSet = JSON.parse(JSON.stringify(taxSet))
     newTaxSet.incomes[incomeIndex].deductions[index] = updatedValue
@@ -67,9 +73,13 @@ export function TaxTable({taxSetIndex, taxSet}: PhasesTableProps) {
               <Table className={tableClasses.table} aria-label="simple table"
                      size={'small'}
               >
-
                 <TaxHeaderRowSet title={'パターン１〜などの列タイトル'} />
                 <TableBody>
+                  <TaxSubHeaderRowSet title={'個人設定'} />
+                  <TaxIncomeTableRowSet rowLabel={'年齢'}
+                                        value={taxSet.age || ''}
+                                        onChange={v => updateTaxSetItem(set => {set.age = Number(v)})}
+                  />
                   <TaxSubHeaderRowSet title={'所得'} amount={sumAmount(taxSet.incomes)} />
                   {taxSet.incomes.map((income: Income, incomeIndex: number) => (
                     <>
