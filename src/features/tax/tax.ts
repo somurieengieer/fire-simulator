@@ -211,7 +211,17 @@ export const commonDeductions = (): InnerEditableDeduction[] => {
     { name: 'iDeco',
       amount: 0,
       editable: true
-    }
+    },
+    { name: '扶養控除',
+      amount: 0,
+      editable: true,
+      tooltip: '満15歳以下:0万、'
+        + '16〜18歳:38万、'
+        + '19〜22歳:63万、'
+        + '23〜69歳:38万、'
+        + '70歳〜（同居以外）:48万、'
+        + '70歳〜（同居）:58万'
+    },
     ]
 }
 export const commonCalculatedDeductions = (): InnerAutoCalculatedItem[] => {
@@ -223,6 +233,21 @@ export const commonCalculatedDeductions = (): InnerAutoCalculatedItem[] => {
         if (taxSet.baseOfTaxation <= 2500) return 16
         return 0
       },
+    },
+    { name: '配偶者控除',
+      calcAmount: (taxSet: TaxSet): number => {
+        const calc = (income: number): number => {
+          if (income <= 900) return 38
+          if (income <= 950) return 26
+          if (income <= 1000) return 13
+          return 0
+        }
+        const checked = taxSet.deductions.find(s => s.name === '配偶者控除')?.checked
+        return checked ? calc(taxSet.baseOfTaxation) : 0
+      },
+      availableCheckBox: true,
+      checked: false,
+      tooltip: '年間の合計所得金額が48万円以下（給与収入が103万以下）。老人控除対象配偶者条件を含まない'
     },
     ...commonInnerSocialInsurances(),
   ]
