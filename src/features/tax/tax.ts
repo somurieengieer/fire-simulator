@@ -274,7 +274,11 @@ export const commonInnerSocialInsurances = (): InnerAutoCalculatedItem[] => {
     { name: '厚生年金保険料',
       calcAmount: (taxSet: TaxSet): number => {
         const premium = taxSet.deductions.find(s => s.name === '厚生年金保険料') as SocialInsurance
-        if (premium.availableCheckBox && !premium.checked) return 0
+        if (premium.availableCheckBox && !premium.checked) {
+          premium.editable = true
+          return premium.amount as number
+        }
+        premium.editable = false
         return existsSalary(taxSet) ? annuity(taxSet) : 0
       },
       availableCheckBox: true,
