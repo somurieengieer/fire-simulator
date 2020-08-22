@@ -10,13 +10,8 @@ import {sumAmount} from "../../features/utils/Utils";
 
 const useStyles = makeStyles({
   root: {
-    marginLeft: 20,
-    marginTop: 5,
-    marginBottom: 5,
+    margin: 5,
     padding: theme.spacing(0.5),
-    [theme.breakpoints.down('sm')]: {
-      marginLeft: 0,
-    }
   }
 });
 
@@ -44,7 +39,6 @@ export function TaxTable({taxSetIndex, taxSet}: PhasesTableProps) {
   }
 
   const updateIncome = (incomeIndex: number, updatedValue: string): void => {
-    console.log('updatedIncome called', taxSet, incomeIndex, updatedValue)
     const newIncomeAndDeductionSet = JSON.parse(JSON.stringify(taxSet))
     newIncomeAndDeductionSet.incomes[incomeIndex].amount = updatedValue
     dispatch(updateTaxSet({taxSet: newIncomeAndDeductionSet, index: taxSetIndex}))
@@ -57,7 +51,6 @@ export function TaxTable({taxSetIndex, taxSet}: PhasesTableProps) {
   }
 
   const updateDeductionChecked = (deductionIndex: number, updatedValue: boolean): void => {
-    console.log('updateDeductionChecked', updatedValue)
     const newTaxSet = JSON.parse(JSON.stringify(taxSet))
     newTaxSet.deductions[deductionIndex].checked = updatedValue
     dispatch(updateTaxSet({taxSet: newTaxSet, index: taxSetIndex}))
@@ -67,109 +60,105 @@ export function TaxTable({taxSetIndex, taxSet}: PhasesTableProps) {
   return (
     <>
       <Grid  className={classes.root}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} lg={7}>
-            <TableContainer component={Paper}>
-              <Table className={tableClasses.table} aria-label="simple table"
-                     size={'small'}
-              >
-                <TaxHeaderRowSet title={'パターン１〜などの列タイトル'} />
-                <TableBody>
-                  <TaxSubHeaderRowSet title={'個人設定'} />
-                  <TaxIncomeTableRowSet rowLabel={'年齢'}
-                                        value={taxSet.personalInfo.age}
-                                        onChange={v => updateTaxSetItem(set => {set.personalInfo.age = Number(v)})}
-                  />
-                  <TaxIncomeTableRowSet rowLabel={'家族人数（40歳未満）'}
-                                        value={taxSet.personalInfo.numberOfFamily}
-                                        onChange={v => updateTaxSetItem(set => {set.personalInfo.numberOfFamily = Number(v)})}
-                  />
-                  <TaxIncomeTableRowSet rowLabel={'家族人数（40歳以上）'}
-                                        value={taxSet.personalInfo.numberOfFamilyOver40}
-                                        onChange={v => updateTaxSetItem(set => {set.personalInfo.numberOfFamilyOver40 = Number(v)})}
-                  />
-                  <TaxSubHeaderRowSet title={'所得'} amount={sumAmount(taxSet.incomes)} />
-                  {taxSet.incomes.map((income: Income, incomeIndex: number) => (
-                    <>
-                      <TaxIncomeTableRowSet rowLabel={income.name}
-                                            value={income.amount || ''}
-                                            onChange={v => updateIncome(incomeIndex, v)}
+          <TableContainer component={Paper}>
+            <Table className={tableClasses.table} aria-label="simple table"
+                   size={'small'}
+            >
+              <TaxHeaderRowSet title={'パターン１〜などの列タイトル'} />
+              <TableBody>
+                <TaxSubHeaderRowSet title={'個人設定'} />
+                <TaxIncomeTableRowSet rowLabel={'年齢'}
+                                      value={taxSet.personalInfo.age}
+                                      onChange={v => updateTaxSetItem(set => {set.personalInfo.age = Number(v)})}
+                />
+                <TaxIncomeTableRowSet rowLabel={'家族人数（40歳未満）'}
+                                      value={taxSet.personalInfo.numberOfFamily}
+                                      onChange={v => updateTaxSetItem(set => {set.personalInfo.numberOfFamily = Number(v)})}
+                />
+                <TaxIncomeTableRowSet rowLabel={'家族人数（40歳以上）'}
+                                      value={taxSet.personalInfo.numberOfFamilyOver40}
+                                      onChange={v => updateTaxSetItem(set => {set.personalInfo.numberOfFamilyOver40 = Number(v)})}
+                />
+                <TaxSubHeaderRowSet title={'所得'} amount={sumAmount(taxSet.incomes)} />
+                {taxSet.incomes.map((income: Income, incomeIndex: number) => (
+                  <>
+                    <TaxIncomeTableRowSet rowLabel={income.name}
+                                          value={income.amount || ''}
+                                          onChange={v => updateIncome(incomeIndex, v)}
+                    />
+                    {income.deductions && income.deductions.map((deduction, i) => (
+                      <TaxIncomeTableRowSet rowLabel={deduction.name}
+                                            value={deduction.amount || ''}
+                                            onChange={v => updateIncomeDeductions(incomeIndex, i, v)}
+                                            disabled={!deduction.editable}
                       />
-                      {income.deductions && income.deductions.map((deduction, i) => (
-                        <TaxIncomeTableRowSet rowLabel={deduction.name}
-                                              value={deduction.amount || ''}
-                                              onChange={v => updateIncomeDeductions(incomeIndex, i, v)}
-                                              disabled={!deduction.editable}
-                        />
-                      ))}
-                    </>
                     ))}
-                  <TaxSubHeaderRowSet title={'課税標準'} />
-                  <TaxIncomeTableRowSet rowLabel={'課税標準'}
-                                        value={taxSet.baseOfTaxation || ''}
-                                        disabled={true}
-                  />
-                  <TaxSubHeaderRowSet title={'控除'} amount={sumAmount(taxSet.deductions)} />
-                  {taxSet.deductions.map((deduction: Deduction, deductionIndex: number) => (
-                    <TaxIncomeTableRowSet rowLabel={deduction.name}
-                                          value={deduction.amount || ''}
-                                          onChange={v => updateDeduction(deductionIndex, v)}
-                                          availableCheckBox={deduction.availableCheckBox}
-                                          checkValue={deduction.checked}
-                                          onChangeCheck={v => updateDeductionChecked(deductionIndex, v)}
-                                          disabled={!deduction.editable}
-                    />
-                    ))}
-                  <TaxSubHeaderRowSet title={'社会保険料'} amount={sumAmount(taxSet.socialInsurance)} />
-                  {taxSet.socialInsurance.map((socialInsurance) => (
-                    <TaxIncomeTableRowSet rowLabel={socialInsurance.name}
-                                          value={socialInsurance.amount || ''}
-                                          disabled={true}
-                    />
+                  </>
                   ))}
-                  <TaxSubHeaderRowSet title={'課税所得金額'} />
-                  <TaxIncomeTableRowSet rowLabel={'課税所得金額'}
-                                        value={taxSet.taxableIncomeAmount || ''}
-                                        disabled={true}
+                <TaxSubHeaderRowSet title={'課税標準'} />
+                <TaxIncomeTableRowSet rowLabel={'課税標準'}
+                                      value={taxSet.baseOfTaxation || ''}
+                                      disabled={true}
+                />
+                <TaxSubHeaderRowSet title={'控除'} amount={sumAmount(taxSet.deductions)} />
+                {taxSet.deductions.map((deduction: Deduction, deductionIndex: number) => (
+                  <TaxIncomeTableRowSet rowLabel={deduction.name}
+                                        value={deduction.amount || ''}
+                                        onChange={v => updateDeduction(deductionIndex, v)}
+                                        availableCheckBox={deduction.availableCheckBox}
+                                        checkValue={deduction.checked}
+                                        onChangeCheck={v => updateDeductionChecked(deductionIndex, v)}
+                                        disabled={!deduction.editable}
                   />
-                  <TaxSubHeaderRowSet title={'税金'} amount={sumAmount(taxSet.personalTax)} />
-                  {taxSet.personalTax.map((personalTax) => (
-                    <TaxIncomeTableRowSet rowLabel={personalTax.name}
-                                          value={personalTax.amount || ''}
-                                          disabled={true}
-                    />
                   ))}
-                  <TaxSubHeaderRowSet title={'可処分所得'} />
-                  <TaxIncomeTableRowSet rowLabel={'可処分所得'}
-                                        value={taxSet.disposableIncome}
+                <TaxSubHeaderRowSet title={'社会保険料'} amount={sumAmount(taxSet.socialInsurance)} />
+                {taxSet.socialInsurance.map((socialInsurance) => (
+                  <TaxIncomeTableRowSet rowLabel={socialInsurance.name}
+                                        value={socialInsurance.amount || ''}
                                         disabled={true}
                   />
-                  <TaxSubHeaderRowSet title={'退職金'} />
-                  <TaxIncomeTableRowSet rowLabel={'労働年数'}
-                                        value={taxSet.retirementTax.workingYears}
-                                        onChange={v => updateTaxSetItem(taxSet => taxSet.retirementTax.workingYears = Number(v))}
-                  />
-                  <TaxIncomeTableRowSet rowLabel={'退職金（会社支払）'}
-                                        value={taxSet.retirementTax.income}
-                                        onChange={v => updateTaxSetItem(taxSet => taxSet.retirementTax.workingYears = Number(v))}
-                  />
-                  <TaxIncomeTableRowSet rowLabel={'退職金（iDeco、小規模企業共済）'}
-                                        value={taxSet.retirementTax.incomeAutoCalculated}
+                ))}
+                <TaxSubHeaderRowSet title={'課税所得金額'} />
+                <TaxIncomeTableRowSet rowLabel={'課税所得金額'}
+                                      value={taxSet.taxableIncomeAmount || ''}
+                                      disabled={true}
+                />
+                <TaxSubHeaderRowSet title={'税金'} amount={sumAmount(taxSet.personalTax)} />
+                {taxSet.personalTax.map((personalTax) => (
+                  <TaxIncomeTableRowSet rowLabel={personalTax.name}
+                                        value={personalTax.amount || ''}
                                         disabled={true}
                   />
-                  <TaxIncomeTableRowSet rowLabel={'税額（所得税・住民税）'}
-                                        value={taxSet.retirementTax.taxAmount}
-                                        disabled={true}
-                  />
-                  <TaxIncomeTableRowSet rowLabel={'退職金可処分所得'}
-                                        value={taxSet.retirementTax.disposableIncome}
-                                        disabled={true}
-                  />
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Grid>
-        </Grid>
+                ))}
+                <TaxSubHeaderRowSet title={'可処分所得'} />
+                <TaxIncomeTableRowSet rowLabel={'可処分所得'}
+                                      value={taxSet.disposableIncome}
+                                      disabled={true}
+                />
+                <TaxSubHeaderRowSet title={'退職金'} />
+                <TaxIncomeTableRowSet rowLabel={'労働年数'}
+                                      value={taxSet.retirementTax.workingYears}
+                                      onChange={v => updateTaxSetItem(taxSet => taxSet.retirementTax.workingYears = Number(v))}
+                />
+                <TaxIncomeTableRowSet rowLabel={'退職金（会社支払）'}
+                                      value={taxSet.retirementTax.income}
+                                      onChange={v => updateTaxSetItem(taxSet => taxSet.retirementTax.workingYears = Number(v))}
+                />
+                <TaxIncomeTableRowSet rowLabel={'退職金（iDeco、小規模企業共済）'}
+                                      value={taxSet.retirementTax.incomeAutoCalculated}
+                                      disabled={true}
+                />
+                <TaxIncomeTableRowSet rowLabel={'税額（所得税・住民税）'}
+                                      value={taxSet.retirementTax.taxAmount}
+                                      disabled={true}
+                />
+                <TaxIncomeTableRowSet rowLabel={'退職金可処分所得'}
+                                      value={taxSet.retirementTax.disposableIncome}
+                                      disabled={true}
+                />
+              </TableBody>
+            </Table>
+          </TableContainer>
       </Grid>
     </>
   );

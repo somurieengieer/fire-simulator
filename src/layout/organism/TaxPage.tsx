@@ -1,9 +1,9 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
-import {Grid} from "@material-ui/core";
 import {TaxPaper} from "../molecules/TaxPaper";
 import {useSelector} from "react-redux";
 import {selectTaxSet, TaxSet} from "../../features/tax/taxSlice";
+import {JustifyCenterBox} from "../atoms/JustifyCenterBox";
 
 const useStyles = makeStyles({
   table: {
@@ -22,11 +22,11 @@ export function TaxPage() {
 
   return (
     <>
-      <Grid>
+      <JustifyCenterBox>
         {selectedTaxSet && selectedTaxSet.map((taxSet: TaxSet, index: number) => (
           <TaxPaper taxSet={taxSet} index={index} />
         ))}
-      </Grid>
+      </JustifyCenterBox>
     </>
   );
 }

@@ -122,7 +122,7 @@ const update = (taxSet: TaxSet): TaxSet => {
 }
 
 const initialState: TaxState = {
-  taxSet: [createTaxSet()]
+  taxSet: [createTaxSet(), createTaxSet(), createTaxSet()]
 }
 
 export const taxSlice = createSlice({
