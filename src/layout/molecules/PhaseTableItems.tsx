@@ -16,8 +16,8 @@ export const usePatternTableStyles = makeStyles({
   },
   tableCellLabel: {
     // minWidth: 120,
-    width: 120,
-    minWidth: 120,
+    width: 200,
+    minWidth: 200,
     backgroundColor: theme.palette.secondary.light,
   },
   tableCell: {

@@ -144,6 +144,27 @@ export function TaxTable({taxSetIndex, taxSet}: PhasesTableProps) {
                                         value={taxSet.disposableIncome}
                                         disabled={true}
                   />
+                  <TaxSubHeaderRowSet title={'退職金'} />
+                  <TaxIncomeTableRowSet rowLabel={'労働年数'}
+                                        value={taxSet.retirementTax.workingYears}
+                                        onChange={v => updateTaxSetItem(taxSet => taxSet.retirementTax.workingYears = Number(v))}
+                  />
+                  <TaxIncomeTableRowSet rowLabel={'退職金（会社支払）'}
+                                        value={taxSet.retirementTax.income}
+                                        onChange={v => updateTaxSetItem(taxSet => taxSet.retirementTax.workingYears = Number(v))}
+                  />
+                  <TaxIncomeTableRowSet rowLabel={'退職金（iDeco、小規模企業共済）'}
+                                        value={taxSet.retirementTax.incomeAutoCalculated}
+                                        disabled={true}
+                  />
+                  <TaxIncomeTableRowSet rowLabel={'税額（所得税・住民税）'}
+                                        value={taxSet.retirementTax.taxAmount}
+                                        disabled={true}
+                  />
+                  <TaxIncomeTableRowSet rowLabel={'退職金可処分所得'}
+                                        value={taxSet.retirementTax.disposableIncome}
+                                        disabled={true}
+                  />
                 </TableBody>
               </Table>
             </TableContainer>

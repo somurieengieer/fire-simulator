@@ -3,6 +3,7 @@
 // 所得と控除のセット（Redux保存用クラス）
 import {Deduction, Income, ShowableItem, SocialInsurance, TaxSet} from "./taxSlice";
 import {manYen, sumAmount} from "../utils/Utils";
+import {retirementTaxConvert} from "./retirementTax";
 
 export interface InnerTaxSet {
   incomes: InnerIncome[],
@@ -293,7 +294,7 @@ export const commonInnerSocialInsurances = (): InnerAutoCalculatedItem[] => {
 }
 
 // 所得税
-const incomeTax = (taxableIncomeAmount: number): number => {
+export const incomeTax = (taxableIncomeAmount: number): number => {
   const data = [
     [1000, 1949000, 5, 0],
     [1950000, 3299000, 10, 97500],
@@ -310,8 +311,8 @@ const incomeTax = (taxableIncomeAmount: number): number => {
   return manYen(taxableIncomeAmount10000 * row[2] / 100 - row[3])
 }
 // 住民税
-const residentTax = (taxSet: TaxSet): number => {
-  const taxableIncomeAmountForResidentTax = taxSet.taxableIncomeAmount
+export const residentTax = (taxSet: TaxSet, taxableIncomeAmount: number): number => {
+  const taxableIncomeAmountForResidentTax = taxableIncomeAmount
     - (Number(taxSet.deductions.find(ded => ded.name === '基礎控除')?.amount || 0) - 33) // 基礎控除の差。所得税は48、住民税は33
   // 東京23区計算
   const taxByEquality = 0.5
@@ -324,7 +325,7 @@ export const commonInnerPersonalTax = (): InnerAutoCalculatedItem[] => {
       calcAmount: (taxSet: TaxSet): number => incomeTax(taxSet.taxableIncomeAmount)
     },
     { name: '住民税',
-      calcAmount: (taxSet: TaxSet): number => residentTax(taxSet)
+      calcAmount: (taxSet: TaxSet): number => residentTax(taxSet, taxSet.taxableIncomeAmount)
     },
   ]
 }
@@ -383,6 +384,9 @@ export function taxSetConvert(taxSet: TaxSet): TaxSet {
   taxSet.disposableIncome = sumAmount(taxSet.incomes)
     - sumAmount(taxSet.socialInsurance)
     - sumAmount(taxSet.personalTax)
+
+  // 退職金
+  retirementTaxConvert(taxSet)
 
   return taxSet
 }

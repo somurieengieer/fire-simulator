@@ -1,6 +1,7 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../../app/store';
 import {defaultIncomeAndDeductionSet, taxSetConvert} from "./tax";
+import {InnerRetirementTax} from "./retirementTax";
 
 export interface ShowableItem {
   name: string,
@@ -13,6 +14,9 @@ export interface PersonalInfo {
   age: number,
   numberOfFamily: number, // 家族人数（国民健康保険料算出用）
   numberOfFamilyOver40: number, // 家族人数（国民健康保険料算出用）
+  workingYears: number, // 労働年数（退職金算定用）
+}
+export interface RetirementTax extends InnerRetirementTax {
 }
 export interface TaxSet {
   incomes: Income[],
@@ -23,6 +27,7 @@ export interface TaxSet {
   taxableIncomeAmount: number, // 課税所得金額
   personalTax: PersonalTax[], // 税金
   disposableIncome: number, // 可処分所得
+  retirementTax: RetirementTax,
 }
 
 // 所得
@@ -72,6 +77,7 @@ const createTaxSet = (): TaxSet => {
       age: 30,
       numberOfFamily: 2,
       numberOfFamilyOver40: 0,
+      workingYears: 30,
     },
     baseOfTaxation: 0, // 後でアップデートかけるので簡略化するために0とする
     deductions: [
@@ -100,6 +106,13 @@ const createTaxSet = (): TaxSet => {
       }})
     ],
     disposableIncome: 0, // 後でアップデートかけるので簡略化するために0とする
+    retirementTax: {
+      workingYears: 20, // 労働年数
+      income: 0, // 退職金（会社支払）
+      incomeAutoCalculated: 0, // 退職金（iDeco、小規模企業共済）
+      taxAmount: 0, // 退職金税額（所得税・住民税）
+      disposableIncome: 0, // 退職金可処分所得
+    }
   })
 }
 
