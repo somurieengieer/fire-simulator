@@ -26,8 +26,11 @@ export function TaxTable({taxSetIndex, taxSet}: PhasesTableProps) {
   const tableClasses = usePatternTableStyles();
   const dispatch = useDispatch();
   const [expandedSocialInsurance, setExpandedSocialInsurance] = useState<boolean>(false)
+  const [expandedBaseOfTaxation, setExpandedBaseOfTaxation] = useState<boolean>(false)
   const [expandedTaxableIncomeAmount, setExpandedTaxableIncomeAmount] = useState<boolean>(false)
   const [expandedPersonalTax, setExpandedPersonalTax] = useState<boolean>(false)
+  const [expandedDisposableIncome, setExpandedDisposableIncome] = useState<boolean>(false)
+  const [expandedRetirementTax, setExpandedRetirementTax] = useState<boolean>(false)
 
   const updateTaxSetItem = (updateValue: (set: TaxSet) => void) => {
     const newTaxSet = JSON.parse(JSON.stringify(taxSet)) as TaxSet
@@ -100,7 +103,8 @@ export function TaxTable({taxSetIndex, taxSet}: PhasesTableProps) {
                     </>
                     ))}
                 </TaxSubHeaderRowSet>
-                <TaxSubHeaderRowSet title={'課税標準'}>
+                <TaxSubHeaderRowSet title={'課税標準'} amount={taxSet.baseOfTaxation}
+                                    expanded={expandedBaseOfTaxation} handleExpandClick={setExpandedBaseOfTaxation}>
                   <TaxTableRowSet rowLabel={'課税標準'}
                                   value={taxSet.baseOfTaxation || ''}
                                   disabled={true}
@@ -144,13 +148,15 @@ export function TaxTable({taxSetIndex, taxSet}: PhasesTableProps) {
                     />
                   ))}
                 </TaxSubHeaderRowSet>
-                <TaxSubHeaderRowSet title={'可処分所得'} amount={taxSet.disposableIncome}>
+                <TaxSubHeaderRowSet title={'可処分所得'} amount={taxSet.disposableIncome}
+                                    expanded={expandedDisposableIncome} handleExpandClick={setExpandedDisposableIncome}>
                   <TaxTableRowSet rowLabel={'可処分所得'}
                                   value={taxSet.disposableIncome}
                                   disabled={true}
                   />
                 </TaxSubHeaderRowSet>
-                <TaxSubHeaderRowSet title={'退職金'}>
+                <TaxSubHeaderRowSet title={'退職金'} amount={taxSet.retirementTax.disposableIncome}
+                                    expanded={expandedRetirementTax} handleExpandClick={setExpandedRetirementTax}>
                   <TaxTableRowSet rowLabel={'労働年数'}
                                   value={taxSet.retirementTax.workingYears}
                                   onChange={v => updateTaxSetItem(taxSet => taxSet.retirementTax.workingYears = Number(v))}
