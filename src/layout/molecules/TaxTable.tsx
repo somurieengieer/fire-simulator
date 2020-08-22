@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Grid, Paper, Table, TableBody, TableContainer} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import {usePatternTableStyles} from "./PhaseTableItems";
@@ -25,6 +25,8 @@ export function TaxTable({taxSetIndex, taxSet}: PhasesTableProps) {
   const classes = useStyles();
   const tableClasses = usePatternTableStyles();
   const dispatch = useDispatch();
+  const [expandedSocialInsurance, setExpandedSocialInsurance] = useState<boolean>(false)
+  const [expandedTaxableIncomeAmount, setExpandedTaxableIncomeAmount] = useState<boolean>(false)
 
   const updateTaxSetItem = (updateValue: (set: TaxSet) => void) => {
     const newTaxSet = JSON.parse(JSON.stringify(taxSet)) as TaxSet
@@ -111,18 +113,28 @@ export function TaxTable({taxSetIndex, taxSet}: PhasesTableProps) {
                                         disabled={!deduction.editable}
                   />
                   ))}
-                <TaxSubHeaderRowSet title={'社会保険料'} amount={sumAmount(taxSet.socialInsurance)} />
-                {taxSet.socialInsurance.map((socialInsurance) => (
-                  <TaxIncomeTableRowSet rowLabel={socialInsurance.name}
-                                        value={socialInsurance.amount || ''}
+                <TaxSubHeaderRowSet title={'社会保険料'} amount={sumAmount(taxSet.socialInsurance)}
+                                    expanded={expandedSocialInsurance} handleExpandClick={setExpandedSocialInsurance}
+                />
+                {expandedSocialInsurance && (
+                  <>
+                    {taxSet.socialInsurance.map((socialInsurance) => (
+                      <TaxIncomeTableRowSet rowLabel={socialInsurance.name}
+                                            value={socialInsurance.amount || ''}
+                                            disabled={true}
+                      />
+                    ))}
+                  </>
+                )}
+                <TaxSubHeaderRowSet title={'課税所得金額'}
+                                    expanded={expandedTaxableIncomeAmount} handleExpandClick={setExpandedTaxableIncomeAmount}
+                />
+                {expandedTaxableIncomeAmount && (
+                  <TaxIncomeTableRowSet rowLabel={'課税所得金額'}
+                                        value={taxSet.taxableIncomeAmount || ''}
                                         disabled={true}
                   />
-                ))}
-                <TaxSubHeaderRowSet title={'課税所得金額'} />
-                <TaxIncomeTableRowSet rowLabel={'課税所得金額'}
-                                      value={taxSet.taxableIncomeAmount || ''}
-                                      disabled={true}
-                />
+                )}
                 <TaxSubHeaderRowSet title={'税金'} amount={sumAmount(taxSet.personalTax)} />
                 {taxSet.personalTax.map((personalTax) => (
                   <TaxIncomeTableRowSet rowLabel={personalTax.name}

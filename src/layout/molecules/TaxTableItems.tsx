@@ -1,6 +1,8 @@
 import React from 'react';
-import {TableCell, TableHead, TableRow} from "@material-ui/core";
+import {IconButton, TableCell, TableHead, TableRow} from "@material-ui/core";
 import {usePatternTableStyles} from "./PhaseTableItems";
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import clsx from 'clsx';
 
 export function TaxHeaderRowSet({title}
 : {title: string}) {
@@ -16,15 +18,34 @@ export function TaxHeaderRowSet({title}
   )
 }
 
-export function TaxSubHeaderRowSet({title, amount}
-: {title: string, amount?: number}) {
+export function TaxSubHeaderRowSet({title, amount, expanded, handleExpandClick}
+: {title: string, amount?: number, expanded?: boolean, handleExpandClick?: (v: boolean) => void}) {
   const classes = usePatternTableStyles();
+  const createTitle = () => (
+    <>
+      {title}
+      {handleExpandClick !== undefined && (
+        <IconButton
+          className={clsx(classes.expand, {
+            [classes.expandOpen]: expanded,
+          })}
+          onClick={v => handleExpandClick(!expanded)}
+          aria-expanded={expanded}
+          aria-label="show more"
+          size={"small"}
+        >
+          <ExpandMoreIcon />
+        </IconButton>
+      )}
+    </>
+  )
+
   return (
     <TableRow className={classes.tableHeadRow}>
       {amount !== undefined ? (
         <>
           <TableCell>
-            {title}
+            {createTitle()}
           </TableCell>
           <TableCell className={classes.tableCell} align="center">
             <input value={amount}
@@ -34,7 +55,7 @@ export function TaxSubHeaderRowSet({title, amount}
         </>
       ) : (
         <TableCell colSpan={2}>
-          {title}
+          {createTitle()}
         </TableCell>
       )}
     </TableRow>
