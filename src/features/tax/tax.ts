@@ -205,14 +205,7 @@ export const commonDeductions = (): InnerEditableDeduction[] => {
       amount: 0,
       editable: true
     },
-    { name: '小規模企業共済',
-      amount: 0,
-      editable: true
-    },
-    { name: 'iDeco',
-      amount: 0,
-      editable: true
-    },
+    ...commonDeductionForReserve(),
     { name: '扶養控除',
       amount: 0,
       editable: true,
@@ -223,7 +216,20 @@ export const commonDeductions = (): InnerEditableDeduction[] => {
         + '70歳〜（同居以外）:48万、'
         + '70歳〜（同居）:58万'
     },
-    ]
+  ]
+}
+// 所得控除（退職金積立）
+const commonDeductionForReserve = (): InnerEditableDeduction[] => {
+  return [
+    { name: '小規模企業共済',
+      amount: 0,
+      editable: true
+    },
+    { name: 'iDeco',
+      amount: 0,
+      editable: true
+    },
+  ]
 }
 export const commonCalculatedDeductions = (): InnerAutoCalculatedItem[] => {
   return [
@@ -388,6 +394,16 @@ export function taxSetConvert(taxSet: TaxSet): TaxSet {
   taxSet.disposableIncome = sumAmount(taxSet.incomes)
     - sumAmount(taxSet.socialInsurance)
     - sumAmount(taxSet.personalTax)
+    - sumAmount(taxSet.deductions
+      .filter(d => commonDeductionForReserve().find(r => r.name === d.name)))
+  console.log('disposableIncome', taxSet.setNumber,
+    sumAmount(taxSet.incomes),
+    sumAmount(taxSet.socialInsurance),
+    sumAmount(taxSet.personalTax),
+    sumAmount(taxSet.deductions
+      .filter(d => commonDeductionForReserve().map(r => r.name === d.name))),
+    taxSet.disposableIncome
+    )
 
   // 退職金
   retirementTaxConvert(taxSet)

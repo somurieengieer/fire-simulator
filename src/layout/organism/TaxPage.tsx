@@ -23,14 +23,14 @@ export function TaxPage() {
   const dispatch = useDispatch();
   const selectedTaxSet: TaxSet[] = useSelector(selectTaxSet)
 
-  const isPDataMode = (): boolean => {
+  const pDataNumber = (): number => {
     const getParams = new URLSearchParams(location.search);
-    return Boolean(getParams.get(`pData`))
+    return Number(getParams.get(`pData`) || 0)
   }
 
   useEffect(() => {
-    if (isPDataMode()) {
-      personalUpdate(selectedTaxSet).forEach(set =>
+    if (pDataNumber()) {
+      personalUpdate(selectedTaxSet, pDataNumber()).forEach(set =>
         dispatch(updateTaxSet(set)))
     }
   }, [location])
