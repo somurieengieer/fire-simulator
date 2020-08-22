@@ -16,11 +16,10 @@ const useStyles = makeStyles({
 });
 
 interface PhasesTableProps {
-  taxSetIndex: number,
   taxSet: TaxSet,
 }
 
-export function TaxTable({taxSetIndex, taxSet}: PhasesTableProps) {
+export function TaxTable({taxSet}: PhasesTableProps) {
 
   const classes = useStyles();
   const tableClasses = usePatternTableStyles();

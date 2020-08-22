@@ -12,16 +12,15 @@ const useStyles = makeStyles({
 
 interface FirePatternPaperProps {
   taxSet: TaxSet,
-  index: number,
 }
 
-export function TaxPaper({taxSet, index}: FirePatternPaperProps) {
+export function TaxPaper({taxSet}: FirePatternPaperProps) {
 
   const classes = useStyles();
 
   return (
     <Paper className={classes.paper}>
-      <TaxTable taxSet={taxSet} taxSetIndex={index}/>
+      <TaxTable taxSet={taxSet} />
     </Paper>
   );
 }

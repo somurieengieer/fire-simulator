@@ -17,14 +17,13 @@ const useStyles = makeStyles({
 export function TaxPage() {
 
   const classes = useStyles();
-
   const selectedTaxSet = useSelector(selectTaxSet)
 
   return (
     <>
       <JustifyCenterBox>
-        {selectedTaxSet && selectedTaxSet.map((taxSet: TaxSet, index: number) => (
-          <TaxPaper taxSet={taxSet} index={index} />
+        {selectedTaxSet && selectedTaxSet.map((taxSet: TaxSet) => (
+          <TaxPaper taxSet={taxSet} />
         ))}
       </JustifyCenterBox>
     </>
