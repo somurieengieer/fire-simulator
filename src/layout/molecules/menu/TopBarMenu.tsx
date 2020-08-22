@@ -40,12 +40,13 @@ export default function TopBarMenu({children}: Props) {
   const classes = useStyles();
 
   const location = useLocation();
-  console.log('location', location)
 
   const title = () => {
     switch (location.pathname) {
       case '/fire':
         return 'FIREシミュレーター'
+      case '/tax':
+        return '税金計算'
     }
     return 'トップ'
   }

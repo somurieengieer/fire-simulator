@@ -33,7 +33,7 @@ export function TaxTable({taxSet}: PhasesTableProps) {
 
   const updateTaxSetValue = (updateValue: () => void) => {
     updateValue()
-    dispatch(updateTaxSet({taxSet: taxSet}))
+    dispatch(updateTaxSet(taxSet))
   }
 
   return (
