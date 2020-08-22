@@ -18,8 +18,13 @@ export function TaxHeaderRowSet({title}
   )
 }
 
-export function TaxSubHeaderRowSet({title, amount, expanded, handleExpandClick}
-: {title: string, amount?: number, expanded?: boolean, handleExpandClick?: (v: boolean) => void}) {
+interface TaxSubHeaderRowSetProps {
+  title: string,
+  amount?: number,
+  expanded?: boolean,
+  handleExpandClick?: (v: boolean) => void
+}
+export function TaxSubHeaderRowSet({title, amount, expanded, handleExpandClick}: TaxSubHeaderRowSetProps) {
   const classes = usePatternTableStyles();
   const createTitle = () => (
     <>
@@ -62,7 +67,7 @@ export function TaxSubHeaderRowSet({title, amount, expanded, handleExpandClick}
   )
 }
 
-export function TaxIncomeTableRowSet({rowLabel, value, onChange, availableCheckBox, checkValue, onChangeCheck, disabled}
+export function TaxTableRowSet({rowLabel, value, onChange, availableCheckBox, checkValue, onChangeCheck, disabled}
 : {rowLabel: string,
   value: string | number,
   onChange?(newValue: string): void,
