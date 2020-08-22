@@ -35,31 +35,31 @@ export function TaxTable({taxSetIndex, taxSet}: PhasesTableProps) {
   const updateTaxSetItem = (updateValue: (set: TaxSet) => void) => {
     const newTaxSet = JSON.parse(JSON.stringify(taxSet)) as TaxSet
     updateValue(newTaxSet)
-    dispatch(updateTaxSet({taxSet: newTaxSet, index: taxSetIndex}))
+    dispatch(updateTaxSet({taxSet: newTaxSet}))
   }
 
   const updateIncomeDeductions = (incomeIndex: number, index: number, updatedValue: any): void => {
     const newTaxSet = JSON.parse(JSON.stringify(taxSet))
     newTaxSet.incomes[incomeIndex].deductions[index] = updatedValue
-    dispatch(updateTaxSet({taxSet: newTaxSet, index: taxSetIndex}))
+    dispatch(updateTaxSet({taxSet: newTaxSet}))
   }
 
   const updateIncome = (incomeIndex: number, updatedValue: string): void => {
     const newIncomeAndDeductionSet = JSON.parse(JSON.stringify(taxSet))
     newIncomeAndDeductionSet.incomes[incomeIndex].amount = updatedValue
-    dispatch(updateTaxSet({taxSet: newIncomeAndDeductionSet, index: taxSetIndex}))
+    dispatch(updateTaxSet({taxSet: newIncomeAndDeductionSet}))
   }
 
   const updateDeduction = (deductionIndex: number, updatedValue: string): void => {
     const newTaxSet = JSON.parse(JSON.stringify(taxSet))
     newTaxSet.deductions[deductionIndex].amount = updatedValue
-    dispatch(updateTaxSet({taxSet: newTaxSet, index: taxSetIndex}))
+    dispatch(updateTaxSet({taxSet: newTaxSet}))
   }
 
   const updateDeductionChecked = (deductionIndex: number, updatedValue: boolean): void => {
     const newTaxSet = JSON.parse(JSON.stringify(taxSet))
     newTaxSet.deductions[deductionIndex].checked = updatedValue
-    dispatch(updateTaxSet({taxSet: newTaxSet, index: taxSetIndex}))
+    dispatch(updateTaxSet({taxSet: newTaxSet}))
 
   }
 

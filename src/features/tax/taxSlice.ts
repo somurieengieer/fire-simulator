@@ -19,6 +19,7 @@ export interface PersonalInfo {
 export interface RetirementTax extends InnerRetirementTax {
 }
 export interface TaxSet {
+  setNumber: number,
   incomes: Income[],
   baseOfTaxation: number, // 課税標準
   personalInfo: PersonalInfo,
@@ -55,9 +56,10 @@ export interface PersonalTax extends ShowableItem {
 
 
 // 内部的クラスから表示用JSONに変換
-const createTaxSet = (): TaxSet => {
+const createTaxSet = (setNumber: number): TaxSet => {
   const innerSet = defaultIncomeAndDeductionSet()
   return update({
+    setNumber: setNumber,
     incomes:
       innerSet.incomes.map(income => {return {
         name: income.name,
@@ -122,7 +124,7 @@ const update = (taxSet: TaxSet): TaxSet => {
 }
 
 const initialState: TaxState = {
-  taxSet: [createTaxSet(), createTaxSet(), createTaxSet()]
+  taxSet: [createTaxSet(0), createTaxSet(1), createTaxSet(2)]
 }
 
 export const taxSlice = createSlice({
@@ -133,8 +135,8 @@ export const taxSlice = createSlice({
     return initialState
   })(),
   reducers: {
-    updateTaxSet: (state, action: PayloadAction<{taxSet: TaxSet, index: number}>) => {
-      state.taxSet[action.payload.index] = update(action.payload.taxSet)
+    updateTaxSet: (state, action: PayloadAction<{taxSet: TaxSet}>) => {
+      state.taxSet[action.payload.taxSet.setNumber] = update(action.payload.taxSet)
     },
   },
 });
