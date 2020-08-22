@@ -31,10 +31,9 @@ export function TaxTable({taxSet}: PhasesTableProps) {
   const [expandedDisposableIncome, setExpandedDisposableIncome] = useState<boolean>(false)
   const [expandedRetirementTax, setExpandedRetirementTax] = useState<boolean>(false)
 
-  const updateTaxSetItem = (updateValue: (set: TaxSet) => void) => {
-    const newTaxSet = JSON.parse(JSON.stringify(taxSet)) as TaxSet
-    updateValue(newTaxSet)
-    dispatch(updateTaxSet({taxSet: newTaxSet}))
+  const updateTaxSetValue = (updateValue: () => void) => {
+    updateValue()
+    dispatch(updateTaxSet({taxSet: taxSet}))
   }
 
   const updateIncomeDeductions = (incomeIndex: number, index: number, updatedValue: any): void => {
@@ -74,15 +73,15 @@ export function TaxTable({taxSet}: PhasesTableProps) {
                 <TaxSubHeaderRowSet title={'個人設定'}>
                   <TaxTableRowSet rowLabel={'年齢'}
                                   value={taxSet.personalInfo.age}
-                                  onChange={v => updateTaxSetItem(set => {set.personalInfo.age = Number(v)})}
+                                  onChange={v => updateTaxSetValue(() => taxSet.personalInfo.age = Number(v))}
                   />
                   <TaxTableRowSet rowLabel={'家族人数（40歳未満）'}
                                   value={taxSet.personalInfo.numberOfFamily}
-                                  onChange={v => updateTaxSetItem(set => {set.personalInfo.numberOfFamily = Number(v)})}
+                                  onChange={v => updateTaxSetValue(() => taxSet.personalInfo.numberOfFamily = Number(v))}
                   />
                   <TaxTableRowSet rowLabel={'家族人数（40歳以上）'}
                                   value={taxSet.personalInfo.numberOfFamilyOver40}
-                                  onChange={v => updateTaxSetItem(set => {set.personalInfo.numberOfFamilyOver40 = Number(v)})}
+                                  onChange={v => updateTaxSetValue(() => taxSet.personalInfo.numberOfFamilyOver40 = Number(v))}
                   />
                 </TaxSubHeaderRowSet>
                 <TaxSubHeaderRowSet title={'所得'} amount={sumAmount(taxSet.incomes)}>
@@ -158,11 +157,11 @@ export function TaxTable({taxSet}: PhasesTableProps) {
                                     expanded={expandedRetirementTax} handleExpandClick={setExpandedRetirementTax}>
                   <TaxTableRowSet rowLabel={'労働年数'}
                                   value={taxSet.retirementTax.workingYears}
-                                  onChange={v => updateTaxSetItem(taxSet => taxSet.retirementTax.workingYears = Number(v))}
+                                  onChange={v => updateTaxSetValue(() => taxSet.retirementTax.workingYears = Number(v))}
                   />
                   <TaxTableRowSet rowLabel={'退職金（会社支払）'}
                                   value={taxSet.retirementTax.income}
-                                  onChange={v => updateTaxSetItem(taxSet => taxSet.retirementTax.workingYears = Number(v))}
+                                  onChange={v => updateTaxSetValue(() => taxSet.retirementTax.workingYears = Number(v))}
                   />
                   <TaxTableRowSet rowLabel={'退職金（iDeco、小規模企業共済）'}
                                   value={taxSet.retirementTax.incomeAutoCalculated}
