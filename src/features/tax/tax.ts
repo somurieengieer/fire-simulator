@@ -352,7 +352,7 @@ export function taxSetConvert(taxSet: TaxSet): TaxSet {
   const calcAutoAmount = (calculables: InnerAutoCalculable<any>[], showableItems: ShowableItem[]) => {
     calculables.forEach(calculable => {
       const ded = showableItems.find(item => item.name === calculable.name) as ShowableItem
-      ded.amount = calculable.calcAmount(taxSet)
+      ded.amount = Math.round(calculable.calcAmount(taxSet))
     })
   }
   const innerSet = defaultIncomeAndDeductionSet()

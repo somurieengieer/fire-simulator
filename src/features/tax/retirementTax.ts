@@ -23,10 +23,10 @@ export function retirementTaxConvert(taxSet: TaxSet): void {
   }
 
   // 課税退職所得金額
-  const taxableIncomeAmount = (totalAmount - deductionAmount) / 2
+  const taxableIncomeAmount = Math.round((totalAmount - deductionAmount) / 2)
 
   // 税金（所得税・住民税）
-  retirementTax.taxAmount = incomeTax(taxableIncomeAmount) + residentTax(taxSet, taxableIncomeAmount)
+  retirementTax.taxAmount = Math.round(incomeTax(taxableIncomeAmount) + residentTax(taxSet, taxableIncomeAmount))
 
-  retirementTax.disposableIncome = totalAmount - retirementTax.taxAmount
+  retirementTax.disposableIncome = Math.round(totalAmount - retirementTax.taxAmount)
 }
