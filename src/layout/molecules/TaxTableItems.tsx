@@ -22,9 +22,10 @@ interface TaxSubHeaderRowSetProps {
   title: string,
   amount?: number,
   expanded?: boolean,
-  handleExpandClick?: (v: boolean) => void
+  handleExpandClick?: (v: boolean) => void,
+  children: React.ReactNode; // TaxTableRowSetが並ぶ感じ（ヘッダー行以降の行）
 }
-export function TaxSubHeaderRowSet({title, amount, expanded, handleExpandClick}: TaxSubHeaderRowSetProps) {
+export function TaxSubHeaderRowSet({title, amount, expanded, handleExpandClick, children}: TaxSubHeaderRowSetProps) {
   const classes = usePatternTableStyles();
   const createTitle = () => (
     <>
@@ -46,24 +47,27 @@ export function TaxSubHeaderRowSet({title, amount, expanded, handleExpandClick}:
   )
 
   return (
-    <TableRow className={classes.tableHeadRow}>
-      {amount !== undefined ? (
-        <>
-          <TableCell>
+    <>
+      <TableRow className={classes.tableHeadRow}>
+        {amount !== undefined ? (
+          <>
+            <TableCell>
+              {createTitle()}
+            </TableCell>
+            <TableCell className={classes.tableCell} align="center">
+              <input value={amount}
+                     type={'number'}
+                     disabled={true} />
+            </TableCell>
+          </>
+        ) : (
+          <TableCell colSpan={2}>
             {createTitle()}
           </TableCell>
-          <TableCell className={classes.tableCell} align="center">
-            <input value={amount}
-                   type={'number'}
-                   disabled={true} />
-          </TableCell>
-        </>
-      ) : (
-        <TableCell colSpan={2}>
-          {createTitle()}
-        </TableCell>
-      )}
-    </TableRow>
+        )}
+      </TableRow>
+      {(handleExpandClick === undefined || expanded) && children}
+    </>
   )
 }
 
