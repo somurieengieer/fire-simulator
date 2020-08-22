@@ -1,4 +1,5 @@
 import {PhaseData} from "./Phase";
+import {financialPDatas} from "./personalFireInitialData";
 
 // デフォルト値
 export const initialPhasesDefault = (): PhaseData[] => [
@@ -28,13 +29,13 @@ interface PhaseDataForWorkerProps {
   babyCost?: number,
   babyBirthYear?: number,
 }
-function create(editable: boolean, obj: any): PhaseData {
+export function create(editable: boolean, obj: any): PhaseData {
   return Object.assign({
     ageAtStartEditable: editable,
     assetAtStartEditable: editable,
   }, obj) as PhaseData
 }
-function createPhaseDataForWorker(props: PhaseDataForWorkerProps ): PhaseData[] {
+export function createPhaseDataForWorker(props: PhaseDataForWorkerProps ): PhaseData[] {
   const result: PhaseData[] = []
     result.push(
     {
@@ -86,7 +87,7 @@ function createPhaseDataForWorker(props: PhaseDataForWorkerProps ): PhaseData[] 
   return result
 }
 
-function createPhaseDataAfterRetirement(props: PhaseDataForWorkerProps ): PhaseData[] {
+export function createPhaseDataAfterRetirement(props: PhaseDataForWorkerProps ): PhaseData[] {
   const result: PhaseData[] = []
   if (props.ageAtRetirement < 59) {
     result.push({
@@ -428,116 +429,6 @@ const expense30MynPerYearWithChildren = (): PhasesTemplate[] => {
   }]
 }
 
-const somethingElse = (): PhasesTemplate[] => {
-  return [{
-    label: '個人事業主・月30万生活・子供あり・完全に引退せず細々働く・独力',
-    createPhaseData: () =>
-      createPhaseDataForWorker({
-        ageAtStart: 32,
-        ageAtRetirement: 55,
-        income: 560,
-        retirementAllowance: 1800,
-        expense: 360,
-        expenseAfterRetirement: 360,
-        annuity: 180, // 年金
-        assetAtStart: 2000,
-        annualInterest: 3,
-        babyCost: 100,
-        babyBirthYear: 33,
-      })
-    },
-    {
-      label: '個人事業主・月30万生活・子供あり・完全に引退せず細々働く',
-      createPhaseData: () => [
-        create(true, {
-          ageAtStart: 33,
-          ageAtEnd: 35,
-          note: '子育て生活（実家）',
-          income: 600,
-          expense: 200,
-          assetAtStart: 2200,
-          annualInterest: 3,
-        }),
-        create(false, {
-          ageAtEnd: 46,
-          note: '子育て生活（都内）',
-          income: 300,
-          expense: 200,
-          annualInterest: 3,
-        }),
-        create(false, {
-          ageAtEnd: 55,
-          note: '子育て生活（都内）細々働く',
-          income: 100,
-          expense: 200,
-          annualInterest: 3,
-        }),
-        create(false, {
-          ageAtEnd: 56,
-          note: '退職金もらう',
-          income: 560,
-          expense: 200,
-          annualInterest: 3,
-        }),
-        ...createPhaseDataAfterRetirement({
-          ageAtRetirement: 57,
-          income: 0,
-          retirementAllowance: 0,
-          expense: 200,
-          expenseAfterRetirement: 200,
-          annuity: 160, // 年金
-          assetAtStart: 0,
-          annualInterest: 3,
-        })
-      ]
-    },
-    {
-      label: '法人化・月30万生活・子供あり・完全に引退せず細々働く',
-      createPhaseData: () => [
-        create(true, {
-          ageAtStart: 33,
-          ageAtEnd: 35,
-          note: '子育て生活（実家）',
-          income: 600,
-          expense: 200,
-          assetAtStart: 2200,
-          annualInterest: 3,
-        }),
-        create(false, {
-          ageAtEnd: 46,
-          note: '子育て生活（都内）',
-          income: 400,
-          expense: 200,
-          annualInterest: 3,
-        }),
-        create(false, {
-          ageAtEnd: 55,
-          note: '子育て生活（都内）細々働く',
-          income: 100,
-          expense: 200,
-          annualInterest: 3,
-        }),
-        create(false, {
-          ageAtEnd: 56,
-          note: '退職金もらう',
-          income: 560,
-          expense: 200,
-          annualInterest: 3,
-        }),
-        ...createPhaseDataAfterRetirement({
-          ageAtRetirement: 57,
-          income: 0,
-          retirementAllowance: 0,
-          expense: 200,
-          expenseAfterRetirement: 200,
-          annuity: 160, // 年金
-          assetAtStart: 0,
-          annualInterest: 3,
-        })
-      ]
-    }
-  ]
-}
 
 export const templateLabel = (label: string): PhasesTemplate => {
   return {label: ` --- ${label} --- `, createPhaseData: () => undefined}
@@ -568,7 +459,7 @@ export const phasesTemplates = (pData: boolean): PhasesTemplate[] => {
   if (pData) {
     res.push(
       templateLabel('月30万円で生活するFIRE（3%運用）・子供あり'),
-      ...somethingElse(),
+      ...financialPDatas(),
     )
   }
   return res
