@@ -23,7 +23,6 @@ export interface ChartData {
 
 export function createChartData(pattern: FirePattern, valueKey: string) {
   const startAge = Number(pattern.phases[0]?.ageAtStart)
-  console.log('pattern is ', pattern)
   return pattern.compoundInterestResult?.rowByYear
     .map((r: CompoundInterestByYear) => {
       const row: ChartData = {name: r.year + startAge}

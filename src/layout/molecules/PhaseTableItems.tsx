@@ -5,7 +5,7 @@ import {theme} from "../materialui/theme";
 import {PhaseClass, PhaseData} from "../../features/fire/Phase";
 import {FirePattern, selectFirePatterns, selectPatternNumbers, updatePhases} from "../../features/fire/fireSlice";
 import {useDispatch, useSelector} from "react-redux";
-import {PhasesTemplate, phasesTemplates} from "../../features/fire/fireInitialData";
+import {createDataFromURL, PhasesTemplate, phasesTemplates} from "../../features/fire/fireInitialData";
 import {numberFromHalfWidthToFullWidth} from "../../features/utils/Utils";
 import {useLocation} from "react-router";
 import classNames from 'classnames'
@@ -115,9 +115,41 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
     setTemplateIndex(phasesTemplates(true).length - (3 - firePattern.patternNumber))
   }
 
+  // 個人データを表示するモード
   const isPDataMode = (): boolean => {
     const getParams = new URLSearchParams(location.search);
     return Boolean(getParams.get(`pData`))
+  }
+
+  // Getパラメータにデータを含む場合
+  const isTDataMode = (): boolean => {
+    const getParams = new URLSearchParams(location.search);
+    return Boolean(Array.from(getParams.keys()).find(k => (/^p\d/).test(k)))
+  }
+
+  const updateFromTData = () => {
+    const getParams = new URLSearchParams(location.search);
+    const patternNumber = firePattern.patternNumber
+    // [1, 2, 3].forEach(patternNumber => {
+      // Array.from(getParams.keys()).filter(k => (new RegExp(`^p${patternNumber}`)).test(k))
+      const nowAge = getParams.get(`p${patternNumber}nowAge`)
+      const workingYears = getParams.get(`p${patternNumber}workingYears`)
+      const retirementAllowance = getParams.get(`p${patternNumber}retirementAllowance`)
+      const income = getParams.get(`p${patternNumber}income`)
+    console.log('updateFromTData', nowAge, workingYears, retirementAllowance, income)
+      if (nowAge || workingYears || retirementAllowance || income) {
+        const newData = createDataFromURL({
+          nowAge: Number(nowAge || ''),
+          workingYears : Number(workingYears || ''),
+          retirementAllowance : Number(retirementAllowance || ''),
+          income : Number(income || ''),
+        })
+        dispatch(updatePhases({
+          patternNumber: firePattern.patternNumber,
+          phases: newData,
+        }))
+      }
+    // })
   }
 
   const updateTemplateOptions = () => {
@@ -133,9 +165,15 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
   // 以下のuseEffectは上から順に動く
   useEffect(() => {
     updateTemplateOptions()
+    if (isTDataMode()) {
+      updateFromTData()
+    }
   }, [location])
 
   useEffect(() => {
+    if (isTDataMode())
+      return
+
     if (isPDataMode()) {
       updateTemplateIndexForPData()
     } else {

@@ -357,7 +357,6 @@ const expense30MynPerYear = (): PhasesTemplate[] => {
   }]
 }
 
-
 const expense20MynPerYearWithChildren = (): PhasesTemplate[] => {
   return [{
     label: 'サラリーマン・年収600万・子供あり',
@@ -429,6 +428,24 @@ const expense30MynPerYearWithChildren = (): PhasesTemplate[] => {
   }]
 }
 
+export const createDataFromURL = ({nowAge, workingYears, retirementAllowance, income}
+: {
+  nowAge?: number,
+  workingYears?: number,
+  retirementAllowance?: number,
+  income?: number,
+}): PhaseData[] => {
+  return createPhaseDataForWorker({
+    ageAtStart: nowAge || 32,
+    ageAtRetirement: workingYears || 60,
+    income: income || 470,
+    retirementAllowance: retirementAllowance || 2000,
+    expense: income ? income - 100 : 370,
+    annuity: 200, // 年金
+    assetAtStart: 0,
+    annualInterest: 3,
+  })
+}
 
 export const templateLabel = (label: string): PhasesTemplate => {
   return {label: ` --- ${label} --- `, createPhaseData: () => undefined}

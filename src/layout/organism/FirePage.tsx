@@ -51,7 +51,7 @@ export function FirePage() {
       </JustifyCenterBox>
       <GoogleAdsSmall />
       <Grid>
-        {selectedFirePatterns.map((pattern: FirePattern, i: number) => (
+        {selectedFirePatterns.map((pattern: FirePattern) => (
           <FirePatternPaper firePattern={pattern} />
         ))}
       </Grid>
