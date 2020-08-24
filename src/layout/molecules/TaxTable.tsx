@@ -95,7 +95,7 @@ export function TaxTable({taxSet}: PhasesTableProps) {
                     />
                     ))}
                 </TaxSubHeaderRowSet>
-                <TaxSubHeaderRowSet title={'社会保険料'} amount={sumAmount(taxSet.socialInsurance)}
+                <TaxSubHeaderRowSet title={'社会保険料'} amount={sumAmount(taxSet.socialInsurance.filter(s => s.name !== '報酬月額'))}
                                     expanded={expandedSocialInsurance} handleExpandClick={setExpandedSocialInsurance}
                 >
                   {taxSet.socialInsurance.map((socialInsurance) => (

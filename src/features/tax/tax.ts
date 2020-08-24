@@ -150,10 +150,9 @@ const healthInsurance = (taxSet: TaxSet): number => {
   return manYen(socialInsurance(taxSet.baseOfTaxation/12)[9] * 12)
 }
 
-// 国民健康保険料（世田谷区令和２年度）
+// 国民谷区令和２年度）
 // https://www.city.setagaya.lg.jp/mokuji/kurashi/003/002/003/d00032129.html
 const socialInsuranceForFree = (taxSet: TaxSet): number => {
-  console.log('国保a', taxSet.baseOfTaxation, taxSet)
   const baseOfIncome = Math.max(taxSet.baseOfTaxation - 33, 0)
   const base = Math.min(baseOfIncome * 0.0714 + taxSet.personalInfo.numberOfFamily * 3.99, 63) // 基礎（医療）分
   const support = Math.min(baseOfIncome * 0.0229 + taxSet.personalInfo.numberOfFamily * 1.29, 19) // 支援金分
@@ -193,6 +192,21 @@ const soleProprietorIncome = (): InnerIncome => {
       amount: 0,
       editable: true,
     }],
+    calculatedDeductions: []
+  }
+}
+
+// 雑所得
+const otherIncome = (): InnerIncome => {
+  return {
+    name: '雑所得',
+    amount: 0,
+    deductions: [
+      {
+        name: '経費',
+        amount: 0,
+        editable: true,
+      }],
     calculatedDeductions: []
   }
 }
@@ -256,14 +270,24 @@ export const commonCalculatedDeductions = (): InnerAutoCalculatedItem[] => {
       checked: false,
       tooltip: '年間の合計所得金額が48万円以下（給与収入が103万以下）。老人控除対象配偶者条件を含まない'
     },
-    ...commonInnerSocialInsurances(),
+    ...commonInnerSocialInsurancesForDeductions(),
   ]
+}
+export const commonInnerSocialInsurancesForDeductions = (): InnerAutoCalculatedItem[] => {
+  const res = commonInnerSocialInsurances()
+  res.splice(0, 1)
+  return res
 }
 export const commonInnerSocialInsurances = (): InnerAutoCalculatedItem[] => {
   const existsSalary = (taxSet: TaxSet): boolean => {
     return Boolean(taxSet.incomes.find(i => i.name === salaryIncome().name && Number(i.amount || 0) > 0))
   }
   return [
+    { name: '報酬月額',
+      calcAmount: (taxSet: TaxSet): number => {
+        return taxSet.incomes.find(i => i.name === '給与所得')?.amount || 0
+      },
+    },
     { name: '健康保険料',
       calcAmount: (taxSet: TaxSet): number => {
         const premium = taxSet.deductions.find(s => s.name === '健康保険料') as SocialInsurance
@@ -359,6 +383,7 @@ export const defaultIncomeAndDeductionSet = (): InnerTaxSet => {
     incomes: [
       salaryIncome(),
       soleProprietorIncome(),
+      otherIncome(),
     ],
     deductions: commonDeductions(),
     calculatedDeductions: commonCalculatedDeductions(),
@@ -388,6 +413,7 @@ export function taxSetConvert(taxSet: TaxSet): TaxSet {
       income.amount - sumAmount(income.deductions),
       0)
     ).reduce((a, b) => a + b)
+  // 報酬月額
 
   // 所得控除
   calcAutoAmount(innerSet.calculatedDeductions, taxSet.deductions)
