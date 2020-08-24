@@ -143,11 +143,13 @@ const socialInsurance = (standardSalaryByMonth: number): any => {
     && standardSalaryByMonth*10000 < d[3])
 }
 
+const standardSalary = (taxSet: TaxSet): number =>
+  (taxSet.incomes.find(i => i.name === '給与所得')?.amount  || 0) / 12
 const annuity = (taxSet: TaxSet): number => {
-  return manYen(socialInsurance(taxSet.baseOfTaxation/12)[taxSet.personalInfo.age >= 40 ? 7 : 5] * 12)
+  return manYen(socialInsurance(standardSalary(taxSet))[taxSet.personalInfo.age >= 40 ? 7 : 5] * 12)
 }
 const healthInsurance = (taxSet: TaxSet): number => {
-  return manYen(socialInsurance(taxSet.baseOfTaxation/12)[9] * 12)
+  return manYen(socialInsurance(standardSalary(taxSet))[9] * 12)
 }
 
 // 国民谷区令和２年度）
@@ -284,9 +286,7 @@ export const commonInnerSocialInsurances = (): InnerAutoCalculatedItem[] => {
   }
   return [
     { name: '報酬月額',
-      calcAmount: (taxSet: TaxSet): number => {
-        return taxSet.incomes.find(i => i.name === '給与所得')?.amount || 0
-      },
+      calcAmount: (taxSet: TaxSet): number => standardSalary(taxSet),
     },
     { name: '健康保険料',
       calcAmount: (taxSet: TaxSet): number => {
@@ -431,18 +431,18 @@ export function taxSetConvert(taxSet: TaxSet): TaxSet {
 
   // 可処分所得
   taxSet.disposableIncome = sumAmount(taxSet.incomes)
-    - sumAmount(taxSet.socialInsurance)
+    - sumAmount(taxSet.socialInsurance.filter(s => s.name !== '報酬月額'))
     - sumAmount(taxSet.personalTax)
     - sumAmount(taxSet.deductions
       .filter(d => commonDeductionForReserve().find(r => r.name === d.name)))
-  console.log('disposableIncome', taxSet.setNumber,
-    sumAmount(taxSet.incomes),
-    sumAmount(taxSet.socialInsurance),
-    sumAmount(taxSet.personalTax),
-    sumAmount(taxSet.deductions
-      .filter(d => commonDeductionForReserve().map(r => r.name === d.name))),
-    taxSet.disposableIncome
-    )
+  // console.log('disposableIncome', taxSet.setNumber,
+  //   sumAmount(taxSet.incomes),
+  //   sumAmount(taxSet.socialInsurance),
+  //   sumAmount(taxSet.personalTax),
+  //   sumAmount(taxSet.deductions
+  //     .filter(d => commonDeductionForReserve().map(r => r.name === d.name))),
+  //   taxSet.disposableIncome
+  //   )
 
   // 退職金
   retirementTaxConvert(taxSet)
