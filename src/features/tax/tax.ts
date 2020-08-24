@@ -322,7 +322,7 @@ export const commonInnerSocialInsurances = (): InnerAutoCalculatedItem[] => {
           return premium.amount as number
         }
         premium.editable = false
-        return !existsSalary(taxSet) ? socialInsuranceForFree(taxSet) : 0
+        return socialInsuranceForFree(taxSet)
       },
       availableCheckBox: true,
       checked: false,
