@@ -15,7 +15,8 @@ const personalUpdates = (): PersonalPattern[] => [
         set.retirementTax.workingYears = 20
         set.deductions[6].checked = false //健康保険
         set.deductions[7].checked = false // 厚生年金
-        set.deductions[8].checked = true // 国民健康保険料
+        set.deductions[8].checked = true // 国民健康保険
+        set.deductions[9].checked = true // 国民年金
       }
       updateBase(taxSet[0])
       updateBase(taxSet[1])

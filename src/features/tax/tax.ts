@@ -293,12 +293,25 @@ export const commonInnerSocialInsurances = (): InnerAutoCalculatedItem[] => {
     { name: '国民健康保険料',
       calcAmount: (taxSet: TaxSet): number => {
         const premium = taxSet.deductions.find(s => s.name === '国民健康保険料') as SocialInsurance
-        if (premium.availableCheckBox && !premium.checked) return 0
+        if (premium.availableCheckBox && !premium.checked) {
+          premium.editable = true
+          return premium.amount as number
+        }
+        premium.editable = false
         return !existsSalary(taxSet) ? socialInsuranceForFree(taxSet) : 0
       },
       availableCheckBox: true,
       checked: false,
       tooltip: '厳密には所得割は「40歳～64歳の方の賦課基準額」をベースにする。今回は本人の所得ベースで計算',
+    },
+    { name: '国民年金保険料',
+      calcAmount: (taxSet: TaxSet): number => {
+        const premium = taxSet.deductions.find(s => s.name === '国民年金保険料') as SocialInsurance
+        if (premium.availableCheckBox && !premium.checked) return 0
+        return 19.8460
+      },
+      availableCheckBox: true,
+      checked: false,
     },
   ]
 }
