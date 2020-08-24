@@ -437,7 +437,7 @@ export const createDataFromURL = ({nowAge, workingYears, retirementAllowance, in
 }): PhaseData[] => {
   return createPhaseDataForWorker({
     ageAtStart: nowAge || 32,
-    ageAtRetirement: workingYears || 60,
+    ageAtRetirement: (nowAge && workingYears) ? (nowAge + workingYears) : 60,
     income: income || 470,
     retirementAllowance: retirementAllowance || 2000,
     expense: income ? income - 100 : 370,
