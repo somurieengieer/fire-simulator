@@ -124,7 +124,7 @@ const update = (taxSet: TaxSet): TaxSet => {
 }
 
 const initialState: TaxState = {
-  taxSet: [createTaxSet(0), createTaxSet(1), createTaxSet(2)]
+  taxSet: [createTaxSet(1), createTaxSet(2), createTaxSet(3)]
 }
 
 export const taxSlice = createSlice({
@@ -136,7 +136,7 @@ export const taxSlice = createSlice({
   })(),
   reducers: {
     updateTaxSet: (state, action: PayloadAction<TaxSet>) => {
-      state.taxSet[action.payload.setNumber] = update(action.payload)
+      state.taxSet[action.payload.setNumber - 1] = update(action.payload)
     },
   },
 });

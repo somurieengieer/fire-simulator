@@ -6,7 +6,7 @@ import {theme} from "../materialui/theme";
 import {TaxHeaderRowSet, TaxSubHeaderRowSet, TaxTableRowSet} from "./TaxTableItems";
 import {Deduction, Income, TaxSet, updateTaxSet} from "../../features/tax/taxSlice"
 import {useDispatch} from "react-redux";
-import {sumAmount} from "../../features/utils/Utils";
+import {numberFromHalfWidthToFullWidth, sumAmount} from "../../features/utils/Utils";
 
 const useStyles = makeStyles({
   root: {
@@ -43,7 +43,7 @@ export function TaxTable({taxSet}: PhasesTableProps) {
             <Table className={tableClasses.table} aria-label="simple table"
                    size={'small'}
             >
-              <TaxHeaderRowSet title={'パターン１〜などの列タイトル'} />
+              <TaxHeaderRowSet title={`パターン${numberFromHalfWidthToFullWidth(taxSet.setNumber)}`} />
               <TableBody>
                 <TaxSubHeaderRowSet title={'個人設定'}>
                   <TaxTableRowSet rowLabel={'年齢'}
