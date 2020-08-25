@@ -146,10 +146,10 @@ const socialInsurance = (standardSalaryByMonth: number): any => {
 const standardSalary = (taxSet: TaxSet): number =>
   (taxSet.incomes.find(i => i.name === '給与所得')?.amount  || 0) / 12
 const annuity = (taxSet: TaxSet): number => {
-  return manYen(socialInsurance(standardSalary(taxSet))[taxSet.personalInfo.age >= 40 ? 7 : 5] * 12)
+  return manYen(socialInsurance(standardSalary(taxSet))[9] * 12)
 }
 const healthInsurance = (taxSet: TaxSet): number => {
-  return manYen(socialInsurance(standardSalary(taxSet))[9] * 12)
+  return manYen(socialInsurance(standardSalary(taxSet))[taxSet.personalInfo.age >= 40 ? 7 : 5] * 12)
 }
 
 // 国民谷区令和２年度）
