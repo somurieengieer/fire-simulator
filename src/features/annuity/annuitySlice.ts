@@ -29,26 +29,46 @@ const createInitialData = (setNumber: number) => {
   return {
     setNumber: setNumber,
     base: {
-      paymentYear: 10,
-      annuity: 0,
-    },
+      paymentYear: 10, annuity: 0,},
     employees: [
-      {
-        paymentYear: 10,
-        averageSalary: 600,
-      },
-      {
-        paymentYear: 20,
-        averageSalary: 300,
-      },
-      {
-        paymentYear: 0,
-        averageSalary: 0,
-      },
-      {
-        paymentYear: 0,
-        averageSalary: 0,
-      },
+      {paymentYear: 10, averageSalary: 600,},
+      {paymentYear: 20, averageSalary: 300,},
+      {paymentYear: 0, averageSalary: 0,},
+      {paymentYear: 0, averageSalary: 0,},
+    ],
+    employeesAnnuity: 0,
+    totalPaidAnnuity: 0,
+    totalPaidAnnuityIncludingCompany: 0,
+    totalEstimatedAnnuity: 0,
+  }
+}
+const createInitialData2 = (setNumber: number) => {
+  return {
+    setNumber: setNumber,
+    base: {
+      paymentYear: 0, annuity: 0,},
+    employees: [
+      {paymentYear: 40, averageSalary: 600,},
+      {paymentYear: 0, averageSalary: 0,},
+      {paymentYear: 0, averageSalary: 0,},
+      {paymentYear: 0, averageSalary: 0,},
+    ],
+    employeesAnnuity: 0,
+    totalPaidAnnuity: 0,
+    totalPaidAnnuityIncludingCompany: 0,
+    totalEstimatedAnnuity: 0,
+  }
+}
+const createInitialData3 = (setNumber: number) => {
+  return {
+    setNumber: setNumber,
+    base: {
+      paymentYear: 40, annuity: 0,},
+    employees: [
+      {paymentYear: 0, averageSalary: 0,},
+      {paymentYear: 0, averageSalary: 0,},
+      {paymentYear: 0, averageSalary: 0,},
+      {paymentYear: 0, averageSalary: 0,},
     ],
     employeesAnnuity: 0,
     totalPaidAnnuity: 0,
@@ -60,8 +80,8 @@ const createInitialData = (setNumber: number) => {
 const initialState: AnnuityState = {
   annuitySet: [
     createInitialData(1),
-    createInitialData(2),
-    createInitialData(3),
+    createInitialData2(2),
+    createInitialData3(3),
   ]
 }
 
