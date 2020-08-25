@@ -88,7 +88,7 @@ export function TaxSubHeaderRowSet({title, amount, expanded, handleExpandClick, 
   )
 }
 
-export function TaxTableRowSet({rowLabel, value, onChange, availableCheckBox, checkValue, onChangeCheck, disabled}
+export function TaxTableRowSet({rowLabel, value, onChange, availableCheckBox, checkValue, onChangeCheck, disabled, noFixed}
 : {rowLabel: string,
   value: string | number,
   onChange?(newValue: string): void,
@@ -96,10 +96,11 @@ export function TaxTableRowSet({rowLabel, value, onChange, availableCheckBox, ch
   checkValue?: boolean,
   onChangeCheck?(newValue: boolean): void,
   disabled?: boolean,
+  noFixed?: boolean,
 }) {
 
   const showValue = (): string | number =>
-    disabled ? Number(value)?.toFixed(0) : value
+    disabled ? noFixed ?  Number(value) : Number(value)?.toFixed(0) : value
 
   const classes = usePatternTableStyles();
   return (

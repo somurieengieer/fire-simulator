@@ -77,6 +77,30 @@ export function AnnuityTable({annuity}: AnnuityTableProps) {
                                   disabled={true}
                   />
                 </TaxSubHeaderRowSet>
+                <TaxSubHeaderRowSet title={'累計'}>
+                  <TaxTableRowSet rowLabel={'納付金額合計'}
+                                  value={annuity.totalPaidAnnuity}
+                                  disabled={true}
+                  />
+                  <TaxTableRowSet rowLabel={'受取年金合計(65〜84歳受取)'}
+                                  value={annuity.totalEstimatedAnnuity}
+                                  disabled={true}
+                  />
+                  <TaxTableRowSet rowLabel={'リターン率'}
+                                  value={(annuity.totalEstimatedAnnuity / annuity.totalPaidAnnuity).toFixed(2)}
+                                  disabled={true}
+                                  noFixed={true}
+                  />
+                  <TaxTableRowSet rowLabel={'納付金額合計(法人支払い分を含む)'}
+                                  value={(annuity.totalPaidAnnuityIncludingCompany)}
+                                  disabled={true}
+                  />
+                  <TaxTableRowSet rowLabel={'リターン率(法人支払い分を含む)'}
+                                  value={(annuity.totalEstimatedAnnuity / annuity.totalPaidAnnuityIncludingCompany).toFixed(2)}
+                                  disabled={true}
+                                  noFixed={true}
+                  />
+                </TaxSubHeaderRowSet>
               </TableBody>
             </Table>
           </TableContainer>

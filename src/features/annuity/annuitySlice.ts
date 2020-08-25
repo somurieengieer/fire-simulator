@@ -15,6 +15,9 @@ export interface AnnuitySet {
   base: AnnuityForBase,
   employees: AnnuityForEmployee[],
   employeesAnnuity: number,
+  totalPaidAnnuity: number,
+  totalPaidAnnuityIncludingCompany: number, // 法人支払い分も含む
+  totalEstimatedAnnuity: number,
 }
 
 export interface AnnuityState {
@@ -38,6 +41,9 @@ const initialState: AnnuityState = {
       }
     ],
     employeesAnnuity: 0,
+    totalPaidAnnuity: 0,
+    totalPaidAnnuityIncludingCompany: 0,
+    totalEstimatedAnnuity: 0,
   }
 }
 
@@ -50,6 +56,14 @@ const calcAnnuity = (annuitySet: AnnuitySet): AnnuitySet => {
   })
   annuitySet.base.annuity = calcedAnnuity.annuityForBase || 0
   annuitySet.employeesAnnuity = calcedAnnuity.annuityForEmployee || 0
+
+  annuitySet.totalPaidAnnuity = annuitySet.base.paymentYear * 19.845
+    + sum(annuitySet.employees.map(e => Math.min(e.averageSalary * 0.0915, 68.076) * e.paymentYear))
+  annuitySet.totalPaidAnnuityIncludingCompany = annuitySet.base.paymentYear * 19.845
+    + sum(annuitySet.employees.map(e => Math.min(e.averageSalary * 0.0915, 68.076) * 2 * e.paymentYear))
+  // 65〜84歳年金受取
+  annuitySet.totalEstimatedAnnuity = (annuitySet.base.annuity + annuitySet.employeesAnnuity) * 20
+
   return annuitySet
 }
 
