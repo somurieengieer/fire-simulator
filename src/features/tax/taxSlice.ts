@@ -29,7 +29,7 @@ export interface TaxSet {
   personalTax: PersonalTax[], // 税金
   disposableIncome: number, // 可処分所得
   retirementTax: RetirementTax,
-  retirementAllowance: ShowableItem, // 年金(40年労働概算)
+  retirementAnnuity: ShowableItem, // 年金(40年労働概算)
 }
 
 // 所得
@@ -116,8 +116,8 @@ const createTaxSet = (setNumber: number): TaxSet => {
       taxAmount: 0, // 退職金税額（所得税・住民税）
       disposableIncome: 0, // 退職金可処分所得
     },
-    retirementAllowance:  {
-      name: innerSet.retirementAllowance.name,
+    retirementAnnuity:  {
+      name: innerSet.retirementAnnuity.name,
       amount: 0, // 後でアップデートかけるので簡略化するために0とする
       editable: false,
     }
