@@ -4,7 +4,7 @@
 import {Deduction, Income, ShowableItem, SocialInsurance, TaxSet} from "./taxSlice";
 import {manYen, sumAmount} from "../utils/Utils";
 import {retirementTaxConvert} from "./retirementTax";
-import {calcAnnuity, updateForRetirementAllowance} from "../retirementAllowance/retirementAllowance";
+import {calcAnnuity, updateForAnnuity} from "../annuity/annuity";
 
 export interface InnerTaxSet {
   incomes: InnerIncome[],
@@ -348,7 +348,7 @@ export const commonRetirementAnnuity = (): InnerAutoCalculatedItem => {
   return {
     name: '年金(40年労働時)',
     calcAmount: (taxSet: TaxSet): number => {
-      const allowance = updateForRetirementAllowance({
+      const allowance = updateForAnnuity({
         paymentYearForBase: existsSalary(taxSet) ? 0 : 40,
         paymentYearForEmployee: existsSalary(taxSet) ? 40 : 0,
         averageStandardSalary: standardSalary(taxSet) * 12,
