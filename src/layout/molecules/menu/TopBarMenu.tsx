@@ -47,6 +47,8 @@ export default function TopBarMenu({children}: Props) {
         return 'FIREシミュレーター'
       case '/tax':
         return '税金計算'
+      case '/annuity':
+        return '年金計算'
     }
     return 'トップ'
   }

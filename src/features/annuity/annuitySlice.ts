@@ -61,12 +61,8 @@ export const annuitySlice = createSlice({
   })(),
   reducers: {
     updateAnnuity: (state, action: PayloadAction<AnnuitySet>) => {
-      console.log('updateAnnuity', calcAnnuity(action.payload))
       const calcedAnnuiy = calcAnnuity(action.payload)
       state.annuitySet = calcedAnnuiy
-      // state.base = calcedAnnuiy.base
-      // state.employees = calcedAnnuiy.employees
-      // state.employeesAnnuity = calcedAnnuiy.employeesAnnuity
     },
   },
 });
