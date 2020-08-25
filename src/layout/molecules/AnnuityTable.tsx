@@ -6,6 +6,7 @@ import {theme} from "../materialui/theme";
 import {TaxSubHeaderRowSet, TaxTableRowSet} from "./TaxTableItems";
 import {useDispatch} from "react-redux";
 import {AnnuityForEmployee, AnnuitySet, updateAnnuity} from "../../features/annuity/annuitySlice";
+import {numberFromHalfWidthToFullWidth} from "../../features/utils/Utils";
 
 const useStyles = makeStyles({
   root: {
@@ -29,8 +30,6 @@ export function AnnuityTable({annuity}: AnnuityTableProps) {
     dispatch(updateAnnuity(annuity))
   }
 
-  console.log('annuity', annuity)
-
   return (
     <>
       <Grid  className={classes.root}>
@@ -41,7 +40,7 @@ export function AnnuityTable({annuity}: AnnuityTableProps) {
               <TableHead>
                 <TableRow className={tableClasses.tableHeadRow}>
                   <TableCell colSpan={2}>
-                    年金計算
+                    年金計算 パターン{numberFromHalfWidthToFullWidth(annuity.setNumber)}
                   </TableCell>
                 </TableRow>
               </TableHead>

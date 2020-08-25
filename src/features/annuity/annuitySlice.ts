@@ -12,6 +12,7 @@ export interface AnnuityForEmployee {
   averageSalary: number,
 }
 export interface AnnuitySet {
+  setNumber: number,
   base: AnnuityForBase,
   employees: AnnuityForEmployee[],
   employeesAnnuity: number,
@@ -21,11 +22,12 @@ export interface AnnuitySet {
 }
 
 export interface AnnuityState {
-  annuitySet: AnnuitySet,
+  annuitySet: AnnuitySet[],
 }
 
-const initialState: AnnuityState = {
-  annuitySet: {
+const createInitialData = (setNumber: number) => {
+  return {
+    setNumber: setNumber,
     base: {
       paymentYear: 10,
       annuity: 0,
@@ -55,6 +57,14 @@ const initialState: AnnuityState = {
   }
 }
 
+const initialState: AnnuityState = {
+  annuitySet: [
+    createInitialData(1),
+    createInitialData(2),
+    createInitialData(3),
+  ]
+}
+
 const calcAnnuity = (annuitySet: AnnuitySet): AnnuitySet => {
   const paymentYearForEmployee = sum(annuitySet.employees.map(e => e.paymentYear))
   const calcedAnnuity = updateForAnnuity({
@@ -78,13 +88,13 @@ const calcAnnuity = (annuitySet: AnnuitySet): AnnuitySet => {
 export const annuitySlice = createSlice({
   name: 'annuity',
   initialState: (function() {
-    calcAnnuity(initialState.annuitySet)
+    initialState.annuitySet.forEach(s => calcAnnuity(s))
     return initialState
   })(),
   reducers: {
     updateAnnuity: (state, action: PayloadAction<AnnuitySet>) => {
       const calcedAnnuiy = calcAnnuity(action.payload)
-      state.annuitySet = calcedAnnuiy
+      state.annuitySet[action.payload.setNumber - 1] = calcedAnnuiy
     },
   },
 });
@@ -94,6 +104,6 @@ export const { updateAnnuity} = annuitySlice.actions;
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.annuity.value)`
-export const selectAnnuity = (state: RootState) => JSON.parse(JSON.stringify(state.annuity.annuitySet)) as AnnuitySet
+export const selectAnnuity = (state: RootState) => JSON.parse(JSON.stringify(state.annuity.annuitySet)) as AnnuitySet[]
 
 export default annuitySlice.reducer;
