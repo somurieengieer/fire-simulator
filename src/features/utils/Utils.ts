@@ -1,7 +1,7 @@
 // 汎用的処理
 
-export function numberFixed(value: number): string {
-  return value.toFixed(1)
+export function numberFixed(value: number): number {
+  return Number(value.toFixed(0))
 }
 
 // 数字を半角から全角に変換

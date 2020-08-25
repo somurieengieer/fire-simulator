@@ -29,6 +29,7 @@ export interface TaxSet {
   personalTax: PersonalTax[], // 税金
   disposableIncome: number, // 可処分所得
   retirementTax: RetirementTax,
+  retirementAllowance: ShowableItem, // 年金(40年労働概算)
 }
 
 // 所得
@@ -114,7 +115,14 @@ const createTaxSet = (setNumber: number): TaxSet => {
       incomeAutoCalculated: 0, // 退職金（iDeco、小規模企業共済）
       taxAmount: 0, // 退職金税額（所得税・住民税）
       disposableIncome: 0, // 退職金可処分所得
+    },
+    retirementAllowance:  {
+      name: innerSet.retirementAllowance.name,
+      amount: 0, // 後でアップデートかけるので簡略化するために0とする
+      editable: false,
     }
+
+    , // 後でアップデートかけるので簡略化するために0とする
   })
 }
 

@@ -30,6 +30,7 @@ export function TaxTable({taxSet}: PhasesTableProps) {
   const [expandedPersonalTax, setExpandedPersonalTax] = useState<boolean>(false)
   const [expandedDisposableIncome, setExpandedDisposableIncome] = useState<boolean>(false)
   const [expandedRetirementTax, setExpandedRetirementTax] = useState<boolean>(false)
+  const [expandedRetirementAllowance, setExpandedRetirementAllowance] = useState<boolean>(false)
 
   const updateTaxSetValue = (updateValue: () => void) => {
     updateValue()
@@ -149,6 +150,13 @@ export function TaxTable({taxSet}: PhasesTableProps) {
                   />
                   <TaxTableRowSet rowLabel={'退職金可処分所得'}
                                   value={taxSet.retirementTax.disposableIncome}
+                                  disabled={true}
+                  />
+                </TaxSubHeaderRowSet>
+                <TaxSubHeaderRowSet title={'年金(40年労働概算)'} amount={Number(taxSet.retirementAllowance.amount)}
+                                    expanded={expandedRetirementAllowance} handleExpandClick={setExpandedRetirementAllowance}>
+                  <TaxTableRowSet rowLabel={'年金(40年労働概算)'}
+                                  value={taxSet.retirementAllowance.amount || ''}
                                   disabled={true}
                   />
                 </TaxSubHeaderRowSet>

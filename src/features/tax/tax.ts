@@ -4,6 +4,7 @@
 import {Deduction, Income, ShowableItem, SocialInsurance, TaxSet} from "./taxSlice";
 import {manYen, sumAmount} from "../utils/Utils";
 import {retirementTaxConvert} from "./retirementTax";
+import {calcAnnuity, updateForRetirementAllowance} from "../retirementAllowance/retirementAllowance";
 
 export interface InnerTaxSet {
   incomes: InnerIncome[],
@@ -11,6 +12,7 @@ export interface InnerTaxSet {
   calculatedDeductions: InnerAutoCalculatedItem [], //控除（自動導出）
   socialInsurance: InnerAutoCalculatedItem[], // 社会保険料
   personalTax: InnerAutoCalculatedItem[], // 税金
+  retirementAllowance: InnerAutoCalculatedItem, // 退職金試算
 }
 
 // 所得
@@ -281,10 +283,10 @@ export const commonInnerSocialInsurancesForDeductions = (): InnerAutoCalculatedI
   res.splice(0, 1)
   return res
 }
+const existsSalary = (taxSet: TaxSet): boolean => {
+  return Boolean(taxSet.incomes.find(i => i.name === salaryIncome().name && Number(i.amount || 0) > 0))
+}
 export const commonInnerSocialInsurances = (): InnerAutoCalculatedItem[] => {
-  const existsSalary = (taxSet: TaxSet): boolean => {
-    return Boolean(taxSet.incomes.find(i => i.name === salaryIncome().name && Number(i.amount || 0) > 0))
-  }
   return [
     { name: '報酬月額',
       calcAmount: (taxSet: TaxSet): number => standardSalary(taxSet),
@@ -341,6 +343,21 @@ export const commonInnerSocialInsurances = (): InnerAutoCalculatedItem[] => {
   ]
 }
 
+// 年金
+export const commonRetirementAllowance = (): InnerAutoCalculatedItem => {
+  return {
+    name: '年金(40年労働時)',
+    calcAmount: (taxSet: TaxSet): number => {
+      const allowance = updateForRetirementAllowance({
+        paymentYearForBase: existsSalary(taxSet) ? 0 : 40,
+        paymentYearForEmployee: existsSalary(taxSet) ? 40 : 0,
+        averageStandardSalary: standardSalary(taxSet) * 12,
+      })
+      return calcAnnuity(allowance)
+    }
+  }
+}
+
 // 所得税
 export const incomeTax = (taxableIncomeAmount: number): number => {
   const data = [
@@ -393,6 +410,7 @@ export const defaultIncomeAndDeductionSet = (): InnerTaxSet => {
     calculatedDeductions: commonCalculatedDeductions(),
     socialInsurance: commonInnerSocialInsurances(), // 社会保険料
     personalTax: commonInnerPersonalTax(), // 税金
+    retirementAllowance: commonRetirementAllowance(), // 退職金試算
   }
 }
 
@@ -450,6 +468,9 @@ export function taxSetConvert(taxSet: TaxSet): TaxSet {
 
   // 退職金
   retirementTaxConvert(taxSet)
+
+  // 年金
+  calcAutoAmount([innerSet.retirementAllowance], [taxSet.retirementAllowance])
 
   return taxSet
 }
