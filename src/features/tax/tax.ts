@@ -375,6 +375,9 @@ export const commonInnerPersonalTax = (): InnerAutoCalculatedItem[] => {
     { name: '住民税',
       calcAmount: (taxSet: TaxSet): number => residentTax(taxSet, taxSet.taxableIncomeAmount)
     },
+    { name: '復興特別所得税',
+      calcAmount: (taxSet: TaxSet): number => Number(taxSet.personalTax.find(p => p.name === '所得税')?.amount || 0) * 0.021
+    },
   ]
 }
 

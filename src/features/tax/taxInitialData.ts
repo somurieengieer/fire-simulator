@@ -54,7 +54,7 @@ const personalUpdates = (): PersonalPattern[] => [
     }
   },
   {
-    // 法人実家パターン
+    // 法人実家パターン（雑所得考慮パターン）
     num: 3,
     taxSet: (taxSet: TaxSet[]): TaxSet[] => {
       const updateBase = (set: TaxSet) => {
@@ -69,6 +69,24 @@ const personalUpdates = (): PersonalPattern[] => [
 
       taxSet[2].incomes[0].amount = 550
       taxSet[2].incomes[2].amount = 150 // 2000万貸付、300万利子。5%運用として100万利益のため給与から200万減らす
+
+      return taxSet
+    }
+  },
+  {
+    // 法人実家パターン
+    num: 4,
+    taxSet: (taxSet: TaxSet[]): TaxSet[] => {
+      const updateBase = (set: TaxSet) => {
+        commonBase(set)
+        set.incomes[0].amount = 360 // 900万売上、100万旅費、100万経費、社会保険料等60万？
+        set.deductions[1].amount = 0
+        set.deductions[2].amount = 27.6
+      }
+      [0, 1, 2].forEach(i => updateBase(taxSet[i]))
+
+      taxSet[0].incomes[0].amount = 720
+      taxSet[0].deductions[5].checked = true // 配偶者控除
 
       return taxSet
     }
