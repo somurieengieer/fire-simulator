@@ -38,7 +38,15 @@ const initialState: AnnuityState = {
       {
         paymentYear: 20,
         averageSalary: 300,
-      }
+      },
+      {
+        paymentYear: 0,
+        averageSalary: 0,
+      },
+      {
+        paymentYear: 0,
+        averageSalary: 0,
+      },
     ],
     employeesAnnuity: 0,
     totalPaidAnnuity: 0,
