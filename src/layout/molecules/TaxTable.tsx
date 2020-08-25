@@ -43,7 +43,8 @@ export function TaxTable({taxSet}: PhasesTableProps) {
             <Table className={tableClasses.table} aria-label="simple table"
                    size={'small'}
             >
-              <TaxHeaderRowSet title={`パターン${numberFromHalfWidthToFullWidth(taxSet.setNumber)}`} />
+              <TaxHeaderRowSet taxSet={taxSet}
+                               title={`パターン${numberFromHalfWidthToFullWidth(taxSet.setNumber)}`} />
               <TableBody>
                 <TaxSubHeaderRowSet title={'個人設定'}>
                   <TaxTableRowSet rowLabel={'年齢'}

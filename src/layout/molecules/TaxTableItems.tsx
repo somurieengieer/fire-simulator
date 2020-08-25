@@ -3,15 +3,32 @@ import {IconButton, TableCell, TableHead, TableRow} from "@material-ui/core";
 import {usePatternTableStyles} from "./PhaseTableItems";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import clsx from 'clsx';
+import {numberFromHalfWidthToFullWidth} from "../../features/utils/Utils";
+import {selectSetNumbers, selectTaxSet, TaxSet, updateTaxSet} from "../../features/tax/taxSlice";
+import {useDispatch, useSelector} from "react-redux";
 
-export function TaxHeaderRowSet({title}
-: {title: string}) {
+export function TaxHeaderRowSet({taxSet, title}
+: {taxSet: TaxSet, title: string}) {
+
   const classes = usePatternTableStyles();
+  const dispatch = useDispatch();
+  const selectedSetNumbers = useSelector(selectSetNumbers)
+  const selectedTaxSet: TaxSet[] = useSelector(selectTaxSet)
+
+  const copyPatternByPatternNumber = (patternNumber: number) => {
+    const newTaxSet: TaxSet = JSON.parse(JSON.stringify(selectedTaxSet[patternNumber - 1]))
+    newTaxSet.setNumber = taxSet.setNumber
+    dispatch(updateTaxSet(newTaxSet))
+  }
+
   return (
     <TableHead>
       <TableRow className={classes.tableHeadRow}>
         <TableCell colSpan={2}>
-          {title}
+          {title}&nbsp;
+          {selectedSetNumbers?.filter((i: number) => i !== taxSet.setNumber).map((i: number) => (
+            <button onClick={() => copyPatternByPatternNumber(i)}>パターン{numberFromHalfWidthToFullWidth(i)}からコピー</button>
+          ))}
         </TableCell>
       </TableRow>
     </TableHead>

@@ -147,5 +147,6 @@ export const { updateTaxSet } = taxSlice.actions;
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.tax.value)`
 export const selectTaxSet = (state: RootState) => JSON.parse(JSON.stringify(state.tax.taxSet)) as TaxSet[]
+export const selectSetNumbers = (state: RootState) => state.tax.taxSet.map((taxSet: TaxSet) => taxSet.setNumber);
 
 export default taxSlice.reducer;
