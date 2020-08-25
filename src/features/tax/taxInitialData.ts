@@ -44,8 +44,31 @@ const personalUpdates = (): PersonalPattern[] => [
       }
       [0, 1, 2].forEach(i => updateBase(taxSet[i]))
 
-      taxSet[1].incomes[0].amount = 290
-      taxSet[1].incomes[2].amount = 200 // 1000万貸付、200万利子。5%運用として50万利益のため給与から150万減らす
+      taxSet[1].incomes[0].amount = 340
+      taxSet[1].incomes[2].amount = 150 // 1000万貸付、150万利子。5%運用として50万利益のため給与から100万減らす
+
+      taxSet[2].incomes[0].amount = 240
+      taxSet[2].incomes[2].amount = 300 // 2000万貸付、300万利子。5%運用として100万利益のため給与から200万減らす
+
+      return taxSet
+    }
+  },
+  {
+    // 法人実家パターン
+    num: 3,
+    taxSet: (taxSet: TaxSet[]): TaxSet[] => {
+      const updateBase = (set: TaxSet) => {
+        commonBase(set)
+        set.incomes[0].amount = 650 // 900万売上、100万旅費、100万経費、社会保険料等60万？
+        set.deductions[1].amount = 0
+        set.deductions[2].amount = 27.6
+      }
+      [0, 1, 2].forEach(i => updateBase(taxSet[i]))
+
+      taxSet[1].incomes[0].amount = 300
+
+      taxSet[2].incomes[0].amount = 550
+      taxSet[2].incomes[2].amount = 150 // 2000万貸付、300万利子。5%運用として100万利益のため給与から200万減らす
 
       return taxSet
     }
