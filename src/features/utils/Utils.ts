@@ -27,3 +27,6 @@ export function sumAmount(ary: {amount?: string | number}[]) {
   return Math.round(ary.map(ded => Number(ded.amount || 0))
     .reduce((a, b) => a + b) || 0)
 }
+export function sum(ary: number[]) {
+  return Math.round(ary.reduce((a, b) => a + b) || 0)
+}
