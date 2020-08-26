@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-import {CompoundInterestPage} from "./layout/organism/CompoundInterestPage";
 import {Route, Switch} from "react-router";
 import {myUrl} from "./layout/Urls";
 import {FirePage} from "./layout/organism/FirePage";
@@ -13,7 +12,8 @@ function App() {
     <MenuFrame>
       <Switch>
         <Route exact path={myUrl.top}>
-          <CompoundInterestPage />
+          {/*<CompoundInterestPage />*/}
+          <FirePage />
         </Route>
         <Route exact path={myUrl.fire}>
           <FirePage />

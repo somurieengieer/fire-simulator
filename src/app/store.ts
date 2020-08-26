@@ -1,5 +1,4 @@
 import {Action, configureStore, ThunkAction} from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
 import fireReducer from '../features/fire/fireSlice';
 import taxReducer from '../features/tax/taxSlice';
 import annuityReducer from '../features/annuity/annuitySlice';
@@ -16,7 +15,6 @@ export const history = createBrowserHistory();
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
     fire: fireReducer,
     tax: taxReducer,
     annuity: annuityReducer,
