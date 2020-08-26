@@ -19,7 +19,7 @@ export function updateForAnnuity(annuity: Annuity): Annuity {
   // 老齢厚生年金
   // 平均標準報酬額 × 5.481/1000 × 平成15年4月以降の加入月数
   annuity.annuityForEmployee =
-    numberFixed(annuity.averageStandardSalary * 5.481 / 1000 * annuity.paymentYearForEmployee)
+    numberFixed(Math.min(annuity.averageStandardSalary, 1194) * 5.481 / 1000 * annuity.paymentYearForEmployee)
 
   return annuity
 }
