@@ -6,6 +6,7 @@ import {AnnuitySet, selectAnnuity} from "../../features/annuity/annuitySlice";
 import {AnnuityTable} from "../molecules/AnnuityTable";
 import {GoogleAdsSmall} from "../../ads/GoogleAdsSmall";
 import {Section, SectionContent, SectionList, SectionTitle} from "../atoms/blog/Section";
+import {Box, Grid} from "@material-ui/core";
 
 const useStyles = makeStyles({
   table: {
@@ -41,9 +42,15 @@ export function AnnuityPage() {
         </Section>
       </JustifyCenterBox>
       <JustifyCenterBox>
-        {selectedAnnuity && selectedAnnuity.map((annuitySet: AnnuitySet) => (
-          <AnnuityTable annuity={annuitySet} />
-          ))}
+        <Box style={{maxWidth: 1200}}>
+          <Grid container>
+            {selectedAnnuity && selectedAnnuity.map((annuitySet: AnnuitySet) => (
+              <Grid item xs={12} md={4}>
+                <AnnuityTable annuity={annuitySet} />
+              </Grid>
+              ))}
+          </Grid>
+        </Box>
       </JustifyCenterBox>
     </>
   );
