@@ -8,6 +8,8 @@ import {personalUpdate} from "../../features/tax/taxInitialData";
 import {useLocation} from "react-router";
 import {myUrl} from "../Urls";
 import {Link} from "react-router-dom";
+import {Section, SectionContent, SectionTitle} from "../atoms/blog/Section";
+import {GoogleAdsSmall} from "../../ads/GoogleAdsSmall";
 
 const useStyles = makeStyles({
   table: {
@@ -59,17 +61,24 @@ export function TaxPage() {
 
   return (
     <>
+      <GoogleAdsSmall />
+      <JustifyCenterBox width={'800'}>
+        <Section maxWidth={800}>
+          <SectionTitle>使い方</SectionTitle>
+          <SectionContent>
+            ※PC推奨<br />
+            FIREシミュレーターの補助サービスです。値入力後に「FIREシミュレーターを開く」ボタンを押してください。<br/>
+            おおまかに手取りと退職金を計算できます。おおまかなので全て万円表記です。<br />
+            ターゲットが普通のサラリーマン、個人事業主なので、よく使いそうな項目のみに絞っています。<br />
+            細かい計算は端折っているので詳細な計算用途では使用しないよう注意してください。<br/>
+          </SectionContent>
+        </Section>
+      </JustifyCenterBox>
       <Link to={() => showFireSimulator()}
             target="_blank"
-            // onClick={(event) => {event.preventDefault(); window.open(showFireSimulator());}
         >
         FIREシミュレーターを開く
       </Link>
-      {/*<button*/}
-      {/*  onClick={showFireSimulator}*/}
-      {/*>*/}
-      {/*  FIREシミュレーターを開く*/}
-      {/*</button>*/}
       <JustifyCenterBox>
         {selectedTaxSet && selectedTaxSet.map((taxSet: TaxSet) => (
           <TaxPaper taxSet={taxSet} />
