@@ -1,5 +1,5 @@
 import React from 'react';
-import {IconButton, TableCell, TableHead, TableRow} from "@material-ui/core";
+import {Box, IconButton, TableCell, TableHead, TableRow} from "@material-ui/core";
 import {usePatternTableStyles} from "./PhaseTableItems";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import clsx from 'clsx';
@@ -25,10 +25,20 @@ export function TaxHeaderRowSet({taxSet, title}
     <TableHead>
       <TableRow className={classes.tableHeadRow}>
         <TableCell colSpan={2}>
-          {title}&nbsp;
-          {selectedSetNumbers?.filter((i: number) => i !== taxSet.setNumber).map((i: number) => (
-            <button onClick={() => copyPatternByPatternNumber(i)}>パターン{numberFromHalfWidthToFullWidth(i)}からコピー</button>
-          ))}
+          <Box
+            display="flex"
+            flexWrap="wrap"
+            alignContent="flex-start"
+          >
+            <Box>
+              {title}&nbsp;
+            </Box>
+            <Box>
+              {selectedSetNumbers?.filter((i: number) => i !== taxSet.setNumber).map((i: number) => (
+                <button onClick={() => copyPatternByPatternNumber(i)}>パターン{numberFromHalfWidthToFullWidth(i)}からコピー</button>
+              ))}
+            </Box>
+          </Box>
         </TableCell>
       </TableRow>
     </TableHead>
