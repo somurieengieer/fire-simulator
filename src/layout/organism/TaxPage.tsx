@@ -10,6 +10,7 @@ import {myUrl} from "../Urls";
 import {Link} from "react-router-dom";
 import {Section, SectionContent, SectionTitle} from "../atoms/blog/Section";
 import {GoogleAdsSmall} from "../../ads/GoogleAdsSmall";
+import {Grid} from "@material-ui/core";
 
 const useStyles = makeStyles({
   table: {
@@ -79,11 +80,11 @@ export function TaxPage() {
         >
         FIREシミュレーターを開く
       </Link>
-      <JustifyCenterBox>
+      <Grid>
         {selectedTaxSet && selectedTaxSet.map((taxSet: TaxSet) => (
           <TaxPaper taxSet={taxSet} />
         ))}
-      </JustifyCenterBox>
+      </Grid>
     </>
   );
 }

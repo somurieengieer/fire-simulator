@@ -74,6 +74,7 @@ export function TaxSubHeaderRowSet({title, amount, expanded, handleExpandClick, 
             <TableCell className={classes.tableCell} align="center">
               <input value={amount}
                      type={'number'}
+                     className={classes.input}
                      disabled={true} />
             </TableCell>
           </>
@@ -117,6 +118,7 @@ export function TaxTableRowSet({rowLabel, value, onChange, availableCheckBox, ch
         )}
         <input value={showValue()}
                type={'number'}
+               className={classes.input}
                onChange={v => onChange && onChange(v.target.value)}
                disabled={disabled}
         />

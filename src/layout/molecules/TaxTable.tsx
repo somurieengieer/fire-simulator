@@ -12,6 +12,9 @@ const useStyles = makeStyles({
   root: {
     margin: 5,
     padding: theme.spacing(0.5),
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: 0,
+    }
   }
 });
 

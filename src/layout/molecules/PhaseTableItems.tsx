@@ -15,9 +15,8 @@ export const usePatternTableStyles = makeStyles({
     // width: 650,
   },
   tableCellLabel: {
-    // minWidth: 120,
     width: 200,
-    minWidth: 200,
+    minWidth: 140,
     backgroundColor: theme.palette.secondary.light,
   },
   tableCell: {
@@ -34,6 +33,9 @@ export const usePatternTableStyles = makeStyles({
     '&:hover': {
       cursor: 'pointer',
     },
+  },
+  input: {
+    width: 120,
   },
   inputError: {
     backgroundColor: theme.palette.error.main,
@@ -248,8 +250,7 @@ export function TableRowSet({rowLabel, phaseClasses, valueCallback, onChange, di
                  type={isTypeString ? 'string' : 'number'}
                  onChange={v => onChange(v.target.value, i)}
                  disabled={disabled(phase)}
-                 style={{width: '140px'}}
-                 className={classNames({[classes.inputError]: validate && validate(phase)})}
+                 className={classNames(classes.input, {[classes.inputError]: validate && validate(phase)})}
           />
         </TableCell>
       ))}

@@ -7,7 +7,8 @@ import {TaxPieChart} from "../atoms/TaxPieChart";
 
 const useStyles = makeStyles({
   paper: {
-    width: 500,
+    width: '100%',
+    marginBottom: 20,
   },
 });
 

@@ -5,6 +5,8 @@ import {Box, Paper} from "@material-ui/core";
 import {JustifyCenterBox} from "./JustifyCenterBox";
 import {TaxSet} from "../../features/tax/taxSlice";
 import {sum, sumAmount} from "../../features/utils/Utils";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import {theme} from "../materialui/theme";
 
 const useStyles = makeStyles({
   paper: {
@@ -30,16 +32,19 @@ export function TaxPieChart({taxSet}: Props) {
 
   const classes = useStyles();
 
+  const isPhoneMode = useMediaQuery(theme.breakpoints.down('xs'));
+  const chartSize = isPhoneMode ? 320 : 400
+
   if (!taxSet) return (<></>)
 
   return (
     <Box m={1}>
       <Paper className={classes.paper}>
         <JustifyCenterBox>
-          <PieChart width={400} height={400}>
+          <PieChart width={chartSize} height={chartSize}>
             <Pie dataKey="value" isAnimationActive={false} data={data01}
                  startAngle={90} endAngle={-270}
-                 cx={200} cy={200} outerRadius={120} fill="#8884d8"
+                 cx={chartSize / 2} cy={chartSize / 2} outerRadius={chartSize / 3.2} fill="#8884d8"
                  label={props => `${props.name} ${percentage(props.value)}%`} />
             <Tooltip formatter={value => `${value}万`}/>
           </PieChart>
