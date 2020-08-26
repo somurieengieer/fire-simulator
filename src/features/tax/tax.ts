@@ -224,6 +224,10 @@ export const commonDeductions = (): InnerEditableDeduction[] => {
       amount: 0,
       editable: true
     },
+    { name: 'その他の控除',
+      amount: 0,
+      editable: true
+    },
     ...commonDeductionForReserve(),
     { name: '扶養控除',
       amount: 0,
