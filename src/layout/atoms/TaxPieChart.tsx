@@ -13,13 +13,6 @@ const useStyles = makeStyles({
   }
 });
 
-export interface ChartData {
-  name: number,
-  [key: string]: number | string;
-}
-
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
-
 interface Props {
   taxSet: TaxSet,
 }
