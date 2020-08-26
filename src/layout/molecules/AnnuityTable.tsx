@@ -45,13 +45,13 @@ export function AnnuityTable({annuity}: AnnuityTableProps) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                <TaxSubHeaderRowSet title={'老齢基礎年金'}>
+                <TaxSubHeaderRowSet title={'国民年金'}>
                   <TaxTableRowSet rowLabel={'納付年数'}
                                   value={annuity.base.paymentYear}
                                   onChange={v => updateTaxSetValue(() => annuity.base.paymentYear = Number(v))}
                   />
                 </TaxSubHeaderRowSet>
-                <TaxSubHeaderRowSet title={'老齢厚生年金'}>
+                <TaxSubHeaderRowSet title={'厚生年金'}>
                   {annuity.employees.map((employee: AnnuityForEmployee, index: number) => (
                     <>
                       <TaxTableRowSet rowLabel={`納付年数${index+1}`}
