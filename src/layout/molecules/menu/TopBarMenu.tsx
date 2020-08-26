@@ -8,6 +8,7 @@ import {useLocation} from "react-router";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import {theme} from "../../materialui/theme";
 import classNames from 'classnames'
+import MenuButtons from "./MenuButtons";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -65,6 +66,7 @@ export default function TopBarMenu({children}: Props) {
             {isPhoneMode && (<br />)}
             - {title()} -
           </Typography>
+          <MenuButtons />
         </Toolbar>
       </AppBar>
       <main className={classes.content}>
