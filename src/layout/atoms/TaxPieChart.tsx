@@ -44,7 +44,7 @@ export function TaxPieChart({taxSet}: Props) {
           <PieChart width={chartSize} height={chartSize}>
             <Pie dataKey="value" isAnimationActive={false} data={data01}
                  startAngle={90} endAngle={-270}
-                 cx={chartSize / 2} cy={chartSize / 2} outerRadius={chartSize / 3.2} fill="#8884d8"
+                 cx={chartSize / 2} cy={chartSize / 2} outerRadius={chartSize / 4} fill="#8884d8"
                  label={props => `${props.name} ${percentage(props.value)}%`} />
             <Tooltip formatter={value => `${value}万`}/>
           </PieChart>
