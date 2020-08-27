@@ -35,6 +35,7 @@ export interface TaxSet {
 
 // 所得
 export interface Income {
+  subHeaderTitle: string,
   name: string,
   amount: number,
   deductions: Deduction[], //控除
@@ -64,6 +65,7 @@ const createTaxSet = (setNumber: number): TaxSet => {
     setNumber: setNumber,
     incomes:
       innerSet.incomes.map(income => {return {
+        subHeaderTitle: income.subHeaderTitle,
         name: income.name,
         amount: income.amount,
         deductions: [

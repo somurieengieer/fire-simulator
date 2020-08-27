@@ -62,23 +62,21 @@ export function TaxTable({taxSet}: PhasesTableProps) {
                                   onChange={v => updateTaxSetValue(() => taxSet.personalInfo.numberOfFamilyOver40 = Number(v))}
                   />
                 </TaxSubHeaderRowSet>
-                <TaxSubHeaderRowSet title={'所得'} amount={sumAmount(taxSet.incomes)}>
-                  {taxSet.incomes.map((income: Income, incomeIndex: number) => (
-                    <>
-                      <TaxTableRowSet rowLabel={income.name}
-                                      value={income.amount || ''}
-                                      onChange={v => updateTaxSetValue(() => income.amount = Number(v))}
+                {taxSet.incomes.map((income: Income, incomeIndex: number) => (
+                  <TaxSubHeaderRowSet title={income.subHeaderTitle} amount={Math.max(income.amount - sumAmount(income.deductions), 0)}>
+                    <TaxTableRowSet rowLabel={income.name}
+                                    value={income.amount || ''}
+                                    onChange={v => updateTaxSetValue(() => income.amount = Number(v))}
+                    />
+                    {income.deductions && income.deductions.map((deduction, i) => (
+                      <TaxTableRowSet rowLabel={deduction.name}
+                                      value={deduction.amount || ''}
+                                      onChange={v => updateTaxSetValue(() => deduction.amount = Number(v))}
+                                      disabled={!deduction.editable}
                       />
-                      {income.deductions && income.deductions.map((deduction, i) => (
-                        <TaxTableRowSet rowLabel={deduction.name}
-                                        value={deduction.amount || ''}
-                                        onChange={v => updateTaxSetValue(() => deduction.amount = Number(v))}
-                                        disabled={!deduction.editable}
-                        />
-                      ))}
-                    </>
                     ))}
-                </TaxSubHeaderRowSet>
+                  </TaxSubHeaderRowSet>
+                  ))}
                 <TaxSubHeaderRowSet title={'課税標準'} amount={taxSet.baseOfTaxation} />
                 <TaxSubHeaderRowSet title={'控除'} amount={sumAmount(taxSet.deductions)}>
                   {taxSet.deductions.map((deduction: Deduction, deductionIndex: number) => (

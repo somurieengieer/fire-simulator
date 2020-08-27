@@ -18,6 +18,7 @@ export interface InnerTaxSet {
 
 // 所得
 export interface InnerIncome {
+  subHeaderTitle: string,
   name: string,
   amount: number,
   deductions: InnerEditableDeduction[], //控除
@@ -171,7 +172,8 @@ const socialInsuranceForFree = (taxSet: TaxSet): number => {
 // 給与所得
 const salaryIncome = (): InnerIncome => {
   return {
-    name: '給与所得',
+    subHeaderTitle: '給与所得',
+    name: '給与等の収入金額',
     amount: 0,
     deductions: [],
     calculatedDeductions: [{
@@ -186,7 +188,8 @@ const salaryIncome = (): InnerIncome => {
 // 事業所得
 const soleProprietorIncome = (): InnerIncome => {
   return {
-    name: '事業所得',
+    subHeaderTitle: '事業所得',
+    name: '総収入金額',
     amount: 0,
     deductions: [{
       name: '青色申告特別控除',
@@ -194,7 +197,7 @@ const soleProprietorIncome = (): InnerIncome => {
       editable: false,
     },
     {
-      name: '経費',
+      name: '必要経費',
       amount: 0,
       editable: true,
     }],
@@ -205,11 +208,12 @@ const soleProprietorIncome = (): InnerIncome => {
 // 雑所得
 const otherIncome = (): InnerIncome => {
   return {
-    name: '雑所得',
+    subHeaderTitle: '雑所得',
+    name: '総収入金額',
     amount: 0,
     deductions: [
       {
-        name: '経費',
+        name: '必要経費・控除',
         amount: 0,
         editable: true,
       }],
