@@ -28,8 +28,6 @@ export function TaxTable({taxSet}: PhasesTableProps) {
   const tableClasses = usePatternTableStyles();
   const dispatch = useDispatch();
   const [expandedSocialInsurance, setExpandedSocialInsurance] = useState<boolean>(false)
-  const [expandedBaseOfTaxation, setExpandedBaseOfTaxation] = useState<boolean>(false)
-  const [expandedTaxableIncomeAmount, setExpandedTaxableIncomeAmount] = useState<boolean>(false)
   const [expandedPersonalTax, setExpandedPersonalTax] = useState<boolean>(false)
   const [expandedDisposableIncome, setExpandedDisposableIncome] = useState<boolean>(false)
   const [expandedRetirementTax, setExpandedRetirementTax] = useState<boolean>(false)
@@ -81,13 +79,7 @@ export function TaxTable({taxSet}: PhasesTableProps) {
                     </>
                     ))}
                 </TaxSubHeaderRowSet>
-                <TaxSubHeaderRowSet title={'課税標準'} amount={taxSet.baseOfTaxation}
-                                    expanded={expandedBaseOfTaxation} handleExpandClick={setExpandedBaseOfTaxation}>
-                  <TaxTableRowSet rowLabel={'課税標準'}
-                                  value={taxSet.baseOfTaxation || ''}
-                                  disabled={true}
-                  />
-                </TaxSubHeaderRowSet>
+                <TaxSubHeaderRowSet title={'課税標準'} amount={taxSet.baseOfTaxation} />
                 <TaxSubHeaderRowSet title={'控除'} amount={sumAmount(taxSet.deductions)}>
                   {taxSet.deductions.map((deduction: Deduction, deductionIndex: number) => (
                     <TaxTableRowSet rowLabel={deduction.name}
@@ -110,13 +102,7 @@ export function TaxTable({taxSet}: PhasesTableProps) {
                     />
                   ))}
                 </TaxSubHeaderRowSet>
-                <TaxSubHeaderRowSet title={'課税所得金額'} amount={taxSet.taxableIncomeAmount}
-                                    expanded={expandedTaxableIncomeAmount} handleExpandClick={setExpandedTaxableIncomeAmount}>
-                  <TaxTableRowSet rowLabel={'課税所得金額'}
-                                  value={taxSet.taxableIncomeAmount || ''}
-                                  disabled={true}
-                  />
-                </TaxSubHeaderRowSet>
+                <TaxSubHeaderRowSet title={'課税所得金額'} amount={taxSet.taxableIncomeAmount} />
                 <TaxSubHeaderRowSet title={'税金'} amount={sumAmount(taxSet.personalTax)}
                                     expanded={expandedPersonalTax} handleExpandClick={setExpandedPersonalTax}>
                   {taxSet.personalTax.map((personalTax) => (
@@ -156,13 +142,8 @@ export function TaxTable({taxSet}: PhasesTableProps) {
                                   disabled={true}
                   />
                 </TaxSubHeaderRowSet>
-                <TaxSubHeaderRowSet title={'年金(40年労働概算)'} amount={Number(taxSet.retirementAnnuity.amount)}
-                                    expanded={expandedRetirementAnnuity} handleExpandClick={setExpandedRetirementAnnuity}>
-                  <TaxTableRowSet rowLabel={'年金(40年労働概算)'}
-                                  value={taxSet.retirementAnnuity.amount || ''}
-                                  disabled={true}
-                  />
-                </TaxSubHeaderRowSet>
+                <TaxSubHeaderRowSet title={'年金(40年労働概算)'} amount={Number(taxSet.retirementAnnuity.amount)}/>
+                <TaxSubHeaderRowSet title={'ふるさと納税目安'} amount={Number(taxSet.furusato.amount)}/>
               </TableBody>
             </Table>
           </TableContainer>

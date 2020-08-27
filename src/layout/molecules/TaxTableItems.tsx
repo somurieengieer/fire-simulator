@@ -50,7 +50,7 @@ interface TaxSubHeaderRowSetProps {
   amount?: number,
   expanded?: boolean,
   handleExpandClick?: (v: boolean) => void,
-  children: React.ReactNode; // TaxTableRowSetが並ぶ感じ（ヘッダー行以降の行）
+  children?: React.ReactNode; // TaxTableRowSetが並ぶ感じ（ヘッダー行以降の行）
 }
 export function TaxSubHeaderRowSet({title, amount, expanded, handleExpandClick, children}: TaxSubHeaderRowSetProps) {
   const classes = usePatternTableStyles();

@@ -13,6 +13,7 @@ export interface InnerTaxSet {
   socialInsurance: InnerAutoCalculatedItem[], // 社会保険料
   personalTax: InnerAutoCalculatedItem[], // 税金
   retirementAnnuity: InnerAutoCalculatedItem, // 年金試算
+  furusato: InnerAutoCalculatedItem, // ふるさと納税
 }
 
 // 所得
@@ -362,6 +363,17 @@ export const commonRetirementAnnuity = (): InnerAutoCalculatedItem => {
   }
 }
 
+export const commonFurusato = (): InnerAutoCalculatedItem => {
+  return {
+    name: 'ふるさと納税目安',
+    calcAmount: (taxSet: TaxSet): number => {
+      const forIncomeTax = Number(taxSet.personalTax.find(p => p.name === '所得税')?.amount) * 0.4
+      const forResidentTax = Number(taxSet.personalTax.find(p => p.name === '住民税')?.amount) * 0.3
+      return Math.min(forIncomeTax, forResidentTax)
+    }
+  }
+}
+
 // 所得税
 export const incomeTax = (taxableIncomeAmount: number): number => {
   const data = [
@@ -415,14 +427,15 @@ export const defaultIncomeAndDeductionSet = (): InnerTaxSet => {
     socialInsurance: commonInnerSocialInsurances(), // 社会保険料
     personalTax: commonInnerPersonalTax(), // 税金
     retirementAnnuity: commonRetirementAnnuity(), // 年金試算
+    furusato: commonFurusato(), // 年金試算
   }
 }
 
 export function taxSetConvert(taxSet: TaxSet): TaxSet {
-  const calcAutoAmount = (calculables: InnerAutoCalculable<any>[], showableItems: ShowableItem[]) => {
+  const calcAutoAmount = (calculables: InnerAutoCalculable<any>[], showableItems: ShowableItem[], roundDigits?: number) => {
     calculables.forEach(calculable => {
       const ded = showableItems.find(item => item.name === calculable.name) as ShowableItem
-      ded.amount = Math.round(calculable.calcAmount(taxSet))
+      ded.amount = Number(calculable.calcAmount(taxSet).toFixed(roundDigits || 0))
     })
   }
   const innerSet = defaultIncomeAndDeductionSet()
@@ -475,6 +488,9 @@ export function taxSetConvert(taxSet: TaxSet): TaxSet {
 
   // 年金
   calcAutoAmount([innerSet.retirementAnnuity], [taxSet.retirementAnnuity])
+
+  // ふるさと納税
+  calcAutoAmount([innerSet.furusato], [taxSet.furusato], 1)
 
   return taxSet
 }
