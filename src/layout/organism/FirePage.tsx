@@ -49,7 +49,6 @@ export function FirePage() {
           </SectionContent>
         </Section>
       </JustifyCenterBox>
-      <GoogleAdsSmall />
       <Grid>
         {selectedFirePatterns.map((pattern: FirePattern) => (
           <FirePatternPaper firePattern={pattern} />
