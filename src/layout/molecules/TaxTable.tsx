@@ -56,10 +56,12 @@ export function TaxTable({taxSet}: PhasesTableProps) {
                   <TaxTableRowSet rowLabel={'家族人数（40歳未満）'}
                                   value={taxSet.personalInfo.numberOfFamily}
                                   onChange={v => updateTaxSetValue(() => taxSet.personalInfo.numberOfFamily = Number(v))}
+                                  toolTip={'国民健康保険料算出に使用します'}
                   />
                   <TaxTableRowSet rowLabel={'家族人数（40歳以上）'}
                                   value={taxSet.personalInfo.numberOfFamilyOver40}
                                   onChange={v => updateTaxSetValue(() => taxSet.personalInfo.numberOfFamilyOver40 = Number(v))}
+                                  toolTip={'国民健康保険料算出に使用します'}
                   />
                 </TaxSubHeaderRowSet>
                 {taxSet.incomes.map((income: Income, incomeIndex: number) => (

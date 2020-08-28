@@ -148,7 +148,7 @@ const socialInsurance = (standardSalaryByMonth: number): any => {
 }
 
 const standardSalary = (taxSet: TaxSet): number =>
-  (taxSet.incomes.find(i => i.name === '給与所得')?.amount  || 0) / 12
+  (taxSet.incomes.find(i => i.subHeaderTitle === '給与所得')?.amount  || 0) / 12
 
 const annuity = (taxSet: TaxSet): number => {
   return manYen(socialInsurance(standardSalary(taxSet))[9] * 12)
@@ -282,7 +282,7 @@ export const commonCalculatedDeductions = (): InnerAutoCalculatedItem[] => {
       },
       availableCheckBox: true,
       checked: false,
-      tooltip: '年間の合計所得金額が48万円以下（給与収入が103万以下）。老人控除対象配偶者条件を含まない'
+      tooltip: '配偶者の年間の合計所得金額が48万円以下（給与収入が103万以下）、老人控除対象配偶者条件を含まない前提'
     },
     ...commonInnerSocialInsurancesForDeductions(),
   ]
