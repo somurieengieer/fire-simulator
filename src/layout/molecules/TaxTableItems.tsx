@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box, IconButton, TableCell, TableHead, TableRow, Tooltip} from "@material-ui/core";
+import {Box, IconButton, TableCell, TableHead, TableRow} from "@material-ui/core";
 import {usePatternTableStyles} from "./PhaseTableItems";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import clsx from 'clsx';
@@ -7,6 +7,7 @@ import {numberFromHalfWidthToFullWidth} from "../../features/utils/Utils";
 import {selectSetNumbers, selectTaxSet, TaxSet, updateTaxSet} from "../../features/tax/taxSlice";
 import {useDispatch, useSelector} from "react-redux";
 import HelpIcon from '@material-ui/icons/Help';
+import ReactTooltip from 'react-tooltip';
 
 export function TaxHeaderRowSet({taxSet, title}
 : {taxSet: TaxSet, title: string}) {
@@ -121,10 +122,13 @@ export function TaxTableRowSet({rowLabel, value, onChange, availableCheckBox, ch
       <TableCell className={classes.tableCellLabel} component="th" scope="row">
         {rowLabel}
         {toolTip && (
-          <Tooltip title={toolTip}>
-              <HelpIcon fontSize={"small"} />
-          </Tooltip>
-        )}
+          <>
+            <span data-tip="hello world">
+              <HelpIcon data-tip={toolTip} fontSize={"small"} />
+            </span>
+            <ReactTooltip />
+          </>
+          )}
       </TableCell>
       <TableCell className={classes.tableCell} align="center">
         {availableCheckBox && (
