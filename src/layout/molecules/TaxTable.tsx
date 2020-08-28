@@ -87,6 +87,7 @@ export function TaxTable({taxSet}: PhasesTableProps) {
                                     checkValue={deduction.checked}
                                     onChangeCheck={v => updateTaxSetValue(() => deduction.checked = v)}
                                     disabled={!deduction.editable}
+                                    toolTip={deduction.toolTip}
                     />
                     ))}
                 </TaxSubHeaderRowSet>

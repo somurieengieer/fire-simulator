@@ -31,10 +31,7 @@ export class PhaseClass implements PhaseData {
     return this.ageAtEnd - this.ageAtStart
   }
 
-  assetAtEndWithoutOperation(): number { // 運用しない場合の終了時資産
-    return this.assetAtStart + (this.income - this.expense) * this.operationPeriod()
-  }
-  profitByYear(): number {
+  investmentByYear(): number {
     return this.income - this.expense
   }
 
@@ -45,7 +42,7 @@ export class PhaseClass implements PhaseData {
   compoundInterestResult(): CompoundInterestResult {
     return calcCompoundInterestResult({
       presentAmount: this.assetAtStart,
-      reserveAmount: this.profitByYear(),
+      reserveAmount: this.investmentByYear(),
       reserveYears: this.operationPeriod(),
       annualInterest: this.annualInterest,
     })

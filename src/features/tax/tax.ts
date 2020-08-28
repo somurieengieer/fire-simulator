@@ -338,7 +338,7 @@ export const commonInnerSocialInsurances = (): InnerAutoCalculatedItem[] => {
       },
       availableCheckBox: true,
       checked: false,
-      tooltip: '厳密には所得割は「40歳～64歳の方の賦課基準額」をベースにする。今回は本人の所得ベースで計算',
+      tooltip: '家族全員の賦課基準額（前年の所得額）－基礎控除33万円）が0円の前提で算出',
     },
     { name: '国民年金保険料',
       calcAmount: (taxSet: TaxSet): number => {

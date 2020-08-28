@@ -1,11 +1,12 @@
 import React from 'react';
-import {Box, IconButton, TableCell, TableHead, TableRow} from "@material-ui/core";
+import {Box, IconButton, TableCell, TableHead, TableRow, Tooltip} from "@material-ui/core";
 import {usePatternTableStyles} from "./PhaseTableItems";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import clsx from 'clsx';
 import {numberFromHalfWidthToFullWidth} from "../../features/utils/Utils";
 import {selectSetNumbers, selectTaxSet, TaxSet, updateTaxSet} from "../../features/tax/taxSlice";
 import {useDispatch, useSelector} from "react-redux";
+import HelpIcon from '@material-ui/icons/Help';
 
 export function TaxHeaderRowSet({taxSet, title}
 : {taxSet: TaxSet, title: string}) {
@@ -99,7 +100,7 @@ export function TaxSubHeaderRowSet({title, amount, expanded, handleExpandClick, 
   )
 }
 
-export function TaxTableRowSet({rowLabel, value, onChange, availableCheckBox, checkValue, onChangeCheck, disabled, noFixed}
+export function TaxTableRowSet({rowLabel, value, onChange, availableCheckBox, checkValue, onChangeCheck, disabled, noFixed, toolTip}
 : {rowLabel: string,
   value: string | number,
   onChange?(newValue: string): void,
@@ -108,6 +109,7 @@ export function TaxTableRowSet({rowLabel, value, onChange, availableCheckBox, ch
   onChangeCheck?(newValue: boolean): void,
   disabled?: boolean,
   noFixed?: boolean,
+  toolTip?: string,
 }) {
 
   const showValue = (): string | number =>
@@ -118,6 +120,11 @@ export function TaxTableRowSet({rowLabel, value, onChange, availableCheckBox, ch
     <TableRow>
       <TableCell className={classes.tableCellLabel} component="th" scope="row">
         {rowLabel}
+        {toolTip && (
+          <Tooltip title={toolTip}>
+              <HelpIcon fontSize={"small"} />
+          </Tooltip>
+        )}
       </TableCell>
       <TableCell className={classes.tableCell} align="center">
         {availableCheckBox && (

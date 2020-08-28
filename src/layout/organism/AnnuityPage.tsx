@@ -42,7 +42,7 @@ export function AnnuityPage() {
         </Section>
       </JustifyCenterBox>
       <JustifyCenterBox>
-        <Box style={{maxWidth: 1200}}>
+        <Box>
           <Grid container>
             {selectedAnnuity && selectedAnnuity.map((annuitySet: AnnuitySet) => (
               <Grid item xs={12} md={4}>

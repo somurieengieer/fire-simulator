@@ -9,6 +9,7 @@ export interface ShowableItem {
   editable: boolean,
   availableCheckBox?: boolean,
   checked?: boolean,
+  toolTip?: string,
 }
 export interface PersonalInfo {
   age: number,
@@ -94,6 +95,7 @@ const createTaxSet = (setNumber: number): TaxSet => {
         editable: false,
         availableCheckBox: d.availableCheckBox,
         checked: d.checked,
+        toolTip: d.tooltip,
       }})
     ],
     socialInsurance: [

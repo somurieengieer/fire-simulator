@@ -153,6 +153,11 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
                                valueCallback={p => p.assetAtStart}
                                onChange={(newValue, i) => update(i, 'assetAtStart', newValue)}
                                disabledCallback={(phase: PhaseClass) => !phase.assetAtStartEditable} />
+                  <TableRowSet rowLabel={'年間資産繰入額'}
+                               phaseClasses={phases}
+                               valueCallback={p => p.investmentByYear()}
+                               onChange={(newValue, i) => update(i, 'investmentByYear()', newValue)}
+                               disabledCallback={(phase: PhaseClass) => true} />
                   <TableRowSet rowLabel={'利回り(%)'}
                                phaseClasses={phases}
                                valueCallback={p => p.annualInterest}
