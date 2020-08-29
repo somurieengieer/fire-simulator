@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import {numberFromHalfWidthToFullWidth} from "../../features/utils/Utils";
 import {selectSetNumbers, selectTaxSet, TaxSet, updateTaxSet} from "../../features/tax/taxSlice";
 import {useDispatch, useSelector} from "react-redux";
-import HelpIcon from '@material-ui/icons/Help';
+import InfoIcon from '@material-ui/icons/Info';
 import ReactTooltip from 'react-tooltip';
 
 export function TaxHeaderRowSet({taxSet, title}
@@ -124,7 +124,7 @@ export function TaxTableRowSet({rowLabel, value, onChange, availableCheckBox, ch
         {toolTip && (
           <>
             <span data-tip="hello world">
-              <HelpIcon data-tip={toolTip} fontSize={"small"} />
+              <InfoIcon data-tip={toolTip} fontSize={"small"} />
             </span>
             <ReactTooltip className={classes.toolTip} />
           </>

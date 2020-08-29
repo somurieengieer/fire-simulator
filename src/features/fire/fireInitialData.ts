@@ -150,7 +150,7 @@ const templateOfNormalSalaryMan3percent = {
 const expense20MynPerYear = (): PhasesTemplate[] => {
   return [
   {
-    label:  'サラリーマン・年収500万',
+    label:  'サラリーマン・年収500万・年150万投資',
     createPhaseData: () =>
       createPhaseDataForWorker({
         ageAtRetirement: 49,
@@ -164,7 +164,7 @@ const expense20MynPerYear = (): PhasesTemplate[] => {
       })
   },
   {
-    label:  'サラリーマン・年収600万',
+    label:  'サラリーマン・年収600万・年220万投資',
     createPhaseData: () =>
       createPhaseDataForWorker({
         ageAtRetirement: 44,
@@ -225,7 +225,7 @@ const expense20MynPerYear = (): PhasesTemplate[] => {
 const expense25MynPerYear = (): PhasesTemplate[] => {
   return [
     {
-      label:  'サラリーマン・年収600万',
+      label:  'サラリーマン・年収600万・年160万投資',
       createPhaseData: () =>
         createPhaseDataForWorker({
           ageAtRetirement: 51,
@@ -239,7 +239,7 @@ const expense25MynPerYear = (): PhasesTemplate[] => {
         })
     },
     {
-      label:  'サラリーマン・年収700万',
+      label:  'サラリーマン・年収700万・年220万投資',
       createPhaseData: () =>
         createPhaseDataForWorker({
           ageAtRetirement: 47,
@@ -286,7 +286,7 @@ const expense25MynPerYear = (): PhasesTemplate[] => {
 const expense30MynPerYear = (): PhasesTemplate[] => {
   return [
   {
-    label:  'サラリーマン・年収700万',
+    label:  'サラリーマン・年収700万・年160万投資',
     createPhaseData: () =>
       createPhaseDataForWorker({
         ageAtRetirement: 52,
@@ -300,7 +300,7 @@ const expense30MynPerYear = (): PhasesTemplate[] => {
       })
   },
   {
-    label:  'サラリーマン・年収800万',
+    label:  'サラリーマン・年収800万・年230万投資',
     createPhaseData: () =>
       createPhaseDataForWorker({
         ageAtRetirement: 48,

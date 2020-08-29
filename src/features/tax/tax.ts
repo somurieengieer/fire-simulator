@@ -282,7 +282,7 @@ export const commonCalculatedDeductions = (): InnerAutoCalculatedItem[] => {
       },
       availableCheckBox: true,
       checked: false,
-      tooltip: '配偶者の年間の合計所得金額が48万円以下（給与収入が103万以下）、老人控除対象配偶者条件を含まない前提'
+      tooltip: '配偶者の年間の合計所得金額が48万円以下（給与収入が103万以下）、老人控除対象配偶者条件を含まない前提の金額を導出'
     },
     ...commonInnerSocialInsurancesForDeductions(),
   ]
