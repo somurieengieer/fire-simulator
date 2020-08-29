@@ -51,7 +51,10 @@ export const usePatternTableStyles = makeStyles({
     transform: 'rotate(180deg)',
   },
   toolTip: {
-    width: 300,
+    maxWidth: 400,
+    [theme.breakpoints.down('sm')]: {
+      maxWidth: 240,
+    }
   },
 });
 
