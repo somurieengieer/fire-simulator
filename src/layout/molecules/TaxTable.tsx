@@ -120,7 +120,7 @@ export function TaxTable({taxSet}: PhasesTableProps) {
                   />
                   <TaxTableRowSet rowLabel={'退職金（会社支払）'}
                                   value={taxSet.retirementTax.income}
-                                  onChange={v => updateTaxSetValue(() => taxSet.retirementTax.workingYears = Number(v))}
+                                  onChange={v => updateTaxSetValue(() => taxSet.retirementTax.income = Number(v))}
                   />
                   <TaxTableRowSet rowLabel={'退職金（iDeco、小規模企業共済）'}
                                   value={taxSet.retirementTax.incomeAutoCalculated}
