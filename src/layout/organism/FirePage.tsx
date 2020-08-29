@@ -8,6 +8,8 @@ import {FirePatternPaper} from "../molecules/FirePatternPaper";
 import {Section, SectionContent, SectionList, SectionTitle} from "../atoms/blog/Section";
 import {JustifyCenterBox} from "../atoms/JustifyCenterBox";
 import {GoogleAdsSmall} from "../../ads/GoogleAdsSmall";
+import {Link} from "react-router-dom";
+import {myUrl} from "../Urls";
 
 const useStyles = makeStyles({
   table: {
@@ -36,6 +38,7 @@ export function FirePage() {
             "堅実"であるため、30歳での引退のように極端な早期リタイアを目指さず、無理のない生活で40代、50代前半の引退を目指します。<br />
             また、運用が想定通りにならなかった場合に備え、利回りが上振れ下振れした際の資産状況もチャート表示されます。<br />
             収入（手取り）・支出・運用利回りを元に簡易的な計算をしているため、預金を含めた資産運用率の設定・運用における税金等を考慮した支出総額・運用利回りを設定するようお気をつけください。<br/>
+            手取りが不明な人は<Link to={() => myUrl.tax}>こちら</Link>から計算できます。<br/>
             <br/>
             メジャーなパターンはテンプレートを用意してありますので、テンプレートを選択してから値を書き換えるのがオススメです。<br/>
             テンプレートの概要は以下の通りです。

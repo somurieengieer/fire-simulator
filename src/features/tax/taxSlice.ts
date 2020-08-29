@@ -115,7 +115,7 @@ const createTaxSet = (setNumber: number): TaxSet => {
     ],
     disposableIncome: 0, // 後でアップデートかけるので簡略化するために0とする
     retirementTax: {
-      workingYears: 20, // 労働年数
+      workingYears: 40, // 労働年数
       income: 0, // 退職金（会社支払）
       incomeAutoCalculated: 0, // 退職金（iDeco、小規模企業共済）
       taxAmount: 0, // 退職金税額（所得税・住民税）
