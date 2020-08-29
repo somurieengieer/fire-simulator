@@ -24,6 +24,9 @@ function App() {
         <Route exact path={myUrl.annuity}>
           <AnnuityPage />
         </Route>
+        <Route>
+          404 Not Found
+        </Route>
       </Switch>
     </MenuFrame>
   );
