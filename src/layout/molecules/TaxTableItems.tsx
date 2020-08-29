@@ -126,7 +126,7 @@ export function TaxTableRowSet({rowLabel, value, onChange, availableCheckBox, ch
             <span data-tip="hello world">
               <HelpIcon data-tip={toolTip} fontSize={"small"} />
             </span>
-            <ReactTooltip />
+            <ReactTooltip className={classes.toolTip} />
           </>
           )}
       </TableCell>

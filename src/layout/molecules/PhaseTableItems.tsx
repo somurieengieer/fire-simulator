@@ -50,6 +50,9 @@ export const usePatternTableStyles = makeStyles({
   expandOpen: {
     transform: 'rotate(180deg)',
   },
+  toolTip: {
+    width: 300,
+  },
 });
 
 interface TablePatternHeaderSetProps {
