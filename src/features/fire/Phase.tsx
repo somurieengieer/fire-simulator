@@ -14,6 +14,7 @@ export interface PhaseData {
   // assetAtEnd(): number, // 終了時資産
 }
 
+
 export class PhaseClass implements PhaseData {
   ageAtStart!: number;
   ageAtEnd!: number;
