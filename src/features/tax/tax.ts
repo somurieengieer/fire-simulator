@@ -32,7 +32,7 @@ export interface InnerShowableItem {
   amount?: number | string,
   availableCheckBox?: boolean,
   checked?: boolean,
-  tooltip?: string,
+  toolTip?: string,
 }
 
 // 編集可能控除
@@ -237,12 +237,12 @@ export const commonDeductions = (): InnerEditableDeduction[] => {
     { name: '扶養控除',
       amount: 0,
       editable: true,
-      tooltip: '満15歳以下:0万、'
-        + '16〜18歳:38万、'
-        + '19〜22歳:63万、'
-        + '23〜69歳:38万、'
-        + '70歳〜（同居以外）:48万、'
-        + '70歳〜（同居）:58万'
+      toolTip: '満15歳以下は0万、'
+        + '16〜18歳は38万、'
+        + '19〜22歳は63万、'
+        + '23〜69歳は38万、'
+        + '70歳以上(同居以外)は48万、'
+        + '70歳以上(同居)は58万'
     },
   ]
 }
@@ -282,7 +282,7 @@ export const commonCalculatedDeductions = (): InnerAutoCalculatedItem[] => {
       },
       availableCheckBox: true,
       checked: false,
-      tooltip: '配偶者の年間の合計所得金額が48万円以下（給与収入が103万以下）、老人控除対象配偶者条件を含まない前提の金額を導出'
+      toolTip: '配偶者の年間の合計所得金額が48万円以下（給与収入が103万以下）、老人控除対象配偶者条件を含まない前提の金額を導出'
     },
     ...commonInnerSocialInsurancesForDeductions(),
   ]
@@ -338,7 +338,7 @@ export const commonInnerSocialInsurances = (): InnerAutoCalculatedItem[] => {
       },
       availableCheckBox: true,
       checked: false,
-      tooltip: '家族全員の賦課基準額（前年の所得額）－基礎控除33万円）が0円の前提で算出',
+      toolTip: '家族全員の賦課基準額（前年の所得額）－基礎控除33万円）が0円の前提で算出',
     },
     { name: '国民年金保険料',
       calcAmount: (taxSet: TaxSet): number => {

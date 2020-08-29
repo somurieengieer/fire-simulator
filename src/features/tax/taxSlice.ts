@@ -95,7 +95,7 @@ const createTaxSet = (setNumber: number): TaxSet => {
         editable: false,
         availableCheckBox: d.availableCheckBox,
         checked: d.checked,
-        toolTip: d.tooltip,
+        toolTip: d.toolTip,
       }})
     ],
     socialInsurance: [

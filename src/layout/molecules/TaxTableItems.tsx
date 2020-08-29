@@ -147,10 +147,3 @@ export function TaxTableRowSet({rowLabel, value, onChange, availableCheckBox, ch
     </TableRow>
   )
 }
-
-export function EmptyTableCell() {
-  return (
-    <TableCell width={10}>
-    </TableCell>
-  )
-}
