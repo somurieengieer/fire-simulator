@@ -8,7 +8,7 @@ import {personalUpdate} from "../../features/tax/taxInitialData";
 import {useLocation} from "react-router";
 import {myUrl} from "../Urls";
 import {Link} from "react-router-dom";
-import {Section, SectionContent, SectionTitle} from "../atoms/blog/Section";
+import {Section, SectionContent, SectionList, SectionTitle} from "../atoms/blog/Section";
 import {GoogleAdsSmall} from "../../ads/GoogleAdsSmall";
 import {Grid} from "@material-ui/core";
 
@@ -69,10 +69,13 @@ export function TaxPage() {
           <SectionContent>
             ※PC推奨<br />
             FIREシミュレーターの補助サービスです。値入力後に「FIREシミュレーターを開く」ボタンを押してください。<br/>
-            おおまかに手取りと退職金を計算できます。おおまかなので"全て万円表記(ふるさと納税のみ小数点以下1桁を表示)"です。<br />
-            ターゲットが普通のサラリーマン、個人事業主なので、よく使いそうな項目のみに絞っています。<br />
-            細かい計算は端折っているので詳細な計算用途では使用しないよう注意してください。<br/>
-            令和2年度対応済<br />
+            注意点は以下の通りです
+            <SectionList items={[
+              '表記は全て万円表記です(ふるさと納税のみ小数点以下1桁を表示)',
+              'おおまかな計算目的なので細かい計算は端折っています。厳密な計算用途で使用しないでください',
+              'ターゲットは普通のサラリーマン、個人事業主です。よく使いそうな項目のみに絞っています',
+              '令和2年度対応済',
+            ]} />
           </SectionContent>
         </Section>
       </JustifyCenterBox>
