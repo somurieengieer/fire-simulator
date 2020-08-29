@@ -70,20 +70,22 @@ function calcProgressiveRate(amount: number, items: ProgressiveRateItem[]): numb
   return amount * item.rate + item.base
 }
 
-// 給与所得控除
+// 給与所得控除（令和2年版）
 const salaryDeductionProgressiveRate = (amount: number) => {
   const items = [
-    [-1, 180, 0.4, 0],
-    [180, 360, 0.3, 18],
-    [360, 660, 0.2, 54],
-    [660, 1000, 0.1, 120],
-    [1000, 9999999999, 0.05, 170],
+    [-1, 162.5, 0, 55],
+    [162.5, 180, 0.4, -10],
+    [180, 360, 0.3, 8],
+    [360, 660, 0.2, 44],
+    [660, 850, 0.1, 110],
+    [850, 99999999999999999999999999, 0, 195],
   ].map(i => {return {min: i[0], max: i[1], rate: i[2], base: i[3]}})
   const result = calcProgressiveRate(amount, items)
 
+  console.log('給与所得控除', result, amount)
   // 限度額の補正
-  if (result < 65) return Math.min(amount, 65)
-  if (result > 230) return 230
+  if (amount < 162.5) return Math.min(amount, 55)
+  // if (result > 195) return 195
   return result
 }
 
