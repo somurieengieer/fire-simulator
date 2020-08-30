@@ -3,19 +3,19 @@
 	<url>
 		<loc>https://fire.somuriengineer.com/</loc>
 		<changefreq>monthly</changefreq>
-		<lastmod>>2020-08-30</lastmod>
+		<lastmod>2020-08-30</lastmod>
 		<priority>1.0</priority>
 	</url>
 	<url>
 		<loc>https://fire.somuriengineer.com/tax</loc>
 		<changefreq>monthly</changefreq>
-		<lastmod>>2020-08-30</lastmod>
+		<lastmod>2020-08-30</lastmod>
 		<priority>0.8</priority>
 	</url>
 	<url>
   	<loc>https://fire.somuriengineer.com/annuity</loc>
   	<changefreq>monthly</changefreq>
-		<lastmod>>2020-08-30</lastmod>
+		<lastmod>2020-08-30</lastmod>
   	<priority>0.8</priority>
   </url>
 </urlset>
