@@ -132,6 +132,7 @@ export const personalUpdate = (taxSet: TaxSet[], pDataNumber: number): TaxSet[] 
     {num: 3, taxSet: companyWithOtherIncome}, // 法人実家パターン（雑所得考慮パターン）
     {num: 4, taxSet: companyAtCountrySide}, // 法人実家パターン
     {num: 5, taxSet: companyAtCountrySide2}, // 法人実家パターン２
+    {num: 5, taxSet: companyAtCountrySide2}, // 法人実家パターン２
     {num: 10, taxSet: wife}, // 妻パターン（法人で役員報酬120万。社会保険料加入）
   ]
   return patterns.find(p => p.num === pDataNumber)?.taxSet(taxSet) || taxSet
