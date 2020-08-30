@@ -9,6 +9,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import {theme} from "../../materialui/theme";
 import classNames from 'classnames'
 import MenuButtons from "./MenuButtons";
+import {myUrl} from "../../Urls";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -44,11 +45,11 @@ export default function TopBarMenu({children}: Props) {
 
   const title = () => {
     switch (location.pathname) {
-      case '/fire':
+      case myUrl.top:
         return 'FIREシミュレーター'
-      case '/tax':
+      case myUrl.tax:
         return '税金計算'
-      case '/annuity':
+      case myUrl.annuity:
         return '年金計算'
     }
     return 'トップ'

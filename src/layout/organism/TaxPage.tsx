@@ -57,7 +57,7 @@ export function TaxPage() {
     })
       .filter((val: string) => val !== '')
       .join('&')
-    return `${myUrl.fire}?${params}`
+    return `${myUrl.top}?${params}`
   }
 
   return (

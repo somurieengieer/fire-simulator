@@ -54,13 +54,13 @@ const companyLivingRent = (taxSet: TaxSet[]): TaxSet[] => {
 const companyWithOtherIncome = (taxSet: TaxSet[]): TaxSet[] => {
   const updateBase = (set: TaxSet) => {
     commonBase(set)
-    set.incomes[0].amount = 650 // 900万売上、100万旅費、100万経費、社会保険料等60万？
+    set.incomes[0].amount = 640 // 900万売上、100万旅費、100万経費、社会保険料等60万？
     set.deductions[2].amount = 0
     set.deductions[3].amount = 27.6
   }
   [0, 1, 2].forEach(i => updateBase(taxSet[i]))
 
-  taxSet[1].incomes[0].amount = 300 // 夫婦で300万ずつ給与のパターン
+  taxSet[1].incomes[0].amount = 320 // 夫婦で300万ずつ給与のパターン
 
   taxSet[2].incomes[0].amount = 550 // 一人で受け取って雑所得
   taxSet[2].incomes[2].amount = 150 // 1000万貸付、150万利子。5%運用として50万利益のため給与から100万減らす
@@ -79,6 +79,24 @@ const companyAtCountrySide = (taxSet: TaxSet[]): TaxSet[] => {
 
   taxSet[0].incomes[0].amount = 720
   taxSet[0].deductions[6].checked = true // 配偶者控除
+
+  return taxSet
+}
+const companyAtCountrySide2 = (taxSet: TaxSet[]): TaxSet[] => {
+  const updateBase = (set: TaxSet) => {
+    commonBase(set)
+    set.incomes[0].amount = 360 // 900万売上、100万旅費、100万経費、社会保険料等60万？
+    set.deductions[2].amount = 0
+    set.deductions[3].amount = 27.6
+  }
+  [0, 1, 2].forEach(i => updateBase(taxSet[i]))
+
+  taxSet[1].incomes[0].amount = 600
+  taxSet[1].deductions[6].checked = true // 配偶者控除
+
+  taxSet[2].incomes[0].amount = 120
+  taxSet[2].deductions[7].checked = false //健康保険
+  taxSet[2].deductions[8].checked = false // 厚生年金
 
   return taxSet
 }
@@ -112,7 +130,8 @@ export const personalUpdate = (taxSet: TaxSet[], pDataNumber: number): TaxSet[] 
     {num: 1, taxSet: freePattern}, // 個人事業主の節税案
     {num: 2, taxSet: companyLivingRent}, // 法人・賃貸マンション暮らし
     {num: 3, taxSet: companyWithOtherIncome}, // 法人実家パターン（雑所得考慮パターン）
-    {num: 3, taxSet: companyAtCountrySide}, // 法人実家パターン
+    {num: 4, taxSet: companyAtCountrySide}, // 法人実家パターン
+    {num: 5, taxSet: companyAtCountrySide2}, // 法人実家パターン２
     {num: 10, taxSet: wife}, // 妻パターン（法人で役員報酬120万。社会保険料加入）
   ]
   return patterns.find(p => p.num === pDataNumber)?.taxSet(taxSet) || taxSet

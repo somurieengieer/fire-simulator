@@ -15,9 +15,6 @@ function App() {
           {/*<CompoundInterestPage />*/}
           <FirePage />
         </Route>
-        <Route exact path={myUrl.fire}>
-          <FirePage />
-        </Route>
         <Route exact path={myUrl.tax}>
           <TaxPage />
         </Route>

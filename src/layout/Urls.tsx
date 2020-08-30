@@ -1,8 +1,7 @@
 export const myUrl = {
-  top: '/',
+  top: '/', // FIREシミュレーターページ
 
   fukuri: '/fukuri',
-  fire: '/fire',
   tax: '/tax',
   annuity: '/annuity',
   examKamiShimoById(id: string) {

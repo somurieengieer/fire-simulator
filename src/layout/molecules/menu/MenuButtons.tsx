@@ -5,6 +5,7 @@ import Menu, {MenuProps} from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import {Link} from "react-router-dom";
+import {myUrl} from "../../Urls";
 
 const StyledMenu = withStyles({
   paper: {
@@ -74,9 +75,9 @@ export default function MenuButtons() {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <LinkedMenuItem onClick={handleClose} url={'/fire'} label={'FIREシミュレーター'} />
-        <LinkedMenuItem onClick={handleClose} url={'/tax'} label={'税金計算'} />
-        <LinkedMenuItem onClick={handleClose} url={'/annuity'} label={'年金計算'} />
+        <LinkedMenuItem onClick={handleClose} url={myUrl.top} label={'FIREシミュレーター'} />
+        <LinkedMenuItem onClick={handleClose} url={myUrl.tax} label={'税金計算'} />
+        <LinkedMenuItem onClick={handleClose} url={myUrl.annuity} label={'年金計算'} />
       </StyledMenu>
     </div>
   );
