@@ -428,17 +428,16 @@ const expense30MynPerYearWithChildren = (): PhasesTemplate[] => {
   }]
 }
 
-export const createDataFromURL = ({nowAge, workingYears, retirementAllowance, income, annuity}
+export const createDataFromURL = ({nowAge, retirementAllowance, income, annuity}
 : {
   nowAge?: number,
-  workingYears?: number,
   retirementAllowance?: number,
   income?: number,
   annuity? : number,
 }): PhaseData[] => {
   return createPhaseDataForWorker({
     ageAtStart: nowAge || 32,
-    ageAtRetirement: (nowAge && workingYears) ? (nowAge + workingYears) : 60,
+    ageAtRetirement: 60,
     income: income || 470,
     retirementAllowance: retirementAllowance || 2000,
     expense: income ? income - 100 : 370,

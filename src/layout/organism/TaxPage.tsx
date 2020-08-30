@@ -47,7 +47,6 @@ export function TaxPage() {
     const params = selectedTaxSet.map(taxSet => {
       return [
         createParam(`p${taxSet.setNumber}nowAge`, taxSet.personalInfo.age),
-        createParam(`p${taxSet.setNumber}workingYears`, taxSet.retirementTax.workingYears),
         createParam(`p${taxSet.setNumber}retirementAllowance`, taxSet.retirementTax.disposableIncome),
         createParam(`p${taxSet.setNumber}income`, taxSet.disposableIncome),
         createParam(`p${taxSet.setNumber}annuity`, taxSet.retirementAnnuity.amount),

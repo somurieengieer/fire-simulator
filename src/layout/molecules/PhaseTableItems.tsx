@@ -141,15 +141,12 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
     // [1, 2, 3].forEach(patternNumber => {
       // Array.from(getParams.keys()).filter(k => (new RegExp(`^p${patternNumber}`)).test(k))
     const nowAge = getParams.get(`p${patternNumber}nowAge`)
-    const workingYears = getParams.get(`p${patternNumber}workingYears`)
     const retirementAllowance = getParams.get(`p${patternNumber}retirementAllowance`)
     const income = getParams.get(`p${patternNumber}income`)
     const annuity = getParams.get(`p${patternNumber}annuity`)
-    console.log('updateFromTData', nowAge, workingYears, retirementAllowance, income)
-      if (nowAge || workingYears || retirementAllowance || income) {
+      if (nowAge || retirementAllowance || income) {
         const newData = createDataFromURL({
           nowAge: Number(nowAge || ''),
-          workingYears: Number(workingYears || ''),
           retirementAllowance: Number(retirementAllowance || ''),
           income: Number(income || ''),
           annuity: Number(annuity || ''),
