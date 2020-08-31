@@ -85,7 +85,7 @@ export function PhasesTable({firePattern}: PhasesTableProps) {
                       年齢
                     </TableCell>
                     {phases.map((phase: PhaseClass, i: number) => (
-                      <TableCell className={tableClasses.tableCell} align="center">
+                      <TableCell className={tableClasses.tableCell} align="center" key={i}>
                         <input value={phase.ageAtStart}
                                onChange={v => update(i, 'ageAtStart', v.target.value)}
                                disabled={!phase.ageAtStartEditable}

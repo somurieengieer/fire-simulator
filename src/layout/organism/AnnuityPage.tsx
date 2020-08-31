@@ -1,6 +1,5 @@
 import React from 'react';
-import {makeStyles} from "@material-ui/core/styles";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {JustifyCenterBox} from "../atoms/JustifyCenterBox";
 import {AnnuitySet, selectAnnuity} from "../../features/annuity/annuitySlice";
 import {AnnuityTable} from "../molecules/AnnuityTable";
@@ -8,16 +7,8 @@ import {GoogleAdsSmall} from "../../ads/GoogleAdsSmall";
 import {Section, SectionContent, SectionList, SectionTitle} from "../atoms/blog/Section";
 import {Box, Grid} from "@material-ui/core";
 
-const useStyles = makeStyles({
-  table: {
-    // width: 650,
-  },
-});
-
 export default function AnnuityPage() {
 
-  const classes = useStyles();
-  const dispatch = useDispatch();
   const selectedAnnuity: AnnuitySet[] = useSelector(selectAnnuity)
 
   return (

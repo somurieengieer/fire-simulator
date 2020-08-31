@@ -25,6 +25,5 @@ export function updateForAnnuity(annuity: Annuity): Annuity {
 }
 export function calcAnnuity(annuity: Annuity): number {
   const updated = updateForAnnuity(annuity)
-  console.log('annuity', updated)
   return (updated.annuityForBase || 0) + (updated.annuityForEmployee || 0)
 }

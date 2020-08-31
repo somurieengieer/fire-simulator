@@ -1,5 +1,4 @@
 import React from 'react';
-import {makeStyles} from "@material-ui/core/styles";
 import {useSelector} from "react-redux";
 import {FirePattern, selectFirePatterns} from "../../features/fire/fireSlice";
 import {Grid} from "@material-ui/core";
@@ -11,18 +10,8 @@ import {GoogleAdsSmall} from "../../ads/GoogleAdsSmall";
 import {Link} from "react-router-dom";
 import {myUrl} from "../Urls";
 
-const useStyles = makeStyles({
-  table: {
-    // width: 650,
-  },
-});
-
-
-
 // 複利計算ページ
 export default function FirePage() {
-
-  const classes = useStyles();
 
   const selectedFirePatterns = useSelector(selectFirePatterns)
 
@@ -59,7 +48,7 @@ export default function FirePage() {
       </JustifyCenterBox>
       <Grid>
         {selectedFirePatterns.map((pattern: FirePattern) => (
-          <FirePatternPaper firePattern={pattern} />
+          <FirePatternPaper firePattern={pattern} key={pattern.patternNumber} />
         ))}
       </Grid>
       <Grid>

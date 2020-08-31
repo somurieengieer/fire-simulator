@@ -201,11 +201,11 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
                   onChange={v => setTemplateIndex(Number(v.target.value))}
                   className={classes.select} >
             {templateOptions.map((o, i) => (
-              <option value={i}>{o.label}</option>
+              <option value={i} key={i}>{o.label}</option>
             ))}
           </select>
           {selectedPatternNumbers?.filter((i: number) => i !== firePattern.patternNumber).map((i: number) => (
-            <button onClick={() => copyPatternByPatternNumber(i)}>パターン{numberFromHalfWidthToFullWidth(i)}からコピー</button>
+            <button onClick={() => copyPatternByPatternNumber(i)} key={i}>パターン{numberFromHalfWidthToFullWidth(i)}からコピー</button>
           ))}
         </TableCell>
       </TableRow>
@@ -248,7 +248,7 @@ export function TableRowSet({rowLabel, phaseClasses, valueCallback, onChange, di
         {rowLabel}
       </TableCell>
       {phaseClasses.map((phase: PhaseClass, i: number) => (
-        <TableCell className={classes.tableCell} align="center">
+        <TableCell className={classes.tableCell} align="center" key={i}>
           <input value={showValue(phase)}
                  type={isTypeString ? 'string' : 'number'}
                  onChange={v => onChange(v.target.value, i)}

@@ -8,12 +8,14 @@ import * as serviceWorker from './serviceWorker';
 import {ConnectedRouter} from "connected-react-router";
 import {MuiThemeProvider} from "@material-ui/core";
 import {theme} from "./layout/materialui/theme";
+import CssBaseline from "@material-ui/core/CssBaseline";
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <MuiThemeProvider theme={theme}>
         <ConnectedRouter history={history}>
+          <CssBaseline />
           <App />
         </ConnectedRouter>
       </MuiThemeProvider>

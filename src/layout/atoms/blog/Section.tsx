@@ -73,8 +73,8 @@ interface SectionListProps {
 export function SectionList({items}: SectionListProps) {
   return (
     <ul style={{paddingLeft: '1.5rem'}}>
-      {items.map(item => (
-        <li>{item}</li>
+      {items.map((item, i) => (
+        <li key={i}>{item}</li>
       ))}
     </ul>
   )

@@ -1,6 +1,5 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
@@ -59,7 +58,6 @@ export default function TopBarMenu({children}: Props) {
 
   return (
     <div className={classes.root}>
-      <CssBaseline />
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" className={classNames(classes.title, {[classes.center]: isPhoneMode})}>

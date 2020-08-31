@@ -19,7 +19,6 @@ interface FirePatternPaperProps {
 export function FirePatternPaper({firePattern}: FirePatternPaperProps) {
 
   const classes = useStyles();
-  const hasError = firePattern.hasError
 
   return (
     <Box m={1}>

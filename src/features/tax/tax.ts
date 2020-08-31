@@ -82,7 +82,6 @@ const salaryDeductionProgressiveRate = (amount: number) => {
   ].map(i => {return {min: i[0], max: i[1], rate: i[2], base: i[3]}})
   const result = calcProgressiveRate(amount, items)
 
-  console.log('給与所得控除', result, amount)
   // 限度額の補正
   if (amount < 162.5) return Math.min(amount, 55)
   // if (result > 195) return 195
@@ -394,7 +393,6 @@ export const incomeTax = (taxableIncomeAmount: number): number => {
   const taxableIncomeAmount10000 = taxableIncomeAmount * 10000
   if (taxableIncomeAmount10000 < 1000) return 0
   const row = data.find(d => d[0] <= taxableIncomeAmount10000 && taxableIncomeAmount10000 < d[1]) as number[]
-  console.log(taxableIncomeAmount10000, row[2], row[3], manYen(taxableIncomeAmount10000 * row[2] / 100 - row[3]))
   return manYen(taxableIncomeAmount10000 * row[2] / 100 - row[3])
 }
 // 住民税
@@ -447,7 +445,7 @@ export function taxSetConvert(taxSet: TaxSet): TaxSet {
   const innerSet = defaultIncomeAndDeductionSet()
   innerSet.incomes.forEach(innerIncome => {
     const income = taxSet.incomes.find(i => i.name === innerIncome.name) as Income
-    innerIncome.calculatedDeductions.map(innerDed => {
+    innerIncome.calculatedDeductions.forEach(innerDed => {
       const ded = income.deductions.find(d => d.name === innerDed.name) as Deduction
       ded.amount = innerDed.calcAmount(income)
     })

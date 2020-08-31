@@ -26,9 +26,7 @@ export function CompoundInterestPage() {
   const [compoundInterestResult, setCompoundInterestResult]  = useState<CompoundInterestResult | null>(null)
 
   const calc = () => {
-    console.log('interestProps', interestProps)
     setCompoundInterestResult(calcCompoundInterestResult(interestProps))
-    console.log(calcCompoundInterestResult(interestProps))
   }
 
   return (

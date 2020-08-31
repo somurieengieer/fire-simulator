@@ -1,4 +1,3 @@
-import React from 'react';
 import {calcCompoundInterestResult, CompoundInterestResult} from "../compoundInterest/compoundInterest";
 
 export interface PhaseData {

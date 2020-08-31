@@ -18,12 +18,9 @@ const useStyles = makeStyles({
   },
 });
 
-
-
 // 個人事業主・サラリーマンの所得計算ページ（使わなそうなので中断）
 export default function TaxPage() {
 
-  const classes = useStyles();
   const location = useLocation();
   const dispatch = useDispatch();
   const selectedTaxSet: TaxSet[] = useSelector(selectTaxSet)

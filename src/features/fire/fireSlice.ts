@@ -79,7 +79,7 @@ function hasError(firePattern: FirePattern): boolean {
     console.log('hasError, ageAtStart > ageAtEnd. firePattern=', firePattern.patternNumber, 'ageAtStart', firePattern.phases.map(p => p.ageAtStart), 'ageAtEnd', firePattern.phases.map(p => p.ageAtEnd))
     return true
   }
-  if (firePattern.phases.find(phase => !phase.annualInterest && phase.annualInterest != 0)) {
+  if (firePattern.phases.find(phase => !phase.annualInterest && phase.annualInterest !== 0)) {
     console.log('hasError, annualInterest does not set. firePattern=', firePattern.patternNumber, 'annualInterest', firePattern.phases.map(p => p.annualInterest))
     return true
   }
