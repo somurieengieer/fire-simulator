@@ -20,7 +20,7 @@ const useStyles = makeStyles({
 
 
 // 複利計算ページ
-export function FirePage() {
+export default function FirePage() {
 
   const classes = useStyles();
 

@@ -14,7 +14,7 @@ const useStyles = makeStyles({
   },
 });
 
-export function AnnuityPage() {
+export default function AnnuityPage() {
 
   const classes = useStyles();
   const dispatch = useDispatch();

@@ -21,7 +21,7 @@ const useStyles = makeStyles({
 
 
 // 個人事業主・サラリーマンの所得計算ページ（使わなそうなので中断）
-export function TaxPage() {
+export default function TaxPage() {
 
   const classes = useStyles();
   const location = useLocation();

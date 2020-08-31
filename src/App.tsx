@@ -1,30 +1,27 @@
-import React from 'react';
+import React, {lazy, Suspense} from 'react';
 import './App.css';
 import {Route, Switch} from "react-router";
 import {myUrl} from "./layout/Urls";
-import {FirePage} from "./layout/organism/FirePage";
 import MenuFrame from "./layout/molecules/menu/MenuFrame";
-import {TaxPage} from "./layout/organism/TaxPage";
-import {AnnuityPage} from "./layout/organism/AnnuityPage";
+
+const FirePage = lazy(() => import("./layout/organism/FirePage"))
+const TaxPage = lazy(() => import("./layout/organism/TaxPage"))
+const AnnuityPage = lazy(() => import("./layout/organism/AnnuityPage"))
 
 function App() {
   return (
     <MenuFrame>
-      <Switch>
-        <Route exact path={myUrl.top}>
-          {/*<CompoundInterestPage />*/}
-          <FirePage />
-        </Route>
-        <Route exact path={myUrl.tax}>
-          <TaxPage />
-        </Route>
-        <Route exact path={myUrl.annuity}>
-          <AnnuityPage />
-        </Route>
-        <Route>
-          404 Not Found
-        </Route>
-      </Switch>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Switch>
+          <Route exact path={myUrl.top} component={FirePage} />
+            {/*<CompoundInterestPage />*/}
+          <Route exact path={myUrl.tax} component={TaxPage} />
+          <Route exact path={myUrl.annuity} component={AnnuityPage} />
+          <Route>
+            404 Not Found
+          </Route>
+        </Switch>
+      </Suspense>
     </MenuFrame>
   );
 }
