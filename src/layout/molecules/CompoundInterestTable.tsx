@@ -1,16 +1,13 @@
-import React from 'react';
-import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
-import {
-  addYearToCompoundInterestResult,
-  CompoundInterestResult
-} from "../../features/compoundInterest/compoundInterest";
-import {makeStyles} from "@material-ui/core/styles";
+import React from 'react'
+import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from '@material-ui/core'
+import {addYearToCompoundInterestResult, CompoundInterestResult} from '../../features/compoundInterest/compoundInterest'
+import {makeStyles} from '@material-ui/core/styles'
 
 const useStyles = makeStyles({
   table: {
-    width: 250,
-  },
-});
+    width: 250
+  }
+})
 
 interface CompoundInterestTableByAgeProps {
   result: CompoundInterestResult,
@@ -41,7 +38,6 @@ export function CompoundInterestTable({result}: CompoundInterestTableProps) {
   />)
 }
 
-
 interface CompoundInterestCommonTableProps {
   label: string,
   yearPostWord: string,
@@ -50,8 +46,7 @@ interface CompoundInterestCommonTableProps {
 
 // 複利結果表
 function CompoundInterestCommonTable({label, yearPostWord, result}: CompoundInterestCommonTableProps) {
-
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
     <TableContainer component={Paper}>
@@ -74,6 +69,5 @@ function CompoundInterestCommonTable({label, yearPostWord, result}: CompoundInte
         </TableBody>
       </Table>
     </TableContainer>
-  );
+  )
 }
-

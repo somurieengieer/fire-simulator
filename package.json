@@ -19,8 +19,14 @@
     "@types/react-router-dom": "^5.1.5",
     "@types/recharts": "^1.8.14",
     "@types/redux-logger": "^3.0.8",
+    "@typescript-eslint/eslint-plugin": "^4.1.0",
+    "@typescript-eslint/parser": "^4.1.0",
     "classnames": "^2.2.6",
     "connected-react-router": "^6.8.0",
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-react": "^7.20.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
@@ -30,7 +36,7 @@
     "react-tooltip": "^4.2.9",
     "recharts": "^1.8.5",
     "redux-logger": "^3.0.6",
-    "typescript": "~3.8.2"
+    "typescript": "^4.0.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -52,5 +58,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint-config-standard": "^14.1.1",
+    "eslint-import-resolver-typescript": "^2.3.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1"
   }
 }

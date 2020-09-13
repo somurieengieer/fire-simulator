@@ -1,46 +1,46 @@
-import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
-import {useLocation} from "react-router";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import {theme} from "../../materialui/theme";
+import React from 'react'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
+import {createStyles, makeStyles, Theme} from '@material-ui/core/styles'
+import {useLocation} from 'react-router'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
+import {theme} from '../../materialui/theme'
 import classNames from 'classnames'
-import MenuButtons from "./MenuButtons";
-import {myUrl} from "../../Urls";
+import MenuButtons from './MenuButtons'
+import {myUrl} from '../../Urls'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       width: '100%',
       minWidth: 375,
-      flexGrow: 1,
+      flexGrow: 1
     },
     title: {
-      flexGrow: 1,
+      flexGrow: 1
     },
     center: {
-      textAlign: 'center',
+      textAlign: 'center'
     },
     content: {
       flexGrow: 1,
       padding: theme.spacing(3),
       [theme.breakpoints.down('sm')]: {
-        padding: theme.spacing(0.5),
+        padding: theme.spacing(0.5)
       }
-    },
-  }),
-);
+    }
+  })
+)
 
 interface Props {
   children: React.ReactNode;
 }
 
 export default function TopBarMenu({children}: Props) {
-  const classes = useStyles();
+  const classes = useStyles()
 
-  const location = useLocation();
+  const location = useLocation()
 
   const title = () => {
     switch (location.pathname) {
@@ -54,7 +54,7 @@ export default function TopBarMenu({children}: Props) {
     return 'トップ'
   }
 
-  const isPhoneMode = useMediaQuery(theme.breakpoints.down('xs'));
+  const isPhoneMode = useMediaQuery(theme.breakpoints.down('xs'))
 
   return (
     <div className={classes.root}>
@@ -62,15 +62,15 @@ export default function TopBarMenu({children}: Props) {
         <Toolbar>
           <Typography variant="h6" className={classNames(classes.title, {[classes.center]: isPhoneMode})}>
             堅実にFIREを実現する&nbsp;
-            {isPhoneMode && (<br />)}
+            {isPhoneMode && (<br/>)}
             - {title()} -
           </Typography>
-          <MenuButtons />
+          <MenuButtons/>
         </Toolbar>
       </AppBar>
       <main className={classes.content}>
         {children}
       </main>
     </div>
-  );
+  )
 }

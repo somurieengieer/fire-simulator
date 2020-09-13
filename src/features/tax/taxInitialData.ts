@@ -1,7 +1,7 @@
-import {TaxSet} from "./taxSlice";
+import {TaxSet} from './taxSlice'
 
 const updateBaseForFree = (set: TaxSet) => {
-  set.deductions[7].checked = false //健康保険
+  set.deductions[7].checked = false // 健康保険
   set.deductions[8].checked = false // 厚生年金
   set.deductions[9].checked = true // 国民健康保険
   set.deductions[10].checked = true // 国民年金
@@ -22,7 +22,7 @@ const freePattern = (taxSet: TaxSet[]): TaxSet[] => {
     set.deductions[1].amount = 4 // その他の控除
     set.deductions[2].amount = 84 // 小規模共済に加入した場合
     set.deductions[3].amount = 81.6 // iDeco
-    set.deductions[7].amount = 36 //健康保険
+    set.deductions[7].amount = 36 // 健康保険
     set.deductions[9].checked = false // 国民健康保険
   }
   [0, 1, 2].forEach(i => updateBase(taxSet[i]))
@@ -95,7 +95,7 @@ const companyAtCountrySide2 = (taxSet: TaxSet[]): TaxSet[] => {
   taxSet[1].deductions[6].checked = true // 配偶者控除
 
   taxSet[2].incomes[0].amount = 120
-  taxSet[2].deductions[7].checked = false //健康保険
+  taxSet[2].deductions[7].checked = false // 健康保険
   taxSet[2].deductions[8].checked = false // 厚生年金
 
   return taxSet
@@ -125,6 +125,7 @@ interface PersonalPattern {
   num: number,
   taxSet: (taxSet: TaxSet[]) => TaxSet[]
 }
+
 export const personalUpdate = (taxSet: TaxSet[], pDataNumber: number): TaxSet[] => {
   const patterns: PersonalPattern[] = [
     {num: 1, taxSet: freePattern}, // 個人事業主の節税案
@@ -133,8 +134,7 @@ export const personalUpdate = (taxSet: TaxSet[], pDataNumber: number): TaxSet[] 
     {num: 4, taxSet: companyAtCountrySide}, // 法人実家パターン
     {num: 5, taxSet: companyAtCountrySide2}, // 法人実家パターン２
     {num: 5, taxSet: companyAtCountrySide2}, // 法人実家パターン２
-    {num: 10, taxSet: wife}, // 妻パターン（法人で役員報酬120万。社会保険料加入）
+    {num: 10, taxSet: wife} // 妻パターン（法人で役員報酬120万。社会保険料加入）
   ]
   return patterns.find(p => p.num === pDataNumber)?.taxSet(taxSet) || taxSet
 }
-

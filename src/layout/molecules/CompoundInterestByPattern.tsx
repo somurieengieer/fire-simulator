@@ -1,16 +1,16 @@
-import React, {useState} from 'react';
-import {FirePattern} from "../../features/fire/fireSlice";
-import {CompoundInterestAreaChartNearPercent} from "../atoms/CompoundInterestAreaChartNearPercent";
-import {Box, Grid, Input, Slider} from "@material-ui/core";
-import {makeStyles} from "@material-ui/core/styles";
-import EqualizerIcon from '@material-ui/icons/Equalizer';
-import {theme} from "../materialui/theme";
+import React, {useState} from 'react'
+import {FirePattern} from '../../features/fire/fireSlice'
+import {CompoundInterestAreaChartNearPercent} from '../atoms/CompoundInterestAreaChartNearPercent'
+import {Box, Grid, Input, Slider} from '@material-ui/core'
+import {makeStyles} from '@material-ui/core/styles'
+import EqualizerIcon from '@material-ui/icons/Equalizer'
+import {theme} from '../materialui/theme'
 
 const useStyles = makeStyles({
   root: {
     width: 500,
     [theme.breakpoints.down('sm')]: {
-      width: 340,
+      width: 340
     }
   },
   sliderRoot: {
@@ -18,13 +18,13 @@ const useStyles = makeStyles({
     width: 450,
     [theme.breakpoints.down('sm')]: {
       marginLeft: 0,
-      width: 340,
+      width: 340
     }
   },
   input: {
-    width: 60,
-  },
-});
+    width: 60
+  }
+})
 
 interface Props {
   firePattern: FirePattern,
@@ -32,7 +32,6 @@ interface Props {
 
 // 近辺%エリアチャート
 export function CompoundInterestByPattern({firePattern}: Props) {
-
   const classes = useStyles()
   const [nearPercent, setNearPercent] = useState<number>(1.0)
 
@@ -40,14 +39,14 @@ export function CompoundInterestByPattern({firePattern}: Props) {
     <Box className={classes.root}>
       <CompoundInterestAreaChartNearPercent
         firePattern={firePattern}
-        nearPercent={nearPercent} />
+        nearPercent={nearPercent}/>
 
       <Grid container spacing={2} alignItems="center"
             className={classes.sliderRoot}
             component="div"
       >
         <Grid item component="span">
-          <EqualizerIcon />
+          <EqualizerIcon/>
         </Grid>
         <Grid item component="span">
           利回り変動率
@@ -74,13 +73,12 @@ export function CompoundInterestByPattern({firePattern}: Props) {
               min: 0,
               max: 5,
               type: 'number',
-              'aria-labelledby': 'input-slider',
+              'aria-labelledby': 'input-slider'
             }}
-            endAdornment={"％"}
+            endAdornment={'％'}
           />
         </Grid>
       </Grid>
     </Box>
-  );
+  )
 }
-

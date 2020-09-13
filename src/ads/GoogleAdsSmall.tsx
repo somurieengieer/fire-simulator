@@ -1,13 +1,11 @@
-import React, {useEffect} from 'react';
-
+import React, {useEffect} from 'react'
 
 export function GoogleAdsSmall() {
-
   useEffect(() => {
     // @ts-ignore
-    if (window.adsbygoogle && process.env.NODE_ENV === "production") {
+    if (window.adsbygoogle && process.env.NODE_ENV === 'production') {
       // @ts-ignore
-      window.adsbygoogle.push({});
+      window.adsbygoogle.push({})
     } else {
       console.log('開発中なのでAdSense表示しない')
     }
@@ -15,7 +13,7 @@ export function GoogleAdsSmall() {
 
   return (
     <>
-      {/*Google adsense advertisement */}
+      {/* Google adsense advertisement */}
       <ins className="adsbygoogle"
            style={{display: 'block'}}
            data-ad-format="fluid"
@@ -25,4 +23,3 @@ export function GoogleAdsSmall() {
     </>
   )
 }
-

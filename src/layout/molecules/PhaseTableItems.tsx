@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from 'react';
-import {TableCell, TableHead, TableRow} from "@material-ui/core";
-import {makeStyles} from "@material-ui/core/styles";
-import {theme} from "../materialui/theme";
-import {PhaseClass, PhaseData} from "../../features/fire/Phase";
-import {FirePattern, selectFirePatterns, selectPatternNumbers, updatePhases} from "../../features/fire/fireSlice";
-import {useDispatch, useSelector} from "react-redux";
-import {createDataFromURL, PhasesTemplate, phasesTemplates} from "../../features/fire/fireInitialData";
-import {numberFromHalfWidthToFullWidth} from "../../features/utils/Utils";
-import {useLocation} from "react-router";
+import React, {useEffect, useState} from 'react'
+import {TableCell, TableHead, TableRow} from '@material-ui/core'
+import {makeStyles} from '@material-ui/core/styles'
+import {theme} from '../materialui/theme'
+import {PhaseClass, PhaseData} from '../../features/fire/Phase'
+import {FirePattern, selectFirePatterns, selectPatternNumbers, updatePhases} from '../../features/fire/fireSlice'
+import {useDispatch, useSelector} from 'react-redux'
+import {createDataFromURL, PhasesTemplate, phasesTemplates} from '../../features/fire/fireInitialData'
+import {numberFromHalfWidthToFullWidth} from '../../features/utils/Utils'
+import {useLocation} from 'react-router'
 import classNames from 'classnames'
 
 export const usePatternTableStyles = makeStyles({
@@ -17,46 +17,46 @@ export const usePatternTableStyles = makeStyles({
   tableCellLabel: {
     width: 200,
     minWidth: 140,
-    backgroundColor: theme.palette.secondary.light,
+    backgroundColor: theme.palette.secondary.light
   },
   tableCell: {
     minWidth: 180,
-    position: 'relative',
+    position: 'relative'
   },
   tableHeadRow: {
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.secondary.main
   },
   select: {
-    height: '2em',
+    height: '2em'
   },
   linkCell: {
     '&:hover': {
-      cursor: 'pointer',
-    },
+      cursor: 'pointer'
+    }
   },
   input: {
-    width: 120,
+    width: 120
   },
   inputError: {
-    backgroundColor: theme.palette.error.main,
+    backgroundColor: theme.palette.error.main
   },
   expand: {
     transform: 'rotate(0deg)',
     marginLeft: 'auto',
     transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
+      duration: theme.transitions.duration.shortest
+    })
   },
   expandOpen: {
-    transform: 'rotate(180deg)',
+    transform: 'rotate(180deg)'
   },
   toolTip: {
     maxWidth: 400,
     [theme.breakpoints.down('sm')]: {
-      maxWidth: 240,
+      maxWidth: 240
     }
-  },
-});
+  }
+})
 
 interface TablePatternHeaderSetProps {
   firePattern: FirePattern,
@@ -64,25 +64,25 @@ interface TablePatternHeaderSetProps {
 }
 
 export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeaderSetProps) {
-  const classes = usePatternTableStyles();
+  const classes = usePatternTableStyles()
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   const selectedPatternNumbers = useSelector(selectPatternNumbers)
   const selectedFirePatterns = useSelector(selectFirePatterns)
   const [templateIndex, setTemplateIndex] = useState<number>(0)
-  const location = useLocation();
-  const [templateOptions, setTemplateOptions] = useState<PhasesTemplate[]>([{label: '▼テンプレートを選択'},])
+  const location = useLocation()
+  const [templateOptions, setTemplateOptions] = useState<PhasesTemplate[]>([{label: '▼テンプレートを選択'}])
 
   const title = (): string => {
     return 'パターン' + numberFromHalfWidthToFullWidth(firePattern.patternNumber)
   }
 
   const copyPatternByPatternNumber = (patternNumber: number) => {
-     const newPhases: PhaseData[] = JSON.parse(JSON.stringify(selectedFirePatterns[patternNumber - 1].phases))
-     dispatch(updatePhases({
-       patternNumber: firePattern.patternNumber,
-       phases: newPhases,
-     }))
+    const newPhases: PhaseData[] = JSON.parse(JSON.stringify(selectedFirePatterns[patternNumber - 1].phases))
+    dispatch(updatePhases({
+      patternNumber: firePattern.patternNumber,
+      phases: newPhases
+    }))
   }
 
   const copyPatternByTemplateNumber = (index: number) => {
@@ -93,15 +93,15 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
     if (!phaseData) return
     dispatch(updatePhases({
       patternNumber: firePattern.patternNumber,
-      phases: phaseData,
+      phases: phaseData
     }))
   }
 
   const updateTemplateIndex = () => {
-    const getParams = new URLSearchParams(location.search);
+    const getParams = new URLSearchParams(location.search)
     const templateIndexParam = getParams.get(`t${firePattern.patternNumber}`)
 
-    let newIndex = 3;
+    let newIndex = 3
     switch (firePattern.patternNumber) {
       case 2:
         newIndex = 5
@@ -112,7 +112,7 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
     }
 
     if (templateIndexParam &&
-      0 <= Number(templateIndexParam) &&
+      Number(templateIndexParam) >= 0 &&
       Number(templateIndexParam) < templateOptions.length) {
       newIndex = Number(templateIndexParam)
     }
@@ -125,37 +125,37 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
 
   // 個人データを表示するモード
   const isPDataMode = (): boolean => {
-    const getParams = new URLSearchParams(location.search);
-    return Boolean(getParams.get(`pData`))
+    const getParams = new URLSearchParams(location.search)
+    return Boolean(getParams.get('pData'))
   }
 
   // Getパラメータにデータを含む場合
   const isTDataMode = (): boolean => {
-    const getParams = new URLSearchParams(location.search);
+    const getParams = new URLSearchParams(location.search)
     return Boolean(Array.from(getParams.keys()).find(k => (/^p\d/).test(k)))
   }
 
   const updateFromTData = () => {
-    const getParams = new URLSearchParams(location.search);
+    const getParams = new URLSearchParams(location.search)
     const patternNumber = firePattern.patternNumber
     // [1, 2, 3].forEach(patternNumber => {
-      // Array.from(getParams.keys()).filter(k => (new RegExp(`^p${patternNumber}`)).test(k))
+    // Array.from(getParams.keys()).filter(k => (new RegExp(`^p${patternNumber}`)).test(k))
     const nowAge = getParams.get(`p${patternNumber}nowAge`)
     const retirementAllowance = getParams.get(`p${patternNumber}retirementAllowance`)
     const income = getParams.get(`p${patternNumber}income`)
     const annuity = getParams.get(`p${patternNumber}annuity`)
-      if (nowAge || retirementAllowance || income) {
-        const newData = createDataFromURL({
-          nowAge: Number(nowAge || ''),
-          retirementAllowance: Number(retirementAllowance || ''),
-          income: Number(income || ''),
-          annuity: Number(annuity || ''),
-        })
-        dispatch(updatePhases({
-          patternNumber: firePattern.patternNumber,
-          phases: newData,
-        }))
-      }
+    if (nowAge || retirementAllowance || income) {
+      const newData = createDataFromURL({
+        nowAge: Number(nowAge || ''),
+        retirementAllowance: Number(retirementAllowance || ''),
+        income: Number(income || ''),
+        annuity: Number(annuity || '')
+      })
+      dispatch(updatePhases({
+        patternNumber: firePattern.patternNumber,
+        phases: newData
+      }))
+    }
     // })
   }
 
@@ -178,8 +178,9 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
   }, [location])
 
   useEffect(() => {
-    if (isTDataMode())
+    if (isTDataMode()) {
       return
+    }
 
     if (isPDataMode()) {
       updateTemplateIndexForPData()
@@ -199,13 +200,14 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
           {title()}&nbsp;
           <select value={templateIndex}
                   onChange={v => setTemplateIndex(Number(v.target.value))}
-                  className={classes.select} >
+                  className={classes.select}>
             {templateOptions.map((o, i) => (
               <option value={i} key={i}>{o.label}</option>
             ))}
           </select>
           {selectedPatternNumbers?.filter((i: number) => i !== firePattern.patternNumber).map((i: number) => (
-            <button onClick={() => copyPatternByPatternNumber(i)} key={i}>パターン{numberFromHalfWidthToFullWidth(i)}からコピー</button>
+            <button onClick={() => copyPatternByPatternNumber(i)}
+                    key={i}>パターン{numberFromHalfWidthToFullWidth(i)}からコピー</button>
           ))}
         </TableCell>
       </TableRow>
@@ -214,8 +216,8 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
 }
 
 export function SubHeaderRowSet({title, colSpan}
-: {title: string, colSpan: number}) {
-  const classes = usePatternTableStyles();
+                                  : { title: string, colSpan: number }) {
+  const classes = usePatternTableStyles()
   return (
     <TableRow className={classes.tableHeadRow}>
       <TableCell colSpan={colSpan}>
@@ -226,7 +228,8 @@ export function SubHeaderRowSet({title, colSpan}
 }
 
 export function TableRowSet({rowLabel, phaseClasses, valueCallback, onChange, disabledCallback, isTypeString, validate}
-: {rowLabel: string,
+                              : {
+  rowLabel: string,
   phaseClasses: PhaseClass[],
   valueCallback(phaseClass: PhaseClass): string | number,
   onChange(newValue: string, index: number): void,
@@ -234,14 +237,13 @@ export function TableRowSet({rowLabel, phaseClasses, valueCallback, onChange, di
   isTypeString?: boolean,
   validate?(phaseClass: PhaseClass): boolean,
 }) {
-
   const disabled = (phaseClass: PhaseClass) => disabledCallback && disabledCallback(phaseClass)
 
   const showValue = (phase: PhaseClass): string | number => {
     return disabled(phase) ? Number(valueCallback(phase))?.toFixed(0) : valueCallback(phase)
   }
 
-  const classes = usePatternTableStyles();
+  const classes = usePatternTableStyles()
   return (
     <TableRow>
       <TableCell className={classes.tableCellLabel} component="th" scope="row">
@@ -257,7 +259,7 @@ export function TableRowSet({rowLabel, phaseClasses, valueCallback, onChange, di
           />
         </TableCell>
       ))}
-      <EmptyTableCell />
+      <EmptyTableCell/>
     </TableRow>
   )
 }

@@ -1,28 +1,27 @@
-import React from 'react';
-import {Box} from "@material-ui/core";
-import {createStyles, makeStyles} from "@material-ui/core/styles";
-
+import React from 'react'
+import {Box} from '@material-ui/core'
+import {createStyles, makeStyles} from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => createStyles({
   section: {
     margin: 20,
     marginBottom: 60,
     [theme.breakpoints.down('sm')]: {
-      margin: 10,
+      margin: 10
     }
   },
   title: {
-    color: '#6594e0',/*文字色*/
+    color: '#6594e0', /* 文字色 */
     borderBottom: 'dashed 2px #6594e0',
-    fontSize: '1.3rem',
+    fontSize: '1.3rem'
   },
   content: {
     margin: 20,
     [theme.breakpoints.down('sm')]: {
-      margin: 5,
+      margin: 5
     }
-  },
-}));
+  }
+}))
 
 interface Props {
   children: React.ReactNode;
@@ -55,7 +54,7 @@ export function SectionTitle({children}: Props) {
     <Box className={classes.title}>
       {children}
     </Box>
-  );
+  )
 }
 
 export function SectionContent({children}: Props) {
@@ -64,12 +63,13 @@ export function SectionContent({children}: Props) {
     <Box className={classes.content}>
       {children}
     </Box>
-  );
+  )
 }
 
 interface SectionListProps {
   items: string[]
 }
+
 export function SectionList({items}: SectionListProps) {
   return (
     <ul style={{paddingLeft: '1.5rem'}}>

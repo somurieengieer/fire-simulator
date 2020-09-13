@@ -1,19 +1,18 @@
-import React from 'react';
-import {Box, IconButton, TableCell, TableHead, TableRow} from "@material-ui/core";
-import {usePatternTableStyles} from "./PhaseTableItems";
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import clsx from 'clsx';
-import {numberFromHalfWidthToFullWidth} from "../../features/utils/Utils";
-import {selectSetNumbers, selectTaxSet, TaxSet, updateTaxSet} from "../../features/tax/taxSlice";
-import {useDispatch, useSelector} from "react-redux";
-import InfoIcon from '@material-ui/icons/Info';
-import ReactTooltip from 'react-tooltip';
+import React from 'react'
+import {Box, IconButton, TableCell, TableHead, TableRow} from '@material-ui/core'
+import {usePatternTableStyles} from './PhaseTableItems'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import clsx from 'clsx'
+import {numberFromHalfWidthToFullWidth} from '../../features/utils/Utils'
+import {selectSetNumbers, selectTaxSet, TaxSet, updateTaxSet} from '../../features/tax/taxSlice'
+import {useDispatch, useSelector} from 'react-redux'
+import InfoIcon from '@material-ui/icons/Info'
+import ReactTooltip from 'react-tooltip'
 
 export function TaxHeaderRowSet({taxSet, title}
-: {taxSet: TaxSet, title: string}) {
-
-  const classes = usePatternTableStyles();
-  const dispatch = useDispatch();
+                                  : { taxSet: TaxSet, title: string }) {
+  const classes = usePatternTableStyles()
+  const dispatch = useDispatch()
   const selectedSetNumbers = useSelector(selectSetNumbers)
   const selectedTaxSet: TaxSet[] = useSelector(selectTaxSet)
 
@@ -37,7 +36,8 @@ export function TaxHeaderRowSet({taxSet, title}
             </Box>
             <Box>
               {selectedSetNumbers?.filter((i: number) => i !== taxSet.setNumber).map((i: number) => (
-                <button onClick={() => copyPatternByPatternNumber(i)}>パターン{numberFromHalfWidthToFullWidth(i)}からコピー</button>
+                <button
+                  onClick={() => copyPatternByPatternNumber(i)}>パターン{numberFromHalfWidthToFullWidth(i)}からコピー</button>
               ))}
             </Box>
           </Box>
@@ -54,22 +54,23 @@ interface TaxSubHeaderRowSetProps {
   handleExpandClick?: (v: boolean) => void,
   children?: React.ReactNode; // TaxTableRowSetが並ぶ感じ（ヘッダー行以降の行）
 }
+
 export function TaxSubHeaderRowSet({title, amount, expanded, handleExpandClick, children}: TaxSubHeaderRowSetProps) {
-  const classes = usePatternTableStyles();
+  const classes = usePatternTableStyles()
   const createTitle = () => (
     <>
       {title}
       {handleExpandClick !== undefined && (
         <IconButton
           className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
+            [classes.expandOpen]: expanded
           })}
           onClick={v => handleExpandClick(!expanded)}
           aria-expanded={expanded}
           aria-label="show more"
-          size={"small"}
+          size={'small'}
         >
-          <ExpandMoreIcon />
+          <ExpandMoreIcon/>
         </IconButton>
       )}
     </>
@@ -87,7 +88,7 @@ export function TaxSubHeaderRowSet({title, amount, expanded, handleExpandClick, 
               <input value={amount}
                      type={'number'}
                      className={classes.input}
-                     disabled={true} />
+                     disabled={true}/>
             </TableCell>
           </>
         ) : (
@@ -102,7 +103,8 @@ export function TaxSubHeaderRowSet({title, amount, expanded, handleExpandClick, 
 }
 
 export function TaxTableRowSet({rowLabel, value, onChange, availableCheckBox, checkValue, onChangeCheck, disabled, noFixed, toolTip}
-: {rowLabel: string,
+                                 : {
+  rowLabel: string,
   value: string | number,
   onChange?(newValue: string): void,
   availableCheckBox?: boolean,
@@ -112,11 +114,10 @@ export function TaxTableRowSet({rowLabel, value, onChange, availableCheckBox, ch
   noFixed?: boolean,
   toolTip?: string,
 }) {
-
   const showValue = (): string | number =>
-    disabled ? noFixed ?  Number(value) : Number(value)?.toFixed(0) : value
+    disabled ? noFixed ? Number(value) : Number(value)?.toFixed(0) : value
 
-  const classes = usePatternTableStyles();
+  const classes = usePatternTableStyles()
   return (
     <TableRow>
       <TableCell className={classes.tableCellLabel} component="th" scope="row">
@@ -124,11 +125,11 @@ export function TaxTableRowSet({rowLabel, value, onChange, availableCheckBox, ch
         {toolTip && (
           <>
             <span data-tip="hello world">
-              <InfoIcon data-tip={toolTip} fontSize={"small"} />
+              <InfoIcon data-tip={toolTip} fontSize={'small'}/>
             </span>
-            <ReactTooltip className={classes.toolTip} />
+            <ReactTooltip className={classes.toolTip}/>
           </>
-          )}
+        )}
       </TableCell>
       <TableCell className={classes.tableCell} align="center">
         {availableCheckBox && (
