@@ -1,15 +1,14 @@
-import React from 'react';
-import TopBarMenu from "./TopBarMenu";
+import React from 'react'
+import TopBarMenu from './TopBarMenu'
 
 interface Props {
   children: React.ReactNode;
 }
 
-export default function MenuFrame({children}: Props) {
-
+export default function MenuFrame ({ children }: Props) {
   return (
     <TopBarMenu>
       {children}
     </TopBarMenu>
-  );
+  )
 }

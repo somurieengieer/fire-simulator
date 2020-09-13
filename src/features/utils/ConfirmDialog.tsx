@@ -1,10 +1,10 @@
 import React from 'react'
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from '@material-ui/core/Button'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
 
 export type ConfirmDialogProps = {
   title?: string,
@@ -15,11 +15,11 @@ export type ConfirmDialogProps = {
   callBackWhenNo?: () => void,
 }
 
-const ConfirmDialog: React.FC<ConfirmDialogProps> = ({title, message, openFlag, closeFlag, callBackWhenYes, callBackWhenNo}) => {
+const ConfirmDialog: React.FC<ConfirmDialogProps> = ({ title, message, openFlag, closeFlag, callBackWhenYes, callBackWhenNo }) => {
   const handleAlertClose = (e: any) => {
-    e.stopPropagation(); //親要素のonClickを呼ばないように制御
-    closeFlag();
-  };
+    e.stopPropagation() // 親要素のonClickを呼ばないように制御
+    closeFlag()
+  }
 
   const exec = (e: any) => {
     handleAlertClose(e)
@@ -54,7 +54,7 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({title, message, openFlag, 
         </Button>
       </DialogActions>
     </Dialog>
-  );
+  )
 }
 
 export default ConfirmDialog
