@@ -1,10 +1,10 @@
 import React from 'react'
-import {FirePattern, updateFirePatternRelatedThings} from '../../features/fire/fireSlice'
-import {Area, AreaChart, CartesianGrid, Tooltip, XAxis, YAxis} from 'recharts'
-import {ChartData, createChartData, mergeChartData} from './CompoundInterestChart'
-import {PhaseData} from '../../features/fire/Phase'
+import { FirePattern, updateFirePatternRelatedThings } from '../../features/fire/fireSlice'
+import { Area, AreaChart, CartesianGrid, Tooltip, XAxis, YAxis } from 'recharts'
+import { ChartData, createChartData, mergeChartData } from './CompoundInterestChart'
+import { PhaseData } from '../../features/fire/Phase'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
-import {theme} from '../materialui/theme'
+import { theme } from '../materialui/theme'
 
 interface Props {
   firePattern: FirePattern,

@@ -1,7 +1,7 @@
-import React, {lazy, Suspense} from 'react'
+import React, { lazy, Suspense } from 'react'
 import './App.css'
-import {Route, Switch} from 'react-router'
-import {myUrl} from './layout/Urls'
+import { Route, Switch } from 'react-router'
+import { myUrl } from './layout/Urls'
 import MenuFrame from './layout/molecules/menu/MenuFrame'
 
 const FirePage = lazy(() => import('./layout/organism/FirePage'))

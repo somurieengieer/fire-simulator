@@ -1,7 +1,7 @@
 import React from 'react'
-import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from '@material-ui/core'
-import {addYearToCompoundInterestResult, CompoundInterestResult} from '../../features/compoundInterest/compoundInterest'
-import {makeStyles} from '@material-ui/core/styles'
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core'
+import { addYearToCompoundInterestResult, CompoundInterestResult } from '../../features/compoundInterest/compoundInterest'
+import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles({
   table: {

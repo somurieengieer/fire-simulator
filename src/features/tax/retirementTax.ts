@@ -1,5 +1,5 @@
-import {TaxSet} from './taxSlice'
-import {incomeTax, residentTax} from './tax'
+import { TaxSet } from './taxSlice'
+import { incomeTax, residentTax } from './tax'
 
 export interface InnerRetirementTax {
   workingYears: number, // 労働年数

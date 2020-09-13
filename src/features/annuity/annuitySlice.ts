@@ -1,7 +1,7 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit'
-import {RootState} from '../../app/store'
-import {updateForAnnuity} from './annuity'
-import {sum} from '../utils/Utils'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { RootState } from '../../app/store'
+import { updateForAnnuity } from './annuity'
+import { sum } from '../utils/Utils'
 
 export interface AnnuityForBase {
   paymentYear: number,

@@ -1,4 +1,4 @@
-import {create, createPhaseDataAfterRetirement, createPhaseDataForWorker, PhasesTemplate} from './fireInitialData'
+import { create, createPhaseDataAfterRetirement, createPhaseDataForWorker, PhasesTemplate } from './fireInitialData'
 
 export const pData1 = {
   label: '個人事業主・月30万生活・子供あり・完全に引退せず細々働く・独力',

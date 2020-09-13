@@ -1,10 +1,10 @@
-import React, {useState} from 'react'
-import {FirePattern} from '../../features/fire/fireSlice'
-import {CompoundInterestAreaChartNearPercent} from '../atoms/CompoundInterestAreaChartNearPercent'
-import {Box, Grid, Input, Slider} from '@material-ui/core'
-import {makeStyles} from '@material-ui/core/styles'
+import React, { useState } from 'react'
+import { FirePattern } from '../../features/fire/fireSlice'
+import { CompoundInterestAreaChartNearPercent } from '../atoms/CompoundInterestAreaChartNearPercent'
+import { Box, Grid, Input, Slider } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
 import EqualizerIcon from '@material-ui/icons/Equalizer'
-import {theme} from '../materialui/theme'
+import { theme } from '../materialui/theme'
 
 const useStyles = makeStyles({
   root: {

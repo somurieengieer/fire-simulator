@@ -2,13 +2,13 @@ import React from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
-import {createStyles, makeStyles, Theme} from '@material-ui/core/styles'
-import {useLocation} from 'react-router'
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
+import { useLocation } from 'react-router'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
-import {theme} from '../../materialui/theme'
+import { theme } from '../../materialui/theme'
 import classNames from 'classnames'
 import MenuButtons from './MenuButtons'
-import {myUrl} from '../../Urls'
+import { myUrl } from '../../Urls'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

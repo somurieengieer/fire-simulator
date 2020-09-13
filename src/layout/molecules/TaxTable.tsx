@@ -1,12 +1,12 @@
-import React, {useState} from 'react'
-import {Grid, Paper, Table, TableBody, TableContainer} from '@material-ui/core'
-import {makeStyles} from '@material-ui/core/styles'
-import {usePatternTableStyles} from './PhaseTableItems'
-import {theme} from '../materialui/theme'
-import {TaxHeaderRowSet, TaxSubHeaderRowSet, TaxTableRowSet} from './TaxTableItems'
-import {Deduction, Income, TaxSet, updateTaxSet} from '../../features/tax/taxSlice'
-import {useDispatch} from 'react-redux'
-import {numberFromHalfWidthToFullWidth, sumAmount} from '../../features/utils/Utils'
+import React, { useState } from 'react'
+import { Grid, Paper, Table, TableBody, TableContainer } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
+import { usePatternTableStyles } from './PhaseTableItems'
+import { theme } from '../materialui/theme'
+import { TaxHeaderRowSet, TaxSubHeaderRowSet, TaxTableRowSet } from './TaxTableItems'
+import { Deduction, Income, TaxSet, updateTaxSet } from '../../features/tax/taxSlice'
+import { useDispatch } from 'react-redux'
+import { numberFromHalfWidthToFullWidth, sumAmount } from '../../features/utils/Utils'
 
 const useStyles = makeStyles({
   root: {

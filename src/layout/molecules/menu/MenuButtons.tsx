@@ -1,11 +1,11 @@
 import React from 'react'
-import {withStyles} from '@material-ui/core/styles'
+import { withStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
-import Menu, {MenuProps} from '@material-ui/core/Menu'
+import Menu, { MenuProps } from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import ListItemText from '@material-ui/core/ListItemText'
-import {Link} from 'react-router-dom'
-import {myUrl} from '../../Urls'
+import { Link } from 'react-router-dom'
+import { myUrl } from '../../Urls'
 
 const StyledMenu = withStyles({
   paper: {

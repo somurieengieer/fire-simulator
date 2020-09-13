@@ -1,12 +1,12 @@
 import React from 'react'
-import {makeStyles} from '@material-ui/core/styles'
-import {Pie, PieChart, Tooltip} from 'recharts'
-import {Box, Paper} from '@material-ui/core'
-import {JustifyCenterBox} from './JustifyCenterBox'
-import {TaxSet} from '../../features/tax/taxSlice'
-import {sum, sumAmount} from '../../features/utils/Utils'
+import { makeStyles } from '@material-ui/core/styles'
+import { Pie, PieChart, Tooltip } from 'recharts'
+import { Box, Paper } from '@material-ui/core'
+import { JustifyCenterBox } from './JustifyCenterBox'
+import { TaxSet } from '../../features/tax/taxSlice'
+import { sum, sumAmount } from '../../features/utils/Utils'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
-import {theme} from '../materialui/theme'
+import { theme } from '../materialui/theme'
 
 const useStyles = makeStyles({
   paper: {

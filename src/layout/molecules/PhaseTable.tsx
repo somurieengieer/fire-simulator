@@ -1,8 +1,8 @@
 import React from 'react'
-import {Box, Grid, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableRow} from '@material-ui/core'
-import {makeStyles} from '@material-ui/core/styles'
-import {useDispatch} from 'react-redux'
-import {addPhase, deletePhase, FirePattern, updatePhases} from '../../features/fire/fireSlice'
+import { Box, Grid, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
+import { useDispatch } from 'react-redux'
+import { addPhase, deletePhase, FirePattern, updatePhases } from '../../features/fire/fireSlice'
 import {
   EmptyTableCell,
   SubHeaderRowSet,
@@ -10,12 +10,12 @@ import {
   TableRowSet,
   usePatternTableStyles
 } from './PhaseTableItems'
-import {theme} from '../materialui/theme'
-import {PhaseClass} from '../../features/fire/Phase'
-import {CompoundInterestByPattern} from './CompoundInterestByPattern'
+import { theme } from '../materialui/theme'
+import { PhaseClass } from '../../features/fire/Phase'
+import { CompoundInterestByPattern } from './CompoundInterestByPattern'
 import classNames from 'classnames'
-import {empty} from '../../features/utils/Utils'
-import {JustifyCenterBox} from '../atoms/JustifyCenterBox'
+import { empty } from '../../features/utils/Utils'
+import { JustifyCenterBox } from '../atoms/JustifyCenterBox'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 
 const useStyles = makeStyles({

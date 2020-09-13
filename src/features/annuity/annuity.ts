@@ -1,5 +1,5 @@
 // 年金に関する処理
-import {numberFixed} from '../utils/Utils'
+import { numberFixed } from '../utils/Utils'
 
 export interface Annuity {
   paymentYearForBase: number, // 老齢基礎年金

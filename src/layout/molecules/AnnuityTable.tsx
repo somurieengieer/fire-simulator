@@ -1,12 +1,12 @@
 import React from 'react'
-import {Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from '@material-ui/core'
-import {makeStyles} from '@material-ui/core/styles'
-import {usePatternTableStyles} from './PhaseTableItems'
-import {theme} from '../materialui/theme'
-import {TaxSubHeaderRowSet, TaxTableRowSet} from './TaxTableItems'
-import {useDispatch} from 'react-redux'
-import {AnnuityForEmployee, AnnuitySet, updateAnnuity} from '../../features/annuity/annuitySlice'
-import {numberFromHalfWidthToFullWidth} from '../../features/utils/Utils'
+import { Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
+import { usePatternTableStyles } from './PhaseTableItems'
+import { theme } from '../materialui/theme'
+import { TaxSubHeaderRowSet, TaxTableRowSet } from './TaxTableItems'
+import { useDispatch } from 'react-redux'
+import { AnnuityForEmployee, AnnuitySet, updateAnnuity } from '../../features/annuity/annuitySlice'
+import { numberFromHalfWidthToFullWidth } from '../../features/utils/Utils'
 
 const useStyles = makeStyles({
   root: {

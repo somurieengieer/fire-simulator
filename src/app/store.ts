@@ -1,10 +1,10 @@
-import {Action, configureStore, ThunkAction} from '@reduxjs/toolkit'
+import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit'
 import fireReducer from '../features/fire/fireSlice'
 import taxReducer from '../features/tax/taxSlice'
 import annuityReducer from '../features/annuity/annuitySlice'
-import {createLogger} from 'redux-logger'
-import {createBrowserHistory} from 'history'
-import {connectRouter, routerMiddleware} from 'connected-react-router'
+import { createLogger } from 'redux-logger'
+import { createBrowserHistory } from 'history'
+import { connectRouter, routerMiddleware } from 'connected-react-router'
 
 const logger = createLogger({
   diff: true,

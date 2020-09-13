@@ -1,5 +1,5 @@
-import {PhaseData} from './Phase'
-import {financialPDatas} from './personalFireInitialData'
+import { PhaseData } from './Phase'
+import { financialPDatas } from './personalFireInitialData'
 
 // デフォルト値
 export const initialPhasesDefault = (): PhaseData[] => [

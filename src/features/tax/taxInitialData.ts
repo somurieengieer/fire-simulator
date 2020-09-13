@@ -1,4 +1,4 @@
-import {TaxSet} from './taxSlice'
+import { TaxSet } from './taxSlice'
 
 const updateBaseForFree = (set: TaxSet) => {
   set.deductions[7].checked = false // 健康保険

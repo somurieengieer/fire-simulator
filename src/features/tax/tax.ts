@@ -1,10 +1,10 @@
 // 所得に関するロジック
 
 // 所得と控除のセット（Redux保存用クラス）
-import {Deduction, Income, ShowableItem, SocialInsurance, TaxSet} from './taxSlice'
-import {manYen, sumAmount} from '../utils/Utils'
-import {retirementTaxConvert} from './retirementTax'
-import {calcAnnuity, updateForAnnuity} from '../annuity/annuity'
+import { Deduction, Income, ShowableItem, SocialInsurance, TaxSet } from './taxSlice'
+import { manYen, sumAmount } from '../utils/Utils'
+import { retirementTaxConvert } from './retirementTax'
+import { calcAnnuity, updateForAnnuity } from '../annuity/annuity'
 
 export interface InnerTaxSet {
   incomes: InnerIncome[],

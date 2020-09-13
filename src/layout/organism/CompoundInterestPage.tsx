@@ -1,13 +1,13 @@
-import React, {useState} from 'react'
-import {Button, TextField, Typography} from '@material-ui/core'
+import React, { useState } from 'react'
+import { Button, TextField, Typography } from '@material-ui/core'
 import {
   calcCompoundInterestResult,
   CompoundInterestProps,
   CompoundInterestResult
 } from '../../features/compoundInterest/compoundInterest'
-import {makeStyles} from '@material-ui/core/styles'
-import {JustifyCenterBox} from '../atoms/JustifyCenterBox'
-import {CompoundInterestTable} from '../molecules/CompoundInterestTable'
+import { makeStyles } from '@material-ui/core/styles'
+import { JustifyCenterBox } from '../atoms/JustifyCenterBox'
+import { CompoundInterestTable } from '../molecules/CompoundInterestTable'
 
 const useStyles = makeStyles({
   table: {

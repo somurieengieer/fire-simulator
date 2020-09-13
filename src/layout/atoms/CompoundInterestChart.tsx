@@ -1,13 +1,13 @@
 import React from 'react'
-import {makeStyles} from '@material-ui/core/styles'
-import {useSelector} from 'react-redux'
-import {FirePattern, selectFirePatterns} from '../../features/fire/fireSlice'
-import {CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis} from 'recharts'
-import {CompoundInterestByYear} from '../../features/compoundInterest/compoundInterest'
-import {Box, Paper, Typography} from '@material-ui/core'
-import {JustifyCenterBox} from './JustifyCenterBox'
+import { makeStyles } from '@material-ui/core/styles'
+import { useSelector } from 'react-redux'
+import { FirePattern, selectFirePatterns } from '../../features/fire/fireSlice'
+import { CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts'
+import { CompoundInterestByYear } from '../../features/compoundInterest/compoundInterest'
+import { Box, Paper, Typography } from '@material-ui/core'
+import { JustifyCenterBox } from './JustifyCenterBox'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
-import {theme} from '../materialui/theme'
+import { theme } from '../materialui/theme'
 
 const useStyles = makeStyles({
   paper: {

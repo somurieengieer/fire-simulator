@@ -1,7 +1,7 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit'
-import {RootState} from '../../app/store'
-import {defaultIncomeAndDeductionSet, taxSetConvert} from './tax'
-import {InnerRetirementTax} from './retirementTax'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { RootState } from '../../app/store'
+import { defaultIncomeAndDeductionSet, taxSetConvert } from './tax'
+import { InnerRetirementTax } from './retirementTax'
 
 export interface ShowableItem {
   name: string,

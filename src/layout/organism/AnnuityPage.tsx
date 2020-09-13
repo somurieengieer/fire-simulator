@@ -1,11 +1,11 @@
 import React from 'react'
-import {useSelector} from 'react-redux'
-import {JustifyCenterBox} from '../atoms/JustifyCenterBox'
-import {AnnuitySet, selectAnnuity} from '../../features/annuity/annuitySlice'
-import {AnnuityTable} from '../molecules/AnnuityTable'
-import {GoogleAdsSmall} from '../../ads/GoogleAdsSmall'
-import {Section, SectionContent, SectionList, SectionTitle} from '../atoms/blog/Section'
-import {Box, Grid} from '@material-ui/core'
+import { useSelector } from 'react-redux'
+import { JustifyCenterBox } from '../atoms/JustifyCenterBox'
+import { AnnuitySet, selectAnnuity } from '../../features/annuity/annuitySlice'
+import { AnnuityTable } from '../molecules/AnnuityTable'
+import { GoogleAdsSmall } from '../../ads/GoogleAdsSmall'
+import { Section, SectionContent, SectionList, SectionTitle } from '../atoms/blog/Section'
+import { Box, Grid } from '@material-ui/core'
 
 export default function AnnuityPage () {
   const selectedAnnuity: AnnuitySet[] = useSelector(selectAnnuity)

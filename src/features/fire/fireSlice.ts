@@ -1,8 +1,8 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit'
-import {RootState} from '../../app/store'
-import {PhaseClass, PhaseData, PhasesClass} from './Phase'
-import {CompoundInterestResult} from '../compoundInterest/compoundInterest'
-import {initialPhasesDefault} from './fireInitialData'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { RootState } from '../../app/store'
+import { PhaseClass, PhaseData, PhasesClass } from './Phase'
+import { CompoundInterestResult } from '../compoundInterest/compoundInterest'
+import { initialPhasesDefault } from './fireInitialData'
 
 interface FireState {
   firePatterns: FirePattern[]

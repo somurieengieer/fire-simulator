@@ -1,4 +1,4 @@
-import {calcCompoundInterestResult, CompoundInterestResult} from '../compoundInterest/compoundInterest'
+import { calcCompoundInterestResult, CompoundInterestResult } from '../compoundInterest/compoundInterest'
 
 export interface PhaseData {
   ageAtStart?: number, // フェーズ開始時年齢
