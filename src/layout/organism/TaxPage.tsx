@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
 import { TaxPaper } from '../molecules/TaxPaper'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectTaxSet, TaxSet, updateTaxSet } from '../../features/tax/taxSlice'
@@ -11,12 +10,6 @@ import { Link } from 'react-router-dom'
 import { Section, SectionContent, SectionList, SectionTitle } from '../atoms/blog/Section'
 import { GoogleAdsSmall } from '../../ads/GoogleAdsSmall'
 import { Grid } from '@material-ui/core'
-
-const useStyles = makeStyles({
-  table: {
-    // width: 650,
-  }
-})
 
 // 個人事業主・サラリーマンの所得計算ページ（使わなそうなので中断）
 export default function TaxPage () {
@@ -81,7 +74,7 @@ export default function TaxPage () {
       </Link>
       <Grid container>
         {selectedTaxSet && selectedTaxSet.map((taxSet: TaxSet) => (
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={4} key={taxSet.setNumber}>
             <TaxPaper taxSet={taxSet}/>
           </Grid>
         ))}
