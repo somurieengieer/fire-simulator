@@ -47,7 +47,9 @@ export function AnnuityTable({annuity}: AnnuityTableProps) {
               <TaxSubHeaderRowSet title={'国民年金'}>
                 <TaxTableRowSet rowLabel={'納付年数'}
                                 value={annuity.base.paymentYear}
-                                onChange={v => updateTaxSetValue(() => annuity.base.paymentYear = Number(v))}
+                                onChange={v => updateTaxSetValue(() => {
+                                  annuity.base.paymentYear = Number(v)
+                                })}
                 />
               </TaxSubHeaderRowSet>
               <TaxSubHeaderRowSet title={'厚生年金'}>
@@ -55,11 +57,15 @@ export function AnnuityTable({annuity}: AnnuityTableProps) {
                   <>
                     <TaxTableRowSet rowLabel={`納付年数${index + 1}`}
                                     value={employee.paymentYear}
-                                    onChange={v => updateTaxSetValue(() => employee.paymentYear = Number(v))}
+                                    onChange={v => updateTaxSetValue(() => {
+                                      employee.paymentYear = Number(v)
+                                    })}
                     />
                     <TaxTableRowSet rowLabel={`平均標準報酬額${index + 1}`}
                                     value={employee.averageSalary}
-                                    onChange={v => updateTaxSetValue(() => employee.averageSalary = Number(v))}
+                                    onChange={v => updateTaxSetValue(() => {
+                                      employee.averageSalary = Number(v)
+                                    })}
                     />
                   </>
                 ))}
