@@ -4,6 +4,8 @@ export const myUrl = {
   fukuri: '/fukuri',
   tax: '/tax',
   annuity: '/annuity',
+  blogList: '/blog',
+  blog: '/blog/:id',
   examKamiShimoById (id: string) {
     return '/exam/kamishimo/' + id
   },
