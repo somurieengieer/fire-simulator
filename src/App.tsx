@@ -8,7 +8,7 @@ const FirePage = lazy(() => import('./layout/organism/FirePage'))
 const TaxPage = lazy(() => import('./layout/organism/TaxPage'))
 const AnnuityPage = lazy(() => import('./layout/organism/AnnuityPage'))
 
-function App() {
+function App () {
   return (
     <MenuFrame>
       <Suspense fallback={<div>Loading...</div>}>

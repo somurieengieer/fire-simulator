@@ -16,7 +16,7 @@ interface FirePatternPaperProps {
 }
 
 // 複利計算ページ
-export function FirePatternPaper({firePattern}: FirePatternPaperProps) {
+export function FirePatternPaper ({ firePattern }: FirePatternPaperProps) {
   const classes = useStyles()
 
   return (

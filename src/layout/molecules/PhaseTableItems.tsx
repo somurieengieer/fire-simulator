@@ -63,7 +63,7 @@ interface TablePatternHeaderSetProps {
   colSpan: number,
 }
 
-export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeaderSetProps) {
+export function TablePatternHeaderSet ({ firePattern, colSpan }: TablePatternHeaderSetProps) {
   const classes = usePatternTableStyles()
 
   const dispatch = useDispatch()
@@ -71,7 +71,7 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
   const selectedFirePatterns = useSelector(selectFirePatterns)
   const [templateIndex, setTemplateIndex] = useState<number>(0)
   const location = useLocation()
-  const [templateOptions, setTemplateOptions] = useState<PhasesTemplate[]>([{label: '▼テンプレートを選択'}])
+  const [templateOptions, setTemplateOptions] = useState<PhasesTemplate[]>([{ label: '▼テンプレートを選択' }])
 
   const title = (): string => {
     return 'パターン' + numberFromHalfWidthToFullWidth(firePattern.patternNumber)
@@ -161,7 +161,7 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
 
   const updateTemplateOptions = () => {
     setTemplateOptions([
-      {label: '▼テンプレートを選択'},
+      { label: '▼テンプレートを選択' },
       ...phasesTemplates(isPDataMode())
     ])
     if (isPDataMode()) {
@@ -199,15 +199,15 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
         <TableCell colSpan={colSpan}>
           {title()}&nbsp;
           <select value={templateIndex}
-                  onChange={v => setTemplateIndex(Number(v.target.value))}
-                  className={classes.select}>
+            onChange={v => setTemplateIndex(Number(v.target.value))}
+            className={classes.select}>
             {templateOptions.map((o, i) => (
               <option value={i} key={i}>{o.label}</option>
             ))}
           </select>
           {selectedPatternNumbers?.filter((i: number) => i !== firePattern.patternNumber).map((i: number) => (
             <button onClick={() => copyPatternByPatternNumber(i)}
-                    key={i}>パターン{numberFromHalfWidthToFullWidth(i)}からコピー</button>
+              key={i}>パターン{numberFromHalfWidthToFullWidth(i)}からコピー</button>
           ))}
         </TableCell>
       </TableRow>
@@ -215,7 +215,7 @@ export function TablePatternHeaderSet({firePattern, colSpan}: TablePatternHeader
   )
 }
 
-export function SubHeaderRowSet({title, colSpan}
+export function SubHeaderRowSet ({ title, colSpan }
                                   : { title: string, colSpan: number }) {
   const classes = usePatternTableStyles()
   return (
@@ -227,7 +227,7 @@ export function SubHeaderRowSet({title, colSpan}
   )
 }
 
-export function TableRowSet({rowLabel, phaseClasses, valueCallback, onChange, disabledCallback, isTypeString, validate}
+export function TableRowSet ({ rowLabel, phaseClasses, valueCallback, onChange, disabledCallback, isTypeString, validate }
                               : {
   rowLabel: string,
   phaseClasses: PhaseClass[],
@@ -252,10 +252,10 @@ export function TableRowSet({rowLabel, phaseClasses, valueCallback, onChange, di
       {phaseClasses.map((phase: PhaseClass, i: number) => (
         <TableCell className={classes.tableCell} align="center" key={i}>
           <input value={showValue(phase)}
-                 type={isTypeString ? 'string' : 'number'}
-                 onChange={v => onChange(v.target.value, i)}
-                 disabled={disabled(phase)}
-                 className={classNames(classes.input, {[classes.inputError]: validate && validate(phase)})}
+            type={isTypeString ? 'string' : 'number'}
+            onChange={v => onChange(v.target.value, i)}
+            disabled={disabled(phase)}
+            className={classNames(classes.input, { [classes.inputError]: validate && validate(phase) })}
           />
         </TableCell>
       ))}
@@ -264,7 +264,7 @@ export function TableRowSet({rowLabel, phaseClasses, valueCallback, onChange, di
   )
 }
 
-export function EmptyTableCell() {
+export function EmptyTableCell () {
   return (
     <TableCell width={10}>
     </TableCell>

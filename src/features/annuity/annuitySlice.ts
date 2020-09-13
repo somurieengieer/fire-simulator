@@ -34,10 +34,10 @@ const createInitialData = (setNumber: number) => {
       paymentYear: 10, annuity: 0
     },
     employees: [
-      {paymentYear: 10, averageSalary: 600},
-      {paymentYear: 20, averageSalary: 300},
-      {paymentYear: 0, averageSalary: 0},
-      {paymentYear: 0, averageSalary: 0}
+      { paymentYear: 10, averageSalary: 600 },
+      { paymentYear: 20, averageSalary: 300 },
+      { paymentYear: 0, averageSalary: 0 },
+      { paymentYear: 0, averageSalary: 0 }
     ],
     employeesAnnuity: 0,
     totalPaidAnnuity: 0,
@@ -52,10 +52,10 @@ const createInitialData2 = (setNumber: number) => {
       paymentYear: 0, annuity: 0
     },
     employees: [
-      {paymentYear: 40, averageSalary: 600},
-      {paymentYear: 0, averageSalary: 0},
-      {paymentYear: 0, averageSalary: 0},
-      {paymentYear: 0, averageSalary: 0}
+      { paymentYear: 40, averageSalary: 600 },
+      { paymentYear: 0, averageSalary: 0 },
+      { paymentYear: 0, averageSalary: 0 },
+      { paymentYear: 0, averageSalary: 0 }
     ],
     employeesAnnuity: 0,
     totalPaidAnnuity: 0,
@@ -70,10 +70,10 @@ const createInitialData3 = (setNumber: number) => {
       paymentYear: 40, annuity: 0
     },
     employees: [
-      {paymentYear: 0, averageSalary: 0},
-      {paymentYear: 0, averageSalary: 0},
-      {paymentYear: 0, averageSalary: 0},
-      {paymentYear: 0, averageSalary: 0}
+      { paymentYear: 0, averageSalary: 0 },
+      { paymentYear: 0, averageSalary: 0 },
+      { paymentYear: 0, averageSalary: 0 },
+      { paymentYear: 0, averageSalary: 0 }
     ],
     employeesAnnuity: 0,
     totalPaidAnnuity: 0,
@@ -124,7 +124,7 @@ export const annuitySlice = createSlice({
   }
 })
 
-export const {updateAnnuity} = annuitySlice.actions
+export const { updateAnnuity } = annuitySlice.actions
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of

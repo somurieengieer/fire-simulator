@@ -11,7 +11,7 @@ import {Link} from 'react-router-dom'
 import {myUrl} from '../Urls'
 
 // 複利計算ページ
-export default function FirePage() {
+export default function FirePage () {
   const selectedFirePatterns = useSelector(selectFirePatterns)
 
   return (

@@ -7,7 +7,7 @@ import {GoogleAdsSmall} from '../../ads/GoogleAdsSmall'
 import {Section, SectionContent, SectionList, SectionTitle} from '../atoms/blog/Section'
 import {Box, Grid} from '@material-ui/core'
 
-export default function AnnuityPage() {
+export default function AnnuityPage () {
   const selectedAnnuity: AnnuitySet[] = useSelector(selectAnnuity)
 
   return (

@@ -16,11 +16,11 @@ const useStyles = makeStyles({
 })
 
 // 複利計算ページ
-export function CompoundInterestPage() {
+export function CompoundInterestPage () {
   const classes = useStyles()
 
   const [interestProps, setInterestProps] = useState<CompoundInterestProps>(
-    {presentAmount: 100, reserveAmount: 10, reserveYears: 10, annualInterest: 3}
+    { presentAmount: 100, reserveAmount: 10, reserveYears: 10, annualInterest: 3 }
   )
   const [compoundInterestResult, setCompoundInterestResult] = useState<CompoundInterestResult | null>(null)
 
@@ -33,23 +33,23 @@ export function CompoundInterestPage() {
       <JustifyCenterBox width={'200px'}>
         <Typography>複利計算ページ</Typography>
         <TextField label="現在の金額"
-                   defaultValue={interestProps.presentAmount}
-                   onChange={v => setInterestProps(Object.assign(interestProps, {presentAmount: v.target.value}))}
+          defaultValue={interestProps.presentAmount}
+          onChange={v => setInterestProps(Object.assign(interestProps, { presentAmount: v.target.value }))}
         />
         <TextField label="積立金額"
-                   defaultValue={interestProps.reserveAmount}
-                   onChange={v => setInterestProps(Object.assign(interestProps, {reserveAmount: v.target.value}))}
+          defaultValue={interestProps.reserveAmount}
+          onChange={v => setInterestProps(Object.assign(interestProps, { reserveAmount: v.target.value }))}
         />
         <TextField label="積立年数"
-                   defaultValue={interestProps.reserveYears}
-                   onChange={v => setInterestProps(Object.assign(interestProps, {reserveYears: v.target.value}))}
+          defaultValue={interestProps.reserveYears}
+          onChange={v => setInterestProps(Object.assign(interestProps, { reserveYears: v.target.value }))}
         />
         <TextField label="年利"
-                   defaultValue={interestProps.annualInterest}
-                   onChange={v => setInterestProps(Object.assign(interestProps, {annualInterest: v.target.value}))}
+          defaultValue={interestProps.annualInterest}
+          onChange={v => setInterestProps(Object.assign(interestProps, { annualInterest: v.target.value }))}
         />
         <Button variant="contained" color="primary"
-                onClick={calc}
+          onClick={calc}
         >
           計算
         </Button>

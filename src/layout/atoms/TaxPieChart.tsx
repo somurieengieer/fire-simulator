@@ -19,11 +19,11 @@ interface Props {
   taxSet: TaxSet,
 }
 
-export function TaxPieChart({taxSet}: Props) {
+export function TaxPieChart ({ taxSet }: Props) {
   const data01 = [
-    {name: '手取り', value: taxSet.disposableIncome},
-    {name: '社会保険料', value: sumAmount(taxSet.socialInsurance)},
-    {name: '税金', value: sumAmount(taxSet.personalTax)}
+    { name: '手取り', value: taxSet.disposableIncome },
+    { name: '社会保険料', value: sumAmount(taxSet.socialInsurance) },
+    { name: '税金', value: sumAmount(taxSet.personalTax) }
   ]
 
   const percentage = (value: number) =>
@@ -42,9 +42,9 @@ export function TaxPieChart({taxSet}: Props) {
         <JustifyCenterBox>
           <PieChart width={chartSize} height={chartSize}>
             <Pie dataKey="value" isAnimationActive={false} data={data01}
-                 startAngle={90} endAngle={-270}
-                 cx={chartSize / 2} cy={chartSize / 2} outerRadius={chartSize / 4} fill="#8884d8"
-                 label={props => `${props.name} ${percentage(props.value)}%`}/>
+              startAngle={90} endAngle={-270}
+              cx={chartSize / 2} cy={chartSize / 2} outerRadius={chartSize / 4} fill="#8884d8"
+              label={props => `${props.name} ${percentage(props.value)}%`}/>
             <Tooltip formatter={value => `${value}万`}/>
           </PieChart>
         </JustifyCenterBox>

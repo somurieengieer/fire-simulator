@@ -65,7 +65,7 @@ interface ProgressiveRateItem {
 }
 
 // 累進金額の計算クラス（給与所得控除額計算など）
-function calcProgressiveRate(amount: number, items: ProgressiveRateItem[]): number {
+function calcProgressiveRate (amount: number, items: ProgressiveRateItem[]): number {
   const item = items.find(i => i.min < amount && amount <= i.max) as ProgressiveRateItem
   return amount * item.rate + item.base
 }
@@ -80,7 +80,7 @@ const salaryDeductionProgressiveRate = (amount: number) => {
     [660, 850, 0.1, 110],
     [850, 99999999999999999999999999, 0, 195]
   ].map(i => {
-    return {min: i[0], max: i[1], rate: i[2], base: i[3]}
+    return { min: i[0], max: i[1], rate: i[2], base: i[3] }
   })
   const result = calcProgressiveRate(amount, items)
 
@@ -450,7 +450,7 @@ export const defaultIncomeAndDeductionSet = (): InnerTaxSet => {
   }
 }
 
-export function taxSetConvert(taxSet: TaxSet): TaxSet {
+export function taxSetConvert (taxSet: TaxSet): TaxSet {
   const calcAutoAmount = (calculables: InnerAutoCalculable<any>[], showableItems: ShowableItem[], roundDigits?: number) => {
     calculables.forEach(calculable => {
       const ded = showableItems.find(item => item.name === calculable.name) as ShowableItem
@@ -482,7 +482,7 @@ export function taxSetConvert(taxSet: TaxSet): TaxSet {
   // 課税所得金額
   taxSet.taxableIncomeAmount = Math.max(taxSet.baseOfTaxation -
     sumAmount(taxSet.deductions),
-    0)
+  0)
 
   // 税金
   calcAutoAmount(innerSet.personalTax, taxSet.personalTax)

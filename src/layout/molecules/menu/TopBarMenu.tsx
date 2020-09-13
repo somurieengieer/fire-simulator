@@ -37,7 +37,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-export default function TopBarMenu({children}: Props) {
+export default function TopBarMenu ({ children }: Props) {
   const classes = useStyles()
 
   const location = useLocation()
@@ -60,7 +60,7 @@ export default function TopBarMenu({children}: Props) {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" className={classNames(classes.title, {[classes.center]: isPhoneMode})}>
+          <Typography variant="h6" className={classNames(classes.title, { [classes.center]: isPhoneMode })}>
             堅実にFIREを実現する&nbsp;
             {isPhoneMode && (<br/>)}
             - {title()} -

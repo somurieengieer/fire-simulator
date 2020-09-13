@@ -9,7 +9,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import InfoIcon from '@material-ui/icons/Info'
 import ReactTooltip from 'react-tooltip'
 
-export function TaxHeaderRowSet({taxSet, title}
+export function TaxHeaderRowSet ({ taxSet, title }
                                   : { taxSet: TaxSet, title: string }) {
   const classes = usePatternTableStyles()
   const dispatch = useDispatch()
@@ -55,7 +55,7 @@ interface TaxSubHeaderRowSetProps {
   children?: React.ReactNode; // TaxTableRowSetが並ぶ感じ（ヘッダー行以降の行）
 }
 
-export function TaxSubHeaderRowSet({title, amount, expanded, handleExpandClick, children}: TaxSubHeaderRowSetProps) {
+export function TaxSubHeaderRowSet ({ title, amount, expanded, handleExpandClick, children }: TaxSubHeaderRowSetProps) {
   const classes = usePatternTableStyles()
   const createTitle = () => (
     <>
@@ -86,9 +86,9 @@ export function TaxSubHeaderRowSet({title, amount, expanded, handleExpandClick, 
             </TableCell>
             <TableCell className={classes.tableCell} align="center">
               <input value={amount}
-                     type={'number'}
-                     className={classes.input}
-                     disabled={true}/>
+                type={'number'}
+                className={classes.input}
+                disabled={true}/>
             </TableCell>
           </>
         ) : (
@@ -102,7 +102,7 @@ export function TaxSubHeaderRowSet({title, amount, expanded, handleExpandClick, 
   )
 }
 
-export function TaxTableRowSet({rowLabel, value, onChange, availableCheckBox, checkValue, onChangeCheck, disabled, noFixed, toolTip}
+export function TaxTableRowSet ({ rowLabel, value, onChange, availableCheckBox, checkValue, onChangeCheck, disabled, noFixed, toolTip }
                                  : {
   rowLabel: string,
   value: string | number,
@@ -134,15 +134,15 @@ export function TaxTableRowSet({rowLabel, value, onChange, availableCheckBox, ch
       <TableCell className={classes.tableCell} align="center">
         {availableCheckBox && (
           <input type={'checkBox'}
-                 checked={checkValue}
-                 onChange={v => onChangeCheck && onChangeCheck(!checkValue)}
+            checked={checkValue}
+            onChange={v => onChangeCheck && onChangeCheck(!checkValue)}
           />
         )}
         <input value={showValue()}
-               type={'number'}
-               className={classes.input}
-               onChange={v => onChange && onChange(v.target.value)}
-               disabled={disabled}
+          type={'number'}
+          className={classes.input}
+          onChange={v => onChange && onChange(v.target.value)}
+          disabled={disabled}
         />
       </TableCell>
     </TableRow>

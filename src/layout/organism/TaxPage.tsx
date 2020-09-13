@@ -19,7 +19,7 @@ const useStyles = makeStyles({
 })
 
 // 個人事業主・サラリーマンの所得計算ページ（使わなそうなので中断）
-export default function TaxPage() {
+export default function TaxPage () {
   const location = useLocation()
   const dispatch = useDispatch()
   const selectedTaxSet: TaxSet[] = useSelector(selectTaxSet)
@@ -75,7 +75,7 @@ export default function TaxPage() {
         </Section>
       </JustifyCenterBox>
       <Link to={() => showFireSimulator()}
-            target="_blank"
+        target="_blank"
       >
         FIREシミュレーターを開く
       </Link>

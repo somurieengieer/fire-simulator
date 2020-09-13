@@ -9,7 +9,7 @@ export interface Annuity {
   annuityForEmployee?: number,
 }
 
-export function updateForAnnuity(annuity: Annuity): Annuity {
+export function updateForAnnuity (annuity: Annuity): Annuity {
   // 老齢基礎年金
   // 約78万円 × 納付月数 / 480月
   annuity.annuityForBase = numberFixed(78 *
@@ -23,7 +23,7 @@ export function updateForAnnuity(annuity: Annuity): Annuity {
   return annuity
 }
 
-export function calcAnnuity(annuity: Annuity): number {
+export function calcAnnuity (annuity: Annuity): number {
   const updated = updateForAnnuity(annuity)
   return (updated.annuityForBase || 0) + (updated.annuityForEmployee || 0)
 }

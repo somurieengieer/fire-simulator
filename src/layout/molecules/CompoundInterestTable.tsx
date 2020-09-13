@@ -14,7 +14,7 @@ interface CompoundInterestTableByAgeProps {
   startAge: number,
 }
 
-export function CompoundInterestTableByAge({result, startAge}: CompoundInterestTableByAgeProps) {
+export function CompoundInterestTableByAge ({ result, startAge }: CompoundInterestTableByAgeProps) {
   console.log('result at CompoundInterestTableByAge', result)
   const resultCalculatedByAge = addYearToCompoundInterestResult(result, startAge)
   console.log('resultCalculatedByAge at CompoundInterestTableByAge', resultCalculatedByAge)
@@ -30,7 +30,7 @@ interface CompoundInterestTableProps {
 }
 
 // 複利結果表
-export function CompoundInterestTable({result}: CompoundInterestTableProps) {
+export function CompoundInterestTable ({ result }: CompoundInterestTableProps) {
   return (<CompoundInterestCommonTable
     label='経過年'
     yearPostWord='年目'
@@ -45,7 +45,7 @@ interface CompoundInterestCommonTableProps {
 }
 
 // 複利結果表
-function CompoundInterestCommonTable({label, yearPostWord, result}: CompoundInterestCommonTableProps) {
+function CompoundInterestCommonTable ({ label, yearPostWord, result }: CompoundInterestCommonTableProps) {
   const classes = useStyles()
 
   return (

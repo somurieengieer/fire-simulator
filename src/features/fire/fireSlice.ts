@@ -8,7 +8,7 @@ interface FireState {
   firePatterns: FirePattern[]
 }
 
-function createNewPhase(firePattern: FirePattern): PhaseData {
+function createNewPhase (firePattern: FirePattern): PhaseData {
   const lastPhase = firePattern.phases.slice(-1)[0]
   return {
     ageAtStart: Number(lastPhase.ageAtEnd || 0) + 1,
@@ -66,7 +66,7 @@ export const updateFirePatternRelatedThings = (firePattern: FirePattern): void =
   firePattern.compoundInterestResult = new PhasesClass(firePattern.phases.map(data => new PhaseClass(data))).compoundInterestResult()
 }
 
-function hasError(firePattern: FirePattern): boolean {
+function hasError (firePattern: FirePattern): boolean {
   if (!firePattern.phases[0].ageAtStart) {
     console.log('hasError, ageAtStart does not set. firePattern=', firePattern.patternNumber, ', ageAtStart=', firePattern.phases[0].ageAtStart)
     return true
@@ -142,7 +142,7 @@ export const fireSlice = createSlice({
   }
 })
 
-export const {updatePhases, deletePhase, addPhase} = fireSlice.actions
+export const { updatePhases, deletePhase, addPhase } = fireSlice.actions
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of

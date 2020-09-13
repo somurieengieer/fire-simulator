@@ -11,7 +11,7 @@ interface Props {
   nearPercent: number, // 変動リスク%
 }
 
-function addAnnualInterest(firePattern: FirePattern, addPercent: number, valueKey: string): ChartData[] {
+function addAnnualInterest (firePattern: FirePattern, addPercent: number, valueKey: string): ChartData[] {
   const copiedFirePattern = JSON.parse(JSON.stringify(firePattern))
   copiedFirePattern.phases.forEach((p: PhaseData) => p.annualInterest = Number(p.annualInterest || 0) + addPercent)
   updateFirePatternRelatedThings(copiedFirePattern)
@@ -19,7 +19,7 @@ function addAnnualInterest(firePattern: FirePattern, addPercent: number, valueKe
 }
 
 // 近辺%エリアチャート
-export function CompoundInterestAreaChartNearPercent({firePattern, nearPercent}: Props) {
+export function CompoundInterestAreaChartNearPercent ({ firePattern, nearPercent }: Props) {
   const createData = (): ChartData[] => {
     const data: ChartData[] | undefined = createChartData(firePattern, 'base')
     if (!data) return []
@@ -39,7 +39,7 @@ export function CompoundInterestAreaChartNearPercent({firePattern, nearPercent}:
 
   const existsData = () => firePattern.compoundInterestResult
 
-  const AreaChartWithSize = ({width, height, children}: { width: number, height: number, children: React.ReactNode }) => {
+  const AreaChartWithSize = ({ width, height, children }: { width: number, height: number, children: React.ReactNode }) => {
     return (
       <AreaChart
         width={width}
@@ -59,23 +59,23 @@ export function CompoundInterestAreaChartNearPercent({firePattern, nearPercent}:
   if (!existsData()) return (<></>)
   return (
     <AreaChartWithSize width={isPhoneMode ? 340 : 500}
-                       height={isPhoneMode ? 272 : 400}>
+      height={isPhoneMode ? 272 : 400}>
       <CartesianGrid strokeDasharray="3 3"/>
       <XAxis dataKey="name" tickFormatter={(tickItem) => `${tickItem}歳`}/>
       <YAxis tickFormatter={(tickItem) => `${tickItem.toLocaleString()}万`}/>
       <Tooltip labelFormatter={label => `${label}歳`}
-               itemSorter={(a, b) => {
-                 let result = 2
-                 if (a.dataKey === 'plus') result = 0
-                 if (a.dataKey === 'base') result = 1
-                 return result
-               }}
-               formatter={((value, name, entry, index) => {
-                 let amount = value
-                 if (name.charAt(0) !== '-') amount += entry.payload.minus
-                 if (name.charAt(0) === '+') amount += entry.payload.base
-                 return `${Number(amount || 0).toLocaleString()}万`
-               })}/>
+        itemSorter={(a, b) => {
+          let result = 2
+          if (a.dataKey === 'plus') result = 0
+          if (a.dataKey === 'base') result = 1
+          return result
+        }}
+        formatter={((value, name, entry, index) => {
+          let amount = value
+          if (name.charAt(0) !== '-') amount += entry.payload.minus
+          if (name.charAt(0) === '+') amount += entry.payload.base
+          return `${Number(amount || 0).toLocaleString()}万`
+        })}/>
       <Area type="monotone" name={`-${nearPercent}％運用`} dataKey="minus" stackId="1" stroke="#ff5858" fill="#FFFFFF"/>
       <Area type="monotone" name='想定通り運用' dataKey="base" stackId="1" stroke="#82ca9d" fill="#ff5858"/>
       <Area type="monotone" name={`+${nearPercent}％運用`} dataKey="plus" stackId="1" stroke="#8884d8" fill="#8884d8"/>

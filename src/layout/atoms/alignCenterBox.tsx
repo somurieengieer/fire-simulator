@@ -13,9 +13,9 @@ interface Props {
 }
 
 // 複利計算ページ
-export function AlignCenterBox({children}: Props) {
+export function AlignCenterBox ({ children }: Props) {
   return (
-    <Box display="flex" alignItems="center" style={{height: '100%'}}>
+    <Box display="flex" alignItems="center" style={{ height: '100%' }}>
       <Box>
         {children}
       </Box>

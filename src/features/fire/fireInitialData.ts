@@ -30,7 +30,7 @@ interface PhaseDataForWorkerProps {
   babyBirthYear?: number,
 }
 
-export function create(editable: boolean, obj: any): PhaseData {
+export function create (editable: boolean, obj: any): PhaseData {
   return ({
     ageAtStartEditable: editable,
     assetAtStartEditable: editable,
@@ -38,7 +38,7 @@ export function create(editable: boolean, obj: any): PhaseData {
   }) as PhaseData
 }
 
-export function createPhaseDataForWorker(props: PhaseDataForWorkerProps): PhaseData[] {
+export function createPhaseDataForWorker (props: PhaseDataForWorkerProps): PhaseData[] {
   const result: PhaseData[] = []
   result.push(
     {
@@ -91,7 +91,7 @@ export function createPhaseDataForWorker(props: PhaseDataForWorkerProps): PhaseD
   return result
 }
 
-export function createPhaseDataAfterRetirement(props: PhaseDataForWorkerProps): PhaseData[] {
+export function createPhaseDataAfterRetirement (props: PhaseDataForWorkerProps): PhaseData[] {
   const result: PhaseData[] = []
   if (props.ageAtRetirement < 59) {
     result.push({
@@ -105,23 +105,23 @@ export function createPhaseDataAfterRetirement(props: PhaseDataForWorkerProps): 
     })
   }
   result.push({
-      ageAtEnd: 70,
-      ageAtStartEditable: false,
-      assetAtStartEditable: false,
-      note: '年金受給前生活（年金支払なし）',
-      income: 0,
-      expense: props.expenseAfterRetirement || props.expense - 20,
-      annualInterest: props.annualInterest
-    },
-    {
-      ageAtEnd: 85,
-      ageAtStartEditable: false,
-      assetAtStartEditable: false,
-      note: '年金受給生活',
-      income: props.annuity,
-      expense: props.expenseAfterRetirement || props.expense - 20,
-      annualInterest: props.annualInterest
-    })
+    ageAtEnd: 70,
+    ageAtStartEditable: false,
+    assetAtStartEditable: false,
+    note: '年金受給前生活（年金支払なし）',
+    income: 0,
+    expense: props.expenseAfterRetirement || props.expense - 20,
+    annualInterest: props.annualInterest
+  },
+  {
+    ageAtEnd: 85,
+    ageAtStartEditable: false,
+    assetAtStartEditable: false,
+    note: '年金受給生活',
+    income: props.annuity,
+    expense: props.expenseAfterRetirement || props.expense - 20,
+    annualInterest: props.annualInterest
+  })
   return result
 }
 
@@ -145,7 +145,7 @@ const templateOfNormalSalaryMan = {
 
 const templateOfNormalSalaryMan3percent = {
   label: '平均的なサラリーマン（3%運用）',
-  createPhaseData: () => templateOfNormalSalaryMan.createPhaseData().map((v) => Object.assign(v, {annualInterest: 3}))
+  createPhaseData: () => templateOfNormalSalaryMan.createPhaseData().map((v) => Object.assign(v, { annualInterest: 3 }))
 }
 
 const expense20MynPerYear = (): PhasesTemplate[] => [
@@ -353,21 +353,21 @@ const expense20MynPerYearWithChildren = (): PhasesTemplate[] => [{
     babyBirthYear: 26
   })
 },
-  {
-    label: '個人事業主・年200万投資',
-    createPhaseData: () => createPhaseDataForWorker({
-      ageAtRetirement: 51,
-      income: 440,
-      retirementAllowance: 2000,
-      expense: 240,
-      expenseAfterRetirement: 240,
-      annuity: 74, // 年金
-      assetAtStart: 0,
-      annualInterest: 3,
-      babyCost: 100,
-      babyBirthYear: 26
-    })
-  }]
+{
+  label: '個人事業主・年200万投資',
+  createPhaseData: () => createPhaseDataForWorker({
+    ageAtRetirement: 51,
+    income: 440,
+    retirementAllowance: 2000,
+    expense: 240,
+    expenseAfterRetirement: 240,
+    annuity: 74, // 年金
+    assetAtStart: 0,
+    annualInterest: 3,
+    babyCost: 100,
+    babyBirthYear: 26
+  })
+}]
 
 const expense30MynPerYearWithChildren = (): PhasesTemplate[] => [{
   label: 'サラリーマン・年収800万・子供あり',
@@ -384,25 +384,25 @@ const expense30MynPerYearWithChildren = (): PhasesTemplate[] => [{
     babyBirthYear: 26
   })
 },
-  {
-    label: '個人事業主・年250万投資',
-    createPhaseData: () => createPhaseDataForWorker({
-      ageAtRetirement: 52,
-      income: 610,
-      retirementAllowance: 2600,
-      expense: 360,
-      expenseAfterRetirement: 360,
-      annuity: 74, // 年金
-      assetAtStart: 0,
-      annualInterest: 3,
-      babyCost: 100,
-      babyBirthYear: 26
-    })
-  }]
+{
+  label: '個人事業主・年250万投資',
+  createPhaseData: () => createPhaseDataForWorker({
+    ageAtRetirement: 52,
+    income: 610,
+    retirementAllowance: 2600,
+    expense: 360,
+    expenseAfterRetirement: 360,
+    annuity: 74, // 年金
+    assetAtStart: 0,
+    annualInterest: 3,
+    babyCost: 100,
+    babyBirthYear: 26
+  })
+}]
 
 export const createDataFromURL = ({
-                                    nowAge, retirementAllowance, income, annuity
-                                  }
+  nowAge, retirementAllowance, income, annuity
+}
                                     : {
   nowAge?: number,
   retirementAllowance?: number,

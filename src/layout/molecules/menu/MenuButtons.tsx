@@ -38,15 +38,15 @@ const StyledMenuItem = withStyles((theme) => ({
   }
 }))(MenuItem)
 
-const LinkedMenuItem = ({onClick, url, label}: { onClick: any, url: string, label: string }) => (
-  <Link to={() => url} style={{textDecoration: 'none', color: '#000'}}>
+const LinkedMenuItem = ({ onClick, url, label }: { onClick: any, url: string, label: string }) => (
+  <Link to={() => url} style={{ textDecoration: 'none', color: '#000' }}>
     <StyledMenuItem>
       <ListItemText onClick={onClick} primary={label}/>
     </StyledMenuItem>
   </Link>
 )
 
-export default function MenuButtons() {
+export default function MenuButtons () {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {

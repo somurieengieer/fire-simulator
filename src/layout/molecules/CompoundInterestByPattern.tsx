@@ -31,7 +31,7 @@ interface Props {
 }
 
 // 近辺%エリアチャート
-export function CompoundInterestByPattern({firePattern}: Props) {
+export function CompoundInterestByPattern ({ firePattern }: Props) {
   const classes = useStyles()
   const [nearPercent, setNearPercent] = useState<number>(1.0)
 
@@ -42,8 +42,8 @@ export function CompoundInterestByPattern({firePattern}: Props) {
         nearPercent={nearPercent}/>
 
       <Grid container spacing={2} alignItems="center"
-            className={classes.sliderRoot}
-            component="div"
+        className={classes.sliderRoot}
+        component="div"
       >
         <Grid item component="span">
           <EqualizerIcon/>

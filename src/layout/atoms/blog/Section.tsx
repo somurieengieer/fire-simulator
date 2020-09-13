@@ -32,11 +32,11 @@ interface SectionProps {
   children: React.ReactNode;
 }
 
-export function Section({maxWidth, children}: SectionProps) {
+export function Section ({ maxWidth, children }: SectionProps) {
   const classes = useStyles()
   if (maxWidth) {
     return (
-      <Box className={classes.section} style={{maxWidth: maxWidth}}>
+      <Box className={classes.section} style={{ maxWidth: maxWidth }}>
         {children}
       </Box>
     )
@@ -48,7 +48,7 @@ export function Section({maxWidth, children}: SectionProps) {
   )
 }
 
-export function SectionTitle({children}: Props) {
+export function SectionTitle ({ children }: Props) {
   const classes = useStyles()
   return (
     <Box className={classes.title}>
@@ -57,7 +57,7 @@ export function SectionTitle({children}: Props) {
   )
 }
 
-export function SectionContent({children}: Props) {
+export function SectionContent ({ children }: Props) {
   const classes = useStyles()
   return (
     <Box className={classes.content}>
@@ -70,9 +70,9 @@ interface SectionListProps {
   items: string[]
 }
 
-export function SectionList({items}: SectionListProps) {
+export function SectionList ({ items }: SectionListProps) {
   return (
-    <ul style={{paddingLeft: '1.5rem'}}>
+    <ul style={{ paddingLeft: '1.5rem' }}>
       {items.map((item, i) => (
         <li key={i}>{item}</li>
       ))}

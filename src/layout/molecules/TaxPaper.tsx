@@ -16,7 +16,7 @@ interface FirePatternPaperProps {
   taxSet: TaxSet,
 }
 
-export function TaxPaper({taxSet}: FirePatternPaperProps) {
+export function TaxPaper ({ taxSet }: FirePatternPaperProps) {
   const classes = useStyles()
 
   return (

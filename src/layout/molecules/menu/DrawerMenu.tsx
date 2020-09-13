@@ -62,7 +62,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-export default function ResponsiveDrawer({window, children}: Props) {
+export default function ResponsiveDrawer ({ window, children }: Props) {
   // const { window, children } = props;
   const classes = useStyles()
   const theme = useTheme()
