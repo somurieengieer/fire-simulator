@@ -2,18 +2,16 @@ import React from 'react'
 import { Box } from '@material-ui/core'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 import { BlogContentItem } from '../../../blogContent/BlogContentItem'
-import { SectionTitle } from './Section'
 
 const useStyles = makeStyles(theme => createStyles({
   root: {
     maxWidth: 800
   },
   header: {
-    margin: 20,
-    marginBottom: 60,
-    [theme.breakpoints.down('sm')]: {
-      margin: 10
-    }
+    padding: '0.4rem',
+    paddingLeft: '1rem',
+    borderRadius: '30px 3px',
+    backgroundColor: theme.palette.primary.main
   },
   title: {
     color: '#6594e0', /* 文字色 */
@@ -50,11 +48,19 @@ interface ContentHeaderProps {
 }
 
 export function ContentHeader ({ content }: ContentHeaderProps) {
-  // const classes = useStyles()
+  const classes = useStyles()
   return (
     <Box>
-      <SectionTitle>{content.title}</SectionTitle>
-      <SectionTitle>{content.created}</SectionTitle>
+      <Box className={classes.header}>
+        <Box>
+          <h1>{content.title}</h1>
+        </Box>
+        <Box display="flex" flexDirection="row-reverse">
+          <Box style={{ marginRight: '3rem', marginBottom: '1rem' }}>
+            {content.created}
+          </Box>
+        </Box>
+      </Box>
     </Box>
   )
 }
