@@ -6,6 +6,9 @@ export const myUrl = {
   annuity: '/annuity',
   blogList: '/blog',
   blog: '/blog/:id',
+  blogById (id: number) {
+    return `${this.blogList}/${id}`
+  },
   examKamiShimoById (id: string) {
     return '/exam/kamishimo/' + id
   },

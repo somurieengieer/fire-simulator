@@ -1,13 +1,46 @@
 import React, { useEffect, useState } from 'react'
 import { BlogContent, blogContentList } from '../../blogContent/BlogContent'
 import { useLocation } from 'react-router'
-import { Paper } from '@material-ui/core'
+import { Box, Paper } from '@material-ui/core'
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
+import { Link } from 'react-router-dom'
+import { myUrl } from '../Urls'
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    link: {
+      textDecoration: 'none'
+    },
+    root: {
+      margin: theme.spacing(1)
+    },
+    header: {
+      paddingLeft: theme.spacing(2),
+      paddingTop: theme.spacing(1)
+    },
+    footer: {
+      paddingBottom: theme.spacing(1),
+      paddingRight: theme.spacing(2)
+    }
+  })
+)
 
 function BlogCaption (content: BlogContent) {
+  const classes = useStyles()
+
   return (
-    <Paper>
-      {content.title}
-    </Paper>
+    <Link to={myUrl.blogById(content.id)} className={classes.link}>
+      <Paper className={classes.root}>
+        <Box className={classes.header}>
+          <h3>{content.title}</h3>
+        </Box>
+        <Box display="flex" flexDirection="row-reverse" className={classes.footer}>
+          <Box>
+            {content.created}
+          </Box>
+        </Box>
+      </Paper>
+    </Link>
   )
 }
 export default function BlogListPage () {
