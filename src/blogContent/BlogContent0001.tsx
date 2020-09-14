@@ -1,12 +1,11 @@
 import React from 'react'
-import { Section, SectionContent, SectionList, SectionTitle } from '../layout/atoms/blog/Section'
+import { SectionContent, SectionList, SectionTitle } from '../layout/atoms/blog/Section'
 
 export default function BlogContent0001 () {
   return (
-    <Section maxWidth={800}>
-      <SectionTitle>使い方</SectionTitle>
+    <>
+      <SectionTitle>セクションタイトル</SectionTitle>
       <SectionContent>
-        ※PC推奨<br/>
         おおまかに老後の年金受給額を計算できます。おおまかなので全て万円表記です。<br/>
         厚生年金は納付年数と平均標準報酬額の入力欄が4つあるので必要に応じて使用してください。<br/>
         細かい計算は端折っているので詳細な計算用途では使用しないよう注意してください。<br/>
@@ -18,6 +17,6 @@ export default function BlogContent0001 () {
           '10年〜40年納付前提'
         ]}/>
       </SectionContent>
-    </Section>
+    </>
   )
 }

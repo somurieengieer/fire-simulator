@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { BlogContent, blogContentList } from '../../blogContent/BlogContent'
+import { BlogContentItem, blogContentList } from '../../blogContent/BlogContentItem'
 import { useLocation } from 'react-router'
 import { Box, Paper } from '@material-ui/core'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-function BlogCaption (content: BlogContent) {
+function BlogCaption (content: BlogContentItem) {
   const classes = useStyles()
 
   return (
@@ -46,7 +46,7 @@ function BlogCaption (content: BlogContent) {
 export default function BlogListPage () {
   const location = useLocation()
   const NUMBER_OF_SHOW_ITEMS = 10
-  const [blogList, setBlogList] = useState<BlogContent[]>()
+  const [blogList, setBlogList] = useState<BlogContentItem[]>()
 
   const page = () => {
     const getParams = new URLSearchParams(location.search)

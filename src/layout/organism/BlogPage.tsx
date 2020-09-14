@@ -1,7 +1,8 @@
 import React from 'react'
 import { Section, SectionTitle } from '../atoms/blog/Section'
-import { blogContentList } from '../../blogContent/BlogContent'
+import { blogContentList } from '../../blogContent/BlogContentItem'
 import { useParams } from 'react-router'
+import { BlogContent } from '../atoms/blog/Content'
 
 export default function BlogPage () {
   // @ts-ignore
@@ -12,11 +13,9 @@ export default function BlogPage () {
 
     if (blog) {
       return (
-        <Section maxWidth={800}>
-          <SectionTitle>{blog.title}</SectionTitle>
-          <SectionTitle>{blog.created}</SectionTitle>
-          {blog.contents}
-        </Section>
+        <BlogContent content={blog}>
+          {blog.content}
+        </BlogContent>
       )
     }
   } finally {
