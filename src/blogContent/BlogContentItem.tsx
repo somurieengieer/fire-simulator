@@ -23,7 +23,7 @@ export const blogContentList: BlogContentItem[] = [
     id: 1,
     title: 'ブログテスト２',
     created: '2020-09-14',
-    tags: [BlogTag.FIRE],
+    tags: [BlogTag.節税],
     content: (<BlogContent0001 />)
   },
   {

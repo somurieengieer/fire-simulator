@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box } from '@material-ui/core'
+import { Box, Card, CardContent, Typography } from '@material-ui/core'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 import { BlogContentItem, blogContentList } from '../../../blogContent/BlogContentItem'
 
@@ -28,27 +28,35 @@ const useStyles = makeStyles(theme => createStyles({
 
 export enum BlogTag {
   FIRE,
-  // 節税,
+  節税,
   // 独り言,
 }
 
 interface SameTagContentsProps {
-  tag: BlogTag
+  tags: BlogTag[]
 }
 
-export function SameTagContents ({ tag }: SameTagContentsProps) {
+export function SameTagContents ({ tags }: SameTagContentsProps) {
   const classes = useStyles()
   const NUMBER_OF_RECOMMEND_CONTENTS = 5
+  // TODO: tagsは１つしかタグを持っていない前提で実装
   const sameTagContents = blogContentList
-    .filter(c => c.tags.includes(tag))
+    .filter(c => tags[0] === c.tags[0])
     .slice(0, NUMBER_OF_RECOMMEND_CONTENTS)
   return (
     <Box>
       <Box className={classes.root}>
         {sameTagContents.map(content => (
-          <Box key={content.id}>
-            <h6>{content.title}</h6>
-          </Box>
+          <Card key={content.id} style={{ marginBottom: 5 }}>
+            <CardContent>
+              <Typography variant='body1'>
+                {content.title}
+              </Typography>
+              <Typography variant='body2'>
+                {content.created}
+              </Typography>
+            </CardContent>
+          </Card>
         ))}
       </Box>
     </Box>

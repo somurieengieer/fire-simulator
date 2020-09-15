@@ -42,7 +42,7 @@ export function BlogSideBar ({ content }: BlogSideBarProps) {
 
   return (
     <Grid className={classes.root}>
-      <SameTagContents tag={content.tags[0]} />
+      <SameTagContents tags={content.tags} />
     </Grid>
   )
 }

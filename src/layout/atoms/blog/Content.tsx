@@ -2,6 +2,7 @@ import React from 'react'
 import { Box } from '@material-ui/core'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 import { BlogContentItem } from '../../../blogContent/BlogContentItem'
+import { JustifyRightBox } from '../JustifyRightBox'
 
 const useStyles = makeStyles(theme => createStyles({
   root: {
@@ -55,11 +56,11 @@ export function ContentHeader ({ content }: ContentHeaderProps) {
         <Box>
           <h1>{content.title}</h1>
         </Box>
-        <Box display="flex" flexDirection="row-reverse">
+        <JustifyRightBox>
           <Box style={{ marginRight: '3rem', marginBottom: '1rem' }}>
             {content.created}
           </Box>
-        </Box>
+        </JustifyRightBox>
       </Box>
     </Box>
   )

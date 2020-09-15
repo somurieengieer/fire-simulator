@@ -5,7 +5,7 @@ import { useParams } from 'react-router'
 import { BlogContent } from '../atoms/blog/Content'
 import { JustifyCenterBox } from '../atoms/JustifyCenterBox'
 import { BlogSideBar } from '../molecules/BlogSideBar'
-import { Box, Grid } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 
 export default function BlogPage () {
   // @ts-ignore
