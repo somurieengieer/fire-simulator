@@ -1,24 +1,10 @@
 import React from 'react'
-import { Box, Grid, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import { useDispatch } from 'react-redux'
-import { addPhase, deletePhase, FirePattern, updatePhases } from '../../features/fire/fireSlice'
-import {
-  EmptyTableCell,
-  SubHeaderRowSet,
-  TablePatternHeaderSet,
-  TableRowSet,
-  usePatternTableStyles
-} from './PhaseTableItems'
 import { theme } from '../materialui/theme'
-import { PhaseClass } from '../../features/fire/Phase'
-import { CompoundInterestByPattern } from './CompoundInterestByPattern'
-import classNames from 'classnames'
-import { empty } from '../../features/utils/Utils'
-import { JustifyCenterBox } from '../atoms/JustifyCenterBox'
-import AddCircleIcon from '@material-ui/icons/AddCircle'
 import { BlogContentItem } from '../../blogContent/BlogContentItem'
-import { SameTagContents } from '../atoms/blog/BlogTag'
+import { BlogSameTagContents } from './BlogSameTagContents'
+import { SmallHeader } from '../atoms/blog/SmallHeader'
 
 const useStyles = makeStyles({
   root: {
@@ -42,7 +28,8 @@ export function BlogSideBar ({ content }: BlogSideBarProps) {
 
   return (
     <Grid className={classes.root}>
-      <SameTagContents tags={content.tags} />
+      <SmallHeader title={'関連記事'} />
+      <BlogSameTagContents tags={content.tags} />
     </Grid>
   )
 }
