@@ -10,8 +10,6 @@ const useStyles = makeStyles(theme => createStyles({
   },
   header: {
     padding: theme.spacing(2),
-    // padding: '0.4rem',
-    // paddingLeft: '1rem',
     borderRadius: '30px 3px',
     backgroundColor: theme.palette.primary.main
   },

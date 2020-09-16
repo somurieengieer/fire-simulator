@@ -15,9 +15,9 @@ export function JustifyCenterBox ({ width, children }: Props) {
           {children}
         </Box>
       ) : (
-        <>
+        <Box style={{ width: '100%' }}>
           {children}
-        </>
+        </Box>
       )}
     </Box>
   )

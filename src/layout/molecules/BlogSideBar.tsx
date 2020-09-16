@@ -5,6 +5,7 @@ import { theme } from '../materialui/theme'
 import { BlogContentItem } from '../../blogContent/BlogContentItem'
 import { BlogSameTagContents } from './BlogSameTagContents'
 import { SmallHeader } from '../atoms/blog/SmallHeader'
+import { Profile } from '../atoms/blog/Profile'
 
 const useStyles = makeStyles({
   root: {
@@ -19,7 +20,7 @@ const useStyles = makeStyles({
 })
 
 interface BlogSideBarProps {
-  content: BlogContentItem,
+  content?: BlogContentItem,
 }
 
 // フェーズ表示
@@ -28,8 +29,13 @@ export function BlogSideBar ({ content }: BlogSideBarProps) {
 
   return (
     <Grid className={classes.root}>
-      <SmallHeader title={'関連記事'} />
-      <BlogSameTagContents tag={content.tag} />
+      <Profile />
+      {content && (
+        <>
+          <SmallHeader title={'関連記事'} />
+          <BlogSameTagContents tag={content.tag} />
+        </>
+      )}
     </Grid>
   )
 }

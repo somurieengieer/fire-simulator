@@ -6,13 +6,14 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
 import { myUrl } from '../Urls'
 import { BlogTagBatch } from '../atoms/blog/BlogTag'
+import BlogSideBarFrame from '../molecules/blog/BlogSideBarFrame'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     link: {
       textDecoration: 'none'
     },
-    root: {
+    paper: {
       margin: theme.spacing(1),
       padding: theme.spacing(2)
     },
@@ -51,14 +52,16 @@ function BlogCaption (content: BlogContentItem) {
   const classes = useStyles()
 
   return (
-    <Link to={myUrl.blogById(content.id)} className={classes.link}>
-      <Paper className={classes.root}>
-        <Box>
-          <h3 className={classes.title}>{content.title}</h3>
-        </Box>
-        <BlogCaptionInfo {...content} />
-      </Paper>
-    </Link>
+    <Box>
+      <Link to={myUrl.blogById(content.id)} className={classes.link}>
+        <Paper className={classes.paper}>
+          <Box>
+            <h3 className={classes.title}>{content.title}</h3>
+          </Box>
+          <BlogCaptionInfo {...content} />
+        </Paper>
+      </Link>
+    </Box>
   )
 }
 export default function BlogListPage () {
@@ -83,11 +86,11 @@ export default function BlogListPage () {
   }, [location])
 
   return (
-    <>
+    <BlogSideBarFrame>
       {blogList?.map(content =>
         <BlogCaption {...content} key={content.id} />
       )}
-    </>
+    </BlogSideBarFrame>
 
   )
 }
