@@ -1,75 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { BlogContentItem, blogContentList } from '../../blogContent/BlogContentItem'
 import { useLocation } from 'react-router'
-import { Box, Grid, Paper, Typography } from '@material-ui/core'
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
-import { Link } from 'react-router-dom'
-import { myUrl } from '../Urls'
-import { BlogTagBatch } from '../atoms/blog/BlogTag'
 import BlogSideBarFrame from '../molecules/blog/BlogSideBarFrame'
+import { BlogCaption } from '../atoms/blog/BlogCaption'
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    link: {
-      textDecoration: 'none'
-    },
-    paper: {
-      margin: theme.spacing(1),
-      padding: theme.spacing(2),
-      '&:hover': {
-        transform: 'translateY(-2px)',
-        transition: '0.6s',
-        // boxShadow: '0 7px 14px rgba(50,50,93,.1), 0 3px 6px rgba(0,0,0,.08)'
-        opacity: 0.9
-      }
-    },
-    title: {
-      marginTop: theme.spacing(1),
-      marginBottom: theme.spacing(2)
-    },
-    footer: {
-      alignItems: 'center'
-    },
-    footerRight: {
-      paddingRight: '3rem',
-      textAlign: 'end'
-    }
-  })
-)
-
-export function BlogCaptionInfo (content: BlogContentItem) {
-  const classes = useStyles()
-
-  return (
-    <Grid container className={classes.footer}>
-      <Grid item sm={6}>
-        <BlogTagBatch tag={content.tag} />
-      </Grid>
-      <Grid item sm={6} className={classes.footerRight}>
-        <Typography>
-          {content.created}
-        </Typography>
-      </Grid>
-    </Grid>
-  )
-}
-
-function BlogCaption (content: BlogContentItem) {
-  const classes = useStyles()
-
-  return (
-    <Box>
-      <Link to={myUrl.blogById(content.id)} className={classes.link}>
-        <Paper className={classes.paper}>
-          <Box>
-            <h3 className={classes.title}>{content.title}</h3>
-          </Box>
-          <BlogCaptionInfo {...content} />
-        </Paper>
-      </Link>
-    </Box>
-  )
-}
 export default function BlogListPage () {
   const location = useLocation()
   const NUMBER_OF_SHOW_ITEMS = 10

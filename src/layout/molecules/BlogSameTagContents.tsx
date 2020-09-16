@@ -3,6 +3,7 @@ import { Box, Card, CardContent, Typography } from '@material-ui/core'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 import { BlogTag } from '../atoms/blog/BlogTag'
 import { blogContentList } from '../../blogContent/BlogContentItem'
+import { BlogCaptionSmall } from '../atoms/blog/BlogCaption'
 
 const useStyles = makeStyles(theme => createStyles({
   root: {
@@ -42,16 +43,7 @@ export function BlogSameTagContents ({ tag }: BlogSameTagContentsProps) {
     <Box>
       <Box className={classes.root}>
         {sameTagContents.map(content => (
-          <Card key={content.id} style={{ marginBottom: 5 }}>
-            <CardContent>
-              <Typography variant='body1'>
-                {content.title}
-              </Typography>
-              <Typography variant='body2'>
-                {content.created}
-              </Typography>
-            </CardContent>
-          </Card>
+          <BlogCaptionSmall {...content} />
         ))}
       </Box>
     </Box>

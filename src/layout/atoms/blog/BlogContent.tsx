@@ -2,7 +2,7 @@ import React from 'react'
 import { Box } from '@material-ui/core'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 import { BlogContentItem } from '../../../blogContent/BlogContentItem'
-import { BlogCaptionInfo } from '../../organism/BlogListPage'
+import { BlogCaptionInfo } from './BlogCaption'
 
 const useStyles = makeStyles(theme => createStyles({
   root: {
