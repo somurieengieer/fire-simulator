@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { BlogContentItem, blogContentList } from '../../blogContent/BlogContentItem'
 import { useLocation } from 'react-router'
-import { Box, Paper } from '@material-ui/core'
+import { Box, Grid, Paper, Typography } from '@material-ui/core'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
 import { myUrl } from '../Urls'
+import { BlogTagBatch } from '../atoms/blog/BlogTag'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -12,18 +13,39 @@ const useStyles = makeStyles((theme: Theme) =>
       textDecoration: 'none'
     },
     root: {
-      margin: theme.spacing(1)
+      margin: theme.spacing(1),
+      padding: theme.spacing(2)
     },
-    header: {
-      paddingLeft: theme.spacing(2),
-      paddingTop: theme.spacing(1)
+    title: {
+      marginTop: theme.spacing(1),
+      marginBottom: theme.spacing(2)
     },
     footer: {
-      paddingBottom: theme.spacing(1),
-      paddingRight: theme.spacing(2)
+      alignItems: 'center'
+    },
+    footerRight: {
+      paddingRight: '3rem',
+      textAlign: 'end'
     }
   })
 )
+
+export function BlogCaptionInfo (content: BlogContentItem) {
+  const classes = useStyles()
+
+  return (
+    <Grid container className={classes.footer}>
+      <Grid item sm={6}>
+        <BlogTagBatch tag={content.tag} />
+      </Grid>
+      <Grid item sm={6} className={classes.footerRight}>
+        <Typography>
+          {content.created}
+        </Typography>
+      </Grid>
+    </Grid>
+  )
+}
 
 function BlogCaption (content: BlogContentItem) {
   const classes = useStyles()
@@ -31,14 +53,10 @@ function BlogCaption (content: BlogContentItem) {
   return (
     <Link to={myUrl.blogById(content.id)} className={classes.link}>
       <Paper className={classes.root}>
-        <Box className={classes.header}>
-          <h3>{content.title}</h3>
+        <Box>
+          <h3 className={classes.title}>{content.title}</h3>
         </Box>
-        <Box display="flex" flexDirection="row-reverse" className={classes.footer}>
-          <Box>
-            {content.created}
-          </Box>
-        </Box>
+        <BlogCaptionInfo {...content} />
       </Paper>
     </Link>
   )

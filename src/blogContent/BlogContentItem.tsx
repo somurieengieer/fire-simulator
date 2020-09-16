@@ -6,7 +6,7 @@ export interface BlogContentItem {
   id: number, // 00001〜99999
   title: string,
   created: string, // YYYY-MM-DD
-  tags: BlogTag[]
+  tag: BlogTag
   content: React.ReactNode,
 }
 
@@ -16,21 +16,21 @@ export const blogContentList: BlogContentItem[] = [
     id: 2,
     title: 'ブログテスト３',
     created: '2020-09-15',
-    tags: [BlogTag.FIRE],
+    tag: BlogTag.FIRE,
     content: (<BlogContent0001 />)
   },
   {
     id: 1,
     title: 'ブログテスト２',
     created: '2020-09-14',
-    tags: [BlogTag.節税],
+    tag: BlogTag.節税,
     content: (<BlogContent0001 />)
   },
   {
     id: 0,
     title: 'ブログテスト１',
     created: '2020-09-13',
-    tags: [BlogTag.FIRE],
+    tag: BlogTag.FIRE,
     content: (<BlogContent0001 />)
   }
 ]

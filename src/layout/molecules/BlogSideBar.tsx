@@ -29,7 +29,7 @@ export function BlogSideBar ({ content }: BlogSideBarProps) {
   return (
     <Grid className={classes.root}>
       <SmallHeader title={'関連記事'} />
-      <BlogSameTagContents tags={content.tags} />
+      <BlogSameTagContents tag={content.tag} />
     </Grid>
   )
 }

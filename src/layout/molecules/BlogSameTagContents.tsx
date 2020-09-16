@@ -28,15 +28,15 @@ const useStyles = makeStyles(theme => createStyles({
 }))
 
 interface BlogSameTagContentsProps {
-  tags: BlogTag[]
+  tag: BlogTag
 }
 
-export function BlogSameTagContents ({ tags }: BlogSameTagContentsProps) {
+export function BlogSameTagContents ({ tag }: BlogSameTagContentsProps) {
   const classes = useStyles()
   const NUMBER_OF_RECOMMEND_CONTENTS = 5
   // TODO: tagsは１つしかタグを持っていない前提で実装
   const sameTagContents = blogContentList
-    .filter(c => tags[0] === c.tags[0])
+    .filter(c => c.tag === tag)
     .slice(0, NUMBER_OF_RECOMMEND_CONTENTS)
   return (
     <Box>

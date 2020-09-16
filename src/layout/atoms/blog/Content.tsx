@@ -2,22 +2,25 @@ import React from 'react'
 import { Box } from '@material-ui/core'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 import { BlogContentItem } from '../../../blogContent/BlogContentItem'
-import { JustifyRightBox } from '../JustifyRightBox'
+import { BlogCaptionInfo } from '../../organism/BlogListPage'
 
 const useStyles = makeStyles(theme => createStyles({
   root: {
     maxWidth: 800
   },
   header: {
-    padding: '0.4rem',
-    paddingLeft: '1rem',
+    padding: theme.spacing(2),
+    // padding: '0.4rem',
+    // paddingLeft: '1rem',
     borderRadius: '30px 3px',
     backgroundColor: theme.palette.primary.main
   },
   title: {
     color: '#6594e0', /* 文字色 */
     borderBottom: 'dashed 2px #6594e0',
-    fontSize: '1.3rem'
+    fontSize: '1.3rem',
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(2)
   },
   content: {
     margin: 20,
@@ -56,11 +59,7 @@ export function ContentHeader ({ content }: ContentHeaderProps) {
         <Box>
           <h1>{content.title}</h1>
         </Box>
-        <JustifyRightBox>
-          <Box style={{ marginRight: '3rem', marginBottom: '1rem' }}>
-            {content.created}
-          </Box>
-        </JustifyRightBox>
+        <BlogCaptionInfo {...content} />
       </Box>
     </Box>
   )
