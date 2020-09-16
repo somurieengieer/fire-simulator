@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
+import { Box, Grid } from '@material-ui/core'
 import { BlogContentItem } from '../../../blogContent/BlogContentItem'
 import { JustifyCenterBox } from '../../atoms/JustifyCenterBox'
 import { BlogSideBar } from '../BlogSideBar'
@@ -14,7 +14,7 @@ export default function BlogSideBarFrame ({ blog, children }: Props) {
     <JustifyCenterBox>
       <Grid container>
         <Grid item sm={12} md={8}>
-          <JustifyCenterBox>
+          <JustifyCenterBox width={'800'}>
             {children}
           </JustifyCenterBox>
         </Grid>

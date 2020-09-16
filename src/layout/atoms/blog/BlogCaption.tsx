@@ -17,7 +17,6 @@ const useStyles = makeStyles((theme: Theme) =>
       '&:hover': {
         transform: 'translateY(-2px)',
         transition: '0.6s',
-        // boxShadow: '0 7px 14px rgba(50,50,93,.1), 0 3px 6px rgba(0,0,0,.08)'
         opacity: 0.9
       }
     },
@@ -56,7 +55,7 @@ export function BlogCaption (content: BlogContentItem) {
   const classes = useStyles()
 
   return (
-    <Box>
+    <Box style={{ width: '100%' }}>
       <Link to={myUrl.blogById(content.id)} className={classes.link}>
         <Paper className={classes.paper}>
           <Box>

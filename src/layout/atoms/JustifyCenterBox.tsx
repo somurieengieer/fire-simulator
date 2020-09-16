@@ -11,11 +11,11 @@ export function JustifyCenterBox ({ width, children }: Props) {
   return (
     <Box display="flex" justifyContent="center">
       {width ? (
-        <Box style={{ width: width }}>
+        <Box style={{ width: Number(width) }}>
           {children}
         </Box>
       ) : (
-        <Box style={{ width: '100%' }}>
+        <Box>
           {children}
         </Box>
       )}

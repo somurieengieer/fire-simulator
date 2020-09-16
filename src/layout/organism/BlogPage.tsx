@@ -3,9 +3,6 @@ import { Section, SectionTitle } from '../atoms/blog/Section'
 import { blogContentList } from '../../blogContent/BlogContentItem'
 import { useParams } from 'react-router'
 import { BlogContent } from '../atoms/blog/BlogContent'
-import { JustifyCenterBox } from '../atoms/JustifyCenterBox'
-import { BlogSideBar } from '../molecules/BlogSideBar'
-import { Grid } from '@material-ui/core'
 import BlogSideBarFrame from '../molecules/blog/BlogSideBarFrame'
 
 export default function BlogPage () {
