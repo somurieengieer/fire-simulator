@@ -15,7 +15,13 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     paper: {
       margin: theme.spacing(1),
-      padding: theme.spacing(2)
+      padding: theme.spacing(2),
+      '&:hover': {
+        transform: 'translateY(-2px)',
+        transition: '0.6s',
+        // boxShadow: '0 7px 14px rgba(50,50,93,.1), 0 3px 6px rgba(0,0,0,.08)'
+        opacity: 0.9
+      }
     },
     title: {
       marginTop: theme.spacing(1),
