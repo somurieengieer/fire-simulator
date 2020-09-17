@@ -3,6 +3,7 @@ import { Avatar, Box, Card, CardContent, Typography } from '@material-ui/core'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 import { JustifyCenterBox } from '../JustifyCenterBox'
 import ProfileImage from '../../../composedImages/profile.jpg'
+import { AlignCenterBox } from '../AlignCenterBox'
 
 const useStyles = makeStyles(theme => createStyles({
   root: {
@@ -19,10 +20,12 @@ export function Profile () {
   const classes = useStyles()
   return (
     <Card className={classes.root}>
-      <CardContent>
+      <CardContent >
         <JustifyCenterBox>
-          <Avatar alt="Hot Spring" src={ProfileImage}
-            className={classes.icon} />
+          <AlignCenterBox height={200}>
+            <Avatar alt="Hot Spring" src={ProfileImage}
+              className={classes.icon} />
+          </AlignCenterBox>
         </JustifyCenterBox>
         <Box>
           <Typography variant='body1'>

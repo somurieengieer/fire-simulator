@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { myUrl } from '../../Urls'
 import { BlogTagBatch } from './BlogTag'
 import { BlogContentItem } from '../../../blogContent/BlogContentItem'
+import { Variant } from '@material-ui/core/styles/createTypography'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -51,24 +52,12 @@ export function BlogCaptionInfo (content: BlogContentItem) {
   )
 }
 
-export function BlogCaption (content: BlogContentItem) {
-  const classes = useStyles()
-
-  return (
-    <Box style={{ width: '100%' }}>
-      <Link to={myUrl.blogById(content.id)} className={classes.link}>
-        <Paper className={classes.paper}>
-          <Box>
-            <h3 className={classes.title}>{content.title}</h3>
-          </Box>
-          <BlogCaptionInfo {...content} />
-        </Paper>
-      </Link>
-    </Box>
-  )
+interface BlogCaptionBaseProps {
+  titleVariant: Variant,
+  content: BlogContentItem
 }
 
-export function BlogCaptionSmall (content: BlogContentItem) {
+export function BlogCaptionBase ({ titleVariant, content }: BlogCaptionBaseProps) {
   const classes = useStyles()
 
   return (
@@ -76,7 +65,7 @@ export function BlogCaptionSmall (content: BlogContentItem) {
       <Link to={myUrl.blogById(content.id)} className={classes.link}>
         <Paper className={classes.paper}>
           <Box>
-            <Typography variant='body1' className={classes.title}>
+            <Typography variant={titleVariant} className={classes.title}>
               {content.title}
             </Typography>
           </Box>
@@ -85,4 +74,12 @@ export function BlogCaptionSmall (content: BlogContentItem) {
       </Link>
     </Box>
   )
+}
+
+export function BlogCaption (content: BlogContentItem) {
+  return (<BlogCaptionBase titleVariant={'h6'} content={content} />)
+}
+
+export function BlogCaptionSmall (content: BlogContentItem) {
+  return (<BlogCaptionBase titleVariant={'body1'} content={content} />)
 }
