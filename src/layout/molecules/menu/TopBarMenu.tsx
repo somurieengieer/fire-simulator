@@ -43,15 +43,16 @@ export default function TopBarMenu ({ children }: Props) {
   const location = useLocation()
 
   const title = () => {
-    switch (location.pathname) {
-      case myUrl.top:
-        return 'FIREシミュレーター'
-      case myUrl.tax:
-        return '税金計算'
-      case myUrl.annuity:
-        return '年金計算'
+    const startWith = (str: string): boolean => {
+      return location.pathname.startsWith(str)
     }
-    return 'トップ'
+
+    return [
+      [myUrl.tax, '税金計算'],
+      [myUrl.annuity, '年金計算'],
+      [myUrl.blogList, 'ブログ'],
+      [myUrl.top, 'FIREシミュレーター']
+    ].find(ary => startWith(ary[0]))?.[1]
   }
 
   const isPhoneMode = useMediaQuery(theme.breakpoints.down('xs'))
