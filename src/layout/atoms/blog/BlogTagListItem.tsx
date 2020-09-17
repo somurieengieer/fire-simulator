@@ -4,24 +4,37 @@ import { BlogTag, blogTags } from './BlogTag'
 import { SmallHeader } from './SmallHeader'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 import { SideBarContentGroup } from './SideBarContentGroup'
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 
 const useStyles = makeStyles(theme => createStyles({
-  root: {
-    maxWidth: 800,
-    marginTop: theme.spacing(3)
+  list: {
+    height: '3rem',
+    borderBottom: 'solid 1px',
+    display: 'flex',
+    alignItems: 'center',
+    paddingLeft: '0.5rem',
+    '&:hover': {
+      transform: 'translateX(2px)',
+      transition: '0.6s',
+      opacity: 0.9,
+      color: theme.palette.secondary.main
+    }
   }
 }))
 
 export function BlogTagListItem () {
+  const classes = useStyles()
   return (
     <SideBarContentGroup>
       <SmallHeader title={'タグ一覧'} />
       {blogTags.map(tag => (
-        <Card key={tag}>
-          <CardContent>
-            <Typography>{tag}</Typography>
-          </CardContent>
-        </Card>
+        <Box className={classes.list} key={tag}>
+          <ArrowForwardIosIcon fontSize={'small'} />
+          &nbsp;
+          <Typography variant={'body1'}>
+            {tag}
+          </Typography>
+        </Box>
       ))}
     </SideBarContentGroup>
   )
