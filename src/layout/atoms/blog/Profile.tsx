@@ -11,8 +11,11 @@ const useStyles = makeStyles(theme => createStyles({
     marginBottom: 10
   },
   icon: {
-    width: theme.spacing(7),
-    height: theme.spacing(7)
+    width: theme.spacing(17),
+    height: theme.spacing(17)
+  },
+  description: {
+    padding: theme.spacing(4)
   }
 }))
 
@@ -22,12 +25,15 @@ export function Profile () {
     <Card className={classes.root}>
       <CardContent >
         <JustifyCenterBox>
-          <AlignCenterBox height={200}>
+          <AlignCenterBox height={260}>
             <Avatar alt="Hot Spring" src={ProfileImage}
               className={classes.icon} />
+            <a href='https://twitter.com/fire_somurie' style={{ textDecoration: 'none', color: '#000' }}>
+              <Typography variant={'h6'} align={'center'}>@fire_somurie</Typography>
+            </a>
           </AlignCenterBox>
         </JustifyCenterBox>
-        <Box>
+        <Box className={classes.description}>
           <Typography variant='body1'>
         堅実なFIREを実現するツールを作成しているフリーエンジニアです。個人事業主→法人化検討中。<br />
         安心・安全なFIREをサポートするためのFIREシミュレーター公開中です！
