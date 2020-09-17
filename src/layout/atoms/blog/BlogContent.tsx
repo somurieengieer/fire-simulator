@@ -1,8 +1,9 @@
 import React from 'react'
 import { Box } from '@material-ui/core'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
-import { BlogContentItem } from '../../../blogContent/BlogContentItem'
+import { BlogContentItem, createUrlByContent } from '../../../blogContent/BlogContentItem'
 import { BlogCaptionInfo } from './BlogCaption'
+import BlogContentMarkdown from '../../../blogContent/BlogContentMarkdown'
 
 const useStyles = makeStyles(theme => createStyles({
   root: {
@@ -30,16 +31,16 @@ const useStyles = makeStyles(theme => createStyles({
 
 interface ContentProps {
   content: BlogContentItem
-  children: React.ReactNode;
 }
 
-export function BlogContent ({ content, children }: ContentProps) {
+export function BlogContent ({ content }: ContentProps) {
   const classes = useStyles()
   return (
     <Box className={classes.root}>
       <ContentHeader content={content} />
       <Box className={classes.content}>
-        {children}
+        <BlogContentMarkdown url={createUrlByContent(content)} />
+        {/* {children} */}
       </Box>
     </Box>
   )

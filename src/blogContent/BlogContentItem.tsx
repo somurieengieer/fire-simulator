@@ -1,5 +1,4 @@
 import React from 'react'
-import BlogContent0001 from './BlogContent0001'
 import { BlogTag } from '../layout/atoms/blog/BlogTag'
 
 export interface BlogContentItem {
@@ -7,7 +6,14 @@ export interface BlogContentItem {
   title: string,
   created: string, // YYYY-MM-DD
   tag: BlogTag
-  content: React.ReactNode,
+}
+
+function zeroPadding (length: number, originalNumber: number): string {
+  return (Array(length).join('0') + originalNumber).slice(-length)
+}
+
+export function createUrlByContent (content: BlogContentItem): string {
+  return `/blog/blog${zeroPadding(5, content.id)}.md`
 }
 
 // 新しい記事が上
@@ -16,21 +22,18 @@ export const blogContentList: BlogContentItem[] = [
     id: 2,
     title: 'ブログテスト３',
     created: '2020-09-15',
-    tag: BlogTag.FIRE,
-    content: (<BlogContent0001 />)
+    tag: BlogTag.FIRE
   },
   {
     id: 1,
-    title: 'ブログテスト２',
-    created: '2020-09-14',
-    tag: BlogTag.節税,
-    content: (<BlogContent0001 />)
+    title: 'FIRE後の家計簿と積み立て試算',
+    created: '2020-09-19',
+    tag: BlogTag.節税
   },
   {
     id: 0,
-    title: 'ブログテスト１',
-    created: '2020-09-13',
-    tag: BlogTag.FIRE,
-    content: (<BlogContent0001 />)
+    title: '堅実なFIREを実現する',
+    created: '2020-09-18',
+    tag: BlogTag.FIRE
   }
 ]

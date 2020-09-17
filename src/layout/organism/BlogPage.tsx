@@ -15,9 +15,7 @@ export default function BlogPage () {
     if (blog) {
       return (
         <BlogSideBarFrame blog={blog}>
-          <BlogContent content={blog}>
-            {blog.content}
-          </BlogContent>
+          <BlogContent content={blog} />
         </BlogSideBarFrame>
       )
     }
