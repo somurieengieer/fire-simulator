@@ -8,6 +8,14 @@ export enum BlogTag {
   // 独り言 = '独り言',
 }
 
+export const blogTags = (function () {
+  const results = []
+  for (const tag in BlogTag) {
+    results.push(tag)
+  }
+  return results
+})()
+
 interface BlogTagBatchProps {
   tag: BlogTag
 }

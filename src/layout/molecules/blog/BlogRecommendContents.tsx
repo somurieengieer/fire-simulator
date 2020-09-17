@@ -5,30 +5,7 @@ import { BlogTag } from '../../atoms/blog/BlogTag'
 import { BlogContentItem, blogContentList } from '../../../blogContent/BlogContentItem'
 import { BlogCaptionSmall } from '../../atoms/blog/BlogCaption'
 import { SmallHeader } from '../../atoms/blog/SmallHeader'
-
-const useStyles = makeStyles(theme => createStyles({
-  root: {
-    maxWidth: 800,
-    marginTop: theme.spacing(3)
-  },
-  header: {
-    padding: '0.4rem',
-    paddingLeft: '1rem',
-    borderRadius: '30px 3px',
-    backgroundColor: theme.palette.primary.main
-  },
-  title: {
-    color: '#6594e0', /* 文字色 */
-    borderBottom: 'dashed 2px #6594e0',
-    fontSize: '1.3rem'
-  },
-  content: {
-    margin: 20,
-    [theme.breakpoints.down('sm')]: {
-      margin: 5
-    }
-  }
-}))
+import { SideBarContentGroup } from '../../atoms/blog/SideBarContentGroup'
 
 interface BlogRecommendContentsProps {
   title: string,
@@ -36,15 +13,13 @@ interface BlogRecommendContentsProps {
 }
 
 function BlogRecommendContents ({ title, contents }: BlogRecommendContentsProps) {
-  const classes = useStyles()
-
   return (
-    <Box className={classes.root}>
+    <SideBarContentGroup>
       <SmallHeader title={title} />
       {contents.map(content => (
         <BlogCaptionSmall {...content} key={content.id} />
       ))}
-    </Box>
+    </SideBarContentGroup>
   )
 }
 
