@@ -78,6 +78,7 @@ export default function MenuButtons () {
         <LinkedMenuItem onClick={handleClose} url={myUrl.top} label={'FIREシミュレーター'}/>
         <LinkedMenuItem onClick={handleClose} url={myUrl.tax} label={'税金計算'}/>
         <LinkedMenuItem onClick={handleClose} url={myUrl.annuity} label={'年金計算'}/>
+        <LinkedMenuItem onClick={handleClose} url={myUrl.blogList} label={'ブログ'}/>
       </StyledMenu>
     </div>
   )
