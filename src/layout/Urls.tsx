@@ -8,7 +8,7 @@ export const myUrl = {
   annuity: '/annuity',
   blogList: '/blog',
   blog: '/blog/:id',
-  blogListByTag (tag: BlogTag) {
+  blogListByTag (tag: BlogTag | string) {
     return `${this.blogList}?cat=${tag}`
   },
   blogById (id: number) {

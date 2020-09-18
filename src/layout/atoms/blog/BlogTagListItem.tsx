@@ -6,6 +6,8 @@ import { createStyles, makeStyles } from '@material-ui/core/styles'
 import { SideBarContentGroup } from './SideBarContentGroup'
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 import { blogContentList } from '../../../blogContent/BlogContentItem'
+import { NonDecoratedLink } from '../NonDecoratedLink'
+import { myUrl } from '../../Urls'
 
 const useStyles = makeStyles(theme => createStyles({
   list: {
@@ -31,14 +33,16 @@ export function BlogTagListItem () {
   return (
     <SideBarContentGroup>
       <SmallHeader title={'カテゴリー'} />
-      {blogTags.map(tag => (
-        <Box className={classes.list} key={tag}>
-          <ArrowForwardIosIcon fontSize={'small'} />
-          &nbsp;
-          <Typography variant={'body1'}>
-            {tag} ({countTagContent(tag)})
-          </Typography>
-        </Box>
+      {blogTags.map((tag: string) => (
+        <NonDecoratedLink url={myUrl.blogListByTag(tag)} key={tag}>
+          <Box className={classes.list}>
+            <ArrowForwardIosIcon fontSize={'small'} />
+            &nbsp;
+            <Typography variant={'body1'}>
+              {tag} ({countTagContent(tag)})
+            </Typography>
+          </Box>
+        </NonDecoratedLink>
       ))}
     </SideBarContentGroup>
   )
