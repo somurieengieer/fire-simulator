@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Grid } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import { BlogContentItem } from '../../../blogContent/BlogContentItem'
 import { JustifyCenterBox } from '../../atoms/JustifyCenterBox'
 import { BlogSideBar } from './BlogSideBar'

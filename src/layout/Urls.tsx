@@ -15,3 +15,21 @@ export const myUrl = {
     return `${this.blogList}/${id}`
   }
 }
+
+interface RootUrlTitle {
+  rootUrl: string
+  title: string
+}
+
+export function rootUrlTitleByUrl (url: string): RootUrlTitle {
+  const startWith = (str: string): boolean => {
+    return url.startsWith(str)
+  }
+
+  return [
+    { rootUrl: myUrl.tax, title: '税金計算' },
+    { rootUrl: myUrl.annuity, title: '年金計算' },
+    { rootUrl: myUrl.blogList, title: 'ブログ' },
+    { rootUrl: myUrl.top, title: 'FIREシミュレーター' }
+  ].find(rootUrlTitle => startWith(rootUrlTitle.rootUrl)) as RootUrlTitle
+}

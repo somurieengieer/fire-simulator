@@ -8,7 +8,10 @@ import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { theme } from '../../materialui/theme'
 import classNames from 'classnames'
 import MenuButtons from './MenuButtons'
-import { myUrl } from '../../Urls'
+import { rootUrlTitleByUrl } from '../../Urls'
+import { NonDecoratedLink } from '../../atoms/NonDecoratedLink'
+import { Box } from '@material-ui/core'
+import topImage from '../../../image/top_image.jpg'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -22,6 +25,15 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     center: {
       textAlign: 'center'
+    },
+    imageBox: {
+      margin: 0,
+      overflow: 'hidden',
+      width: '100%',
+      height: 300
+    },
+    image: {
+      width: '100%'
     },
     content: {
       flexGrow: 1,
@@ -42,18 +54,11 @@ export default function TopBarMenu ({ children }: Props) {
 
   const location = useLocation()
 
-  const title = () => {
-    const startWith = (str: string): boolean => {
-      return location.pathname.startsWith(str)
-    }
+  const title = () =>
+    rootUrlTitleByUrl(location.pathname).title
 
-    return [
-      [myUrl.tax, '税金計算'],
-      [myUrl.annuity, '年金計算'],
-      [myUrl.blogList, 'ブログ'],
-      [myUrl.top, 'FIREシミュレーター']
-    ].find(ary => startWith(ary[0]))?.[1]
-  }
+  const rootUrl = () =>
+    rootUrlTitleByUrl(location.pathname).rootUrl
 
   const isPhoneMode = useMediaQuery(theme.breakpoints.down('xs'))
 
@@ -62,13 +67,18 @@ export default function TopBarMenu ({ children }: Props) {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" className={classNames(classes.title, { [classes.center]: isPhoneMode })}>
-            堅実にFIREを実現する&nbsp;
-            {isPhoneMode && (<br/>)}
-            - {title()} -
+            <NonDecoratedLink to={rootUrl()}>
+              堅実にFIREを実現する&nbsp;
+              {isPhoneMode && (<br/>)}
+              - {title()} -
+            </NonDecoratedLink>
           </Typography>
           <MenuButtons/>
         </Toolbar>
       </AppBar>
+      <Box className={classes.imageBox}>
+        <img src={topImage} alt='top_image' className={classes.image}/>
+      </Box>
       <main className={classes.content}>
         {children}
       </main>
