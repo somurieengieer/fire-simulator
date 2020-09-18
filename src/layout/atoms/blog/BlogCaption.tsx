@@ -10,9 +10,6 @@ import { NonDecoratedLink } from '../NonDecoratedLink'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    link: {
-      textDecoration: 'none'
-    },
     paper: {
       marginBottom: theme.spacing(1),
       padding: theme.spacing(2),

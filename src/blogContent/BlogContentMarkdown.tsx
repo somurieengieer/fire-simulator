@@ -38,7 +38,7 @@ export default function BlogContentMarkdown ({ url }: Props) {
   useEffect(() => {
     getSource(url)
       .then(r => setSource(r))
-  }, [])
+  }, [url])
 
   return (
     <Box className={classes.content}>

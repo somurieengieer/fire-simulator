@@ -13,7 +13,7 @@ function zeroPadding (length: number, originalNumber: number): string {
 }
 
 export function createUrlByContent (content: BlogContentItem): string {
-  return `/blog/blog${zeroPadding(5, content.id)}.md`
+  return `/blog/blog${zeroPadding(5, content.id)}_${content.title}.md`
 }
 
 // 新しい記事が上
@@ -21,14 +21,14 @@ export const blogContentList: BlogContentItem[] = [
   {
     id: 2,
     title: 'ブログテスト３',
-    created: '2020-09-15',
-    tag: BlogTag.FIRE
+    created: '2020-09-20',
+    tag: BlogTag.節税
   },
   {
     id: 1,
     title: 'FIRE後の家計簿と積み立て試算',
     created: '2020-09-19',
-    tag: BlogTag.節税
+    tag: BlogTag.FIRE
   },
   {
     id: 0,
