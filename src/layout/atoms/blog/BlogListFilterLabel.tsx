@@ -7,11 +7,10 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       width: 200,
-      margin: theme.spacing(2),
       paddingTop: theme.spacing(1),
       paddingBottom: theme.spacing(1),
       textAlign: 'center',
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: theme.palette.grey.A100,
       '&:hover': {
         cursor: 'pointer',
         transform: 'translateY(-2px)',
@@ -21,17 +20,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     active: {
       backgroundColor: theme.palette.secondary.main
-    },
-    title: {
-      marginTop: theme.spacing(1),
-      marginBottom: theme.spacing(2)
-    },
-    footer: {
-      alignItems: 'center'
-    },
-    footerRight: {
-      paddingRight: '2rem',
-      textAlign: 'end'
     }
   })
 )

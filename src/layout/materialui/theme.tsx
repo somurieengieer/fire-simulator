@@ -14,7 +14,7 @@ const base = {
     error: {
       main: '#FF8888'
 
-    }
+    },
     // warning: {
     //
     // },
@@ -24,6 +24,9 @@ const base = {
     // success: {
     //
     // }
+    notActive: {
+      main: '#DDDDDD'
+    }
   },
   typography: {
     fontFamily: [
