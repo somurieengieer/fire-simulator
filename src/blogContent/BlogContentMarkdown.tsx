@@ -18,6 +18,16 @@ const useStyles = makeStyles(theme => createStyles({
       borderBottomColor: theme.palette.secondary.main,
       paddingLeft: 10,
       paddingBottom: 6
+    },
+    '& > blockquote': {
+      paddingLeft: theme.spacing(3),
+      paddingRight: theme.spacing(3),
+      border: 'solid 2px',
+      borderColor: theme.palette.grey.A700,
+      backgroundColor: theme.palette.grey.A100
+    },
+    '& > * > li': {
+      textDecoration: 'none'
     }
   }
 }))
