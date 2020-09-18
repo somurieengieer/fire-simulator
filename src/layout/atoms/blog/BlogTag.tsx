@@ -1,6 +1,8 @@
 import React from 'react'
 import { Box, Chip, Typography } from '@material-ui/core'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
+import { useHistory } from 'react-router'
+import { myUrl } from '../../Urls'
 
 export enum BlogTag {
   FIRE = 'FIRE',
@@ -21,8 +23,15 @@ interface BlogTagBatchProps {
 }
 
 export function BlogTagBatch ({ tag }: BlogTagBatchProps) {
+  const history = useHistory()
+
+  function handleClick (e: any) {
+    history.push(myUrl.blogListByTag(tag))
+    e.preventDefault()
+  }
+
   return (
-    <Box>
+    <Box onClick={e => handleClick(e)}>
       <Chip label={tag} color="secondary" />
     </Box>
   )

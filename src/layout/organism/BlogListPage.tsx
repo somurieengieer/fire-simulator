@@ -46,7 +46,17 @@ export default function BlogListPage () {
 
   useEffect(() => {
     updateContentByFilter()
-  }, [location, filterLabel])
+  }, [filterLabel])
+
+  useEffect(() => {
+    const getParams = new URLSearchParams(location.search)
+    const category = getParams.get('cat')
+    if (category && filterLabels().includes(category)) {
+      setFilterLabel(category)
+    }
+    updateContentByFilter()
+    console.log('cat is ', category, filterLabel)
+  }, [location])
 
   return (
     <BlogSideBarFrame>
