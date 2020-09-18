@@ -9,6 +9,11 @@ body {
   font-size: 1.2em;
 }
 
+/*p {*/
+/*  font-size: 1.1rem;*/
+/*  line-height: 2.3rem;*/
+/*}*/
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
   monospace;

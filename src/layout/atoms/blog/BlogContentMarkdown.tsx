@@ -20,6 +20,22 @@ const useStyles = makeStyles(theme => createStyles({
     fontSize: '1.3rem',
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(2)
+  },
+  content: {
+    margin: 20,
+    fontSize: '1.1rem',
+    lineHeight: '2.3rem',
+    [theme.breakpoints.down('sm')]: {
+      margin: 5
+    },
+    '& > h1': {
+      borderLeft: 'solid 10px',
+      borderBottom: 'solid 1px',
+      borderLeftColor: theme.palette.secondary.main,
+      borderBottomColor: theme.palette.secondary.main,
+      paddingLeft: 10,
+      paddingBottom: 6
+    }
   }
 }))
 
@@ -32,7 +48,10 @@ export function BlogContent ({ content }: ContentProps) {
   return (
     <Box className={classes.root}>
       <ContentHeader content={content} />
-      <BlogContentMarkdown url={createUrlByContent(content)} />
+      <Box className={classes.content}>
+        <BlogContentMarkdown url={createUrlByContent(content)} />
+        {/* {children} */}
+      </Box>
     </Box>
   )
 }
