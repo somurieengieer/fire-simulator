@@ -6,6 +6,7 @@ import { myUrl } from '../../Urls'
 import { BlogTagBatch } from './BlogTag'
 import { BlogContentItem } from '../../../blogContent/BlogContentItem'
 import { Variant } from '@material-ui/core/styles/createTypography'
+import { NonDecoratedLink } from '../NonDecoratedLink'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -67,7 +68,7 @@ export function BlogCaptionBase ({ titleVariant, content }: BlogCaptionBaseProps
 
   return (
     <Box>
-      <Link to={myUrl.blogById(content.id)} className={classes.link}>
+      <NonDecoratedLink to={myUrl.blogById(content.id)}>
         <Paper className={classes.paper}>
           <Box>
             <Typography variant={titleVariant} className={classes.title}>
@@ -76,7 +77,7 @@ export function BlogCaptionBase ({ titleVariant, content }: BlogCaptionBaseProps
           </Box>
           <BlogCaptionInfo content={content} />
         </Paper>
-      </Link>
+      </NonDecoratedLink>
     </Box>
   )
 }

@@ -34,7 +34,7 @@ export function BlogTagListItem () {
     <SideBarContentGroup>
       <SmallHeader title={'カテゴリー'} />
       {blogTags.map((tag: string) => (
-        <NonDecoratedLink url={myUrl.blogListByTag(tag)} key={tag}>
+        <NonDecoratedLink to={myUrl.blogListByTag(tag)} key={tag}>
           <Box className={classes.list}>
             <ArrowForwardIosIcon fontSize={'small'} />
             &nbsp;

@@ -3,6 +3,7 @@ import { Box, Chip, Typography } from '@material-ui/core'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import { useHistory } from 'react-router'
 import { myUrl } from '../../Urls'
+import { NonDecoratedLink } from '../NonDecoratedLink'
 
 export enum BlogTag {
   FIRE = 'FIRE',
@@ -44,9 +45,18 @@ export function BlogTagBatch ({ tag, linkActive }: BlogTagBatchProps) {
     }
   }
 
-  return (
+  const batchJsx = (
     <Box onClick={e => handleClick(e)}>
       <Chip label={tag} color="secondary" className={classes.root} />
     </Box>
   )
+
+  if (linkActive) {
+    return (
+      <NonDecoratedLink to={myUrl.blogListByTag(tag)}>
+        {batchJsx}
+      </NonDecoratedLink>
+    )
+  }
+  return batchJsx
 }

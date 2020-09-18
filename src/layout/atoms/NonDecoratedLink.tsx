@@ -13,11 +13,11 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 interface Props {
-  url: string,
+  to: string,
   children: React.ReactNode;
 }
 
-export function NonDecoratedLink ({ url, children }: Props) {
+export function NonDecoratedLink ({ to, children }: Props) {
   const classes = useStyles()
 
   const topScroll = () => {
@@ -30,7 +30,7 @@ export function NonDecoratedLink ({ url, children }: Props) {
     }
   }
   return (
-    <Link to={url} className={classes.root} onClick={topScroll}>
+    <Link to={to} className={classes.root} onClick={topScroll}>
       {children}
     </Link>
   )
