@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => createStyles({
 export function BlogTagListItem () {
   const classes = useStyles()
   const countTagContent = (tag: string): number => {
-    return blogContentList.filter(b => b.tag == tag).length
+    return blogContentList.filter(b => b.tag === tag).length
   }
   return (
     <SideBarContentGroup>
