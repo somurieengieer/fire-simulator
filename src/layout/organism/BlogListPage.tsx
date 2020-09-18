@@ -10,8 +10,9 @@ export default function BlogListPage () {
   const location = useLocation()
   const NUMBER_OF_SHOW_ITEMS = 10
   const LATEST_CONTENT = '最新記事'
-  const [blogList, setBlogList] = useState<BlogContentItem[]>()
   const [filterLabel, setFilterLabel] = useState<string>(LATEST_CONTENT)
+  // フィルターされた記事全量
+  const [contentList, setContentList] = useState<BlogContentItem[]>(blogContentList)
 
   const page = () => {
     const getParams = new URLSearchParams(location.search)
@@ -25,18 +26,22 @@ export default function BlogListPage () {
   }
 
   const updateContentByFilter = () => {
+    let filteredContents = blogContentList
+    if (filterLabel !== LATEST_CONTENT) {
+      filteredContents = filteredContents.filter(b => b.tag === filterLabel)
+    }
+    setContentList(filteredContents)
+  }
+
+  // ページング時に現ページで表示すべきコンテンツ
+  const pagedShowContent = (): BlogContentItem[] => {
     const startContentIndex = page() * NUMBER_OF_SHOW_ITEMS
     let endContentIndex = startContentIndex + NUMBER_OF_SHOW_ITEMS
 
-    let filteredContents = blogContentList
-    if (filterLabel !== LATEST_CONTENT) {
-      filteredContents = filteredContents.filter(b => b.tag)
+    if (endContentIndex > contentList.length) {
+      endContentIndex = contentList.length
     }
-
-    if (endContentIndex > filteredContents.length) {
-      endContentIndex = filteredContents.length
-    }
-    setBlogList(filteredContents.slice(startContentIndex, endContentIndex))
+    return contentList.slice(startContentIndex, endContentIndex)
   }
 
   useEffect(() => {
@@ -49,7 +54,7 @@ export default function BlogListPage () {
         activeLabel={filterLabel}
         callbackForUpdate={(label: string) => setFilterLabel(label)} />
 
-      {blogList?.map(content =>
+      {pagedShowContent().map(content =>
         <BlogCaption {...content} key={content.id} />
       )}
     </BlogSideBarFrame>
