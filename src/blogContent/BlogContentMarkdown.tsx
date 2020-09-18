@@ -36,6 +36,28 @@ interface Props {
 url: string
 }
 
+function createTOC (markdownSource: string): string {
+  var markdownIt = require('markdown-it')
+  var markdownItTocAndAnchor = require('markdown-it-toc-and-anchor').default
+
+  return markdownIt({
+    html: true,
+    linkify: true,
+    typographer: true
+  })
+    .use(markdownItTocAndAnchor, {
+    })
+    .render(markdownSource)
+}
+
+function htmlToReactJsx (htmlSource: string): string {
+  var HtmlToReactParser = require('html-to-react').Parser
+
+  var htmlToReactParser = new HtmlToReactParser()
+  var reactElement = htmlToReactParser.parse(htmlSource)
+  return reactElement
+}
+
 export default function BlogContentMarkdown ({ url }: Props) {
   const classes = useStyles()
   const [source, setSource] = useState<string>('Loading...')
@@ -45,6 +67,10 @@ export default function BlogContentMarkdown ({ url }: Props) {
     return await res.text()
   }
 
+  // const applyTOC = (markdownSource: string): string => {
+  //   return createTOC(markdownSource) + markdownSource
+  // }
+
   useEffect(() => {
     getSource(url)
       .then(r => setSource(r))
@@ -52,6 +78,10 @@ export default function BlogContentMarkdown ({ url }: Props) {
 
   return (
     <Box className={classes.content}>
+      {htmlToReactJsx(createTOC(source))}
+      <div>■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■</div>
+      <ReactMarkdown source={createTOC(source)} />
+      <div>■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■</div>
       <ReactMarkdown source={source} />
     </Box>
   )
