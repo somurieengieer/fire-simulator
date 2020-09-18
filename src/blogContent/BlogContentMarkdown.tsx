@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import ReactMarkdown from 'react-markdown'
-import { Box } from '@material-ui/core'
+import { Box, Typography } from '@material-ui/core'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => createStyles({
@@ -10,6 +9,22 @@ const useStyles = makeStyles(theme => createStyles({
     lineHeight: '2.3rem',
     [theme.breakpoints.down('sm')]: {
       margin: 5
+    },
+    // 目次(Table Of Contents）
+    '& > .markdownIt-TOC': {
+      border: 'solid 2px',
+      borderColor: theme.palette.grey.A200,
+      borderRadius: 6,
+      paddingTop: theme.spacing(4),
+      paddingLeft: theme.spacing(8),
+      paddingBottom: theme.spacing(4),
+      '& > li > a': {
+        textDecoration: 'none',
+        color: '#0000AA',
+        '&:hover': {
+          textDecorationLine: 'underline'
+        }
+      }
     },
     '& > h1': {
       borderLeft: 'solid 10px',
@@ -36,9 +51,9 @@ interface Props {
 url: string
 }
 
-function createTOC (markdownSource: string): string {
-  var markdownIt = require('markdown-it')
-  var markdownItTocAndAnchor = require('markdown-it-toc-and-anchor').default
+function applyTOC (markdownSource: string): string {
+  const markdownIt = require('markdown-it')
+  const markdownItTocAndAnchor = require('markdown-it-toc-and-anchor').default
 
   return markdownIt({
     html: true,
@@ -46,8 +61,10 @@ function createTOC (markdownSource: string): string {
     typographer: true
   })
     .use(markdownItTocAndAnchor, {
+      anchorLinkSymbol: ''
     })
-    .render(markdownSource)
+    // 目次を一番上に追加
+    .render('\n@[toc]\n<br/>\n' + markdownSource)
 }
 
 function htmlToReactJsx (htmlSource: string): string {
@@ -67,10 +84,6 @@ export default function BlogContentMarkdown ({ url }: Props) {
     return await res.text()
   }
 
-  // const applyTOC = (markdownSource: string): string => {
-  //   return createTOC(markdownSource) + markdownSource
-  // }
-
   useEffect(() => {
     getSource(url)
       .then(r => setSource(r))
@@ -78,11 +91,10 @@ export default function BlogContentMarkdown ({ url }: Props) {
 
   return (
     <Box className={classes.content}>
-      {htmlToReactJsx(createTOC(source))}
-      <div>■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■</div>
-      <ReactMarkdown source={createTOC(source)} />
-      <div>■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■</div>
-      <ReactMarkdown source={source} />
+      <Typography variant={'caption'}>目次</Typography>
+      {htmlToReactJsx(applyTOC(source))}
+      {/* <div>■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■</div> */}
+      {/* <ReactMarkdown source={source} /> */}
     </Box>
   )
 }
