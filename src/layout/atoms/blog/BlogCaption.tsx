@@ -35,13 +35,18 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-export function BlogCaptionInfo (content: BlogContentItem) {
+interface BlogCaptionInfoProps {
+  content: BlogContentItem,
+  tagLinkActive?: boolean
+}
+
+export function BlogCaptionInfo ({ content, tagLinkActive } : BlogCaptionInfoProps) {
   const classes = useStyles()
 
   return (
     <Grid container className={classes.footer}>
       <Grid item sm={6}>
-        <BlogTagBatch tag={content.tag} />
+        <BlogTagBatch tag={content.tag} linkActive={tagLinkActive} />
       </Grid>
       <Grid item sm={6} className={classes.footerRight}>
         <Typography>
@@ -69,7 +74,7 @@ export function BlogCaptionBase ({ titleVariant, content }: BlogCaptionBaseProps
               {content.title}
             </Typography>
           </Box>
-          <BlogCaptionInfo {...content} />
+          <BlogCaptionInfo content={content} />
         </Paper>
       </Link>
     </Box>

@@ -18,21 +18,35 @@ export const blogTags = (function () {
   return results
 })()
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      '&:hover': {
+        cursor: 'pointer'
+      }
+    }
+  })
+)
+
 interface BlogTagBatchProps {
-  tag: BlogTag
+  tag: BlogTag,
+  linkActive?: boolean
 }
 
-export function BlogTagBatch ({ tag }: BlogTagBatchProps) {
+export function BlogTagBatch ({ tag, linkActive }: BlogTagBatchProps) {
+  const classes = useStyles()
   const history = useHistory()
 
   function handleClick (e: any) {
-    history.push(myUrl.blogListByTag(tag))
-    e.preventDefault()
+    if (linkActive) {
+      history.push(myUrl.blogListByTag(tag))
+      e.preventDefault()
+    }
   }
 
   return (
     <Box onClick={e => handleClick(e)}>
-      <Chip label={tag} color="secondary" />
+      <Chip label={tag} color="secondary" className={classes.root} />
     </Box>
   )
 }

@@ -58,7 +58,7 @@ export function ContentHeader ({ content }: ContentHeaderProps) {
         <Box>
           <h1>{content.title}</h1>
         </Box>
-        <BlogCaptionInfo {...content} />
+        <BlogCaptionInfo content={content} tagLinkActive={true} />
       </Box>
     </Box>
   )
