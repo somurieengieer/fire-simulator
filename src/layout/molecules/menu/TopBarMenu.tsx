@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
       textAlign: 'center'
     },
     imageBox: {
+      position: 'relative',
       margin: 0,
       overflow: 'hidden',
       width: '100%',
@@ -34,6 +35,13 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     image: {
       width: '100%'
+    },
+    imageText: {
+      position: 'absolute',
+      bottom: 0,
+      left: 20,
+      color: theme.palette.common.white,
+      opacity: 0.8
     },
     content: {
       flexGrow: 1,
@@ -78,6 +86,9 @@ export default function TopBarMenu ({ children }: Props) {
       </AppBar>
       <Box className={classes.imageBox}>
         <img src={topImage} alt='top_image' className={classes.image}/>
+        <Typography variant={'h1'} className={classes.imageText}>
+          FIRE
+        </Typography>
       </Box>
       <main className={classes.content}>
         {children}
