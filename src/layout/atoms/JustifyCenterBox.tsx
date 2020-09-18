@@ -11,7 +11,7 @@ export function JustifyCenterBox ({ width, children }: Props) {
   return (
     <Box display="flex" justifyContent="center">
       {width ? (
-        <Box style={{ width: Number(width) }}>
+        <Box style={{ maxWidth: Number(width) }}>
           {children}
         </Box>
       ) : (
