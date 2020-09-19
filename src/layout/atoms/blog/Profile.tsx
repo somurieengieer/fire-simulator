@@ -5,6 +5,7 @@ import { JustifyCenterBox } from '../JustifyCenterBox'
 import ProfileImage from '../../../composedImages/profile.jpg'
 import { AlignCenterBox } from '../AlignCenterBox'
 import { SideBarContentGroup } from './SideBarContentGroup'
+import TwitterIcon from '@material-ui/icons/Twitter'
 
 const useStyles = makeStyles(theme => createStyles({
   icon: {
@@ -13,6 +14,12 @@ const useStyles = makeStyles(theme => createStyles({
   },
   description: {
     padding: theme.spacing(4)
+  },
+  twitterLink: {
+    color: '#000',
+    '&:hover': {
+      textDecorationLine: 'underline'
+    }
   }
 }))
 
@@ -26,8 +33,15 @@ export function Profile () {
             <AlignCenterBox height={260}>
               <Avatar alt="Hot Spring" src={ProfileImage}
                 className={classes.icon} />
-              <a href='https://twitter.com/fire_somurie' style={{ textDecoration: 'none', color: '#000' }}>
-                <Typography variant={'h6'} align={'center'}>@fire_somurie</Typography>
+              <a href='https://twitter.com/fire_somurie' className={classes.twitterLink}>
+                <Box display="flex" alignItems="flex-end">
+                  <Box>
+                    <TwitterIcon fontSize={'small'} style={{ color: '#00ACEE' }} />
+                  </Box>
+                  <Box>
+                    <Typography variant={'h6'} align={'center'}>@fire_somurie</Typography>
+                  </Box>
+                </Box>
               </a>
             </AlignCenterBox>
           </JustifyCenterBox>
