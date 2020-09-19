@@ -5,6 +5,7 @@ import BlogSideBarFrame from '../molecules/blog/BlogSideBarFrame'
 import { BlogCaption } from '../atoms/blog/BlogCaption'
 import { blogTags } from '../atoms/blog/BlogTag'
 import { BlogListFilter } from '../molecules/blog/BlogListFilter'
+import { Grid } from '@material-ui/core'
 
 export default function BlogListPage () {
   const location = useLocation()
@@ -55,7 +56,6 @@ export default function BlogListPage () {
       setFilterLabel(category)
     }
     updateContentByFilter()
-    console.log('cat is ', category, filterLabel)
   }, [location])
 
   return (
@@ -64,9 +64,13 @@ export default function BlogListPage () {
         activeLabel={filterLabel}
         callbackForUpdate={(label: string) => setFilterLabel(label)} />
 
-      {pagedShowContent().map(content =>
-        <BlogCaption {...content} key={content.id} />
-      )}
+      <Grid container style={{ maxWidth: 800 }}>
+        {pagedShowContent().map(content =>
+          <Grid item xs={12} key={content.id}>
+            <BlogCaption {...content} key={content.id} />
+          </Grid>
+        )}
+      </Grid>
     </BlogSideBarFrame>
 
   )

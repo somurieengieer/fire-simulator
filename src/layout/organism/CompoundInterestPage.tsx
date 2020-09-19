@@ -30,7 +30,7 @@ export function CompoundInterestPage () {
 
   return (
     <>
-      <JustifyCenterBox width={'200'}>
+      <JustifyCenterBox maxWidth={'200'}>
         <Typography>複利計算ページ</Typography>
         <TextField label="現在の金額"
           defaultValue={interestProps.presentAmount}
@@ -56,7 +56,7 @@ export function CompoundInterestPage () {
       </JustifyCenterBox>
 
       {compoundInterestResult && (
-        <JustifyCenterBox width={'250'}>
+        <JustifyCenterBox maxWidth={'250'}>
           <CompoundInterestTable result={compoundInterestResult}/>
         </JustifyCenterBox>
       )}

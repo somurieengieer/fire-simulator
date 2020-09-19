@@ -1,14 +1,14 @@
 import React from 'react'
-import { Box } from '@material-ui/core'
+import { Box, Grid } from '@material-ui/core'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import { BlogListFilterLabel } from '../../atoms/blog/BlogListFilterLabel'
 import { JustifyCenterBox } from '../../atoms/JustifyCenterBox'
-import classNames from 'classnames'
 import ExpandLessIcon from '@material-ui/icons/ExpandLess'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
+      width: '100%',
       margin: theme.spacing(2)
     },
     table: {
@@ -16,7 +16,8 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '100%'
     },
     cell: {
-      display: 'table-cell'
+      display: 'table-cell',
+      width: 'auto'
     },
     active: {
       color: theme.palette.secondary.main
@@ -36,21 +37,21 @@ export function BlogListFilter ({ filterLabels, activeLabel, callbackForUpdate }
   const isActive = (label: string): boolean => label === activeLabel
 
   return (
-    <Box className={classNames(classes.root, classes.table)} >
-      {filterLabels.map(label => (
-        <Box className={classes.cell} key={label}>
-          <JustifyCenterBox>
+    <Box className={classes.root}>
+      <Grid container spacing={2}>
+        {filterLabels.map(label => (
+          <Grid item xs style={{ width: '100%' }} justify={'center'} key={label}>
             <BlogListFilterLabel title={label}
               callback={() => callbackForUpdate(label)}
               active={isActive(label)} />
-          </JustifyCenterBox>
-          {isActive(label) && (
-            <JustifyCenterBox>
-              <ExpandLessIcon className={classes.active} />
-            </JustifyCenterBox>
-          )}
-        </Box>
-      ))}
+            {isActive(label) && (
+              <JustifyCenterBox>
+                <ExpandLessIcon className={classes.active} />
+              </JustifyCenterBox>
+            )}
+          </Grid>
+        ))}
+      </Grid>
     </Box>
   )
 }

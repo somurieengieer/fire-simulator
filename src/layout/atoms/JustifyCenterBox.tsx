@@ -2,16 +2,16 @@ import React from 'react'
 import { Box } from '@material-ui/core'
 
 interface Props {
-  width?: string,
+  maxWidth?: string,
   children: React.ReactNode;
 }
 
 // 複利計算ページ
-export function JustifyCenterBox ({ width, children }: Props) {
+export function JustifyCenterBox ({ maxWidth, children }: Props) {
   return (
     <Box display="flex" justifyContent="center">
-      {width ? (
-        <Box style={{ maxWidth: Number(width) }}>
+      {maxWidth ? (
+        <Box style={{ maxWidth: Number(maxWidth) }}>
           {children}
         </Box>
       ) : (

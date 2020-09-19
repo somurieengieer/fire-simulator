@@ -51,7 +51,7 @@ export default function TaxPage () {
   return (
     <>
       <GoogleAdsSmall/>
-      <JustifyCenterBox width={'800'}>
+      <JustifyCenterBox maxWidth={'800'}>
         <Section maxWidth={800}>
           <SectionTitle>使い方</SectionTitle>
           <SectionContent>

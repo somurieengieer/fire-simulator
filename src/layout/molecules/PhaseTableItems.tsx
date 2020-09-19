@@ -12,7 +12,7 @@ import classNames from 'classnames'
 
 export const usePatternTableStyles = makeStyles({
   table: {
-    // width: 650,
+    // maxWidth: 650,
   },
   tableCellLabel: {
     width: 200,
