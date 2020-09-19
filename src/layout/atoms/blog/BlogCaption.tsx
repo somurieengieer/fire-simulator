@@ -7,6 +7,7 @@ import { BlogTagBatch } from './BlogTag'
 import { BlogContentItem } from '../../../blogContent/BlogContentItem'
 import { Variant } from '@material-ui/core/styles/createTypography'
 import { NonDecoratedLink } from '../NonDecoratedLink'
+import WatchLaterIcon from '@material-ui/icons/WatchLater'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -28,7 +29,8 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     footerRight: {
       paddingRight: '2rem',
-      textAlign: 'end'
+      textAlign: 'end',
+      color: theme.palette.grey.A700
     }
   })
 )
@@ -43,13 +45,17 @@ export function BlogCaptionInfo ({ content, tagLinkActive } : BlogCaptionInfoPro
 
   return (
     <Grid container className={classes.footer}>
-      <Grid item sm={6}>
+      <Grid item xs={6}>
         <BlogTagBatch tag={content.tag} linkActive={tagLinkActive} />
       </Grid>
-      <Grid item sm={6} className={classes.footerRight}>
-        <Typography>
-          {content.created}
-        </Typography>
+      <Grid item xs={6} className={classes.footerRight}>
+        <Box display='flex' justifyContent='flex-end' alignItems='center'>
+          <WatchLaterIcon style={{ fontSize: '1rem' }} />
+          &nbsp;
+          <Typography>
+            {content.created}
+          </Typography>
+        </Box>
       </Grid>
     </Grid>
   )

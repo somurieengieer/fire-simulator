@@ -8,10 +8,8 @@ import ExpandLessIcon from '@material-ui/icons/ExpandLess'
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      margin: theme.spacing(2)
-    },
-    cell: {
-      width: '100%'
+      width: '100%',
+      padding: theme.spacing(3)
     },
     active: {
       color: theme.palette.secondary.main
@@ -34,7 +32,7 @@ export function BlogListFilter ({ filterLabels, activeLabel, callbackForUpdate }
     <Box className={classes.root}>
       <Grid container spacing={2}>
         {filterLabels.map(label => (
-          <Grid item xs className={classes.cell} justify={'center'} key={label}>
+          <Grid item xs justify={'center'} key={label}>
             <BlogListFilterLabel title={label}
               callback={() => callbackForUpdate(label)}
               active={isActive(label)} />

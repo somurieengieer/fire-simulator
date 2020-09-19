@@ -71,7 +71,7 @@ export default function BlogListPage () {
           </Grid>
         )}
         {pagedShowContent().length === 0 && (
-          <Grid item xs={12} style={{ width: '100%' }}>
+          <Grid item xs={12}>
             <Typography variant={'h6'}>
               記事がありません
             </Typography>
