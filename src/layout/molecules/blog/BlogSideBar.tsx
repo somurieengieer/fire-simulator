@@ -6,6 +6,7 @@ import { BlogContentItem } from '../../../blogContent/BlogContentItem'
 import { BlogLatestContents, BlogSameTagContents } from './BlogRecommendContents'
 import { Profile } from '../../atoms/blog/Profile'
 import { BlogTagListItem } from '../../atoms/blog/BlogTagListItem'
+import { GoogleAdsSmall } from '../../../ads/GoogleAdsSmall'
 
 const useStyles = makeStyles({
   root: {
@@ -33,8 +34,10 @@ export function BlogSideBar ({ content }: BlogSideBarProps) {
       {content && (
         <BlogSameTagContents tag={content.tag} />
       )}
+      <GoogleAdsSmall />
       <BlogLatestContents />
       <BlogTagListItem />
+      <GoogleAdsSmall />
     </Grid>
   )
 }

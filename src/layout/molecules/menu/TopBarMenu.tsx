@@ -31,7 +31,10 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: 0,
       overflow: 'hidden',
       width: '100%',
-      height: 300
+      height: 300,
+      backgroundImage: 'url("/image/top_image.jpg")',
+      backgroundAttachment: 'fixed',
+      backgroundSize: '100%'
     },
     image: {
       width: '100%'
@@ -84,12 +87,6 @@ export default function TopBarMenu ({ children }: Props) {
           <MenuButtons/>
         </Toolbar>
       </AppBar>
-      <Box className={classes.imageBox}>
-        <img src={topImage} alt='top_image' className={classes.image}/>
-        <Typography variant={'h1'} className={classes.imageText}>
-          FIRE
-        </Typography>
-      </Box>
       <main className={classes.content}>
         {children}
       </main>

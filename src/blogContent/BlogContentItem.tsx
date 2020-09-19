@@ -1,4 +1,3 @@
-import React from 'react'
 import { BlogTag } from '../layout/atoms/blog/BlogTag'
 
 export interface BlogContentItem {

@@ -18,9 +18,7 @@ const useStyles = makeStyles(theme => createStyles({
       paddingTop: theme.spacing(4),
       paddingLeft: theme.spacing(8),
       paddingBottom: theme.spacing(4),
-      '& > li > a': {
-        textDecoration: 'none',
-        color: '#0000AA',
+      '& a': {
         '&:hover': {
           textDecorationLine: 'underline'
         }
