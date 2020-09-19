@@ -15,7 +15,7 @@ export default function BlogSideBarFrame ({ blog, children }: Props) {
     <JustifyCenterBox>
       <Grid container>
         <Grid item sm={12} md={8}>
-          <JustifyCenterBox>
+          <JustifyCenterBox maxWidth={'800'}>
             <GoogleAdsSmall />
             {children}
           </JustifyCenterBox>

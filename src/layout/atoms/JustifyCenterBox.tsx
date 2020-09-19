@@ -6,12 +6,11 @@ interface Props {
   children: React.ReactNode;
 }
 
-// 複利計算ページ
 export function JustifyCenterBox ({ maxWidth, children }: Props) {
   return (
     <Box display="flex" justifyContent="center">
       {maxWidth ? (
-        <Box style={{ maxWidth: Number(maxWidth) }}>
+        <Box style={{ width: '100%', maxWidth: Number(maxWidth) }}>
           {children}
         </Box>
       ) : (

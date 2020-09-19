@@ -64,18 +64,16 @@ export function BlogCaptionBase ({ titleVariant, content }: BlogCaptionBaseProps
   const classes = useStyles()
 
   return (
-    <Box>
-      <NonDecoratedLink to={myUrl.blogById(content.id)}>
-        <Paper className={classes.paper}>
-          <Box>
-            <Typography variant={titleVariant} className={classes.title}>
-              {content.title}
-            </Typography>
-          </Box>
-          <BlogCaptionInfo content={content} />
-        </Paper>
-      </NonDecoratedLink>
-    </Box>
+    <NonDecoratedLink to={myUrl.blogById(content.id)}>
+      <Paper className={classes.paper}>
+        <Box>
+          <Typography variant={titleVariant} className={classes.title}>
+            {content.title}
+          </Typography>
+        </Box>
+        <BlogCaptionInfo content={content} />
+      </Paper>
+    </NonDecoratedLink>
   )
 }
 

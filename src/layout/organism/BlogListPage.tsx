@@ -5,7 +5,7 @@ import BlogSideBarFrame from '../molecules/blog/BlogSideBarFrame'
 import { BlogCaption } from '../atoms/blog/BlogCaption'
 import { blogTags } from '../atoms/blog/BlogTag'
 import { BlogListFilter } from '../molecules/blog/BlogListFilter'
-import { Grid } from '@material-ui/core'
+import { Box, Grid, Paper, Typography } from '@material-ui/core'
 
 export default function BlogListPage () {
   const location = useLocation()
@@ -64,10 +64,17 @@ export default function BlogListPage () {
         activeLabel={filterLabel}
         callbackForUpdate={(label: string) => setFilterLabel(label)} />
 
-      <Grid container style={{ maxWidth: 800 }}>
+      <Grid container style={{ width: '100%' }}>
         {pagedShowContent().map(content =>
           <Grid item xs={12} key={content.id}>
             <BlogCaption {...content} key={content.id} />
+          </Grid>
+        )}
+        {pagedShowContent().length === 0 && (
+          <Grid item xs={12} style={{ width: '100%' }}>
+            <Typography variant={'h6'}>
+              記事がありません
+            </Typography>
           </Grid>
         )}
       </Grid>
