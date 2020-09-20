@@ -17,12 +17,12 @@ export function createUrlByContent (content: BlogContentItem): string {
 
 // 新しい記事が上
 export const blogContentList: BlogContentItem[] = [
-  // {
-  //   id: 1,
-  //   title: 'FIRE後の家計簿と積み立て試算',
-  //   created: '2020-09-19',
-  //   tag: BlogTag.FIRE
-  // },
+  {
+    id: 1,
+    title: 'FIRE後の家計簿と積み立て試算',
+    created: '2020-09-19',
+    tag: BlogTag.FIRE
+  },
   {
     id: 0,
     title: '堅実なFIREを実現する',

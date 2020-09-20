@@ -19,7 +19,6 @@ const useStyles = makeStyles(theme => createStyles({
       paddingLeft: theme.spacing(6),
       paddingRight: theme.spacing(6),
       paddingBottom: theme.spacing(4),
-      backgroundColor: theme.palette.common.white,
       '& a': {
         '&:hover': {
           textDecorationLine: 'underline'
@@ -47,7 +46,7 @@ const useStyles = makeStyles(theme => createStyles({
     '& table': {
       borderCollapse: 'collapse'
     },
-    '& th, td': {
+    '& td, th': {
       border: 'solid 1px',
       paddingLeft: theme.spacing(1),
       paddingRight: theme.spacing(1),
@@ -55,9 +54,6 @@ const useStyles = makeStyles(theme => createStyles({
     },
     '& th': {
       backgroundColor: theme.palette.primary.main
-    },
-    '& td': {
-      backgroundColor: theme.palette.common.white
     }
   }
 }))
