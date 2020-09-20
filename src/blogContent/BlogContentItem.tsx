@@ -12,7 +12,7 @@ function zeroPadding (length: number, originalNumber: number): string {
 }
 
 export function createUrlByContent (content: BlogContentItem): string {
-  return `/blog/blog${zeroPadding(5, content.id)}_${content.title}.md`
+  return `/blog/blog${zeroPadding(5, content.id)}.md`
 }
 
 // 新しい記事が上
@@ -25,7 +25,7 @@ export const blogContentList: BlogContentItem[] = [
   // },
   {
     id: 0,
-    title: '堅実なFIREを実現する',
+    title: '堅実にFIREを実現する',
     created: '2020-09-19',
     tag: BlogTag.FIRE
   }

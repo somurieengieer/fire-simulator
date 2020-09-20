@@ -12,6 +12,7 @@ import { rootUrlTitleByUrl } from '../../Urls'
 import { NonDecoratedLink } from '../../atoms/NonDecoratedLink'
 import { Box } from '@material-ui/core'
 import topImage from '../../../image/top_image.jpg'
+import { BASE_TITLE } from '../../../common/common'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -80,7 +81,7 @@ export default function TopBarMenu ({ children }: Props) {
         <Toolbar>
           <Typography variant="h6" className={classNames(classes.title, { [classes.center]: isPhoneMode })}>
             <NonDecoratedLink to={rootUrl()}>
-              堅実にFIREを実現する&nbsp;
+              {BASE_TITLE}&nbsp;
               {isPhoneMode && (<br/>)}
               - {title()} -
             </NonDecoratedLink>

@@ -2,7 +2,6 @@ import React from 'react'
 import { Box } from '@material-ui/core'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 import { BlogContentItem, createUrlByContent } from '../../../blogContent/BlogContentItem'
-import { BlogCaptionInfo } from '../../atoms/blog/BlogCaption'
 import BlogContentMarkdown from '../../../blogContent/BlogContentMarkdown'
 import { BlogContentHeader } from '../../atoms/blog/BlogContentHeader'
 
