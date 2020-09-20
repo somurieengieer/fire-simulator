@@ -51,6 +51,9 @@ const useStyles = makeStyles(theme => createStyles({
       paddingLeft: theme.spacing(1),
       paddingRight: theme.spacing(1),
       borderColor: theme.palette.grey.A200
+    },
+    '& th': {
+      backgroundColor: theme.palette.primary.main
     }
   }
 }))
