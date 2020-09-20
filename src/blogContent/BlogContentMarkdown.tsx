@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => createStyles({
         }
       }
     },
-    '& > h1': {
+    '& h1': {
       borderLeft: 'solid 10px',
       borderBottom: 'solid 1px',
       borderLeftColor: theme.palette.secondary.main,
@@ -33,15 +33,24 @@ const useStyles = makeStyles(theme => createStyles({
       paddingLeft: 10,
       paddingBottom: 6
     },
-    '& > blockquote': {
+    '& blockquote': {
       paddingLeft: theme.spacing(3),
       paddingRight: theme.spacing(3),
       border: 'solid 2px',
-      borderColor: theme.palette.grey.A700,
-      backgroundColor: theme.palette.grey.A100
+      borderColor: theme.palette.grey.A100,
+      backgroundColor: '#EEEEEE'
     },
-    '& > * > li': {
+    '& li': {
       textDecoration: 'none'
+    },
+    '& table': {
+      borderCollapse: 'collapse'
+    },
+    '& td, th': {
+      border: 'solid 1px',
+      paddingLeft: theme.spacing(1),
+      paddingRight: theme.spacing(1),
+      borderColor: theme.palette.grey.A200
     }
   }
 }))
