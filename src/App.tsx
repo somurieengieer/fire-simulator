@@ -3,7 +3,6 @@ import './App.css'
 import { Route, Switch } from 'react-router'
 import { myUrl } from './layout/Urls'
 import MenuFrame from './layout/molecules/menu/MenuFrame'
-import { Loading } from './layout/atoms/Loading'
 
 const FirePage = lazy(() => import('./layout/organism/FirePage'))
 const TaxPage = lazy(() => import('./layout/organism/TaxPage'))
@@ -14,9 +13,10 @@ const BlogListPage = lazy(() => import('./layout/organism/BlogListPage'))
 function App () {
   return (
     <MenuFrame>
-      <Suspense fallback={<Loading />}>
+      <Suspense fallback={<div>Loading...</div>}>
         <Switch>
           <Route exact path={myUrl.top} component={FirePage}/>
+          {/* <CompoundInterestPage /> */}
           <Route exact path={myUrl.tax} component={TaxPage}/>
           <Route exact path={myUrl.annuity} component={AnnuityPage}/>
           <Route exact path={myUrl.blogList} component={BlogListPage}/>
