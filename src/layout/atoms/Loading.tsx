@@ -9,11 +9,11 @@ export function Loading () {
   return (
     <JustifyCenterBox>
       <AlignCenterBox height={400}>
-        <div>LoadingDiv</div>
+        {/* <div>LoadingDiv</div> */}
+        <Typography>Loading</Typography>
       </AlignCenterBox>
     </JustifyCenterBox>
     // ローディングアイコン
     //     {/* <FontAwesomeIcon className='fa-spin' style={{ padding: 10, fontSize: 50 }} icon={faSpinner} /> */}
-  // <Typography>Loading</Typography>
   )
 }
