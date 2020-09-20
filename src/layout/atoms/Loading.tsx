@@ -7,13 +7,13 @@ import { AlignCenterBox } from './AlignCenterBox'
 
 export function Loading () {
   return (
-    <div>LoadingDiv</div>
+    <JustifyCenterBox>
+      <div>LoadingDiv</div>
+    </JustifyCenterBox>
     // ローディングアイコン
-    // <JustifyCenterBox>
     //   <AlignCenterBox height={400}>
     //     {/* <FontAwesomeIcon className='fa-spin' style={{ padding: 10, fontSize: 50 }} icon={faSpinner} /> */}
   // <Typography>Loading</Typography>
   // </AlignCenterBox>
-    // </JustifyCenterBox>
   )
 }
