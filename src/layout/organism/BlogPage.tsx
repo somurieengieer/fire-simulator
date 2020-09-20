@@ -2,7 +2,7 @@ import React from 'react'
 import { Section, SectionTitle } from '../atoms/blog/Section'
 import { blogContentList } from '../../blogContent/BlogContentItem'
 import { useParams } from 'react-router'
-import { BlogContent } from '../molecules/blog/BlogContent'
+import { BlogContent } from '../atoms/blog/BlogContent'
 import BlogSideBarFrame from '../molecules/blog/BlogSideBarFrame'
 
 export default function BlogPage () {
