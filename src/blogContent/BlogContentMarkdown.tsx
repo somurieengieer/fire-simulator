@@ -16,7 +16,8 @@ const useStyles = makeStyles(theme => createStyles({
       borderColor: theme.palette.grey.A200,
       borderRadius: 6,
       paddingTop: theme.spacing(4),
-      paddingLeft: theme.spacing(8),
+      paddingLeft: theme.spacing(6),
+      paddingRight: theme.spacing(6),
       paddingBottom: theme.spacing(4),
       '& a': {
         '&:hover': {
@@ -91,8 +92,6 @@ export default function BlogContentMarkdown ({ url }: Props) {
     <Box className={classes.content}>
       <Typography variant={'caption'}>目次</Typography>
       {htmlToReactJsx(applyTOC(source))}
-      {/* <div>■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■</div> */}
-      {/* <ReactMarkdown source={source} /> */}
     </Box>
   )
 }

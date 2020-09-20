@@ -50,7 +50,8 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
       padding: theme.spacing(3),
       [theme.breakpoints.down('sm')]: {
-        padding: theme.spacing(0.5)
+        padding: theme.spacing(0.5),
+        paddingTop: theme.spacing(3)
       }
     }
   })

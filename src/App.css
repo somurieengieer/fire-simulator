@@ -38,11 +38,26 @@ h1 {
 h2 {
   font-size: 1.3rem;
 }
-h3,h4 {
+h3, h4 {
   font-size: 1.2rem;
 }
-h5,h6 {
+h5, h6 {
   font-size: 1.1rem;
+}
+@media screen and (max-width: 600px) {
+  /* Material UI のxs(600px)以下（スマホ用） */
+  h1 {
+    font-size: 1.2rem;
+  }
+  h2 {
+    font-size: 1.1rem;
+  }
+  h3, h4, h5, h6 {
+    font-size: 1.0rem;
+  }
+  p {
+    line-height: 2rem;
+  }
 }
 
 @keyframes App-logo-float {
