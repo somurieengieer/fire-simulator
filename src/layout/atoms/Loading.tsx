@@ -8,12 +8,12 @@ import { AlignCenterBox } from './AlignCenterBox'
 export function Loading () {
   return (
     <JustifyCenterBox>
-      <div>LoadingDiv</div>
+      <AlignCenterBox height={400}>
+        <div>LoadingDiv</div>
+      </AlignCenterBox>
     </JustifyCenterBox>
     // ローディングアイコン
-    //   <AlignCenterBox height={400}>
     //     {/* <FontAwesomeIcon className='fa-spin' style={{ padding: 10, fontSize: 50 }} icon={faSpinner} /> */}
   // <Typography>Loading</Typography>
-  // </AlignCenterBox>
   )
 }
