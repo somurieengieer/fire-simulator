@@ -10,10 +10,10 @@ export function Loading () {
     <JustifyCenterBox>
       <AlignCenterBox height={400}>
         {/* <div>LoadingDiv</div> */}
-        <Typography>Loading</Typography>
+        <Typography>Loading Awesome</Typography>
+        <FontAwesomeIcon className='fa-spin' style={{ padding: 10, fontSize: 50 }} icon={faSpinner} />
       </AlignCenterBox>
     </JustifyCenterBox>
     // ローディングアイコン
-    //     {/* <FontAwesomeIcon className='fa-spin' style={{ padding: 10, fontSize: 50 }} icon={faSpinner} /> */}
   )
 }
