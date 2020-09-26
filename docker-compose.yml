@@ -1,0 +1,22 @@
+version: '3' # Compose file format version
+services:
+  web:  # サービス名。webとかredisとかdbとかが入る。起動順番の依存関係はdepends_onで設定する
+    tty: true  # 擬似端末を保持 make container stay launched。ないとup後即終了する
+    build:
+      # 書き方フォーマット　https://docs.docker.com/compose/compose-file/
+      context: .  # dockerファイルが存在するディレクトリ。./dirに置くこともあるみたい
+      dockerfile: Dockerfile
+    volumes:
+     - ./:/usr/src/app  # ローカルの.をコンテナのusr/src/appにマウント
+#    volumes:          # データを永続化する場合は以下のようにvolumesを使う。今回永続化したいデータはないので使わない
+#     - type: volume
+#       source: mydata
+#       target: /data  # コンテナ上のパス
+#       volume:
+#         nocopy: true
+    command: sh -c "yarn start"  # sh -cを使って&&で繋げると複数コマンドを実行できる。
+#    command: sh -c "cd react-sample && yarn start"  # sh -cを使って&&で繋げると複数コマンドを実行できる。
+    ports:
+     - "3000:3000"
+# volumes:
+#  mydata:  # ドライバ指定できるが通常指定しない

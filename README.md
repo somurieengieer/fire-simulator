@@ -35,3 +35,15 @@ http://oisham.hatenablog.com/entry/2019/08/20/111826
 
 単体テスト内でexportしないといけないので export {} をファイル内に記述する。
 
+
+## enzymeの利用
+
+yarn add --dev enzyme jest-enzyme enzyme-adapter-react-15 @types/enzyme
+
+# Docker起動
+
+以下コマンドで起動する
+
+```
+$ docker-compose up --build
+```
