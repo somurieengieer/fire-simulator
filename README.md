@@ -47,3 +47,33 @@ yarn add --dev enzyme jest-enzyme enzyme-adapter-react-15 @types/enzyme
 ```
 $ docker-compose up --build
 ```
+
+# Gradle
+
+依存関係の更新：　$ gradle build
+
+# SeleniumでE2Eテストを行う
+
+サーバ構成
+
+Docker上でReact(Node.js)、Seleniumサーバ、テストドライバ(Node.js)を動かす。
+テストドライバサーバからSeleniumサーバの4444を経由してSeleniumを操作する。
+また、Seleniumサーバの5900でvncが動き、視覚的に動作を確認できる。
+
+WebdriverIO: Node.js上でSelenium WebDriverを操作するライブラリ
+
+## テスト実行方法
+
+ReactとSeleniumサーバを起動する
+
+```
+$ docker-compose up --build  // 特にdockerイメージ作成の変更がなければbuildは不要
+```
+
+（テスト状況を見たいなら）ブラウザでvnc://localhost:5900を実行し、画面共有を開く
+
+node selenide/execTest.js を実行
+
+### 動かない場合
+
+ポート4444が他で使用されていたりしたことがある。再起動するのが早い。

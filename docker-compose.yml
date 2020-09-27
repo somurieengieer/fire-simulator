@@ -18,5 +18,13 @@ services:
 #    command: sh -c "cd react-sample && yarn start"  # sh -cを使って&&で繋げると複数コマンドを実行できる。
     ports:
      - "3000:3000"
+  # docker-selenium
+  selenium:
+    image: selenium/standalone-chrome-debug:3.2.0-actinium
+    volumes:
+      - /dev/shm:/dev/shm
+    ports:
+      - "4444:4444"
+      - "5900:5900"
 # volumes:
 #  mydata:  # ドライバ指定できるが通常指定しない
