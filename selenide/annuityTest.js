@@ -2,7 +2,7 @@ const fs = require('fs')
 const { promisify } = require('util')
 const webdriver = require('selenium-webdriver')
 
-const { Builder, Capabilities } = require('selenium-webdriver')
+const { Builder, By, Capabilities } = require('selenium-webdriver')
 
 var capabilities = Capabilities.chrome();
 (async function helloSelenium () {
@@ -12,7 +12,8 @@ var capabilities = Capabilities.chrome();
     .build()
   try {
     console.log('-----test 1')
-    await driver.get('http://www.google.com')
+    await driver.get('http://localhost:3000/annuity')
+    // await driver.findElement(By.xpath('tbody[0]/'))
     console.log('-----test 2')
   } finally {
     try {

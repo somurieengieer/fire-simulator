@@ -51,6 +51,7 @@
     "recharts": "^1.8.5",
     "redux-logger": "^3.0.6",
     "selenium-webdriver": "^4.0.0-alpha.7",
+    "testcafe": "^1.9.3",
     "typescript": "^4.0.2",
     "webdriverio": "^6.5.2"
   },
