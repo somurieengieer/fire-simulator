@@ -81,7 +81,7 @@ export function TaxSubHeaderRowSet ({ title, amount, expanded, handleExpandClick
       <TableRow className={classes.tableHeadRow}>
         {amount !== undefined ? (
           <>
-            <TableCell>
+            <TableCell component="th" scope="row">
               {createTitle()}
             </TableCell>
             <TableCell className={classes.tableCell} align="center">
