@@ -8,7 +8,7 @@ import { ReactSelector } from 'testcafe-react-selectors'
 // ・
 // ---------------------------------------------------------
 
-fixture('Getting started').page('http://localhost:3000/annuity')
+fixture('年金計算テスト').page('http://localhost:3000/annuity')
 
 async function replaceValue (t: TestController, selector: Selector, value: string) {
   await t
@@ -53,26 +53,11 @@ async function replaceValueByTitleAll (t: TestController, valueAndTitles: ValueA
   }))
 }
 
-test('My first test', async (t: TestController) => {
-  await checkValueByTitle(t, '納付年数', '10')
+// ==========================================================================================
+// ここから下テストケース
+// ==========================================================================================
 
-  // const annuityTable = ReactSelector('AnnuityTable').nth(0)
-  //   .find('td > input')
-  // await replaceValue(t, annuityTable, '20')
-
-  await replaceValueByTitle(t, '納付年数', '20')
-
-  await checkValueByTitle(t, '納付年数', '20')
-
-  // ------ Sample ------
-  // await t
-  //   .typeText('#developer-name', 'wakamsha') // 2.
-  //   .click('#submit-button') // 3.
-  //   .expect(Selector('#article-header').innerText) // 4-a.
-  //   .eql('Thank you, wakamsha!') // 4-b.
-})
-
-test('Default Value', async (t: TestController) => {
+test('初期表示（国民年金＋厚生年金）', async (t: TestController) => {
   await checkValueByTitleAll(t, [
     { title: '納付年数', value: '10' },
     { title: '納付年数1', value: '10' },
