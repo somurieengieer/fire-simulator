@@ -1,4 +1,11 @@
-# 機能
+# サマリ
+
+機能は以下の通り
+・資産運用シミュレータ
+・税金計算
+・年金計算
+テストは以下の通り
+・TestCafeがメイン（Selenideとかも検討したが手軽にNode.jsでできるTestCafeを選択）
 
 # ブログ
 
@@ -9,10 +16,11 @@
 
 # 使用ライブラリ
 
-いつもと違うライブラリは以下の通り
+普段使わないライブラリは以下の通り
 
 - Recharts.js
 - FontAwesome（Loading画像）
+- TestCafe
 
 # 単体テスト
 
@@ -77,3 +85,18 @@ node selenide/execTest.js を実行
 ### 動かない場合
 
 ポート4444が他で使用されていたりしたことがある。再起動するのが早い。
+
+# TestCafeでE2Eテストを行う
+
+TestCafeでは以下コマンドでE2Eテストを実行できる。
+testcafe/以下に画面単位でテストケースを追加する。
+
+```
+$ testcafe chrome:headless testcafe/annuityTest.ts 
+```
+
+セットアップ時に参考にしたサイトは以下の通り。  
+https://tech.recruit-mp.co.jp/front-end/post-20193/
+
+docker run -v ${TEST_FOLDER}:/tests -it testcafe/testcafe ${TESTCAFE_ARGS}
+docker run -v testcafe:/tests -it testcafe/testcafe 
