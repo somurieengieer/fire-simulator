@@ -1,6 +1,13 @@
 import { Selector } from 'testcafe'
 import { ReactSelector } from 'testcafe-react-selectors'
 
+// ---------------------------------------------------------
+// 全体のテスト方針
+// ・主要なケースのみをテスト対象とする
+// ・パターン1のみテスト
+// ・
+// ---------------------------------------------------------
+
 fixture('Getting started').page('http://localhost:3000/annuity')
 
 async function replaceValue (t: TestController, selector: Selector, value: string) {
