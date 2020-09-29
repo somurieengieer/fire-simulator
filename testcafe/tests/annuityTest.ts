@@ -1,5 +1,4 @@
 import { Selector } from 'testcafe'
-import { ReactSelector } from 'testcafe-react-selectors'
 
 // ---------------------------------------------------------
 // 全体のテスト方針
