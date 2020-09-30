@@ -8,11 +8,9 @@
 
 テストは以下の通り
 
-- TestCafeがメイン（Selenideとかも検討したが手軽にNode.jsでできるTestCafeを選択）
+- TestCafe
 
-公開中のサービスは以下。
-
-https://fire.somuriengineer.com/
+公開中のサービス: https://fire.somuriengineer.com/
 
 
 # ブログ
