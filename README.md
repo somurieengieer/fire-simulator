@@ -1,11 +1,19 @@
 # サマリ
 
 機能は以下の通り
-・資産運用シミュレータ
-・税金計算
-・年金計算
+
+- 資産運用シミュレータ
+- 税金計算
+- 年金計算
+
 テストは以下の通り
-・TestCafeがメイン（Selenideとかも検討したが手軽にNode.jsでできるTestCafeを選択）
+
+- TestCafeがメイン（Selenideとかも検討したが手軽にNode.jsでできるTestCafeを選択）
+
+公開中のサービスは以下。
+
+https://fire.somuriengineer.com/
+
 
 # ブログ
 
@@ -20,10 +28,12 @@
 
 - Recharts.js
 - FontAwesome（Loading画像）
+- markdown-it
 - TestCafe
 
-# 単体テスト
+# 単体テスト（E2Eテストのみ実行する方針にしたため廃止）
 
+単体テストの動作確認としてjest
 以下を参考にjestで実装。
 各ディレクトリ内に設置された__tests__ディレクトリにテストファイルが置かれている。
 https://typescript-jp.gitbook.io/deep-dive/intro-1/jest
@@ -48,19 +58,35 @@ http://oisham.hatenablog.com/entry/2019/08/20/111826
 
 yarn add --dev enzyme jest-enzyme enzyme-adapter-react-15 @types/enzyme
 
-# Docker起動
+# E2Eテスト
 
-以下コマンドで起動する
+## TestCafe
+
+TestCafeでは以下コマンドでE2Eテストを実行できる。
+testcafe/以下に画面単位でテストケースを追加する。
 
 ```
-$ docker-compose up --build
+$ testcafe chrome:headless testcafe/annuityTest.ts 
 ```
 
-# Gradle
+セットアップ時に参考にしたサイトは以下の通り。  
+https://tech.recruit-mp.co.jp/front-end/post-20193/
 
-依存関係の更新：　$ gradle build
+実行コマンド（動作確認中）
 
-# SeleniumでE2Eテストを行う
+```
+$ docker run -v ${TEST_FOLDER}:/tests -it testcafe/testcafe ${TESTCAFE_ARGS}
+$ docker run -v testcafe:/tests -it testcafe/testcafe 
+```
+
+### CircleCI
+
+CircleCIでCIを実現する。  
+※これから実装
+
+## SeleniumでE2Eテストを行う（ボツ）
+
+※色々動作検証した結果TestCafeの方がReactと相性良さそうなのでボツ
 
 サーバ構成
 
@@ -70,7 +96,7 @@ Docker上でReact(Node.js)、Seleniumサーバ、テストドライバ(Node.js)�
 
 WebdriverIO: Node.js上でSelenium WebDriverを操作するライブラリ
 
-## テスト実行方法
+### テスト実行方法
 
 ReactとSeleniumサーバを起動する
 
@@ -86,17 +112,3 @@ node selenide/execTest.js を実行
 
 ポート4444が他で使用されていたりしたことがある。再起動するのが早い。
 
-# TestCafeでE2Eテストを行う
-
-TestCafeでは以下コマンドでE2Eテストを実行できる。
-testcafe/以下に画面単位でテストケースを追加する。
-
-```
-$ testcafe chrome:headless testcafe/annuityTest.ts 
-```
-
-セットアップ時に参考にしたサイトは以下の通り。  
-https://tech.recruit-mp.co.jp/front-end/post-20193/
-
-docker run -v ${TEST_FOLDER}:/tests -it testcafe/testcafe ${TESTCAFE_ARGS}
-docker run -v testcafe:/tests -it testcafe/testcafe 
