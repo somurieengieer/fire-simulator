@@ -7,7 +7,7 @@ import { Selector } from 'testcafe'
 // ・
 // ---------------------------------------------------------
 
-fixture('年金計算テスト').page('http://localhost:3000/annuity')
+fixture('年金計算テスト').page('http://web:3000/annuity')
 
 async function replaceValue (t: TestController, selector: Selector, value: string) {
   await t

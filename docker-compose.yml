@@ -15,6 +15,9 @@ services:
 #       volume:
 #         nocopy: true
     command: sh -c "yarn start"  # sh -cを使って&&で繋げると複数コマンドを実行できる。
+                                 # docker-compose upした時に実行される。
+                                 # commandが存在するとDockerfileに記載されたCMDは無視されるので注意
+                                 # docker-compose run で実行するとこのコマンドは無視される（runは単独でコンテナ実行されるのでweb以外を実行した時はそもそもwebは起動しない）
 #    command: sh -c "cd react-sample && yarn start"  # sh -cを使って&&で繋げると複数コマンドを実行できる。
     ports:
      - "3000:3000"
@@ -31,8 +34,11 @@ services:
       - web  # webが立ち上がってからテスト実行する
     build:
       context: ./testcafe
-    command: >
-      "chromium:headless --no-sandbox"
-      /var/src/test/tests/*
+    # commandに記載するとDockerfileに記載したCMDを無視する（ENTRYPOINTは無視されない）
+    # > で改行
+#    command: >
+#      "chromium:headless --no-sandbox"
+#      /var/src/test/tests/*
+
 # volumes:
 #  mydata:  # ドライバ指定できるが通常指定しない

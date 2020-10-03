@@ -82,6 +82,11 @@ $ docker run -v testcafe:/tests -it testcafe/testcafe
 CircleCIでCIを実現する。  
 ※これから実装
 
+## Docker
+
+Dockerの使い方を忘れてしまう。↓以下をさらっと見ると思い出しやすい。
+https://www.slideshare.net/zembutsu/docker-underlying-and-containers-lifecycle
+
 ## SeleniumでE2Eテストを行う（ボツ）
 
 ※色々動作検証した結果TestCafeの方がReactと相性良さそうなのでボツ
