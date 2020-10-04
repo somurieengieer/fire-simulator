@@ -5,6 +5,8 @@ COPY . /var/src/app/
 WORKDIR /var/src/app
 # 存在しない場合は作成される
 
+RUN [ "yarn" ]
+
 CMD [ "yarn", "start" ]
 
 # 今回はdocker-compose.ymlのservices.web.volumesでマウントしているが、
