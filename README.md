@@ -73,6 +73,7 @@ docker-compose up でも実行できるが、余計なログ（webのログ）�
 動きの意図が異なるため以下コマンドを使うのが良い。
 
 ```
+$ docker-compose build
 $ docker-compose run --rm testcafe
 ```
 
