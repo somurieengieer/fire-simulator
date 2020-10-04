@@ -8,4 +8,4 @@ jobs:
       - checkout
       - setup_remote_docker  # ci中でdockerとdocker-composeを使う為の魔法のワード
       - run: docker-compose build
-      - run: docker-compose run testcafe
+      - run: docker-compose up
