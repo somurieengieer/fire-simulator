@@ -60,7 +60,7 @@ yarn add --dev enzyme jest-enzyme enzyme-adapter-react-15 @types/enzyme
 
 ## TestCafe
 
-TestCafeでは以下コマンドでE2Eテストを実行できる。
+TestCafe単体では以下コマンドでE2Eテストを実行できる。
 testcafe/以下に画面単位でテストケースを追加する。
 
 ```
@@ -80,7 +80,11 @@ $ docker run -v testcafe:/tests -it testcafe/testcafe
 ### CircleCI
 
 CircleCIでCIを実現する。  
-※これから実装
+ローカルで実行するコマンドは以下の通り
+
+```
+$ docker-compose run --build
+```
 
 ## Docker
 

@@ -31,7 +31,7 @@ services:
 #      - "5900:5900"
   testcafe:
     depends_on:
-      - web  # webが立ち上がってからテスト実行する
+      - web  # webが立ち上がってからテスト実行する（webの起動タイミングしか見ないのでhttpリクエスト受付可能か田舎はwait.shで見る必要がある）
     build:
       context: ./testcafe
     # commandに記載するとDockerfileに記載したCMDを無視する（ENTRYPOINTは無視されない）
