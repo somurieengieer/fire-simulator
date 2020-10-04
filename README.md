@@ -95,6 +95,11 @@ https://qiita.com/shindex/items/eeb35dc7200d80ddf397
 Dockerの使い方を忘れてしまう。↓以下をさらっと見ると思い出しやすい。
 https://www.slideshare.net/zembutsu/docker-underlying-and-containers-lifecycle
 
+docker-composeを使う場合、docker-compose.ymlとDockerfileでどちらに何を書くか方針を決めておいた方が良い。
+基本的にDockerfileに書けるものは書く、
+それらを組み合わせて上書きするようなものはdocker-compose.ymlに書くのが良い。
+ビルド時に必要な処理(実行時ではなくビルド時に必要なファイルのマウントやyarnなど)はDockerfileに書くように注意する。
+
 ## SeleniumでE2Eテストを行う（ボツ）
 
 ※色々動作検証した結果TestCafeの方がReactと相性良さそうなのでボツ
