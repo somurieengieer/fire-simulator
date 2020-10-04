@@ -1,11 +1,11 @@
 FROM node:10.19-alpine  
 # FROMは一番最初に書く必要あり。行頭に#がついた行がコメントになるため、コメントは行末でなく下の行に記載する
 
-COPY . /var/src/app/
+ADD . /var/src/app/
 WORKDIR /var/src/app
 # 存在しない場合は作成される
 
-RUN [ "yarn" ]
+RUN yarn
 
 CMD [ "yarn", "start" ]
 
