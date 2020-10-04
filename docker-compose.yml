@@ -14,7 +14,7 @@ services:
 #       target: /data  # コンテナ上のパス
 #       volume:
 #         nocopy: true
-    command: sh -c "yarn start"  # sh -cを使って&&で繋げると複数コマンドを実行できる。
+#    command: sh -c "yarn start"  # sh -cを使って&&で繋げると複数コマンドを実行できる。
                                  # docker-compose upした時に実行される。
                                  # commandが存在するとDockerfileに記載されたCMDは無視されるので注意
                                  # docker-compose run で実行するとこのコマンドは無視される（runは単独でコンテナ実行されるのでweb以外を実行した時はそもそもwebは起動しない）

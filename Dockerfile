@@ -5,9 +5,12 @@ COPY . /var/src/app/
 WORKDIR /var/src/app
 # 存在しない場合は作成される
 
+CMD [ "yarn", "start" ]
+
 # 今回はdocker-compose.ymlのservices.web.volumesでマウントしているが、
 # 以下のような書き方でコンテナ上にデータコピーもできる。
 # ADD . /code  # .をコンテナ上の/codeにコピーする
 # WORKDIR /code
 
 # ADD とCOPYは似ているが、ADDだとリモートからのファイル追加ができ、圧縮ファイルが自動解凍される点が異なる。
+
