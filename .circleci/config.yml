@@ -3,10 +3,11 @@ jobs:
   build:
     docker:
       - image: circleci/node:8.1.2
-    working_directory: "~/"
+    working_directory: "~/testcafe"
     steps:
       - checkout
       - setup_remote_docker  # ci中でdockerとdocker-composeを使う為の魔法のワード。ビルド用に独立した環境を作成する。
+      - run: pwd
       - run: docker-compose build
       - run: ls -l
       - run: docker-compose up
