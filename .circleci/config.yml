@@ -8,5 +8,4 @@ jobs:
       - checkout
       - setup_remote_docker  # ci中でdockerとdocker-composeを使う為の魔法のワード。ビルド用に独立した環境を作成する。
       - run: docker-compose build
-      - run: ls -l /var/src/app
       - run: docker-compose up
