@@ -99,6 +99,15 @@ $ docker-compose run --build
 参考にしたサイトは以下の通り。  
 https://qiita.com/shindex/items/eeb35dc7200d80ddf397  
 
+### CircleCI結果をSlack通知
+
+Slack Orbsを使ってSlackに通知する。
+普通のWebHookの場合はCircleCIにSlackのWebHookURLを設定するだけだが、
+Orbsの場合はメッセージ内容やメンションや動く条件などを.circleci/config.ymlに細かく設定できる。
+難しくもないのでOrbsを使う方が良さそう。
+設定は以下を参考。
+
+https://qiita.com/k_bobchin/items/11f0d778de09502de1f3
 
 ## Docker
 

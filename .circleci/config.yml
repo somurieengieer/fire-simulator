@@ -15,6 +15,7 @@ jobs:
 #     Slack Orbを使ってSlackに通知
       - slack/status:
 #          fail_only: true # 失敗時だけ通知する場合
-          success_message: ':circleci-pass: $CIRCLE_BRANCH のデプロイが完了しました\nUser：$CIRCLE_USERNAME'
-          failure_message: ':circleci-fail: $CIRCLE_BRANCH のデプロイが失敗しました\nUser：$CIRCLE_USERNAME'
+          mentions: 'here'
+          success_message: ':+1: $CIRCLE_BRANCH のデプロイが完了しました\nUser：$CIRCLE_USERNAME'
+          failure_message: ':バーン: $CIRCLE_BRANCH のデプロイが失敗しました\nUser：$CIRCLE_USERNAME'
           webhook: '${SLACK_WEBHOOK}'
