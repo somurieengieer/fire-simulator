@@ -20,6 +20,9 @@ RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key
 CMD [ "sh", "-c", "./wait.sh" ]
 
 
+# 以下はtestcafeを単独で実行させる用途で書いていたDockerfile
+#（docker-composeで制御してCircleCIに乗せるにくかったのでボツ）
+
 #FROM testcafe/testcafe
 #
 #USER root

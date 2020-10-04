@@ -67,6 +67,15 @@ testcafe/以下に画面単位でテストケースを追加する。
 $ testcafe chrome:headless testcafe/annuityTest.ts 
 ```
 
+サーバを起動していない場合はdocker-composeでまとめて実行できる。
+docker-composeのコマンドは以下の通り。（testcafeにwebが依存しているためwebを起動させてからtestcafeが動く）
+docker-compose up でも実行できるが、余計なログ（webのログ）が出たり、実行後に終了しなかったりする。
+動きの意図が異なるため以下コマンドを使うのが良い。
+
+```
+$ docker-compose run --rm testcafe
+```
+
 セットアップ時に参考にしたサイトは以下の通り。  
 https://tech.recruit-mp.co.jp/front-end/post-20193/
 

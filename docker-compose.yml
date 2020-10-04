@@ -6,8 +6,8 @@ services:
       # 書き方フォーマット　https://docs.docker.com/compose/compose-file/
       context: .  # dockerファイルが存在するディレクトリ。./dirに置くこともあるみたい
       dockerfile: Dockerfile
-#    volumes:
-#     - ./:/var/src/app  # ローカルの.をコンテナのvar/src/appにマウント
+    volumes:
+     - ./:/var/src/app  # ローカルの.をコンテナのvar/src/appにマウント
 #    volumes:          # データを永続化する場合は以下のようにvolumesを使う。今回永続化したいデータはないので使わない
 #     - type: volume
 #       source: mydata
