@@ -93,13 +93,14 @@
   "test": "jest",
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged; jest"
+      "pre-commit": "lint-staged"
     }
   },
   "lint-staged": {
     "*.{ts,tsx}": [
       "tslint --fix './src/**/*.ts'",
-      "tslint --fix './src/**/*.tsx'"
+      "tslint --fix './src/**/*.tsx'",
+      "git add"
     ]
   }
 }
