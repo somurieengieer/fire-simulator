@@ -9,16 +9,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import { JustifyCenterBox } from '../atoms/JustifyCenterBox'
 import { CompoundInterestTable } from '../molecules/CompoundInterestTable'
 
-const useStyles = makeStyles({
-  table: {
-    width: 650
-  }
-})
-
 // 複利計算ページ
 export function CompoundInterestPage () {
-  const classes = useStyles()
-
   const [interestProps, setInterestProps] = useState<CompoundInterestProps>(
     { presentAmount: 100, reserveAmount: 10, reserveYears: 10, annualInterest: 3 }
   )

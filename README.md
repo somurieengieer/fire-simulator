@@ -55,7 +55,8 @@ http://oisham.hatenablog.com/entry/2019/08/20/111826
 
 lint-stagedとhuskeyを使って実現する。  
 lint-stagedはgitのstaging環境にある資源に対してスクリプトを実行するnpmパッケージ。  
-huskeyはgitのpre-commit hookとpackage.jsonを連携するツール。  
+※staging環境に上がっているファイルのみを対象とする。
+huskeyはgitのpre-commit hookの設定をpackage.jsonに書けるようにする。(.git/hooks/pre-commit にスクリプトを書いた場合、プロジェクト内で共有がしにくい)
 これらを組み合わせて、コミット時にlint-stagedを動かし、
 eslintでスタイル違反しているコードを自動修正・エラー検出を行うことができる。
 

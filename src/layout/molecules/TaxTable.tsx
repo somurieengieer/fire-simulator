@@ -30,7 +30,7 @@ export function TaxTable ({ taxSet }: PhasesTableProps) {
   const [expandedPersonalTax, setExpandedPersonalTax] = useState<boolean>(false)
   const [expandedRetirementTax, setExpandedRetirementTax] = useState<boolean>(false)
 
-  const updateTaxSetValue = (updateValue: () => void) => {
+  const updateTaxSetValue = (updateValue: () => void): void => {
     updateValue()
     dispatch(updateTaxSet(taxSet))
   }
@@ -63,6 +63,7 @@ export function TaxTable ({ taxSet }: PhasesTableProps) {
               </TaxSubHeaderRowSet>
               {taxSet.incomes.map((income: Income, incomeIndex: number) => (
                 <TaxSubHeaderRowSet title={income.subHeaderTitle}
+                  key={income.name}
                   amount={Math.max(income.amount - sumAmount(income.deductions), 0)}>
                   <TaxTableRowSet rowLabel={income.name}
                     value={income.amount || ''}
@@ -70,6 +71,7 @@ export function TaxTable ({ taxSet }: PhasesTableProps) {
                   />
                   {income.deductions && income.deductions.map((deduction, i) => (
                     <TaxTableRowSet rowLabel={deduction.name}
+                      key={i}
                       value={deduction.amount || ''}
                       onChange={v => updateTaxSetValue(() => deduction.amount = Number(v))}
                       disabled={!deduction.editable}
@@ -81,6 +83,7 @@ export function TaxTable ({ taxSet }: PhasesTableProps) {
               <TaxSubHeaderRowSet title={'控除'} amount={sumAmount(taxSet.deductions)}>
                 {taxSet.deductions.map((deduction: Deduction, deductionIndex: number) => (
                   <TaxTableRowSet rowLabel={deduction.name}
+                    key={deductionIndex}
                     value={deduction.amount || ''}
                     onChange={v => updateTaxSetValue(() => deduction.amount = Number(v))}
                     availableCheckBox={deduction.availableCheckBox}
@@ -97,6 +100,7 @@ export function TaxTable ({ taxSet }: PhasesTableProps) {
               >
                 {taxSet.socialInsurance.map((socialInsurance) => (
                   <TaxTableRowSet rowLabel={socialInsurance.name}
+                    key={socialInsurance.name}
                     value={socialInsurance.amount || ''}
                     disabled={true}
                   />
@@ -107,6 +111,7 @@ export function TaxTable ({ taxSet }: PhasesTableProps) {
                 expanded={expandedPersonalTax} handleExpandClick={setExpandedPersonalTax}>
                 {taxSet.personalTax.map((personalTax) => (
                   <TaxTableRowSet rowLabel={personalTax.name}
+                                  key={personalTax.name}
                     value={personalTax.amount || ''}
                     disabled={true}
                   />

@@ -37,6 +37,7 @@ export function TaxHeaderRowSet ({ taxSet, title }
             <Box>
               {selectedSetNumbers?.filter((i: number) => i !== taxSet.setNumber).map((i: number) => (
                 <button
+                  key={i}
                   onClick={() => copyPatternByPatternNumber(i)}>パターン{numberFromHalfWidthToFullWidth(i)}からコピー</button>
               ))}
             </Box>

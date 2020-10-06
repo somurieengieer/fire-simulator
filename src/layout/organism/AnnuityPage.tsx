@@ -33,9 +33,9 @@ export default function AnnuityPage () {
       </JustifyCenterBox>
       <JustifyCenterBox>
         <Box>
-          <Grid container>
-            {selectedAnnuity && selectedAnnuity.map((annuitySet: AnnuitySet) => (
-              <Grid item xs={12} md={4}>
+          <Grid container={true}>
+            {selectedAnnuity && selectedAnnuity.map((annuitySet: AnnuitySet, i: number) => (
+              <Grid item={true} xs={12} md={4} key={i}>
                 <AnnuityTable annuity={annuitySet}/>
               </Grid>
             ))}
