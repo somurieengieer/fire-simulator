@@ -51,6 +51,13 @@ http://oisham.hatenablog.com/entry/2019/08/20/111826
 
 単体テスト内でexportしないといけないので export {} をファイル内に記述する。
 
+## コミット時にESLintを走らせる
+
+lint-stagedとhuskeyを使って実現する。  
+lint-stagedはgitのstaging環境にある資源に対してスクリプトを実行するnpmパッケージ。  
+huskeyはgitのpre-commit hookとpackage.jsonを連携するツール。  
+これらを組み合わせて、コミット時にlint-stagedを動かし、
+eslintでスタイル違反しているコードを自動修正・エラー検出を行うことができる。
 
 ## enzymeの利用
 
