@@ -12,6 +12,9 @@
 
 公開中のサービス: https://fire.somuriengineer.com/
 
+# Usage
+
+起動はyarn start
 
 # ブログ
 
@@ -19,6 +22,13 @@
 
 - public/blog/にブログを追加
 - /src/blogContent/BlogContentItem.tsxに追加（リンクと記事が生成される）
+
+### ブログに画像を貼り付ける
+
+public/image/0000x/2_1.jpg のフォーマットで保存する。10個分の記事を同一ディレクトリに保存する。
+画像は縦横の最大が680pxにする。以下コマンドでサイズ縮小してから使用する。
+
+$ sips -Z 680 *
 
 # 使用ライブラリ
 

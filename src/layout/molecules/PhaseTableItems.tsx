@@ -266,7 +266,7 @@ export function TableRowSet ({ rowLabel, phaseClasses, valueCallback, onChange, 
 
 export function EmptyTableCell () {
   return (
-    <TableCell width={10}>
-    </TableCell>
+    
+    <TableCell width={10}/>
   )
 }

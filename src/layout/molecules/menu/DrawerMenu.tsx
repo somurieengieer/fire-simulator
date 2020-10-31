@@ -78,7 +78,7 @@ export default function ResponsiveDrawer ({ window, children }: Props) {
       <Divider/>
       <List>
         {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
+          <ListItem button={true} key={text}>
             <ListItemIcon>{index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}</ListItemIcon>
             <ListItemText primary={text}/>
           </ListItem>
@@ -87,7 +87,7 @@ export default function ResponsiveDrawer ({ window, children }: Props) {
       <Divider/>
       <List>
         {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
+          <ListItem button={true} key={text}>
             <ListItemIcon>{index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}</ListItemIcon>
             <ListItemText primary={text}/>
           </ListItem>
@@ -112,14 +112,14 @@ export default function ResponsiveDrawer ({ window, children }: Props) {
           >
             <MenuIcon/>
           </IconButton>
-          <Typography variant="h6" noWrap>
+          <Typography variant="h6" noWrap={true}>
             Responsive drawer
           </Typography>
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-        <Hidden smUp implementation="css">
+        <Hidden smUp={true} implementation="css">
           <Drawer
             container={container}
             variant="temporary"
@@ -136,13 +136,13 @@ export default function ResponsiveDrawer ({ window, children }: Props) {
             {drawer}
           </Drawer>
         </Hidden>
-        <Hidden xsDown implementation="css">
+        <Hidden xsDown={true} implementation="css">
           <Drawer
             classes={{
               paper: classes.drawerPaper
             }}
             variant="permanent"
-            open
+            open={true}
           >
             {drawer}
           </Drawer>

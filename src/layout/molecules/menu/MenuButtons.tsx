@@ -71,7 +71,7 @@ export default function MenuButtons () {
       <StyledMenu
         id="customized-menu"
         anchorEl={anchorEl}
-        keepMounted
+        keepMounted={true}
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >

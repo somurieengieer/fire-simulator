@@ -41,17 +41,17 @@ export function CompoundInterestByPattern ({ firePattern }: Props) {
         firePattern={firePattern}
         nearPercent={nearPercent}/>
 
-      <Grid container spacing={2} alignItems="center"
+      <Grid container={true} spacing={2} alignItems="center"
         className={classes.sliderRoot}
         component="div"
       >
-        <Grid item component="span">
+        <Grid item={true} component="span">
           <EqualizerIcon/>
         </Grid>
-        <Grid item component="span">
+        <Grid item={true} component="span">
           利回り変動率
         </Grid>
-        <Grid item xs component="span">
+        <Grid item={true} xs={true} component="span">
           <Slider
             value={nearPercent}
             onChange={(e, newValue) => setNearPercent(newValue as number)}
@@ -62,7 +62,7 @@ export function CompoundInterestByPattern ({ firePattern }: Props) {
             step={0.1}
           />
         </Grid>
-        <Grid item component="span">
+        <Grid item={true} component="span">
           <Input
             className={classes.input}
             value={nearPercent.toFixed(1)}

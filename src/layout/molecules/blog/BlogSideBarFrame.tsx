@@ -13,15 +13,15 @@ interface Props {
 export default function BlogSideBarFrame ({ blog, children }: Props) {
   return (
     <JustifyCenterBox>
-      <Grid container>
-        <Grid item sm={12} md={8}>
+      <Grid container={true}>
+        <Grid item={true} sm={12} md={8}>
           <JustifyCenterBox maxWidth={'800'}>
             <GoogleAdsSmall />
             {children}
           </JustifyCenterBox>
         </Grid>
         {/* // TODO: サイドバーの横幅は不変にしたい */}
-        <Grid item md={4}>
+        <Grid item={true} md={4}>
           <BlogSideBar content={blog} />
         </Grid>
       </Grid>

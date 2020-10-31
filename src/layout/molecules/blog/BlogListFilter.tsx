@@ -30,9 +30,9 @@ export function BlogListFilter ({ filterLabels, activeLabel, callbackForUpdate }
 
   return (
     <Box className={classes.root}>
-      <Grid container spacing={2}>
+      <Grid container={true} spacing={2}>
         {filterLabels.map(label => (
-          <Grid item xs justify={'center'} key={label}>
+          <Grid item={true} xs={true} justify={'center'} key={label}>
             <BlogListFilterLabel title={label}
               callback={() => callbackForUpdate(label)}
               active={isActive(label)} />

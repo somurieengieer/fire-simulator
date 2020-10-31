@@ -72,9 +72,9 @@ export default function TaxPage () {
       >
         FIREシミュレーターを開く
       </Link>
-      <Grid container>
+      <Grid container={true}>
         {selectedTaxSet && selectedTaxSet.map((taxSet: TaxSet) => (
-          <Grid item xs={12} md={4} key={taxSet.setNumber}>
+          <Grid item={true} xs={12} md={4} key={taxSet.setNumber}>
             <TaxPaper taxSet={taxSet}/>
           </Grid>
         ))}

@@ -19,7 +19,7 @@ export function GoogleAdsSmall () {
         data-ad-format="fluid"
         data-ad-layout-key="-fb+5w+4e-db+86"
         data-ad-client="ca-pub-7646050836920456"
-        data-ad-slot="6588052635"></ins>
+        data-ad-slot="6588052635"/>
     </>
   )
 }

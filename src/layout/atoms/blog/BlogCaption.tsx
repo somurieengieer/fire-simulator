@@ -44,11 +44,11 @@ export function BlogCaptionInfo ({ content, tagLinkActive } : BlogCaptionInfoPro
   const classes = useStyles()
 
   return (
-    <Grid container className={classes.footer}>
-      <Grid item xs={6}>
+    <Grid container={true} className={classes.footer}>
+      <Grid item={true} xs={6}>
         <BlogTagBatch tag={content.tag} linkActive={tagLinkActive} />
       </Grid>
-      <Grid item xs={6} className={classes.footerRight}>
+      <Grid item={true} xs={6} className={classes.footerRight}>
         <Box display='flex' justifyContent='flex-end' alignItems='center'>
           <WatchLaterIcon style={{ fontSize: '1rem' }} />
           &nbsp;

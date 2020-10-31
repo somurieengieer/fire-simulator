@@ -64,14 +64,14 @@ export default function BlogListPage () {
         activeLabel={filterLabel}
         callbackForUpdate={(label: string) => setFilterLabel(label)} />
 
-      <Grid container style={{ width: '100%' }}>
+      <Grid container={true} style={{ width: '100%' }}>
         {pagedShowContent().map(content =>
-          <Grid item xs={12} key={content.id}>
+          <Grid item={true} xs={12} key={content.id}>
             <BlogCaption {...content} key={content.id} />
           </Grid>
         )}
         {pagedShowContent().length === 0 && (
-          <Grid item xs={12}>
+          <Grid item={true} xs={12}>
             <Typography variant={'h6'}>
               記事がありません
             </Typography>

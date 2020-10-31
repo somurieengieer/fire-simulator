@@ -70,8 +70,8 @@ export function PhasesTable ({ firePattern }: PhasesTableProps) {
   return (
     <>
       <Grid className={classes.root}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} lg={7}>
+        <Grid container={true} spacing={2}>
+          <Grid item={true} xs={12} lg={7}>
             <TableContainer component={Paper}>
               <Table className={tableClasses.table} aria-label="simple table"
                 size={'small'}
@@ -171,7 +171,7 @@ export function PhasesTable ({ firePattern }: PhasesTableProps) {
               </Table>
             </TableContainer>
           </Grid>
-          <Grid item xs={12} lg={5}>
+          <Grid item={true} xs={12} lg={5}>
             <JustifyCenterBox>
               <CompoundInterestByPattern firePattern={firePattern}/>
             </JustifyCenterBox>

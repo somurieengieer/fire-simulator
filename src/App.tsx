@@ -16,11 +16,11 @@ function App () {
     <MenuFrame>
       <Suspense fallback={<Loading />}>
         <Switch>
-          <Route exact path={myUrl.top} component={FirePage}/>
-          <Route exact path={myUrl.tax} component={TaxPage}/>
-          <Route exact path={myUrl.annuity} component={AnnuityPage}/>
-          <Route exact path={myUrl.blogList} component={BlogListPage}/>
-          <Route exact path={myUrl.blog} component={BlogPage}/>
+          <Route exact={true} path={myUrl.top} component={FirePage}/>
+          <Route exact={true} path={myUrl.tax} component={TaxPage}/>
+          <Route exact={true} path={myUrl.annuity} component={AnnuityPage}/>
+          <Route exact={true} path={myUrl.blogList} component={BlogListPage}/>
+          <Route exact={true} path={myUrl.blog} component={BlogPage}/>
           <Route>
             404 Not Found
           </Route>
