@@ -8,7 +8,7 @@ const useStyles = makeStyles(theme => createStyles({
     fontSize: '1.1rem',
     lineHeight: '2.3rem',
     [theme.breakpoints.down('sm')]: {
-      margin: 5
+      margin: 5,
     },
     // 目次(Table Of Contents）
     '& > .markdownIt-TOC': {
@@ -58,6 +58,9 @@ const useStyles = makeStyles(theme => createStyles({
     },
     '& td': {
       backgroundColor: theme.palette.common.white
+    },
+    '& img': {
+      maxWidth: '100%'
     }
   }
 }))
