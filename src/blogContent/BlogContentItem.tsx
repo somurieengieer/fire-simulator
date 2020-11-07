@@ -18,6 +18,12 @@ export function createUrlByContent (content: BlogContentItem): string {
 // 新しい記事が上
 export const blogContentList: BlogContentItem[] = [
   {
+    id: 3,
+    title: '郡山市近辺の温泉（土湯温泉）',
+    created: '2020-11-07',
+    tag: BlogTag.FIRE
+  },
+  {
     id: 2,
     title: '郡山市近辺の温泉（二岐温泉）',
     created: '2020-10-31',
