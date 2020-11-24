@@ -71,7 +71,7 @@ export const pData3 = {
       ageAtStart: 34,
       ageAtEnd: 35,
       note: '子育て生活（実家）',
-      income: 400,
+      income: 700,
       expense: 200,
       assetAtStart: 2200,
       annualInterest: 3
